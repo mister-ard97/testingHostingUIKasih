@@ -19,6 +19,7 @@ import NotFound from './pages/NotFound';
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
 import ChangePassword from './pages/userFeature/changePassword'
+import Payment from './pages/payment'
 
 import BottomNav from './components/bottomNav'
 
@@ -56,7 +57,7 @@ class App extends Component {
                 <Route path='/verifiedReset' component={VerifiedResetPassword} />
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
-                
+                <Route path='/payment' component={Payment}/>
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
