@@ -1,0 +1,86 @@
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { KeepLogin } from './redux/actions';
+import './App.css';
+
+import Header from './components/header';
+
+import Home from './pages/Home';
+
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifiedResetPassword from './pages/VerifiedPasswordToken';
+import WaitingVerification from './pages/WaitingVerification';
+import Verified from './pages/Verified';
+import NotFound from './pages/NotFound';
+
+import UserPage from './pages/User'
+import VerificationUser from './pages/userFeature/verificationUser';
+import ChangePassword from './pages/userFeature/changePassword'
+
+import BottomNav from './components/bottomNav'
+
+ 
+class App extends Component {
+
+  componentDidMount() {
+    this.props.KeepLogin();
+  }
+
+  render() {
+    // checkauthChecked
+    if(!this.props.authChecked) {
+      return (       
+          <div className='MaCommerce' >
+             <Header />
+
+            <div className="spinner-border mt-3" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+      )
+    }
+    return (
+        <div className='MaCommerce' >
+    
+              <Header />
+              <Switch>
+
+                <Route path='/' component={Home} exact />
+
+                <Route path='/login' component={Login} exact />
+                <Route path='/register' component={Register} exact />
+                <Route path='/forgotPassword' component={ForgotPassword} />
+                <Route path='/verifiedReset' component={VerifiedResetPassword} />
+                <Route path='/waitingverification' component={WaitingVerification} />
+                <Route path='/verified' component={Verified} />
+                
+                <Route path='/user' component={UserPage} />
+                <Route path='/verificationUser' component={VerificationUser} />
+                <Route path='/changePassword' component={ChangePassword} />
+                <Route path='*' component={NotFound} />
+
+
+              </Switch>
+
+       
+        {/* Route Admin */}
+        {/* <Route path='/adminDashboard' component={AdminDashboard} />
+        <Route path='/adminLogin' component={AdminLogin} exact />
+        <Route path='/adminRegister' component={AdminRegister} exact />
+        <Route path='/adminWaitingVerification' component={AdminWaitingVerification} exact />
+        <Route path='/adminVerified' component={AdminVerified} /> */}
+        </div>
+    )
+  }
+} 
+
+const mapStateToProps = ({auth}) => {
+  return {
+    authChecked: auth.authChecked
+  }
+}
+
+export default connect(mapStateToProps, { KeepLogin })(App);

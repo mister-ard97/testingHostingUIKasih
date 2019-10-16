@@ -1,0 +1,321 @@
+/* Global styling */
+.cursorPointer {
+  cursor: pointer
+}
+
+.removeTagA {
+  text-decoration: none !important;
+}
+
+.removeTagA h5, .removeTagA .popCount {
+  color: #000000 !important
+}
+
+/* Navbar */
+.navbarContainer {
+  /* background-color: #1a1a1a !important; */
+  box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.20) !important;
+}
+
+/* .navbar {
+  background-color: #1a1a1a !important;
+} */
+
+.navbar-brand {
+  font-family: 'Kaushan Script', cursive, sans-serif !important;
+  font-size: 32px !important;
+  color: #a6a5a4;
+}
+
+.navbar-brand span {
+  color: #ff9500;
+}
+
+.link-dark svg, .link-dark a {
+  color: #666666 !important;
+}
+
+.link-white svg, .link-white a {
+  color: #FFFFFF !important;
+}
+
+.link-white a.navbar-brand {
+  color: #000000 !important;
+}
+
+.link-white #loginDropdown a {
+  color: #007bff !important;
+}
+
+.link-white .dropdown-item {
+  color: black !important;
+}
+
+/* Navbar Header */
+.SearchCategory .dropdown a.dropdown-toggle.nav-link::after, 
+.navbar-nav-cust .dropdown a.dropdown-toggle.nav-link::after,
+.SearchCategorySm.dropdown a.dropdown-toggle.nav-link::after {
+  content: none !important;
+}
+
+.dropdown .dropdown-menu {
+  margin-top: 15px;
+  min-width: 35rem !important;
+}
+
+.dropdown .dropdown-menu.userDropdown {
+  margin-top: 15px;
+  min-width: 20rem !important;
+}
+
+.navbar-nav-cust {
+  flex-direction: row;
+}
+
+.showText {
+  opacity: 0;
+}
+
+.searchIcon:focus>.showText,
+.searchIcon:hover>.showText {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.collapse svg {
+  font-size: 18px;
+}
+
+/* Carousel */
+.carousel-custom {
+  /* margin-top: -100px; */
+  z-index: -3;
+}
+
+.carousel-custom .custom-items {
+    height: 200px;
+    background: grey;
+}
+
+.carousel-custom-user .custom-items {
+    height: 300px;
+    background: grey;
+}
+
+.carousel-custom-user .opacity-carousel-items .display-4 {
+    font-size: 1.75rem !important;
+    font-weight: bold;
+  }
+
+.opacity-carousel-items div.bg-light {
+  width: 400px;
+  opacity: 0.8;
+  color: #2b201f !important;
+  float: left;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: #000000 !important;
+}
+
+.slick-slide>div {
+  margin: 20px 15px !important;
+}
+
+.slick-next {
+  right: -25px !important;
+}
+
+.slick-prev {
+  left: -25px !important; 
+}
+
+a.card {
+  color: black !important;
+}
+
+a.card:hover {
+  color: black !important;
+  text-decoration: none;
+}
+
+textarea:focus {   
+    border-color: rgba(229, 103, 23, 0.8) !important;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6) !important;
+    outline: 0 none !important;
+}
+
+/* Login Page */
+.loginPage {
+  align-content: center;
+  height: 100%;
+}
+
+/* Button Material Ui*/
+.selected:hover {
+      /* color: #0056b3; */
+    /* text-decoration: underline; */
+}
+
+.selected {
+    /* color: #3f51b5; */
+    /* padding-top: 6px; */
+}
+
+/* ADMIN DASHBOARD */
+#body-row {
+    margin-left:0;
+    margin-right:0;
+}
+#sidebar-container {
+    min-height: 100vh;   
+    background-color: #333;
+    padding: 0;
+}
+
+.sidebar-expanded {
+    width: 230px;
+}
+
+#sidebar-container .list-group a {
+    height: 50px;
+    color: white;
+}
+
+#sidebar-container .list-group .sidebar-submenu a {
+    height: 45px;
+    padding-left: 30px;
+}
+.sidebar-submenu {
+    font-size: 0.9rem;
+}
+
+.sidebar-separator-title {
+    background-color: #333;
+}
+.sidebar-separator {
+    background-color: #333;
+    height: 25px;
+}
+
+/* Product Section */
+.addNewProduct {
+  text-align: center;
+}
+.addNewProduct .custom-file {
+  width: 200px;
+
+}
+
+.addNewProduct .custom-file label {
+  text-align: left;
+}
+.addNewProduct .custom-file-label {
+  font-size: 12px;
+}
+
+/* END OF ADMIN DASHBOARD */
+
+@media only screen and (min-width: 2016px) , (min-width: 2659px), (min-width: 4500px) {
+  .MaCommerce {
+  position: relative;
+  min-height: 100vh;
+}
+
+  #Footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1900px) {
+  .MaCommerce {
+    position: static;
+    min-height: 0;
+  }
+
+  #Footer {
+    position: static;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+
+@media only screen and (max-width: 1025px) {
+  
+  .navbar-brand {
+    font-size: 24px !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .dropdown .dropdown-menu {
+  margin-top: 15px;
+  min-width: 20rem !important;
+}
+
+  .navbar-brand {
+    font-size: 18px !important;
+  }
+
+  .link-white svg, .link-white a {
+    color: rgba(0,0,0,.5) !important;
+  }
+
+  .link-white a.navbar-brand {
+    color: #000000 !important;
+  }
+
+  .link-white #loginDropdown a {
+    color: #007bff !important;
+  }
+
+  .carousel-custom {
+    margin-top: 0px;
+    z-index: -3;
+  }
+  .carousel-custom .custom-items {
+    height: 450px;
+    background: grey;
+  }
+} 
+
+/* Register */
+.userImage {
+  object-fit: cover;
+  width: 200px;
+}
+
+@media only screen and (max-width: 991px) {
+    .navbar-brand {
+    font-size: 32px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .carousel-custom .custom-items {
+    height: 350px;
+    background: grey;
+  }
+  .slick-slide>div {
+    margin: 20px 10px !important;
+  }
+
+  .opacity-carousel-items .display-4 {
+    font-size: 1.75rem !important;
+    font-weight: bold;
+  }
+} 
+
+@media only screen and (max-width: 580px) {
+  .slick-next {
+    right: -1px !important;
+  }
+
+  .slick-prev {
+    left: -1px !important; 
+    z-index: 2;
+  }
+} 
