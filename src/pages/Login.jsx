@@ -89,7 +89,7 @@ class Login extends Component {
          if(response) {
             let dataGoogle = {
                 email: response.profileObj.email,
-                name: response.profileObj.name,
+                nama: response.profileObj.name,
                 googleId: response.profileObj.googleId,
             }
             this.props.userLoginWithGoogle(dataGoogle)

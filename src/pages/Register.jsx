@@ -10,7 +10,7 @@ import { Redirect, Link } from 'react-router-dom';
 class Register extends Component {
     state = {
         UserImageName: 'Select Image',
-        UserImageFile: 'http://localhost:2002/defaultPhoto/defaultUser.png',
+        UserImageFile: 'http://localhost:1998/defaultPhoto/defaultUser.png',
         UserImageDB: undefined,
         NextPage: false
     }
@@ -46,7 +46,7 @@ class Register extends Component {
         } else {
             this.setState({ 
                 UserImageName: 'Select Image', 
-                UserImageFile: 'http://localhost:2002/defaultPhoto/defaultUser.png' ,
+                UserImageFile: 'http://localhost:1998/defaultPhoto/defaultUser.png' ,
                 UserImageDB: undefined
             })
         }
