@@ -53,13 +53,13 @@ class Register extends Component {
     }
 
     renderButtonRegister = () => {
-        if(this.props.loading) {
-            return (
-                <div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            )
-        }
+        // if(this.props.loading) {
+        //     return (
+        //         <div className="spinner-border" role="status">
+        //             <span className="sr-only">Loading...</span>
+        //         </div>
+        //     )
+        // }
 
         return <button onClick={this.handleSubmitRegister} className="btn btn-primary form-control">Register</button>
     }
