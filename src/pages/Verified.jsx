@@ -30,10 +30,10 @@ class VerifiedPage extends Component {
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                             :
-                                            this.props.status === 'Unverified' ?
+                                            this.props.verified === 0 ?
                                                 <p className='text-danger'>Verification Failed. Please refresh your page</p>
                                                 :
-                                            this.props.status === 'Verified' ?
+                                            this.props.verified === 1 ?
                                                 <p className='text-success'>Verification Success. Thanks for your patience :)</p>
                                                 :
                                                 null
@@ -56,7 +56,7 @@ class VerifiedPage extends Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
-        status: state.auth.status,
+        verified: state.auth.verified,
         token: state.auth.token,
         justRegister: state.auth.justRegister
     }

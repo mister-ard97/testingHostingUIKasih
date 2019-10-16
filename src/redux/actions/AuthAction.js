@@ -59,14 +59,15 @@ export const onUserRegister = (data) => {
 
                 Axios.post(URL_API + '/user/register', formData, headers)
                     .then((res) => {
-                        let { name, email, token, status, role, UserImage } = res.data
+                        
+                        let { name, email, token, verified, role, UserImage } = res.data
                         localStorage.setItem('token', token);
                         dispatch({
                             type: USER_LOGIN_SUCCESS, payload: {
                                 name,
                                 email,
                                 token,
-                                status,
+                                verified,
                                 role,
                                 UserImage,
                                 justRegister: true,
@@ -98,18 +99,17 @@ export const EmailVerification = () => {
                 'Authorization': `Bearer ${token}`,
             }
         }
-        Axios.put(URL_API + '/user/userEmailVerification', {}, options)
+        Axios.put(URL_API + '/user/emailVerification', {}, options)
             .then((res) => {
-                let { name, email, token, status, role, address, UserImage } = res.data
+                let { name, email, token, verified, role, UserImage } = res.data
                 localStorage.setItem('token', token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         name,
                         email,
                         token,
-                        status,
+                        verified,
                         role,
-                        address,
                         UserImage,
                         justRegister: true,
                         loginChecked: true
@@ -123,22 +123,25 @@ export const EmailVerification = () => {
     }
 }
 
-export const resendEmailVerification = (username, email) => {
+export const resendEmailVerification = () => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
-        Axios.post(URL_API + '/user/userResendEmailVerification', {
-            username,
-            email,
-        })
+        const token = localStorage.getItem('token');
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        }
+        Axios.post(URL_API + '/user/resendEmailVerification', {}, options)
         .then((res) => {
-            let { name, email, token, status, role, UserImage } = res.data
+            let { name, email, token, verified, role, UserImage } = res.data
             localStorage.setItem('token', token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
                     name,
                     email,
                     token,
-                    status,
+                    verified,
                     role,
                     UserImage,
                     justRegister: true,
@@ -157,20 +160,19 @@ export const userLogin = (email, password) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
 
-        Axios.post(URL_API + '/user/userLogin', {
+        Axios.post(URL_API + '/user/login', {
             email, password
         })
         .then((res) => {
-            let { name, email, token, status, role, address, UserImage } = res.data
+            let { name, email, token, verified, role, UserImage } = res.data
             localStorage.setItem('token', token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
                     name,
                     email,
                     token,
-                    status,
+                    verified,
                     role,
-                    address,
                     UserImage, 
                     loginChecked: true
                 }
@@ -192,7 +194,7 @@ export const userLoginWithGoogle = (data) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
 
-        Axios.post(URL_API + '/user/userLoginWithGoogle', {data})
+        Axios.post(URL_API + '/user/loginGmail', {data})
             .then((res) => {
                 let { name, email, token, status, role, address, UserImage } = res.data
                 localStorage.setItem('token', token);
@@ -226,18 +228,17 @@ export const userLoginWithFacebook = (data) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
 
-        Axios.post(URL_API + '/user/userLoginWithFacebook', { data })
+        Axios.post(URL_API + '/user/loginFacebook', { data })
             .then((res) => {
-                let { name, email, token, status, role, address, UserImage } = res.data
+                let { name, email, token, verified, role, UserImage } = res.data
                 localStorage.setItem('token', token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         name,
                         email,
                         token,
-                        status,
+                        verified,
                         role,
-                        address,
                         UserImage,
                         loginChecked: true
                     }
@@ -265,16 +266,16 @@ export const KeepLogin = () => {
            }
        }
 
-       Axios.post(URL_API + '/user/userKeepLogin', {}, options)
+       Axios.post(URL_API + '/user/keepLogin', {}, options)
            .then((res) => {
-               let { name, email, token, status, role, UserImage} = res.data
+                let { name, email, token, verified, role, UserImage } = res.data
                localStorage.setItem('token', token);
                dispatch({
                    type: USER_LOGIN_SUCCESS, payload: {
                         name,
                        email,
                        token,
-                       status,
+                       verified,
                        role,
                        UserImage, 
                        loginChecked: true

@@ -11,7 +11,7 @@ class WaitingVerification extends Component {
     }
 
     resendEmailVerification = () => {
-        this.props.resendEmailVerification(this.props.username, this.props.email);
+        this.props.resendEmailVerification();
     }
 
     renderButtonResendEmailVer = () => {
@@ -66,18 +66,17 @@ class WaitingVerification extends Component {
         }
 
         return(
-            // <Redirect to='/' />
-            <p>Wishlist</p>)
+            <Redirect to='/' />
+        )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        username: state.auth.username,
         email: state.auth.email,
         loading: state.auth.loading,
         statusVer: state.auth.statusVerification,
-        status: state.auth.status
+        verified: state.auth.verified
     }
 }
 

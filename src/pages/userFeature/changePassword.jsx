@@ -19,7 +19,6 @@ class ChangePassword extends React.Component{
                     loadingButton: true,
                     onsuccess: false, error: ''
                 })
-                console.log('function change pw')
                 const token = localStorage.getItem('token');
 
                 let options = {
@@ -28,7 +27,7 @@ class ChangePassword extends React.Component{
                     }
                 }
 
-                Axios.post(`${URL_API}/user/changeUserPassword`, {
+                Axios.post(`${URL_API}/user/userChangePassword`, {
                     email: this.props.email,
                     oldpw: this.OldPassword.value,
                     newpw: this.NewPassword.value

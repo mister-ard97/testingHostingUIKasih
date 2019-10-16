@@ -49,7 +49,7 @@ class Header extends Component {
                                         {
                                             this.props.loginChecked ?
                                                 <div style={{width: 40}}>
-                                                    <img src={`${URL_API}${this.props.UserImage}`} alt={'User' + this.props.username} className='img-fluid' style={{borderRadius: 40}}/>
+                                                    <img src={`${URL_API}/${this.props.UserImage}`} alt={'User' + this.props.username} className='img-fluid' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
                                                 <div className='bg-warning font-weight-bold rounded px-1'>
@@ -68,7 +68,7 @@ class Header extends Component {
                                         this.props.justRegister ?
                                             <div>
                                                 {
-                                                    this.props.status === 'Unverified' ?
+                                                    this.props.status === 0 ?
                                                     <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                     :
                                                     null
@@ -80,7 +80,7 @@ class Header extends Component {
                                         :
                                             <div>
                                                 {
-                                                    this.props.status === 'Unverified' ?
+                                                    this.props.status === 0 ?
                                                         <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                         :
                                                         null
@@ -148,7 +148,7 @@ const mapStateToProps = (state) => {
         username: state.auth.username,
         justRegister: state.auth.justRegister,
         UserImage: state.auth.UserImage,
-        status: state.auth.status,
+        verified: state.auth.verified,
         loginChecked: state.auth.loginChecked,
         loading: state.auth.loading,
     }
