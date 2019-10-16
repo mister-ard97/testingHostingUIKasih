@@ -100,7 +100,7 @@ class Login extends Component {
         if(response) {
             let dataFacebook = {
                 email: response.email,
-                name: response.name,
+                nama: response.name,
                 facebookId: response.id,
             }
             console.log(dataFacebook)
