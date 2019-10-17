@@ -19,9 +19,10 @@ import StudentList from './pages/StudentData'
 import StudentDetail from './pages/studentdetail'
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
+
 import ChangePassword from './pages/userFeature/changePassword'
 
-import BottomNav from './components/bottomNav'
+import Subscription from './pages/Subscription'
 
  
 class App extends Component {
@@ -58,6 +59,8 @@ class App extends Component {
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
                 <Route path='/studentlist' component={StudentList}/>
+                <Route path='/subscription' component={Subscription} />
+                
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
