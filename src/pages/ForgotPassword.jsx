@@ -25,7 +25,7 @@ class ForgotPassword extends Component {
         //pengecekan di component.
         e.preventDefault();
 
-        this.setState({loadingComponent: true})
+        this.setState({loadingComponent: true, successText: '', errorText: ''})
         if(this.Email.value === '') {
             this.setState({errorText: 'Harap untuk masukkan Email', loadingComponent: false})
         } else {
@@ -42,7 +42,8 @@ class ForgotPassword extends Component {
                     if (err.response) {
                         this.setState({
                             errorText: err.response.data.message,
-                            loadingComponent: false
+                            loadingComponent: false,
+                            successText: ''
                         })
                     }
                 })
