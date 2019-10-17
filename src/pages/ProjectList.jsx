@@ -1,8 +1,10 @@
 import React from 'react'
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API'
+
 import { Modal, ModalHeader, ModalBody, ModalFooter,Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import ReactQuill from 'react-quill'; // ES6
+import queryString from 'query-string'
 
 import User from './User'
 
@@ -12,61 +14,71 @@ class ProjectList extends React.Component{
         editNum : null,
         modalOpen : false,
         text : '',
-        imageFile : null
+        imageFile : null,
+        totalpage : 0
     }
 
     componentDidMount(){
         this.getProjectList()
     }
 
+    renderPagingButton = () =>{
+        if(this.state.totalpage !== 0){
+            
+            var jsx = []
+            for(var i = 0; i<this.state.totalpage; i++){
+                jsx.push(
+                     <PaginationItem>
+                        <PaginationLink href={`/project?page=${i+1}`}>
+                            {i+1}
+                        </PaginationLink>
+                    </PaginationItem>
+                )
+            }
+            return jsx
+        }
+    }
+
     printPagination = () =>{
-        return (
-            <Pagination aria-label="Page navigation example">
-            <PaginationItem>
-                <PaginationLink first href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink previous href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              {/* <PaginationItem>
-                <PaginationLink href="#">
-                  3
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">
-                  5
-                </PaginationLink>
-              </PaginationItem> */}
-              <PaginationItem>
-                <PaginationLink next href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink last href="#" />
-              </PaginationItem>
-            </Pagination>
-        )
+        if(this.state.totalpage !== 0){
+            const parsed = queryString.parse(this.props.location.search);
+            var currentpage = parsed.page
+            return (
+                <Pagination aria-label="Page navigation example">
+                <PaginationItem>
+                    <PaginationLink first href={`/project?page=1`} />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink previous
+                     href={`/project?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                  </PaginationItem>
+                    {this.renderPagingButton()}
+                  <PaginationItem>
+                    <PaginationLink next 
+                    href={`/project?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                    this.state.totalpage 
+                :
+                parseInt(currentpage) + 1}`} />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink last href={`/project?page=${this.state.totalpage}`} />
+                  </PaginationItem>
+                </Pagination>
+            )
+        }
     }
 
     getProjectList(){
-        Axios.get(URL_API+'/project/getproject')
+        const parsed = queryString.parse(this.props.location.search);
+
+        console.log(parsed)
+        if(!parsed.page){
+            parsed.page = 1
+        }
+
+        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=1`)
         .then((res)=>{
-         
+            console.log(res)
 
             var results = res.data.result.map((val,id)=>{
                 var hasil = {...val, ...val.User}
@@ -75,9 +87,11 @@ class ProjectList extends React.Component{
             })
 
             this.setState({
-                data : results
+                data : results,
+                totalpage : res.data.total
             })
-            console.log(this.state.data)
+            console.log(this.state)
+            
         })
         .catch((err)=>{
             console.log(err)
