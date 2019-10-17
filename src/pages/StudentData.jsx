@@ -1,0 +1,73 @@
+import React, { Component } from 'react';
+import Axios from 'axios'
+import { URL_API } from '../helpers/Url_API';
+import {Table} from 'reactstrap'
+import {Link} from 'react-router-dom'
+
+class Studentlist extends Component {
+    state = {
+        studentdata:[],
+        countstudent:0
+      }
+    componentDidMount(){
+        Axios.get(URL_API+'/student/getstudentdatapaging',{
+            params:{
+                limit:2,
+                page:1
+            }
+        }).then(res=>{
+            this.setState({studentdata:res.data.rows,countstudent:res.data.count})
+        })
+    }
+    renderListstudent=()=>{
+        return this.state.studentdata.map((item,index)=>{
+            return (
+                <tr key={item.id}>
+                    <td >{index+1}</td>
+                    <td>{item.name}</td>
+                    <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
+                    <td>{item.sekolah}</td>
+                    <td>
+                    <Link to={'/studentdetail'} style={{textDecoration:'none'}}>
+                        <button className='btn btn-primary'>Lihat student</button>
+                    </Link>    
+                    </td>
+                    {/* <td>{item.stok}</td>
+                    <td>{item.namacategory}</td>
+                    <td>{item.satuanorder}</td>
+                    <td>{item.informasiproduct}</td>
+                    <td><button className='btn btn-danger' onClick={()=>this.setState({deletemodal:true,modaldeleteindex:index})}>delete</button></td> */}
+                </tr>
+            )
+        })
+    }
+    render() { 
+        return (
+            <div>
+                loading
+
+                <Table className='mt-2' striped hover>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama murid</th>
+                                <th>foto murid</th>
+                                <th>sekolah</th>
+                                {/* <th>stok</th>
+                                <th>produk category</th>
+                                <th>/satuan order</th>
+                                <th>informasi produk</th> */}
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderListstudent()}
+                        </tbody>
+                </Table>
+            </div>
+          );
+    }
+}
+ 
+export default Studentlist;

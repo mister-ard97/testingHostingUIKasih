@@ -15,7 +15,8 @@ import VerifiedResetPassword from './pages/VerifiedPasswordToken';
 import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
-
+import StudentList from './pages/StudentData'
+import StudentDetail from './pages/studentdetail'
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
 import ChangePassword from './pages/userFeature/changePassword'
@@ -56,10 +57,11 @@ class App extends Component {
                 <Route path='/verifiedReset' component={VerifiedResetPassword} />
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
-                
+                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
+                <Route path='/studentdetail' component={StudentDetail} />
                 <Route path='*' component={NotFound} />
 
 
