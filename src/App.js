@@ -17,12 +17,22 @@ import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
 import StudentDetail from './pages/studentdetail'
+
+//PROJECT
+import PostProject from './pages/admin/postProject';
+import ProjectManage from './pages/ProjectManage';
+
+import ProjectList from './pages/ProjectList'
+import ProjectDetails from './pages/ProjectDetails'
+
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
 
 import ChangePassword from './pages/userFeature/changePassword'
 
 import Subscription from './pages/Subscription'
+import BottomNav from './components/bottomNav'
+import postProject from './pages/admin/postProject';
 
  
 class App extends Component {
@@ -65,6 +75,15 @@ class App extends Component {
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
                 <Route path='/studentdetail' component={StudentDetail} />
+
+                {/* User */}
+                <Route path='/project-list' component={ProjectList} />
+                <Route path='/project-detail' component={ProjectDetails} />
+
+                  {/* User Admin */}
+                <Route path='/manage-project' component={ProjectManage}/>
+                <Route path='/post-project' component={PostProject} />
+
                 <Route path='*' component={NotFound} />
 
 
