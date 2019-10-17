@@ -16,17 +16,11 @@ import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 
-//PROJECT
-import PostProject from './pages/admin/postProject'
-import ProjectList from './pages/ProjectList'
-
-
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
 import ChangePassword from './pages/userFeature/changePassword'
 
 import BottomNav from './components/bottomNav'
-import postProject from './pages/admin/postProject';
 
  
 class App extends Component {
@@ -66,8 +60,6 @@ class App extends Component {
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
-                <Route path='/galangdana' component={PostProject}/>
-                <Route path='/project' component={ProjectList}/>
                 <Route path='*' component={NotFound} />
 
 
