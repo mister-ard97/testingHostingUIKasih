@@ -58,10 +58,13 @@ class postProject extends React.Component{
     onSubmitClick = () =>{
    
         var formData = new FormData()
-
+        let token = localStorage.getItem('token')
         var headers ={
             headers : 
-            {'Content-Type' : 'multipart/form-data'}
+            {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'multipart/form-data'
+            }
         }
 
         var data = {
@@ -69,11 +72,14 @@ class postProject extends React.Component{
             description : this.state.text,
             totalTarget : this.refs.prtarget.value,
             projectCreated : this.refs.prdatestart.value,
-            projectEnded : this.refs.prdateend.value
+            projectEnded : this.refs.prdateend.value,
+            shareDescription: this.refs.shareDescription.value
         }
         
         formData.append('image', this.state.imageFile) 
         formData.append('data', JSON.stringify(data))
+
+        console.log(data)
 
         Axios.post(URL_API+'/project/postproject', formData, headers)
         .then((res)=>{
@@ -116,6 +122,9 @@ class postProject extends React.Component{
                     <img id="imgpreview" width="200px" height="200px"/>
                 </div>
 
+                <h5>Ajakan Campaign</h5>
+                <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
+                <p>Maks 100 Karakter</p>
                 <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
             </div>
         )
