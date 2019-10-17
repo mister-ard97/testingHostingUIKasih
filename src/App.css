@@ -368,3 +368,9 @@ textarea:focus {
 .buttonPayment{
   text-align: right;
 }
+
+.komentar{
+  border-radius: 4px;
+  padding: 4px;
+  width: 100%;
+}
