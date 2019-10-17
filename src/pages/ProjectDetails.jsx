@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { URL_API } from '../helpers/Url_API';
+import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton
+  } from 'react-share';
+
+  import {
+    FacebookIcon,
+    WhatsappIcon,
   } from 'react-share';
 
 import queryString from 'query-string'
@@ -34,6 +39,7 @@ class ProjectDetails extends Component {
             return this.state.ProjectDetail.map((val, index) => {
                 return (
                     <div className='card mt-3' key={index}>
+                        
                         <div className='row'>
                             <div className='col-2'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
@@ -54,12 +60,16 @@ class ProjectDetails extends Component {
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
                                 <hr/>
                                 <h6>Rp. {val.totalTarget}</h6>
-                                <FacebookShareButton>
-                                    Share Facebook
+                                <a className='btn btn-primary'>
+                                <FacebookShareButton url={`https://www.google.com`} >
+                                    <FacebookIcon size={12} round={true} />
                                 </FacebookShareButton>
-                                <WhatsappShareButton>
-                                    Share WA
+                                </a>
+                                <a className='btn btn-success'>
+                                <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
+                                    <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
+                                </a>
                                 <button>
                                     Donasi
                                 </button>
