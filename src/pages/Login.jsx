@@ -89,7 +89,7 @@ class Login extends Component {
          if(response) {
             let dataGoogle = {
                 email: response.profileObj.email,
-                name: response.profileObj.name,
+                nama: response.profileObj.name,
                 googleId: response.profileObj.googleId,
             }
             this.props.userLoginWithGoogle(dataGoogle)
@@ -100,7 +100,7 @@ class Login extends Component {
         if(response) {
             let dataFacebook = {
                 email: response.email,
-                name: response.name,
+                nama: response.name,
                 facebookId: response.id,
             }
             console.log(dataFacebook)

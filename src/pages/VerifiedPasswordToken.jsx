@@ -171,7 +171,7 @@ class VerifiedPage extends Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
-        status: state.auth.status,
+        verified: state.auth.verified,
         token: state.auth.token,
         justRegister: state.auth.justRegister
     }
