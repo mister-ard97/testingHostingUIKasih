@@ -13,9 +13,9 @@ class StudentDetails extends Component {
     }
 
     componentDidMount(){
-        // var id = this.props.location.search.split('=')[1]
-        // Axios.get(API_URL + `student/get-student/${id}`)
-        Axios.get(API_URL + `/student/get-student-detail/1` )
+        var id = this.props.location.search.split('=')[1]
+        // Axios.get(API_URL + `/student/get-student-detail/1` )
+        Axios.get(API_URL + `/student-detail/get-student-detail/${id}`)
         .then((res) => {
             this.setState({ data: res.data })
             console.log(this.state.data)
@@ -23,8 +23,8 @@ class StudentDetails extends Component {
     }
 
     deleteDetail = (id) => {
-
-        Axios.post(API_URL + `/student/delete-student-detail/${id}`, {id, studentId: 1})
+        var studentId = this.props.location.search.split('=')[1]
+        Axios.post(API_URL + `/student-detail/delete-student-detail/${id}`, { id, studentId })
         .then((res) => {
             console.log(res.data)
             this.setState({ data: res.data })
@@ -43,7 +43,7 @@ class StudentDetails extends Component {
                                 <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
                             </td>
                             <td>
-                                <input type="text" defaultValue={val.deskripsi} />
+                                <input type="text" defaultValue={val.deskripsi} ref='descEdit'/>
                             </td>
                             <td>
                                 <button onClick={() => this.setState({ selectedId: 0})}>Cancel</button>
@@ -83,16 +83,16 @@ class StudentDetails extends Component {
         var formData = new FormData()
         var newObj = {
             id,
-            deskripsi: this.refs.deskripsi.value,
-            studentId: 1
+            deskripsi: this.refs.descEdit.value,
+            studentId: this.props.location.search.split('=')[1]
         }
         console.log(newObj)
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/student/edit-student-detail/${newObj.studentId}`, formData)
+        Axios.post(API_URL + `/student-detail/edit-student-detail/${newObj.studentId}`, formData)
         .then((res) => {
             console.log(res.data)
-            this.setState({ data: res.data })
+            this.setState({ data: res.data, selectedId: 0 })
         })
         .catch((err) => {
             console.log(err)
@@ -103,17 +103,22 @@ class StudentDetails extends Component {
         var formData = new FormData()
         var newObj = {
             deskripsi: this.refs.deskripsi.value,
-            studentId: 2
+            studentId: this.props.location.search.split('=')[1]
         }
         if(!this.state.addImageFile || !this.refs.deskripsi.value){
             return window.alert('fill all forms please')
         }
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/student/add-student-detail/${1}`, formData)
+        Axios.post(API_URL + `/student-detail/add-student-detail/${newObj.studentId}`, formData)
         .then((res) => {
             console.log(res.data)
-            this.setState({ data: res.data })
+            this.setState({ 
+                data: res.data,
+                addImageFile: null,
+                addImageFileName: null
+            })
+            this.refs.deskripsi.value = ''
         })
         .catch((err) => {
             console.log(err)
@@ -121,13 +126,6 @@ class StudentDetails extends Component {
     }
 
     render() { 
-        if(this.state.edit){
-            return(
-                <div className='row'>
-                    {this.renderEditStudent()}
-                </div>
-            )
-        }
         return ( 
             <div className='row'>
                     <div className='container'>
@@ -139,7 +137,7 @@ class StudentDetails extends Component {
                             <th>Actions</th>
                         </thead>
                         {this.renderStudentData()}
-                        <tbody>
+                        <tbody style={{ marginTop: 60 }}>
                             <tr>
                                 <td>
                                     <button onClick={this.addNewDetail}>

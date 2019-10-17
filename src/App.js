@@ -22,6 +22,7 @@ import VerificationUser from './pages/userFeature/verificationUser';
 
 import ChangePassword from './pages/userFeature/changePassword'
 import StudentDetails from './pages/StudentDetails';
+import Subscription from './pages/Subscription'
 
  
 class App extends Component {
@@ -58,6 +59,7 @@ class App extends Component {
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
                 <Route path='/student-details' component={StudentDetails} />
+                <Route path='/subscription' component={Subscription} />
                 
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
