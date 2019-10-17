@@ -374,3 +374,53 @@ textarea:focus {
   padding: 4px;
   width: 100%;
 }
+
+.cardHistory{
+  border: thin solid grey ;
+  border-radius: 4px;
+  padding: 0.5em;
+  display: flex;
+}
+
+.imageProject img{
+  border-radius: 4px;
+  margin-right: 0.5em;
+}
+
+.projectDetail{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.projectName{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.komentarDonasi{
+  font-size: 0.8em;
+}
+
+.nominalDonasi{
+  font-size: 1em;
+  position: relative;
+  bottom: 0;
+}
+
+.statusPatment{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusTest{
+  margin: 0 auto;
+  border : 1px solid green;
+  border-radius: 8px;
+  padding: 4px 16px;
+}
+
+.kotak{
+  border: 1px dashed red;
+}
