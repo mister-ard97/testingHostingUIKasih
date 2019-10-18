@@ -5,7 +5,8 @@ import { URL_API } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton
-  } from 'react-share';
+} from 'react-share';
+import { Link } from 'react-router-dom'
 
 import queryString from 'query-string'
 
@@ -60,9 +61,11 @@ class ProjectDetails extends Component {
                                 <WhatsappShareButton>
                                     Share WA
                                 </WhatsappShareButton>
-                                <button>
-                                    Donasi
-                                </button>
+                                <Link to={`/payment?id=${val.projectId}`} > 
+                                    <button>
+                                        Donasi
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>    
