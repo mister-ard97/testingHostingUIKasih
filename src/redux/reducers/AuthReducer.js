@@ -11,13 +11,16 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-    name: '',
-    username: '',
+    id : '',
+    subscriptionStatus: '',
+    token: '',
+    phoneNumber: '',
+    nama: '',
     email: '',
     token: '',
     verified: '',
     loading: false,
-    UserImage: '',
+    userImage: '',
     error: '',
     role: '',
     statusVerification: '',
