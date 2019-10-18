@@ -152,7 +152,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.auth.name,
+        name: state.auth.nama,
         justRegister: state.auth.justRegister,
         userImage: state.auth.userImage,
         verified: state.auth.verified,
