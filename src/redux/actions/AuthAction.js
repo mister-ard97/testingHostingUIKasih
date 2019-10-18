@@ -60,16 +60,30 @@ export const onUserRegister = (data) => {
                 Axios.post(URL_API + '/user/register', formData, headers)
                     .then((res) => {
                         
-                        let { name, email, token, verified, role, UserImage } = res.data
+                        let { 
+                            id, 
+                            subscriptionStatus, 
+                            name, 
+                            email, 
+                            token, 
+                            verified, 
+                            role, 
+                            userImage,
+                            phoneNumber
+                        } = res.data.dataUser
+
                         localStorage.setItem('token', token);
                         dispatch({
                             type: USER_LOGIN_SUCCESS, payload: {
+                                id,
+                                subscriptionStatus,
                                 name,
                                 email,
                                 token,
                                 verified,
                                 role,
-                                UserImage,
+                                userImage,
+                                phoneNumber,
                                 justRegister: true,
                                 loginChecked: true,
                                 NextPage: true
@@ -101,16 +115,31 @@ export const EmailVerification = () => {
         }
         Axios.put(URL_API + '/user/emailVerification', {}, options)
             .then((res) => {
-                let { name, email, token, verified, role, UserImage } = res.data
+                
+                let { 
+                    id, 
+                    subscriptionStatus, 
+                    name, 
+                    email, 
+                    token, 
+                    verified, 
+                    role, 
+                    userImage,
+                    phoneNumber
+                } = res.data.dataUser
+
                 localStorage.setItem('token', token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
+                        id,
+                        subscriptionStatus,
                         name,
                         email,
                         token,
                         verified,
                         role,
-                        UserImage,
+                        userImage,
+                        phoneNumber,
                         justRegister: true,
                         loginChecked: true
                     }
@@ -134,16 +163,31 @@ export const resendEmailVerification = () => {
         }
         Axios.post(URL_API + '/user/resendEmailVerification', {}, options)
         .then((res) => {
-            let { name, email, token, verified, role, UserImage } = res.data
+            
+            let { 
+                id, 
+                subscriptionStatus, 
+                name, 
+                email, 
+                token, 
+                verified, 
+                role, 
+                userImage,
+                phoneNumber 
+            } = res.data.dataUser
+
             localStorage.setItem('token', token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
+                    id,
+                    subscriptionStatus,
                     name,
                     email,
                     token,
                     verified,
                     role,
-                    UserImage,
+                    userImage,
+                    phoneNumber,
                     justRegister: true,
                     loginChecked: true
                 }
@@ -164,16 +208,31 @@ export const userLogin = (email, password) => {
             email, password
         })
         .then((res) => {
-            let { name, email, token, verified, role, UserImage } = res.data
+            
+            let { 
+                id, 
+                subscriptionStatus, 
+                name, 
+                email, 
+                token, 
+                verified, 
+                role, 
+                userImage,
+                phoneNumber
+            } = res.data.dataUser
+
             localStorage.setItem('token', token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
+                    id,
+                    subscriptionStatus,
                     name,
                     email,
                     token,
                     verified,
                     role,
-                    UserImage, 
+                    userImage,
+                    phoneNumber, 
                     loginChecked: true
                 }
             })
@@ -196,17 +255,31 @@ export const userLoginWithGoogle = (data) => {
 
         Axios.post(URL_API + '/user/loginGmail', {data})
             .then((res) => {
-                let { name, email, token, status, role, address, UserImage } = res.data
+                
+                let { 
+                    id, 
+                    subscriptionStatus, 
+                    name, 
+                    email, 
+                    token, 
+                    verified, 
+                    role, 
+                    userImage,
+                    phoneNumber
+                } = res.data.dataUser
+
                 localStorage.setItem('token', token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
+                        id,
+                        subscriptionStatus,
                         name,
                         email,
                         token,
-                        status,
+                        verified,
                         role,
-                        address,
-                        UserImage,
+                        userImage,
+                        phoneNumber,
                         loginChecked: true
                     }
                 })
@@ -230,16 +303,31 @@ export const userLoginWithFacebook = (data) => {
 
         Axios.post(URL_API + '/user/loginFacebook', { data })
             .then((res) => {
-                let { name, email, token, verified, role, UserImage } = res.data
+                
+                let { 
+                    id, 
+                    subscriptionStatus, 
+                    name, 
+                    email, 
+                    token, 
+                    verified, 
+                    role, 
+                    userImage,
+                    phoneNumber
+                } = res.data.dataUser
+
                 localStorage.setItem('token', token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
+                        id,
+                        subscriptionStatus,
                         name,
                         email,
                         token,
                         verified,
                         role,
-                        UserImage,
+                        userImage,
+                        phoneNumber,
                         loginChecked: true
                     }
                 })
@@ -268,16 +356,31 @@ export const KeepLogin = () => {
 
        Axios.post(URL_API + '/user/keepLogin', {}, options)
            .then((res) => {
-                let { name, email, token, verified, role, UserImage } = res.data
+               
+            let { 
+                id, 
+                subscriptionStatus, 
+                name, 
+                email, 
+                token, 
+                verified, 
+                role, 
+                userImage,
+                phoneNumber
+            } = res.data.dataUser
+
                localStorage.setItem('token', token);
                dispatch({
                    type: USER_LOGIN_SUCCESS, payload: {
-                        name,
-                       email,
-                       token,
-                       verified,
-                       role,
-                       UserImage, 
+                    id,
+                    subscriptionStatus,
+                    name,
+                    email,
+                    token,
+                    verified,
+                    role,
+                    userImage,
+                    phoneNumber, 
                        loginChecked: true
                    } })
            })
