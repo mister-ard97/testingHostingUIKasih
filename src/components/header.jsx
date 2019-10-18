@@ -117,24 +117,32 @@ class Header extends Component {
                             <Redirect to={`/`} />
                             : null
                         }
-                        <NavbarToggler onClick={this.toggle} />
+                        <NavbarToggler onClick={this.toggle} className='d-none' />
 
                         {/* Untuk Small Device  */}
                         <Link to='/' className='navbar-brand mx-auto justify-content-start d-flex d-lg-none'>
                             <span>Kasih</span>Nusantara
                         </Link>
 
-                        <Collapse id="CollapseMaCommerce" isOpen={this.state.isOpen} navbar className='link-white'>
+                        <div className='d-flex d-lg-none' style={{
+                            listStyle: 'none'
+                        }}>
+                            {this.renderCartAccount('text-black-50')}
+                        </div>
+
+                        <Collapse id="CollapseMaCommerce" isOpen={this.state.isOpen} navbar className='link-white d-none d-flex'>
                             <div className='container'>
                                 <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
                                     <span>Kasih</span>Nusantara
                                 </Link>
                             </div>
                             {/* Untuk Large Device */}
-                            <Nav navbar className='d-flex'>
+                            <Nav navbar className='d-lg-flex d-none'>
                                 {this.renderCartAccount('text-black-50')}
                             </Nav>
                         </Collapse>
+
+                        
                     </div>
                 </Navbar>
             </div>
