@@ -74,6 +74,8 @@ class Header extends Component {
                                                     null
                                                 }
                                                 <p>Selamat Bergabung di MaCommerce, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                
                                             </div>
@@ -86,6 +88,8 @@ class Header extends Component {
                                                         null
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
                                     :
@@ -131,15 +135,20 @@ class Header extends Component {
                         </div>
 
                         <Collapse id="CollapseMaCommerce" isOpen={this.state.isOpen} navbar className='link-white d-none d-flex'>
-                            <div className='container'>
-                                <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
-                                    <span>Kasih</span>Nusantara
-                                </Link>
-                            </div>
                             {/* Untuk Large Device */}
+                            <div className='container m-0 p-0'>
+                                <div className='row m-0'>
+                                    <div className='col-4'>
+                                    <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
+                                        <span>Kasih</span>Nusantara
+                                    </Link>
+                                    </div>
+                                </div>
+                            </div>
+
                             <Nav navbar className='d-lg-flex d-none'>
-                                {this.renderCartAccount('text-black-50')}
-                            </Nav>
+                                        {this.renderCartAccount('text-black-50')}
+                                    </Nav>
                         </Collapse>
 
                         
