@@ -172,7 +172,7 @@ app.get('/verifiedReset', function(request, response) {
         return console.log(err);
       }
 
-      Axios.get(URL_API + `/project/getDetailProject?id=${req.query.id}`)
+      Axios.get(URL_API + `/project/getDetailProject?id=${request.query.id}`)
         .then((res) => {
             console.log(res.data)
             data = data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
