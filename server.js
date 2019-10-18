@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const path = require('path');
 const fs = require('fs');
 const Axios = require('axios');
-const URL_API = 'http://localhost:1998'
+const { URL_API } = require('./src/helpers/Url_API')
 
 app.get('/', function(request, response) {
   console.log('Home page visited!');
