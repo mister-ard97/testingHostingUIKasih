@@ -13,7 +13,7 @@ import { URL_API } from '../../helpers/Url_API';
 
 export const onUserRegister = (data) => {
     let {
-        name,
+        nama,
         password,
         confPassword,
         email,
@@ -23,7 +23,7 @@ export const onUserRegister = (data) => {
 
     return (dispatch) => {
         dispatch({type: AUTH_LOGIN_LOADING});
-        if (name === '' ||
+        if (nama === '' ||
             password === '' ||
             confPassword === '' ||
             email === '' ||
@@ -63,7 +63,7 @@ export const onUserRegister = (data) => {
                         let { 
                             id, 
                             subscriptionStatus, 
-                            name, 
+                            nama, 
                             email, 
                             token, 
                             verified, 
@@ -77,7 +77,7 @@ export const onUserRegister = (data) => {
                             type: USER_LOGIN_SUCCESS, payload: {
                                 id,
                                 subscriptionStatus,
-                                name,
+                                nama,
                                 email,
                                 token,
                                 verified,
@@ -119,7 +119,7 @@ export const EmailVerification = () => {
                 let { 
                     id, 
                     subscriptionStatus, 
-                    name, 
+                    nama, 
                     email, 
                     token, 
                     verified, 
@@ -133,7 +133,7 @@ export const EmailVerification = () => {
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
-                        name,
+                        nama,
                         email,
                         token,
                         verified,
@@ -167,7 +167,7 @@ export const resendEmailVerification = () => {
             let { 
                 id, 
                 subscriptionStatus, 
-                name, 
+                nama, 
                 email, 
                 token, 
                 verified, 
@@ -181,7 +181,7 @@ export const resendEmailVerification = () => {
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
-                    name,
+                    nama,
                     email,
                     token,
                     verified,
@@ -212,7 +212,7 @@ export const userLogin = (email, password) => {
             let { 
                 id, 
                 subscriptionStatus, 
-                name, 
+                nama, 
                 email, 
                 token, 
                 verified, 
@@ -226,7 +226,7 @@ export const userLogin = (email, password) => {
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
-                    name,
+                    nama,
                     email,
                     token,
                     verified,
@@ -259,7 +259,7 @@ export const userLoginWithGoogle = (data) => {
                 let { 
                     id, 
                     subscriptionStatus, 
-                    name, 
+                    nama, 
                     email, 
                     token, 
                     verified, 
@@ -274,7 +274,7 @@ export const userLoginWithGoogle = (data) => {
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
-                        name,
+                        nama,
                         email,
                         token,
                         verified,
@@ -308,7 +308,7 @@ export const userLoginWithFacebook = (data) => {
                 let { 
                     id, 
                     subscriptionStatus, 
-                    name, 
+                    nama, 
                     email, 
                     token, 
                     verified, 
@@ -322,7 +322,7 @@ export const userLoginWithFacebook = (data) => {
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
-                        name,
+                        nama,
                         email,
                         token,
                         verified,
@@ -361,7 +361,7 @@ export const KeepLogin = () => {
             let { 
                 id, 
                 subscriptionStatus, 
-                name, 
+                nama, 
                 email, 
                 token, 
                 verified, 
@@ -375,7 +375,7 @@ export const KeepLogin = () => {
                    type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
-                    name,
+                    nama,
                     email,
                     token,
                     verified,

@@ -32,7 +32,6 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case USER_LOGIN_SUCCESS:
-            console.log(...action.payload)
             return { ...INITIAL_STATE, ...action.payload, loading: false, authChecked: true}
         case AUTH_LOGIN_LOADING:
             return {...state, loading: true, error: ''}
