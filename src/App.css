@@ -424,3 +424,45 @@ textarea:focus {
 .kotak{
   border: 1px dashed red;
 }
+
+.containerListDonasi{
+  border: thin solid #f1eee8;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.card-list-donasi-project{
+  border-bottom: thin solid #f1eee8;
+  padding: 0.5em;
+
+
+}
+
+.userImage img{
+  width: 60px;
+  border-radius: 60px;
+
+
+}
+
+.contentList{
+  padding-left: 1.5em;
+}
+
+.namaDonatur{
+  font-weight: bold;
+  color: blue;
+}
+
+.nominalDonasi{
+  color: #505866;
+}
+
+.komentar{
+  font-style: italic;
+}
+
+.dateDonasi{
+  font-size: 11px;
+  color: #505866;
+}
