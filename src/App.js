@@ -19,6 +19,7 @@ import StudentList from './pages/StudentData'
 import StudentDetail from './pages/studentdetail'
 
 //PROJECT
+// import PostStudent fro
 import PostProject from './pages/admin/postProject';
 import ProjectManage from './pages/ProjectManage';
 
@@ -84,7 +85,7 @@ class App extends Component {
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
-                <Route path='/post-student' component={PostStudent} />
+                {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
 
