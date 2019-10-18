@@ -7,7 +7,8 @@ import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton
-  } from 'react-share';
+} from 'react-share';
+import { Link } from 'react-router-dom'
 
   import {
     FacebookIcon,
@@ -79,16 +80,16 @@ class ProjectDetails extends Component {
                                     <FacebookIcon size={12} round={true} />
                                 </FacebookShareButton>
                                 </a>
-                                <a className='btn btn-success'>
                                 <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
                                     <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
-                                </a>
-                                <button>
-                                    Donasi
-                                </button>
+                                <Link to={`/payment?id=${val.projectId}`} > 
+                                    <button>
+                                        Donasi
+                                    </button>
+                                </Link>
                             </div>
-                        </div>
+                            </div>
                     </div>    
                 )
             })

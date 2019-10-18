@@ -4,7 +4,7 @@ import { API_URL } from '../../API'
 
 export const getSub = (email) => {
     return(dispatch) => {
-        Axios.post(API_URL + `/user/getSubscription`, {email})
+        Axios.post(API_URL + `/payment/getSubscription`, {email})
         .then((res) => {
             dispatch({
                 type: GET_SUBSCRIPTION,
@@ -19,7 +19,7 @@ export const getSub = (email) => {
 
 export const applySub = (subscriptionNominal, email) => {
     return(dispatch) => {
-        Axios.post(API_URL + `/user/applySubscription`, { subscriptionNominal, email })
+        Axios.post(API_URL + `/payment/applySubscription`, { subscriptionNominal, email })
         .then((res) => {
             dispatch({ 
                 type:  APPLY_SUBSCRIPTION,

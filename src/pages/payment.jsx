@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Button, Input} from 'reactstrap'
 import Axios from 'axios'
 import {Switch, TextareaAutosize} from '@material-ui/core'
+import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
 
 class Payment extends Component {
@@ -10,11 +11,11 @@ class Payment extends Component {
         komentar:'',
         anonim: false,
         komentarBtn: false,
-        name:'qiandra'
+        name: this.props.nama
     }
 
     renderMidtrans = () =>{
-        
+        var id = this.props.location.search.split('=')[1]
         var randInt = Math.floor(Math.random()*(999-100+1)+100)
         var parameter = {
             parameter:{
@@ -32,7 +33,7 @@ class Payment extends Component {
                 ],
                 customer_details: {
                   first_name: this.state.anonim ? 'anonim' : this.state.name,
-                  email: "user2@qyans.com"
+                  email: this.props.email
                 },
                 // gopay: {
                 //   enable_callback: true,
@@ -41,8 +42,8 @@ class Payment extends Component {
                 // }
               },
             userData:{
-                userId: '1',
-                projectId: '2',
+                userId: this.props.id,
+                projectId: id,
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
                 anonim: this.state.anonim ? 1 : 0
             }
@@ -107,8 +108,8 @@ class Payment extends Component {
                         <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
                     </div>
                     <div className='mt-3' >
-                        <div style={{fontWeight:'bold'}}>Qiandra</div>
-                        <div style={{fontStyle:'itelix'}}>qiandra@qyans.com</div>
+                        <div style={{fontWeight:'bold'}}>{this.props.nama}</div>
+                        <div style={{fontStyle:'itelix'}}>{this.props.email}</div>
                         <div className='d-flex justify-content-between mt-3'>
                             <div> sembunyikan mana saya (donasi sebagai anonim)</div>
                             <div>
@@ -175,4 +176,12 @@ class Payment extends Component {
     }
 }
 
-export default Payment;
+const mapStatetoProps = ({ auth }) => {
+    return{
+        id: auth.id,
+        nama: auth.nama,
+        email: auth.email 
+    }
+}
+
+export default connect(mapStatetoProps,{})(Payment);
