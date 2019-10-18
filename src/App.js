@@ -70,7 +70,7 @@ class App extends Component {
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
-                <Route path='/studentlist' component={StudentList}/>
+                <Route path='/student-list' component={StudentList}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />

@@ -76,6 +76,7 @@ class Header extends Component {
                                                 <p>Selamat Bergabung di MaCommerce, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                
                                             </div>
@@ -90,6 +91,7 @@ class Header extends Component {
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
                                     :

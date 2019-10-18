@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import { API_URL } from '../API'
-import { CustomInput } from 'reactstrap'
+import { CustomInput } from 'reactstrap';
+
 
 class StudentDetails extends Component {
     state = { 
         data: [],
+        raportUser: [],
         edit: false,
         addImageFileName: null,
         addImageFile: null,
@@ -15,11 +19,22 @@ class StudentDetails extends Component {
     componentDidMount(){
         var id = this.props.location.search.split('=')[1]
         // Axios.get(API_URL + `/student/get-student-detail/1` )
-        Axios.get(API_URL + `/student-detail/get-student-detail/${id}`)
-        .then((res) => {
-            this.setState({ data: res.data })
-            console.log(this.state.data)
+        
+        // Firliandy
+        // Axios.get(API_URL + `/student-detail/get-student-detail/${id}`)
+        // .then((res) => {
+        //     this.setState({ data: res.data })
+        //     console.log(this.state.data)
+        // })
+
+        // Dino
+        Axios.get(URL_API+'/studentdetail/get-student-detail/1')
+        .then(res=>{
+            this.setState({data: res.data[0], raportUser:res.data[0].StudentDetails})
+        }).catch(err=>{
+            console.log(err)
         })
+
     }
 
     deleteDetail = (id) => {
@@ -29,6 +44,16 @@ class StudentDetails extends Component {
             console.log(res.data)
             this.setState({ data: res.data })
         })
+    }
+
+    renderRaport=()=>{
+
+        return this.state.raportUser.map((item,index)=>{
+            return(
+                <img key={index} src={URL_API+item.pictureReport} alt={`${item.pictureReport}`}/>
+            )
+        })
+
     }
 
 
@@ -55,15 +80,21 @@ class StudentDetails extends Component {
                 )
 
             }
+
             if(val.pictureReport !== null){
                 return(
                     <tbody key={index}>
-                        <th><img src={API_URL+val.pictureReport} alt='report.jpeg' style={{ width: '50%' }} /></th>
+                        <th><img src={API_URL+val.pictureReport} alt={`${val.pictureReport}`} style={{ width: '50%' }} /></th>
                         <th>{val.deskripsi}</th>
-                        <th>
-                            <button onClick={() => this.setState({ selectedId: val.id })}>Edit</button>
-                            <button onClick={() => this.deleteDetail(val.id)}>Delete</button>
-                        </th>
+                        {
+                            this.props.role === 'User Admin' ?
+                            <th>
+                                <button onClick={() => this.setState({ selectedId: val.id })}>Edit</button>
+                                <button onClick={() => this.deleteDetail(val.id)}>Delete</button>
+                            </th>
+                            :
+                            null
+                        }
                     </tbody>
                 )
             }
@@ -126,6 +157,7 @@ class StudentDetails extends Component {
     }
 
     render() { 
+
         return ( 
             <div className='row'>
                     <div className='container'>
@@ -137,24 +169,35 @@ class StudentDetails extends Component {
                             <th>Actions</th>
                         </thead>
                         {this.renderStudentData()}
-                        <tbody style={{ marginTop: 60 }}>
-                            <tr>
-                                <td>
-                                    <button onClick={this.addNewDetail}>
-                                        upload
-                                    </button>
-                                </td>
-                                <td>
-                                    <input type='text' ref='deskripsi' placeholder='description'/>
-                                    <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
-                                </td>
-                            </tr>
-                        </tbody>
+                        {
+                            this.props.role === 'User Admin' ? 
+                            <tbody style={{ marginTop: 60 }}>
+                                <tr>
+                                    <td>
+                                        <button onClick={this.addNewDetail}>
+                                            upload
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <input type='text' ref='deskripsi' placeholder='description'/>
+                                        <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            :
+                            null
+                        }
                     </table>
                 </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = ({auth}) => {
+    return {
+        role: auth.role
+    }
+}
  
-export default StudentDetails;
+export default connect(mapStateToProps)(StudentDetails);

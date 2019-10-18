@@ -32,11 +32,6 @@ class Studentlist extends Component {
                         <button className='btn btn-primary'>Lihat student</button>
                     </Link>    
                     </td>
-                    {/* <td>{item.stok}</td>
-                    <td>{item.namacategory}</td>
-                    <td>{item.satuanorder}</td>
-                    <td>{item.informasiproduct}</td>
-                    <td><button className='btn btn-danger' onClick={()=>this.setState({deletemodal:true,modaldeleteindex:index})}>delete</button></td> */}
                 </tr>
             )
         })
@@ -53,10 +48,6 @@ class Studentlist extends Component {
                                 <th>Nama murid</th>
                                 <th>foto murid</th>
                                 <th>sekolah</th>
-                                {/* <th>stok</th>
-                                <th>produk category</th>
-                                <th>/satuan order</th>
-                                <th>informasi produk</th> */}
                                 <th></th>
                                 <th></th>
                             </tr>
