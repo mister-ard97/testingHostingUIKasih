@@ -76,7 +76,7 @@ const mapStateToProps = ({auth, admin}) => {
     return {
         loading: auth.loading,
         email: auth.email,
-        name: auth.name,
+        name: auth.nama,
         role: auth.role,
     }
 }
