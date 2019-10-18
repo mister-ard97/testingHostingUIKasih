@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
+const Axios = require('axios');
+const URL_API = 'http://localhost:1998'
 
 app.get('/', function(request, response) {
   console.log('Home page visited!');
@@ -146,6 +148,31 @@ app.get('/verifiedReset', function(request, response) {
     });
   });
 
+  app.get(`/project-detail`, function(request, response) {
+    console.log('test page visited!');
+    const filePath = path.resolve(__dirname, './build', 'index.html')
+    fs.readFile(filePath, 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+
+      Axios.get(URL_API + `/project/getDetailProject?id=${req.query.id}`)
+        .then((res) => {
+            console.log(res.data)
+            data = data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
+            data = data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
+            result = data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
+
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      
+      response.send(result);
+    });
+  });
+
 app.use(express.static(path.resolve(__dirname, './build')));
 
 app.get('*', function(request, response) {
@@ -161,5 +188,7 @@ app.get('*', function(request, response) {
   });
   // response.sendFile(filePath);
 });
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

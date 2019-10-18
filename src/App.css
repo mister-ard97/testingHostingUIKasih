@@ -319,3 +319,108 @@ textarea:focus {
     z-index: 2;
   }
 } 
+
+
+/* ===================== PAYMENT STYLE ===================== */
+
+.inputBoxNominal{
+  display: flex;
+  justify-content: space-around;
+  background-color: #f2f3f4;
+  padding: 8px;
+  border-radius: 0.5em;
+  text-align: right;
+}
+
+.inputNominal{
+  position: relative;
+  width: 90%;
+  background-color: transparent;
+  border: 0px;
+  text-align: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.inputNominal:active{
+  background-color: transparent;
+  border: 0px;
+
+}
+
+
+.rpNominal{
+  text-align: left;
+  display: inline;
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle;
+  
+}
+
+.titleProject{
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.buttonPayment{
+  text-align: right;
+}
+
+.komentar{
+  border-radius: 4px;
+  padding: 4px;
+  width: 100%;
+}
+
+.cardHistory{
+  border: thin solid grey ;
+  border-radius: 4px;
+  padding: 0.5em;
+  display: flex;
+}
+
+.imageProject img{
+  border-radius: 4px;
+  margin-right: 0.5em;
+}
+
+.projectDetail{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.projectName{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.komentarDonasi{
+  font-size: 0.8em;
+}
+
+.nominalDonasi{
+  font-size: 1em;
+  position: relative;
+  bottom: 0;
+}
+
+.statusPatment{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusTest{
+  margin: 0 auto;
+  border : 1px solid green;
+  border-radius: 8px;
+  padding: 4px 16px;
+}
+
+.kotak{
+  border: 1px dashed red;
+}
