@@ -148,6 +148,22 @@ app.get('/verifiedReset', function(request, response) {
     });
   });
 
+  app.get('/payment', function(request, response) {
+    console.log('test page visited!');
+    const filePath = path.resolve(__dirname, './build', 'index.html')
+    fs.readFile(filePath, 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      data = data.replace(/\$OG_TITLE/g, 'Payment Page');
+      data = data.replace(/\$OG_DESCRIPTION/g, "Payment Page");
+      data = data.replace(/\$OG_TOKEN/g, 'SB-Mid-client-Ttge99xVU4AOz44T');
+      result = data.replace(/\$OG_IMAGE/g, 'https://i.imgur.com/V7irMl8.png');
+
+      response.send(result);
+    });
+  });
+
   app.get(`/project-detail`, function(request, response) {
     console.log('test page visited!');
     const filePath = path.resolve(__dirname, './build', 'index.html')
