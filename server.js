@@ -173,19 +173,19 @@ app.get('/verifiedReset', function(request, response) {
       }
 
       Axios.get(URL_API + `/project/getDetailProject?id=${request.query.id}`)
-        .then((res) => {
+        .then(async (res) => {
             console.log(res.data)
-            data = data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
-            data = data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
-            data = data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
-
+            data = await data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
+            data = await data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
+            data = await data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
+            response.send(data);
         })
         .catch((err) => {
           console.log(err)
         })
 
       
-      response.send(result);
+      
     });
   });
 
