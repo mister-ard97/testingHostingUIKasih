@@ -177,7 +177,7 @@ app.get('/verifiedReset', function(request, response) {
             console.log(res.data)
             data = data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
             data = data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
-            result = data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
+            data = data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
 
         })
         .catch((err) => {

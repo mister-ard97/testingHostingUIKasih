@@ -28,9 +28,9 @@ class Studentlist extends Component {
                     <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
                     <td>{item.sekolah}</td>
                     <td>
-                    <Link to={'/studentdetail'} style={{textDecoration:'none'}}>
+                    <a href={`/studentdetail?id=${item.id}`} style={{textDecoration:'none'}}>
                         <button className='btn btn-primary'>Lihat student</button>
-                    </Link>    
+                    </a>    
                     </td>
                 </tr>
             )
@@ -39,8 +39,6 @@ class Studentlist extends Component {
     render() { 
         return (
             <div>
-                loading
-
                 <Table className='mt-2' striped hover>
                         <thead>
                             <tr>

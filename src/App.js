@@ -84,6 +84,7 @@ class App extends Component {
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
+                <Route path='/post-student' component={PostStudent} />
 
                 <Route path='*' component={NotFound} />
 
