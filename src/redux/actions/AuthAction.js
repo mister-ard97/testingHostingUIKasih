@@ -252,10 +252,10 @@ export const userLogin = (email, password) => {
 export const userLoginWithGoogle = (data) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
-
+        console.log(data)
         Axios.post(URL_API + '/user/loginGmail', {data})
             .then((res) => {
-                
+                console.log('oausd')
                 let { 
                     id, 
                     subscriptionStatus, 
@@ -267,6 +267,7 @@ export const userLoginWithGoogle = (data) => {
                     userImage,
                     phoneNumber
                 } = res.data.dataUser
+                console.log(res.data.dataUser)
 
                 localStorage.setItem('token', token);
                 dispatch({
