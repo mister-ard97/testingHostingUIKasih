@@ -72,7 +72,7 @@ export const onUserRegister = (data) => {
                             phoneNumber
                         } = res.data.dataUser
 
-                        localStorage.setItem('token', token);
+                        localStorage.setItem('token', res.data.token);
                         dispatch({
                             type: USER_LOGIN_SUCCESS, payload: {
                                 id,
@@ -128,7 +128,7 @@ export const EmailVerification = () => {
                     phoneNumber
                 } = res.data.dataUser
 
-                localStorage.setItem('token', token);
+                localStorage.setItem('token', res.data.token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
@@ -176,7 +176,7 @@ export const resendEmailVerification = () => {
                 phoneNumber 
             } = res.data.dataUser
 
-            localStorage.setItem('token', token);
+            localStorage.setItem('token', res.data.token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
@@ -221,7 +221,7 @@ export const userLogin = (email, password) => {
                 phoneNumber
             } = res.data.dataUser
 
-            localStorage.setItem('token', token);
+            localStorage.setItem('token', res.data.token);
             dispatch({
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
@@ -269,7 +269,7 @@ export const userLoginWithGoogle = (data) => {
                 } = res.data.dataUser
                 console.log(res.data.dataUser)
 
-                localStorage.setItem('token', token);
+                localStorage.setItem('token', res.data.token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
@@ -317,7 +317,7 @@ export const userLoginWithFacebook = (data) => {
                     phoneNumber
                 } = res.data.dataUser
 
-                localStorage.setItem('token', token);
+                localStorage.setItem('token', res.data.token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
@@ -370,7 +370,7 @@ export const KeepLogin = () => {
                 phoneNumber
             } = res.data.dataUser
 
-               localStorage.setItem('token', token);
+               localStorage.setItem('token', res.data.token);
                dispatch({
                    type: USER_LOGIN_SUCCESS, payload: {
                     id,
