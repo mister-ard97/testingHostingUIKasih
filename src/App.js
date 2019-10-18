@@ -25,7 +25,7 @@ import ProjectDetails from './pages/ProjectDetails'
 
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
-import ChangePassword from './pages/userFeature/changePassword'
+import ChangePassword from './pages/userFeature/changePassword';
 
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';

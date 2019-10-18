@@ -13,6 +13,10 @@ class ChangePassword extends React.Component{
  
 
     onChangePasswordClick = () =>{
+        this.setState({
+            loadingButton: true,
+            onsuccess: false, error: ''
+        })
         if(this.OldPassword.value !== '') {
             if (this.NewPassword.value === this.ConfNewPassword.value) {
                 this.setState({
@@ -39,6 +43,8 @@ class ChangePassword extends React.Component{
                             error: ''
                         })
                         this.OldPassword.value = ''
+                        this.NewPassword.value = ''
+                        this.ConfNewPassword.value = ''
                     })
                     .catch((err) => {
                         if (err.response) {
@@ -48,9 +54,11 @@ class ChangePassword extends React.Component{
                              })
                         }
                     })
+            } else {
+                this.setState({error: 'Password dan Konfirmasi Password harus sama', loadingButton: false })
             }
         } else {
-            this.setState({error: 'Password Lama harus diisi. Tidak boleh kosong' })
+            this.setState({error: 'Password Lama harus diisi. Tidak boleh kosong', loadingButton: false })
         }
       
       

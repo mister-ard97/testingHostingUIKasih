@@ -76,7 +76,9 @@ class ProjectManage extends React.Component{
             parsed.page = 1
         }
 
-        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=1`)
+        let limit = 1
+
+        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=${limit}`)
         .then((res)=>{
             console.log(res)
 
@@ -88,7 +90,7 @@ class ProjectManage extends React.Component{
 
             this.setState({
                 data : results,
-                totalpage : res.data.total
+                totalpage : Math.ceil(res.data.total / limit)
             })
             console.log(this.state)
             

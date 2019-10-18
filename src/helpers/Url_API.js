@@ -2,4 +2,6 @@
 
 export const URL_API = 'http://localhost:1998';
 
-export const UI_LINK = 'http://localhost:3000'
+export const UI_LINK = 'http://localhost:3000';
+
+// hosting live
