@@ -49,7 +49,7 @@ class Header extends Component {
                                         {
                                             this.props.loginChecked ?
                                                 <div style={{width: 40}}>
-                                                    <img src={`${URL_API}/${this.props.UserImage}`} alt={'User' + this.props.username} className='img-fluid' style={{borderRadius: 40}}/>
+                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
                                                 <div className='bg-warning font-weight-bold rounded px-1'>
@@ -145,9 +145,8 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         name: state.auth.name,
-        username: state.auth.username,
         justRegister: state.auth.justRegister,
-        UserImage: state.auth.UserImage,
+        userImage: state.auth.userImage,
         verified: state.auth.verified,
         loginChecked: state.auth.loginChecked,
         loading: state.auth.loading,
