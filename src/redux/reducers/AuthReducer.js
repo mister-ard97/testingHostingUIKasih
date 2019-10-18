@@ -15,7 +15,7 @@ const INITIAL_STATE = {
     subscriptionStatus: '',
     token: '',
     phoneNumber: '',
-    name: '',
+    nama: '',
     email: '',
     token: '',
     verified: '',
