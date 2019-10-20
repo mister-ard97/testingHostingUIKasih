@@ -1,18 +1,21 @@
 import React, {Component} from 'react'
 import {Button, Input} from 'reactstrap'
 import Axios from 'axios'
-import {Switch} from '@material-ui/core'
+import {Switch, TextareaAutosize} from '@material-ui/core'
+import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
 
 class Payment extends Component {
     state = {
         nominal:0,
+        komentar:'',
         anonim: false,
-        name:'qiandra'
+        komentarBtn: false,
+        name: this.props.nama
     }
 
     renderMidtrans = () =>{
-        
+        var id = this.props.location.search.split('=')[1]
         var randInt = Math.floor(Math.random()*(999-100+1)+100)
         var parameter = {
             parameter:{
@@ -30,7 +33,7 @@ class Payment extends Component {
                 ],
                 customer_details: {
                   first_name: this.state.anonim ? 'anonim' : this.state.name,
-                  email: "user2@qyans.com"
+                  email: this.props.email
                 },
                 // gopay: {
                 //   enable_callback: true,
@@ -39,8 +42,10 @@ class Payment extends Component {
                 // }
               },
             userData:{
-                userId: '1',
-                projectId: '2'
+                userId: this.props.id,
+                projectId: id,
+                komentar: this.state.komentar ? this.state.komentar : '-' ,
+                anonim: this.state.anonim ? 1 : 0
             }
         }
         
@@ -54,10 +59,17 @@ class Payment extends Component {
                 console.log('success')
                 console.log(result)
                 console.log(result.finish_redirect_url)
-                console.log(document.getElementById('apagitu'))
+                Axios.post(`${URL_API}/payment/updatePayment`, result)
+                .then((res)=>{
+                    console.log(res.data)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
                 var link = result.finish_redirect_url.split('?')[1]
                 document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
                 this.setState({lompatan: `/finish?${link}`})
+                
                }
                ,
                onPending: function(result){
@@ -93,11 +105,11 @@ class Payment extends Component {
                     </div>
                     <div className='inputBoxNominal mt-3'>
                         <div className='rpNominal'>Rp. </div>
-                        <Input className='inputNominal' type='text' ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
+                        <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
                     </div>
                     <div className='mt-3' >
-                        <div style={{fontWeight:'bold'}}>Qiandra</div>
-                        <div style={{fontStyle:'itelix'}}>qiandra@qyans.com</div>
+                        <div style={{fontWeight:'bold'}}>{this.props.nama}</div>
+                        <div style={{fontStyle:'itelix'}}>{this.props.email}</div>
                         <div className='d-flex justify-content-between mt-3'>
                             <div> sembunyikan mana saya (donasi sebagai anonim)</div>
                             <div>
@@ -109,8 +121,23 @@ class Payment extends Component {
                                 />
                             </div>
                         </div>
+                        <div className='d-flex justify-content-between'>
+                            <div>Tulis Komentar (opsional)</div>
+                            <div>
+                                <Switch
+                                    checked={this.state.komentarBtn}
+                                    onChange={this.handleChangeKomentar}
+                                    value="checkedB"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                />
+                            </div>
+                        </div>
+                            <div hidden={!this.state.komentarBtn} style={{transition:'0.5s'}}>
+                                <textarea placeholder="tulis Komentar"  maxLength='140' cols='80' rows='4' className='komentar' onChange={(e) => this.komentarChange(e)}/>
+                                <p>{this.state.komentar.length}/140</p>
+                            </div>
                     </div>
-                    <div className='buttonPayment'>
+                    <div className='buttonPayment mt-5'>
                         <Button color='danger'  onClick={this.renderMidtrans}>Lanjutkan Pembayaran</Button>   
                     </div>
                 </div>
@@ -118,15 +145,27 @@ class Payment extends Component {
         )
     }
 
+    komentarChange = (e) => {
+        if(this.state.komentar.length < 140){
+            this.setState({komentar: `${e.target.value}`})
+        }
+    }
+
     handleChangeAnonim = () => {
         let check = this.state.anonim
         this.setState({anonim: !check})
     }
+
+    handleChangeKomentar = () => {
+        let check = this.state.komentarBtn
+        this.setState({komentarBtn: !check})
+    }
     
     render(){
-        console.log(this.state.nominal)
-        console.log(typeof(parseInt(this.state.nominal)))
-        console.log(this.state.anonim)
+        // console.log(this.state.nominal)
+        // console.log(typeof(parseInt(this.state.nominal)))
+        // console.log(this.state.anonim ? 1 : 0)
+        // console.log(this.state.komentar)
         return(
             <div className='container mt-4'>
                 
@@ -137,4 +176,12 @@ class Payment extends Component {
     }
 }
 
-export default Payment;
+const mapStatetoProps = ({ auth }) => {
+    return{
+        id: auth.id,
+        nama: auth.nama,
+        email: auth.email 
+    }
+}
+
+export default connect(mapStatetoProps,{})(Payment);

@@ -31,6 +31,7 @@ import VerificationUser from './pages/userFeature/verificationUser';
 
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
+import History from './pages/historyDonasi'
 
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
@@ -61,9 +62,7 @@ class App extends Component {
     
               <Header />
               <Switch>
-
                 <Route path='/' component={Home} exact />
-
                 <Route path='/login' component={Login} exact />
                 <Route path='/register' component={Register} exact />
                 <Route path='/forgotPassword' component={ForgotPassword} />
@@ -71,7 +70,8 @@ class App extends Component {
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
-                <Route path='/student-list' component={StudentList}/>
+                <Route path='/history' component={History}/>
+                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
@@ -88,8 +88,6 @@ class App extends Component {
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
-
-
               </Switch>
 
        

@@ -100,7 +100,7 @@ class postProject extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className='container mt-4'>
                 <h1 className="mb-4">GALANG DANA</h1>
                 <h5>Nama Project</h5>
                 <input type="text" ref='prname' className="form-control mb-4" placeholder="masukkan nama project"/>
