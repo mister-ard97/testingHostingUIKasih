@@ -16,7 +16,7 @@ import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
-import StudentDetail from './pages/studentdetail'
+import StudentDetail from './pages/StudentDetails'
 
 //PROJECT
 // import PostStudent fro

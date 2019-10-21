@@ -92,7 +92,7 @@ class Header extends Component {
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
                                             :
@@ -100,7 +100,7 @@ class Header extends Component {
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
 
@@ -125,6 +125,7 @@ class Header extends Component {
 
     render() {
 
+        console.log(this.props.role)
         return (
             <div className='sticky-top bg-info'>
                 <Navbar id='Header' expand="lg" className='font-weight-bold'>
@@ -180,6 +181,7 @@ const mapStateToProps = (state) => {
         verified: state.auth.verified,
         loginChecked: state.auth.loginChecked,
         loading: state.auth.loading,
+        role: state.auth.role
     }
 }
 

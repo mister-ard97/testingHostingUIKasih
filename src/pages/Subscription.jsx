@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Numeral from 'numeral'
 import { connect } from 'react-redux'
-import { applySub, getSub } from '../redux/actions' 
+import { getSub, applySub } from '../redux/actions' 
 import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
 import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
@@ -21,6 +21,7 @@ class Subscription extends Component {
             return this.setState({ redirectHome: true })
         }
         this.props.getSub(this.props.email)
+        // console.log(this.props.applySub())
     }
 
     formatDisplay (num) {
@@ -111,6 +112,7 @@ class Subscription extends Component {
                 var link = result.finish_redirect_url.split('?')[1]
                 document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
                 this.setState({lompatan: `/finish?${link}`})
+                console.log(this.props.applySub(gross_amount, this.props.email))
                 this.props.applySub(gross_amount, this.props.email)
                }
                ,
@@ -165,6 +167,7 @@ class Subscription extends Component {
 
     render() { 
         console.log(this.props.email)
+        console.log(this.props.subStatus)
         if(this.state.redirectHome){
             return(
                 <Redirect to='/login' />
