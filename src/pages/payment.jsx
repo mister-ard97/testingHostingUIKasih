@@ -4,6 +4,7 @@ import Axios from 'axios'
 import {Switch, TextareaAutosize} from '@material-ui/core'
 import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
+import { Redirect } from 'react-router-dom'
 
 class Payment extends Component {
     state = {
@@ -11,7 +12,22 @@ class Payment extends Component {
         komentar:'',
         anonim: false,
         komentarBtn: false,
-        name: this.props.nama
+        name: this.props.nama,
+        projectName: null,
+        projectId: null
+    }
+
+    componentDidMount(){
+        var nama = localStorage.getItem('nama')
+        if(nama){
+
+            var namaParse = JSON.parse(nama)
+            console.log(namaParse.projectId, namaParse.projectName)
+            this.setState({projectName: namaParse.projectName, projectId: namaParse.projectId})
+        }else{
+            this.setState({ redirectHome: true })
+        }
+        localStorage.removeItem('nama')
     }
 
     renderMidtrans = () =>{
@@ -104,6 +120,7 @@ class Payment extends Component {
                 <div className='offset-md-2 col-md-8 p-3' >
                     <div className='titleProject'>
                         {this.props.location.state}
+                        {this.state.projectName}
                     </div>
                     <div className='inputBoxNominal mt-3'>
                         <div className='rpNominal'>Rp. </div>
@@ -164,6 +181,11 @@ class Payment extends Component {
     }
     
     render(){
+        if(this.state.redirectHome){
+            return <Redirect to={`/`} />
+
+        }
+        console.log(this.props.match)
         // console.log(this.state.nominal)
         // console.log(typeof(parseInt(this.state.nominal)))
         // console.log(this.state.anonim ? 1 : 0)
