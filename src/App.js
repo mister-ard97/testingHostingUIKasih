@@ -30,7 +30,7 @@ import VerificationUser from './pages/userFeature/verificationUser';
 
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
-
+import HistoryTransaction from './pages/HistoryTransaction'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
@@ -80,10 +80,13 @@ class App extends Component {
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} />
+                
 
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
+                <Route path='/historypayment' component={HistoryTransaction} />
+                {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
 

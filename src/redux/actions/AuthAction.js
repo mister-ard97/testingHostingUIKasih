@@ -261,13 +261,14 @@ export const userLoginWithGoogle = (data) => {
                     subscriptionStatus, 
                     nama, 
                     email, 
-                    token, 
+                    
                     verified, 
                     role, 
                     userImage,
                     phoneNumber
                 } = res.data.dataUser
-                console.log(res.data.dataUser)
+                let token = res.data.token
+           
 
                 localStorage.setItem('token', res.data.token);
                 dispatch({
@@ -362,14 +363,13 @@ export const KeepLogin = () => {
                 id, 
                 subscriptionStatus, 
                 nama, 
-                email, 
-                token, 
+                email,
                 verified, 
                 role, 
                 userImage,
                 phoneNumber
             } = res.data.dataUser
-
+            let token = res.data.token
                localStorage.setItem('token', res.data.token);
                dispatch({
                    type: USER_LOGIN_SUCCESS, payload: {

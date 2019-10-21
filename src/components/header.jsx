@@ -48,8 +48,9 @@ class Header extends Component {
                                     <DropdownToggle nav caret>
                                         {
                                             this.props.loginChecked ?
-                                                <div style={{width: 40}}>
-                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid' style={{borderRadius: 40}}/>
+                                                <div style={{width: 40}} >
+                                                 
+                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid ' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
                                                 <div className='bg-warning font-weight-bold rounded px-1'>
@@ -107,6 +108,7 @@ class Header extends Component {
     }
 
     render() {
+        console.log(this.props.auth)
 
         return (
             <div className='sticky-top bg-info'>
@@ -138,8 +140,12 @@ class Header extends Component {
                             </div>
                             {/* Untuk Large Device */}
                             <Nav navbar className='d-lg-flex d-none'>
-                                {this.renderCartAccount('text-black-50')}
-                            </Nav>
+                                <div className="d-flex flex-row">
+
+                            <Link to="/historypayment"><h5 className="text-light pt-2"> History Transaction</h5></Link>
+                                </div>
+                                        {this.renderCartAccount('text-black-50')}
+                                    </Nav>
                         </Collapse>
 
                         
@@ -152,6 +158,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        auth : state.auth,
         name: state.auth.nama,
         justRegister: state.auth.justRegister,
         userImage: state.auth.userImage,
