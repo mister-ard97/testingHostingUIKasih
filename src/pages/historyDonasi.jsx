@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Axios from 'axios'
 import {URL_API} from '../helpers/Url_API'
 import { CircularProgress } from '@material-ui/core'
+import Numeral from 'numeral'
 class HistoryDonasi extends Component {
     state = {
         historyData:null
@@ -37,7 +38,7 @@ class HistoryDonasi extends Component {
                             </div>
                         </div>
                         <div className='nominalDonasi'>
-                            Rp. {val.nominal}
+                            Rp. {Numeral(val.nominal).format('0,0')}
                         </div>
                     </div>
                     <div className='statusPatment col-md-1 p-0 '>

@@ -8,7 +8,6 @@ import {
     FacebookShareButton,
     WhatsappShareButton
 } from 'react-share';
-import { Link } from 'react-router-dom'
 
   import {
     FacebookIcon,
@@ -83,7 +82,7 @@ class ProjectDetails extends Component {
                                 <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
                                     <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
-                                <Link to={`/payment?id=${val.projectId}`} > 
+                                <Link to={'/payment?id='+ val.projectId}> 
                                     <button>
                                         Donasi
                                     </button>
@@ -103,7 +102,7 @@ class ProjectDetails extends Component {
     renderDonasiList = () => {
         return this.state.listDonasi.map((val) => {
             return (
-                <div className='card-list-donasi-project mb-1'>
+                <div className='card-list-donasi-project mb-2'>
                     <div className='row'>
                         <div className='userImage  col-md-1'>
                             <img src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' alt='img'/>
