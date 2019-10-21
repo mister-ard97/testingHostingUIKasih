@@ -48,6 +48,15 @@ class ProjectDetails extends Component {
         })
     }
 
+    getNamaProject = (projectId, projectName) => {
+        let nama = {
+            projectId,
+            projectName
+        }
+        localStorage.setItem('nama', JSON.stringify(nama))
+
+    }
+
     renderProjectList = () => {
         let params = queryString.parse(this.props.location.search)
         if(this.state.ProjectDetail) {
@@ -83,11 +92,11 @@ class ProjectDetails extends Component {
                                 <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
                                     <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
-                                <Link to={`/payment?id=${val.projectId}`} > 
+                                <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
                                     <button>
                                         Donasi
                                     </button>
-                                </Link>
+                                </a>
                             </div>
                             </div>
                     </div>    
