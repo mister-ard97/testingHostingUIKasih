@@ -8,7 +8,6 @@ import {
     FacebookShareButton,
     WhatsappShareButton
 } from 'react-share';
-import { Link } from 'react-router-dom'
 
   import {
     FacebookIcon,
