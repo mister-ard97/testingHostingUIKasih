@@ -86,6 +86,7 @@ class Login extends Component {
     }
 
     loginWithGoogle = (response) => {
+        console.log(response)
          if(response) {
             let dataGoogle = {
                 email: response.profileObj.email,

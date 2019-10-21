@@ -28,15 +28,10 @@ class Studentlist extends Component {
                     <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
                     <td>{item.sekolah}</td>
                     <td>
-                    <Link to={'/studentdetail'} style={{textDecoration:'none'}}>
+                    <a href={`/studentdetail?id=${item.id}`} style={{textDecoration:'none'}}>
                         <button className='btn btn-primary'>Lihat student</button>
-                    </Link>    
+                    </a>    
                     </td>
-                    {/* <td>{item.stok}</td>
-                    <td>{item.namacategory}</td>
-                    <td>{item.satuanorder}</td>
-                    <td>{item.informasiproduct}</td>
-                    <td><button className='btn btn-danger' onClick={()=>this.setState({deletemodal:true,modaldeleteindex:index})}>delete</button></td> */}
                 </tr>
             )
         })
@@ -44,8 +39,6 @@ class Studentlist extends Component {
     render() { 
         return (
             <div>
-                loading
-
                 <Table className='mt-2' striped hover>
                         <thead>
                             <tr>
@@ -53,10 +46,6 @@ class Studentlist extends Component {
                                 <th>Nama murid</th>
                                 <th>foto murid</th>
                                 <th>sekolah</th>
-                                {/* <th>stok</th>
-                                <th>produk category</th>
-                                <th>/satuan order</th>
-                                <th>informasi produk</th> */}
                                 <th></th>
                                 <th></th>
                             </tr>

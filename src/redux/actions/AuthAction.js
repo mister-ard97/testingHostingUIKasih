@@ -13,7 +13,7 @@ import { URL_API } from '../../helpers/Url_API';
 
 export const onUserRegister = (data) => {
     let {
-        name,
+        nama,
         password,
         confPassword,
         email,
@@ -23,7 +23,7 @@ export const onUserRegister = (data) => {
 
     return (dispatch) => {
         dispatch({type: AUTH_LOGIN_LOADING});
-        if (name === '' ||
+        if (nama === '' ||
             password === '' ||
             confPassword === '' ||
             email === '' ||
@@ -252,10 +252,10 @@ export const userLogin = (email, password) => {
 export const userLoginWithGoogle = (data) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_LOADING });
-
+        console.log(data)
         Axios.post(URL_API + '/user/loginGmail', {data})
             .then((res) => {
-                
+                console.log('oausd')
                 let { 
                     id, 
                     subscriptionStatus, 
@@ -267,6 +267,7 @@ export const userLoginWithGoogle = (data) => {
                     userImage,
                     phoneNumber
                 } = res.data.dataUser
+                console.log(res.data.dataUser)
 
                 localStorage.setItem('token', res.data.token);
                 dispatch({
