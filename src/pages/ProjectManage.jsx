@@ -88,6 +88,8 @@ class ProjectManage extends React.Component{
                 return hasil
             })
 
+            
+
             this.setState({
                 data : results,
                 totalpage : Math.ceil(res.data.total / limit)

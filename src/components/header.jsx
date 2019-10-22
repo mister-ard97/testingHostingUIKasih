@@ -101,6 +101,8 @@ class Header extends Component {
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/manage-project' className='border-bottom d-block'> Project List </Link>
+                                                <Link to='/post-project' className='border-bottom d-block'> Post Project </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
 

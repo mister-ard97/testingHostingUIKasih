@@ -69,7 +69,7 @@ class ProjectDetails extends Component {
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
                             </div>
     
-                            <div className='col-10'>
+                            <div className='col-10 img-small'>
                                 <h5>{val.projectName}</h5>
                                 <p>{val.projectCreator}</p>
                                 <hr/>
