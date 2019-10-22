@@ -51,22 +51,25 @@ class Subscription extends Component {
         if(!this.props.email){
             return null
         }
-        var date = this.refs.inputremainderdate.value
-        console.log(date)
-        var randInt = Math.floor(Math.random()*(999-100+1)+100)
+        // var date = this.refs.inputremainderdate.value
+        // console.log(date)
+        // var randInt = Math.floor(Math.random()*(999-100+1)+100)
         var gross_amount = 0
         if(this.state.lain){
             // var subPriceBebas = this.refs.nominalBebas.value
             
-            gross_amount = this.refs.nominalBebas.value
+            gross_amount = parseInt(this.state.nominal)
         }else{
             gross_amount = this.refs.nominal.value
         }
 
-
+        //console.log(gross_amount)
 
         this.props.applySub(gross_amount, this.props.email, this.reminderDate.value)
         alert('Anda berhasil Subscribe. Terima Kasih')
+        this.setState({
+            redirectHome: true
+        })
         // var parameter = {
         //     parameter:{
         //         transaction_details: {
@@ -209,7 +212,7 @@ class Subscription extends Component {
                             <InputGroupAddon addonType="prepend">
                             <Button className="bg-white text-dark border-right-0"  hidden={!this.state.lain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>
                             </InputGroupAddon>
-                            <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.lain} ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
+                            <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.lain} innerRef='nominalBebas' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
                         </InputGroup>
                         {/* <input type='text' hidden={!this.state.lain} defaultValue={`Rp. ${this.state.nominalDisplay}`} className='form-control' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly}/> */}
                             <Switch 

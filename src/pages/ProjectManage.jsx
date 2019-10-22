@@ -29,7 +29,7 @@ class ProjectManage extends React.Component{
             for(var i = 0; i<this.state.totalpage; i++){
                 jsx.push(
                      <PaginationItem>
-                        <PaginationLink href={`/project?page=${i+1}`}>
+                        <PaginationLink href={`/manage-project?page=${i+1}`}>
                             {i+1}
                         </PaginationLink>
                     </PaginationItem>
@@ -97,11 +97,11 @@ class ProjectManage extends React.Component{
                 return hasil
             })
 
-            
+
 
             this.setState({
                 data : results,
-                totalpage : Math.ceil(res.data.total / limit)
+                totalpage : res.data.total
             })
             console.log(this.state)
             
@@ -344,8 +344,9 @@ class ProjectManage extends React.Component{
                            
                             {this.renderProjectList()}
                         </tbody>
-                        {this.printPagination()}
+                        
                         </table>
+                        {this.printPagination()}
 
             </div>
         )
