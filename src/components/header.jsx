@@ -81,6 +81,7 @@ class Header extends Component {
                                                
                                             </div>
                                         :
+                                            this.props.role !== 'User Admin' ?
                                             <div>
                                                 {
                                                     this.props.status === 0 ?
@@ -92,6 +93,24 @@ class Header extends Component {
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/' onClick={this.userLogOut}> Log Out </Link>
+                                            </div>
+
+                                            :
+
+                                            <div>
+                                                {
+                                                    this.props.status === 0 ?
+                                                        <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
+                                                        :
+                                                        null
+                                                }
+                                                <p>Selamat Datang Kembali, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                            
+                                                
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
                                     :

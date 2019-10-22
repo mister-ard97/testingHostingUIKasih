@@ -3,12 +3,12 @@ import Axios from 'axios';
 import {Link} from 'react-router-dom'
 import Numeral from 'numeral'
 import { connect } from 'react-redux';
+import { Input } from 'reactstrap'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton
 } from 'react-share';
-import { Link } from 'react-router-dom'
 
   import {
     FacebookIcon,
@@ -75,19 +75,32 @@ class ProjectDetails extends Component {
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
                                 <hr/>
                                 <h6>Rp. {val.totalTarget}</h6>
-                                <a className='btn btn-primary'>
-                                <FacebookShareButton url={`https://www.google.com`} >
+
+                                <Input type='button' className='btn btn-primary mb-3' value='Share Facebook'>
+                                <FacebookShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} >
                                     <FacebookIcon size={12} round={true} />
                                 </FacebookShareButton>
-                                </a>
+                                </Input>
+                           
+                                <Input className='btn btn-success' type='button' value='Share Whatsapp'>
                                 <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
                                     <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
-                                <Link to={`/payment?id=${val.projectId}`} > 
+                                </Input>
+                                {
+                                    this.props.email ?
+                                    <Link to={`/payment?id=${val.projectId}`} > 
                                     <button>
                                         Donasi
                                     </button>
-                                </Link>
+                                    </Link>
+                                    :
+                                    <Link to={`/login`} > 
+                                        <button>
+                                            Donasi
+                                        </button>
+                                    </Link>
+                                }
                             </div>
                             </div>
                     </div>    
