@@ -4,7 +4,6 @@ import { URL_API } from '../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { API_URL } from '../API';
 
 class Studentlist extends Component {
     state = {
@@ -37,9 +36,14 @@ class Studentlist extends Component {
                             <button className='btn btn-primary'>Lihat student</button>
                         </a>   
                         </td>
-                        <td>
+                        {
+                            this.props.role === 'User Admin' ?
+                            <td>
                         <button className='btn btn-danger' onClick={() => this.deleteStudent(item.id)}>delete student</button> 
                         </td>
+                        : 
+                        null
+                        }
                     </tr>
                 )
             }
@@ -47,7 +51,7 @@ class Studentlist extends Component {
     }
 
     deleteStudent = (id) => {
-        Axios.delete(API_URL + `/student/deletestudentdata/${id}`)
+        Axios.delete(URL_API + `/student/deletestudentdata/${id}`)
         .then((res) => {
             Axios.get(URL_API+'/student/getstudentdatapaging',{
                 params:{
@@ -145,7 +149,7 @@ class Studentlist extends Component {
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
 
-        Axios.post(API_URL +'/student/poststudentdata', formData)
+        Axios.post(URL_API +'/student/poststudentdata', formData)
         .then((res) => {
             this.setState({ openModal: false, data: res.data })
             Axios.get(URL_API+'/student/getstudentdatapaging',{
@@ -160,32 +164,55 @@ class Studentlist extends Component {
     }
 
     render() { 
+        if(this.props.role === 'User Admin') {
+            return (
+                <div>
+                    <Table className='mt-2' striped hover>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama murid</th>
+                                    <th>foto murid</th>
+                                    <th>sekolah</th>
+                                    <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderListstudent()}
+                            </tbody>
+                    </Table>
+                                {this.renderModal()}
+                </div>
+              );
+        }
+
         return (
             <div>
-                <Table className='mt-2' striped hover>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama murid</th>
-                                <th>foto murid</th>
-                                <th>sekolah</th>
-                                <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderListstudent()}
-                        </tbody>
-                </Table>
-                            {this.renderModal()}
-            </div>
-          );
+                    <Table className='mt-2' striped hover>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama murid</th>
+                                    <th>foto murid</th>
+                                    <th>sekolah</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderListstudent()}
+                            </tbody>
+                    </Table>
+                                
+                </div>
+        )
     }
 }
 
 const mapStatetoProps = ({ auth }) => {
     return{
-        id: auth.id
+        id: auth.id,
+        role: auth.role
     }
 }
  

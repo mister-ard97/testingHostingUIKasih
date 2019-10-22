@@ -91,14 +91,15 @@ class Header extends Component {
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
+                                                
                                             </div>
                                             :
                                             <div>
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>

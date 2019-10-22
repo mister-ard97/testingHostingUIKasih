@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import { CustomInput } from 'reactstrap';
-import { API_URL } from '../API';
+import { URL_API } from '../helpers/Url_API';
 
 
 class StudentDetails extends Component {
@@ -21,7 +21,7 @@ class StudentDetails extends Component {
         var id = this.props.location.search.split('=')[1]
         // Axios.get(API_URL + `/student/get-student-detail/1` )
         console.log(id)
-        Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
         .then((res) => {
             this.setState({ data: res.data })
             console.log(this.state.data)
@@ -39,7 +39,7 @@ class StudentDetails extends Component {
 
     deleteDetail = (id) => {
         var studentId = this.props.location.search.split('=')[1]
-        Axios.post(API_URL + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
+        Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
         .then((res) => {
             // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
             // .then((res) => {
@@ -60,17 +60,42 @@ class StudentDetails extends Component {
 
     // }
 
-    renderStudentDetail = () => {
+    renderStudentDetailForGuest = () => {
         return this.state.data.map((val) => {
-            return(
-                <div className='row'>
-                    <div className='col-6'>
-                        halo
-                    </div>
-                    <div className='col-6'>
-                        halo
-                    </div>
-                </div>
+            return (
+             <div className='col-12'>
+                 <p>Foto Siswa</p>
+                 <img src={URL_API + val.studentImage} alt={val.studentImage} style={{width: '300px'}}/>
+                 <p>Nama: {val.name}</p>
+                 <p>Pendidikan Terakhir: {val.pendidikanTerakhir}</p>
+                 <p>Gender: {val.gender}</p>
+                 <p>Status Keluarga: {val.status}</p>
+                 <p>Story : {val.story}</p>
+                 <p></p>
+                  <table>
+                    <thead>
+                        <th className='pr-3'> Report Image</th>
+                        <th className='pr-5'>Description</th>
+                    </thead>
+                <tbody>
+                    {
+                         val.StudentDetails.map((item) => {
+                            return(
+                                
+                                <tr>
+                                    <td>
+                                        <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
+                                    </td>
+                                    <td>
+                                        {item.deskripsi}
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+              </table>
+             </div>
             )
         })
     }
@@ -102,7 +127,7 @@ class StudentDetails extends Component {
                     <tbody>
                             <tr>
                                 <td>
-                                    <img src={API_URL + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
+                                    <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
                                 </td>
                                 <td>
                                     {item.deskripsi}
@@ -139,11 +164,11 @@ class StudentDetails extends Component {
         console.log(newObj)
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/studentdetail/edit-student-detail/${newObj.studentId}`, formData)
+        Axios.post(URL_API + `/studentdetail/edit-student-detail/${newObj.studentId}`, formData)
         .then(() => {
             // console.log(res.data)
             id = this.props.location.search.split('=')[1]
-            Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+            Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
             .then((res) => {
                 this.setState({ data: res.data, selectedId: 0 })
                 console.log(this.state.data)
@@ -165,9 +190,9 @@ class StudentDetails extends Component {
         }
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/studentdetail/add-student-detail/${newObj.studentId}`, formData)
+        Axios.post(URL_API + `/studentdetail/add-student-detail/${newObj.studentId}`, formData)
         .then((res) => {
-            Axios.get(API_URL + `/studentdetail/get-student-detail/${newObj.studentId}`)
+            Axios.get(URL_API + `/studentdetail/get-student-detail/${newObj.studentId}`)
             .then((res) => {
                 this.setState({ 
                     data: res.data,
@@ -185,16 +210,13 @@ class StudentDetails extends Component {
     }
 
     render() { 
+       if(this.props.role === 'User Admin') {
         return ( 
             <div className='row'>
                     <div className='container'>
 
                     <table>
-                        <thead>
-                            <th className='pr-3'> Report Image</th>
-                            <th className='pr-5'>Description</th>
-                            <th>Actions</th>
-                        </thead>
+                      
                         {this.renderStudentDetail()}
                         {
                             this.props.role === 'User Admin' ? 
@@ -218,6 +240,15 @@ class StudentDetails extends Component {
                 </div>
             </div>
         );
+       }
+       
+       return ( 
+        <div className='container'>
+                <div className='row'>
+                {this.renderStudentDetailForGuest()}
+            </div>
+        </div>
+    );
     }
 }
 

@@ -48,7 +48,7 @@ class Home extends Component {
                                             Subscription
                                         </p>
                                         <p>
-                                            Project Yang Bersifat Subscription
+                                            Ayo Subscribe sekarang
                                         </p>
                                     </Link>
                                 </div>
