@@ -10,7 +10,7 @@ export const URL_API = 'http://localhost:1998';
 
 // hosting api live
 
-// export const URL_API = 'https://kasihnus.purwadhikax.com';
+//export const URL_API = 'https://kasihnus.purwadhikax.com';
 
 // hosting live
 

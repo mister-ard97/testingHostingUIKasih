@@ -10,7 +10,7 @@ import queryString from 'query-string'
 class ProjectList extends Component {
     state = {
         ProjectList: null,
-        totalPage: 0
+        totalpage: 0
     }
 
     componentDidMount() {
@@ -20,8 +20,10 @@ class ProjectList extends Component {
         if(!parsed.page){
             parsed.page = 1
         }
+
+        let limit = 4
         
-        Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=1`)
+        Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
         .then((res) => {
             var results = res.data.result.map((val,id)=>{
                 var hasil = {...val, ...val.User}
@@ -31,7 +33,7 @@ class ProjectList extends Component {
 
             this.setState({
                 ProjectList : results,
-                totalPage : res.data.total
+                totalpage : Math.ceil(res.data.total / limit)
             })
         })
         .catch((err) => {
@@ -67,12 +69,12 @@ class ProjectList extends Component {
                   </PaginationItem>
                   <PaginationItem>
                     <PaginationLink previous
-                     href={`/project?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                     href={`/project-list?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
                   </PaginationItem>
                     {this.renderPagingButton()}
                   <PaginationItem>
                     <PaginationLink next 
-                    href={`/project?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                    href={`/project-list?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
                     this.state.totalpage 
                 :
                 parseInt(currentpage) + 1}`} />
@@ -92,7 +94,7 @@ class ProjectList extends Component {
             if(this.state.ProjectList.length !== 0) {
                 return this.state.ProjectList.map((val, index) => {
                     return (
-                        <Link to={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+                        <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
                         <div className='row'>
                             <div className='col-2'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
@@ -106,7 +108,7 @@ class ProjectList extends Component {
                                 <h6>Rp. {val.totalTarget}</h6>
                             </div>
                         </div>
-                    </Link>    
+                    </a>    
                     )
                 })
                 
@@ -124,10 +126,10 @@ class ProjectList extends Component {
 
     render() {
         return (
-            <div className='row'>
+            <div className='row m-0'>
                 <div className='offset-2 col-8'>
                     {this.renderProjectList()}
-                    {this.renderPagingButton()}
+                    {this.printPagination()}
                 </div>
             </div>
         )

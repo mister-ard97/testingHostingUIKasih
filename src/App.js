@@ -17,8 +17,9 @@ import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
 import StudentDetail from './pages/studentdetail'
-
+import io from 'socket.io-client'
 //PROJECT
+// import PostStudent fro
 import PostProject from './pages/admin/postProject';
 import ProjectManage from './pages/ProjectManage';
 
@@ -30,15 +31,19 @@ import VerificationUser from './pages/userFeature/verificationUser';
 
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
-import HistoryTransaction from './pages/HistoryTransaction'
+import History from './pages/historyDonasi'
+
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
+import { URL_API } from './helpers/Url_API';
 
  
 class App extends Component {
 
   componentDidMount() {
+    console.log('asd')
+    const socket = io(URL_API) //localhost 
     this.props.KeepLogin();
   }
 
@@ -60,9 +65,7 @@ class App extends Component {
     
               <Header />
               <Switch>
-
                 <Route path='/' component={Home} exact />
-
                 <Route path='/login' component={Login} exact />
                 <Route path='/register' component={Register} exact />
                 <Route path='/forgotPassword' component={ForgotPassword} />
@@ -70,6 +73,7 @@ class App extends Component {
                 <Route path='/waitingverification' component={WaitingVerification} />
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
+                <Route path='/history' component={History}/>
                 <Route path='/studentlist' component={StudentList}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/user' component={UserPage} />
@@ -85,12 +89,9 @@ class App extends Component {
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
-                <Route path='/historypayment' component={HistoryTransaction} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
-
-
               </Switch>
 
        

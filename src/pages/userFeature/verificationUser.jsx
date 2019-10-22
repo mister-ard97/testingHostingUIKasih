@@ -31,10 +31,6 @@ class verificationUser extends Component {
         }
     }
 
-    sendDataVerificationUser = () => {
-
-    }
-
     render() {
         return (
             <div className='container'>

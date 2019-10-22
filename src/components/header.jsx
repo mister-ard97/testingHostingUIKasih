@@ -75,10 +75,14 @@ class Header extends Component {
                                                     null
                                                 }
                                                 <p>Selamat Bergabung di MaCommerce, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                
                                             </div>
                                         :
+                                            this.props.role !== 'User Admin' ?
                                             <div>
                                                 {
                                                     this.props.status === 0 ?
@@ -87,6 +91,27 @@ class Header extends Component {
                                                         null
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/' onClick={this.userLogOut}> Log Out </Link>
+                                            </div>
+
+                                            :
+
+                                            <div>
+                                                {
+                                                    this.props.status === 0 ?
+                                                        <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
+                                                        :
+                                                        null
+                                                }
+                                                <p>Selamat Datang Kembali, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                
+                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                            
+                                                
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
                                     :
@@ -133,17 +158,18 @@ class Header extends Component {
                         </div>
 
                         <Collapse id="CollapseMaCommerce" isOpen={this.state.isOpen} navbar className='link-white d-none d-flex'>
-                            <div className='container'>
-                                <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
-                                    <span>Kasih</span>Nusantara
-                                </Link>
-                            </div>
                             {/* Untuk Large Device */}
-                            <Nav navbar className='d-lg-flex d-none'>
-                                <div className="d-flex flex-row">
-
-                            <Link to="/historypayment"><h5 className="text-light pt-2"> History Transaction</h5></Link>
+                            <div className='container m-0 p-0'>
+                                <div className='row m-0'>
+                                    <div className='col-4'>
+                                    <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
+                                        <span>Kasih</span>Nusantara
+                                    </Link>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <Nav navbar className='d-lg-flex d-none'>
                                         {this.renderCartAccount('text-black-50')}
                                     </Nav>
                         </Collapse>

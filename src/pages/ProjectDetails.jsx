@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import {Link} from 'react-router-dom'
+import Numeral from 'numeral'
 import { connect } from 'react-redux';
+import { Input } from 'reactstrap'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton
-  } from 'react-share';
+} from 'react-share';
 
   import {
     FacebookIcon,
@@ -17,6 +20,7 @@ import queryString from 'query-string'
 class ProjectDetails extends Component {
     state = {
         ProjectDetail: null,
+        listDonasi: ''
     }
 
     componentDidMount() {
@@ -32,9 +36,29 @@ class ProjectDetails extends Component {
         .catch((err) => {
             console.log(err)
         })
+
+        let parameter = {
+            projectId : params.id
+        }  
+
+        Axios.post(`${URL_API}/payment/getDonasiProject`, parameter)
+        .then((res)=>{
+            console.log(res.data)
+            this.setState({ listDonasi: res.data})
+        })
+    }
+
+    getNamaProject = (projectId, projectName) => {
+        let nama = {
+            projectId,
+            projectName
+        }
+        localStorage.setItem('nama', JSON.stringify(nama))
+
     }
 
     renderProjectList = () => {
+        let params = queryString.parse(this.props.location.search)
         if(this.state.ProjectDetail) {
             return this.state.ProjectDetail.map((val, index) => {
                 return (
@@ -60,21 +84,39 @@ class ProjectDetails extends Component {
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
                                 <hr/>
                                 <h6>Rp. {val.totalTarget}</h6>
-                                <a className='btn btn-primary'>
-                                <FacebookShareButton url={`https://www.google.com`} >
+
+                                <Input type='button' className='btn btn-primary mb-3' value='Share Facebook'>
+                                <FacebookShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} >
                                     <FacebookIcon size={12} round={true} />
                                 </FacebookShareButton>
-                                </a>
-                                <a className='btn btn-success'>
+                                </Input>
+                           
+                                <Input className='btn btn-success' type='button' value='Share Whatsapp'>
                                 <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
                                     <WhatsappIcon size={12} round={true} />
                                 </WhatsappShareButton>
+                                </Input>
+                                {
+                                    this.props.email ?
+                                    <Link to={`/payment?id=${val.projectId}`} > 
+                                    <button>
+                                        Donasi
+                                    </button>
+                                    </Link>
+                                    :
+                                    <Link to={`/login`} > 
+                                        <button>
+                                            Donasi
+                                        </button>
+                                    </Link>
+                                }
+                                <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
+                                    <button>
+                                        Donasi
+                                    </button>
                                 </a>
-                                <button>
-                                    Donasi
-                                </button>
                             </div>
-                        </div>
+                            </div>
                     </div>    
                 )
             })
@@ -85,12 +127,57 @@ class ProjectDetails extends Component {
         }
     }
 
-    render() {
-        return (
-            <div className='row'>
-                <div className='offset-2 col-8'>
-                    {this.renderProjectList()}
+    renderDonasiList = () => {
+        return this.state.listDonasi.map((val) => {
+            return (
+                <div className='card-list-donasi-project mb-1'>
+                    <div className='row'>
+                        <div className='userImage  col-md-1'>
+                            <img src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' alt='img'/>
+                        </div>
+                        <div className='contentList   col-md-11'>
+                            <div className='namaDonatur'>
+                                {val.isAnonim === 1 ? 'Anonim' : val.User.nama}
+                            </div>
+                            <div className='nominalDonasi'>
+                                Donasi Rp.  {Numeral(val.nominal).format('0,0')}
+                            </div>
+                            <div className='dateDonasi'>
+                                {val.updatedAt}
+                            </div>
+                            <div className='komentar'>
+                                {val.komentar !== '-' ? val.komentar : null}
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            )
+        })
+    }
+
+    render() {
+        // if(this.state.listDonasi.length === 0){
+        //     return <h2>Loading</h2>
+        // }
+        return (
+            <div className='container'>
+                <div className='row'>
+                    <div className='offset-2 col-8'>
+                        {this.renderProjectList()}
+                    </div>
+                </div>
+                {
+                    this.state.listDonasi.length !==0 ?
+                    <div>
+                        <div className='row mt-4'>
+                            <div className='offset-2 col-8 containerListDonasi'>
+                                    {this.renderDonasiList()}
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null
+                }
             </div>
         )
     }

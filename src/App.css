@@ -368,3 +368,101 @@ textarea:focus {
 .buttonPayment{
   text-align: right;
 }
+
+.komentar{
+  border-radius: 4px;
+  padding: 4px;
+  width: 100%;
+}
+
+.cardHistory{
+  border: thin solid grey ;
+  border-radius: 4px;
+  padding: 0.5em;
+  display: flex;
+}
+
+.imageProject img{
+  border-radius: 4px;
+  margin-right: 0.5em;
+}
+
+.projectDetail{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.projectName{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.komentarDonasi{
+  font-size: 0.8em;
+}
+
+.nominalDonasi{
+  font-size: 1em;
+  position: relative;
+  bottom: 0;
+}
+
+.statusPatment{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusTest{
+  margin: 0 auto;
+  border : 1px solid green;
+  border-radius: 8px;
+  padding: 4px 16px;
+}
+
+.kotak{
+  border: 1px dashed red;
+}
+
+.containerListDonasi{
+  border: thin solid #f1eee8;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.card-list-donasi-project{
+  border-bottom: thin solid #f1eee8;
+  padding: 0.5em;
+
+
+}
+
+.userImage img{
+  width: 60px;
+  border-radius: 60px;
+
+
+}
+
+.contentList{
+  padding-left: 1.5em;
+}
+
+.namaDonatur{
+  font-weight: bold;
+  color: blue;
+}
+
+.nominalDonasi{
+  color: #505866;
+}
+
+.komentar{
+  font-style: italic;
+}
+
+.dateDonasi{
+  font-size: 11px;
+  color: #505866;
+}
