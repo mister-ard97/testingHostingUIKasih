@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const path = require('path');
 const fs = require('fs');
 const Axios = require('axios');
-const URL_API = 'https://kasihnus.purwadhikax.com'
+const URL_API = 'https://apikasihnusantara.purwadhikax.com'
 
 app.get('/', function(request, response) {
   console.log('Home page visited!');
