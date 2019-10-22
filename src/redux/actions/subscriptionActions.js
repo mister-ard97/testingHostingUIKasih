@@ -1,10 +1,11 @@
 import Axios from 'axios'
 import { APPLY_SUBSCRIPTION, GET_SUBSCRIPTION } from './types'
-import { API_URL } from '../../API'
+import { URL_API } from '../../helpers/Url_API'
+
 
 export const getSub = (email) => {
     return(dispatch) => {
-        Axios.post(API_URL + `/payment/getSubscription`, {email})
+        Axios.post(URL_API + `/user/getSubscription`, {email})
         .then((res) => {
             dispatch({
                 type: GET_SUBSCRIPTION,
@@ -19,7 +20,7 @@ export const getSub = (email) => {
 
 export const applySub = (subscriptionNominal, email) => {
     return(dispatch) => {
-        Axios.post(API_URL + `/payment/applySubscription`, { subscriptionNominal, email })
+        Axios.post(URL_API + `/user/applySubscription`, { subscriptionNominal, email })
         .then((res) => {
             dispatch({ 
                 type:  APPLY_SUBSCRIPTION,

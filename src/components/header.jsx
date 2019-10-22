@@ -68,12 +68,12 @@ class Header extends Component {
                                         this.props.justRegister ?
                                             <div>
                                                 {
-                                                    this.props.status === 0 ?
+                                                    this.props.verified === 0 ?
                                                     <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                     :
                                                     null
                                                 }
-                                                <p>Selamat Bergabung di MaCommerce, {this.props.name}</p>
+                                                <p>Selamat Bergabung di Kasih Nusantara, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
@@ -84,35 +84,26 @@ class Header extends Component {
                                             this.props.role !== 'User Admin' ?
                                             <div>
                                                 {
-                                                    this.props.status === 0 ?
+                                                    this.props.verified === 0 ?
                                                         <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                         :
                                                         null
                                                 }
+                                                <p>Selamat Datang Kembali, {this.props.name}</p>
+                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/' onClick={this.userLogOut}> Log Out </Link>
+                                            </div>
+                                            :
+                                            <div>
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
 
-                                            :
-
-                                            <div>
-                                                {
-                                                    this.props.status === 0 ?
-                                                        <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
-                                                        :
-                                                        null
-                                                }
-                                                <p>Selamat Datang Kembali, {this.props.name}</p>
-                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
                                             
-                                                
-                                                <Link to='/' onClick={this.userLogOut}> Log Out </Link>
-                                            </div>
                                     :
                                         <div>
                                             <p>Anda belum login silahkan login <Link to='/login'>disini</Link></p>
@@ -133,6 +124,7 @@ class Header extends Component {
 
     render() {
 
+        console.log(this.props.role)
         return (
             <div className='sticky-top bg-info'>
                 <Navbar id='Header' expand="lg" className='font-weight-bold'>
@@ -188,6 +180,7 @@ const mapStateToProps = (state) => {
         verified: state.auth.verified,
         loginChecked: state.auth.loginChecked,
         loading: state.auth.loading,
+        role: state.auth.role
     }
 }
 
