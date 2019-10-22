@@ -85,17 +85,14 @@ class ProjectDetails extends Component {
                                 <hr/>
                                 <h6>Rp. {val.totalTarget}</h6>
 
-                                <Input type='button' className='btn btn-primary mb-3' value='Share Facebook'>
-                                <FacebookShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} >
-                                    <FacebookIcon size={12} round={true} />
+                                <FacebookShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} className='btn btn-primary'>
+                                    Share Facebook
                                 </FacebookShareButton>
-                                </Input>
                            
-                                <Input className='btn btn-success' type='button' value='Share Whatsapp'>
-                                <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
-                                    <WhatsappIcon size={12} round={true} />
+                                
+                                <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} className='btn btn-success'>
+                                    Share Whatsapp
                                 </WhatsappShareButton>
-                                </Input>
                                 {
                                     this.props.email ?
                                     <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 

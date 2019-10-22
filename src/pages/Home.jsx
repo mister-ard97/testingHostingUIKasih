@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Axios from 'axios'
+import { URL_API } from '../helpers/Url_API';
 
 import Carousel from '../components/carousel';
 
 class Home extends Component {
+    state = {
+        studentdata: [],
+        countstudent: 0
+    }
     componentDidMount() {
         // document.title = 'Testing App'
         window.scrollTo(0, 0);
+        // Axios.get(URL_API+'/student/getstudentdatapaging',{
+        //     params:{
+        //         limit:5,
+        //         page:1
+        //     }
+        // }).then(res=>{
+        //     this.setState({studentdata:res.data.rows,countstudent:res.data.count})
+        // })
     }
 
     render() {
@@ -64,6 +78,8 @@ class Home extends Component {
                                     </Link>
                                 </div>
                             </div>
+
+                            
                     </div>
 
                 

@@ -214,29 +214,30 @@ class StudentDetails extends Component {
         return ( 
             <div className='row'>
                     <div className='container'>
-
-                    <table>
+                        <div className='col-12'>
+                        <table>
                       
-                        {this.renderStudentDetail()}
-                        {
-                            this.props.role === 'User Admin' ? 
-                            <tbody style={{ marginTop: 60 }}>
-                                <tr>
-                                    <td>
-                                        <button onClick={this.addNewDetail}>
-                                            upload
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type='text' ref='deskripsi' placeholder='description'/>
-                                        <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                            :
-                            null
-                        }
-                    </table>
+                      {this.renderStudentDetail()}
+                      {
+                          this.props.role === 'User Admin' ? 
+                          <tbody style={{ marginTop: 60 }}>
+                              <tr>
+                                  <td>
+                                      <button onClick={this.addNewDetail}>
+                                          upload
+                                      </button>
+                                  </td>
+                                  <td>
+                                      <input type='text' ref='deskripsi' placeholder='description'/>
+                                      <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
+                                  </td>
+                              </tr>
+                          </tbody>
+                          :
+                          null
+                      }
+                  </table>
+                        </div>
                 </div>
             </div>
         );
