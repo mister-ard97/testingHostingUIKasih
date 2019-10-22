@@ -37,12 +37,18 @@ import PaymentFinish from './pages/paymentFinish'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
+import {URL_API} from './helpers/Url_API'
 
+import io from 'socket.io-client'
  
 class App extends Component {
 
   componentDidMount() {
     this.props.KeepLogin();
+
+    // const socket = io(URL_API)
+    // console.log(socket)
+    // socket.on('status_transaction', this.updateStatus)
   }
 
   render() {

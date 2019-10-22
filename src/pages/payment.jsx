@@ -5,6 +5,7 @@ import {Switch, TextareaAutosize} from '@material-ui/core'
 import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
 import { Redirect } from 'react-router-dom'
+import io from 'socket.io-client'
 
 class Payment extends Component {
     state = {
@@ -28,7 +29,18 @@ class Payment extends Component {
             this.setState({ redirectHome: true })
         }
         localStorage.removeItem('nama')
+
+        const socket = io(URL_API)
+        console.log(socket)
+        socket.on('status_transaction', this.updateStatus)
+
     }
+
+    updateStatus=(status)=>{
+        this.setState({status})
+        console.log('socket Status ============== > ')
+        console.log(status)
+      }
 
     renderMidtrans = () =>{
         var id = this.props.location.search.split('=')[1]

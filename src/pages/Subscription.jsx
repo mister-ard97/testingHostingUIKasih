@@ -85,7 +85,7 @@ class Subscription extends Component {
               },
             userData:{
                 userId: this.props.id,
-                projectId: 0,
+                projectId: 2,
                 komentar: '-' ,
                 anonim: 0
             }
