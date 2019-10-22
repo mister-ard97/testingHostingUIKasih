@@ -32,6 +32,7 @@ import VerificationUser from './pages/userFeature/verificationUser';
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
 import History from './pages/historyDonasi'
+import PaymentFinish from './pages/paymentFinish'
 
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
@@ -77,6 +78,7 @@ class App extends Component {
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
                 <Route path='/studentdetail' component={StudentDetail} />
+                <Route path='/paymentStatus' component={PaymentFinish}/>
 
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />

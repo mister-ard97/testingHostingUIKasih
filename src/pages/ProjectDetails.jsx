@@ -98,23 +98,19 @@ class ProjectDetails extends Component {
                                 </Input>
                                 {
                                     this.props.email ?
-                                    <Link to={`/payment?id=${val.projectId}`} > 
-                                    <button>
-                                        Donasi
-                                    </button>
-                                    </Link>
-                                    :
-                                    <Link to={`/login`} > 
+                                    <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
                                         <button>
                                             Donasi
                                         </button>
-                                    </Link>
+                                    </a>
+                                    :
+                                    <a href={`/login`}> 
+                                        <button>
+                                            Donasi
+                                        </button>
+                                    </a>
                                 }
-                                <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
-                                    <button>
-                                        Donasi
-                                    </button>
-                                </a>
+                                
                             </div>
                             </div>
                     </div>    
@@ -130,7 +126,7 @@ class ProjectDetails extends Component {
     renderDonasiList = () => {
         return this.state.listDonasi.map((val) => {
             return (
-                <div className='card-list-donasi-project mb-1'>
+                <div className='card-list-donasi-project mb-2'>
                     <div className='row'>
                         <div className='userImage  col-md-1'>
                             <img src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' alt='img'/>

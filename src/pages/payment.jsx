@@ -110,6 +110,8 @@ class Payment extends Component {
           }).catch((err)=>{
             console.log(err)
           })
+
+
     }
 
     renderPayment = () => {
@@ -117,6 +119,7 @@ class Payment extends Component {
             <div className='row'>
                 <div className='offset-md-2 col-md-8 p-3' >
                     <div className='titleProject'>
+                        {this.props.location.state}
                         {this.state.projectName}
                     </div>
                     <div className='inputBoxNominal mt-3'>

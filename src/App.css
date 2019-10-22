@@ -432,9 +432,10 @@ textarea:focus {
 }
 
 .card-list-donasi-project{
-  border-bottom: thin solid #f1eee8;
+  /* border-bottom: thin solid #f1eee8; */
+  background-color: #fafafa;
   padding: 0.5em;
-
+  border-radius: 8px;
 
 }
 
