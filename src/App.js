@@ -44,7 +44,7 @@ class App extends Component {
 
   componentDidMount() {
     console.log('asd')
-    const socket = io(URL_API) //localhost 
+    // const socket = io(URL_API) //localhost 
     this.props.KeepLogin();
   }
 
