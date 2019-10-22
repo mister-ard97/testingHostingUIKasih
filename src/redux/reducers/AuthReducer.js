@@ -13,6 +13,7 @@ import {
 const INITIAL_STATE = {
     id : '',
     subscriptionStatus: '',
+    subscriptionNominal: '',
     token: '',
     phoneNumber: '',
     nama: '',

@@ -5,7 +5,7 @@ import { URL_API } from '../../helpers/Url_API'
 
 export const getSub = (email) => {
     return(dispatch) => {
-        Axios.post(URL_API + `/user/getSubscription`, {email})
+        Axios.get(URL_API + `/payment/getSubscription`, {email})
         .then((res) => {
             dispatch({
                 type: GET_SUBSCRIPTION,
@@ -18,9 +18,9 @@ export const getSub = (email) => {
     }
 }
 
-export const applySub = (subscriptionNominal, email) => {
+export const applySub = (subscriptionNominal, email, reminderDate) => {
     return(dispatch) => {
-        Axios.post(URL_API + `/user/applySubscription`, { subscriptionNominal, email })
+        Axios.post(URL_API + `/payment/applySubscription`, { subscriptionNominal, email, reminderDate })
         .then((res) => {
             dispatch({ 
                 type:  APPLY_SUBSCRIPTION,
