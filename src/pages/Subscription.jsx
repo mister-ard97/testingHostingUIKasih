@@ -51,6 +51,8 @@ class Subscription extends Component {
         if(!this.props.email){
             return null
         }
+        var date = this.refs.inputremainderdate.value
+        console.log(date)
         var randInt = Math.floor(Math.random()*(999-100+1)+100)
         var gross_amount = 0
         if(this.state.lain){
@@ -193,6 +195,7 @@ class Subscription extends Component {
             <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-group'>
+              
                     <label for="exampleInputEmail1">Silahkan pilih jumlah nominal langganan</label>
                         <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
                             <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
@@ -201,6 +204,7 @@ class Subscription extends Component {
                             <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
                             <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
                         </select>
+              
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                             <Button className="bg-white text-dark border-right-0"  hidden={!this.state.lain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>

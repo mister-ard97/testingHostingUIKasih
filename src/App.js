@@ -16,8 +16,8 @@ import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
-import StudentDetail from './pages/StudentDetails'
-
+import StudentDetail from './pages/studentdetail'
+import io from 'socket.io-client'
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
@@ -37,11 +37,14 @@ import PaymentFinish from './pages/paymentFinish'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
+import { URL_API } from './helpers/Url_API';
 
  
 class App extends Component {
 
   componentDidMount() {
+    console.log('asd')
+    const socket = io(URL_API) //localhost 
     this.props.KeepLogin();
   }
 
@@ -83,6 +86,7 @@ class App extends Component {
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} />
+                
 
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>

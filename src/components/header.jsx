@@ -48,8 +48,9 @@ class Header extends Component {
                                     <DropdownToggle nav caret>
                                         {
                                             this.props.loginChecked ?
-                                                <div style={{width: 40}}>
-                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid' style={{borderRadius: 40}}/>
+                                                <div style={{width: 40}} >
+                                                 
+                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid ' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
                                                 <div className='bg-warning font-weight-bold rounded px-1'>
@@ -126,6 +127,7 @@ class Header extends Component {
     }
 
     render() {
+        console.log(this.props.auth)
 
         console.log(this.props.role)
         return (
@@ -177,6 +179,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        auth : state.auth,
         name: state.auth.nama,
         justRegister: state.auth.justRegister,
         userImage: state.auth.userImage,

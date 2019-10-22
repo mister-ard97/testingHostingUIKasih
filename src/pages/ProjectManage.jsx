@@ -70,15 +70,24 @@ class ProjectManage extends React.Component{
 
     getProjectList(){
         const parsed = queryString.parse(this.props.location.search);
+        let token = localStorage.getItem('token')
+        var headers ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
 
         console.log(parsed)
         if(!parsed.page){
             parsed.page = 1
+
+
         }
 
         let limit = 1
 
-        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=${limit}`)
+        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=${limit}`, headers)
         .then((res)=>{
             console.log(res)
 
