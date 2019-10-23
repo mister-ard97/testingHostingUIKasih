@@ -166,7 +166,6 @@ class Studentlist extends Component {
     }
 
     render() { 
-        if(this.props.role === 'User Admin') {
             return (
                 <div>
                     <Table className='mt-2' striped hover>
@@ -176,7 +175,12 @@ class Studentlist extends Component {
                                     <th>Nama murid</th>
                                     <th>foto murid</th>
                                     <th>sekolah</th>
-                                    <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
+                                    {
+                                        this.props.role ?
+                                        <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
+                                        :
+                                        null
+                                    }
                                     <th></th>
                                 </tr>
                             </thead>
@@ -185,30 +189,6 @@ class Studentlist extends Component {
                             </tbody>
                     </Table>
                             {this.renderModal()}
-                </div>
-              );
-        }
-
-        return (
-            <div>
-                    <Table className='mt-2' striped hover>
-                            <thead>
-                                {/* <tr>
-                                    <th>No</th>
-                                    <th>Nama murid</th>
-                                    <th>foto murid</th>
-                                    <th>sekolah</th>
-                                    <th></th>
-                                </tr> */}
-                            </thead>
-                            <tbody>
-                                {this.renderListstudent()}
-                            </tbody>
-                            <tfoot>
-
-                            </tfoot>
-                    </Table>
-                                
                 </div>
         )
     }
