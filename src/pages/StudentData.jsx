@@ -15,11 +15,13 @@ class Studentlist extends Component {
     componentDidMount(){
         Axios.get(URL_API+'/student/getstudentdatapaging',{
             params:{
-                limit:5,
+                limit:1,
                 page:1
             }
         }).then(res=>{
             this.setState({studentdata:res.data.rows,countstudent:res.data.count})
+            console.log(this.state.studentdata)
+            console.log(this.state.countstudent)
         })
     }
     renderListstudent=()=>{
@@ -182,7 +184,7 @@ class Studentlist extends Component {
                                 {this.renderListstudent()}
                             </tbody>
                     </Table>
-                                {this.renderModal()}
+                            {this.renderModal()}
                 </div>
               );
         }
@@ -191,17 +193,20 @@ class Studentlist extends Component {
             <div>
                     <Table className='mt-2' striped hover>
                             <thead>
-                                <tr>
+                                {/* <tr>
                                     <th>No</th>
                                     <th>Nama murid</th>
                                     <th>foto murid</th>
                                     <th>sekolah</th>
                                     <th></th>
-                                </tr>
+                                </tr> */}
                             </thead>
                             <tbody>
                                 {this.renderListstudent()}
                             </tbody>
+                            <tfoot>
+
+                            </tfoot>
                     </Table>
                                 
                 </div>

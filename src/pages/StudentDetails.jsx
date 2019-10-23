@@ -18,6 +18,11 @@ class StudentDetails extends Component {
     }
 
     componentDidMount(){
+
+
+        // GANTI JADI POST YANG NERIMA REQ.BODY
+
+
         var id = this.props.location.search.split('=')[1]
         // Axios.get(API_URL + `/student/get-student-detail/1` )
         console.log(id)
@@ -25,6 +30,9 @@ class StudentDetails extends Component {
         .then((res) => {
             this.setState({ data: res.data })
             console.log(this.state.data)
+        })
+        .catch((err) => {
+            console.log(err)
         })
 
         // Dino

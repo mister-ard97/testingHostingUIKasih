@@ -2,7 +2,7 @@
 
 // export const URL_API = 'http://localhost:1998';
 
-// export const URL_API = 'http://localhost:2019'
+export const URL_API = 'http://localhost:2019'
 
 // hosting api 
 
@@ -12,7 +12,7 @@
 
 // hosting api live
 
-export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
+// export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
 
 // hosting live
 
