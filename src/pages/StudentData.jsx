@@ -15,11 +15,13 @@ class Studentlist extends Component {
     componentDidMount(){
         Axios.get(URL_API+'/student/getstudentdatapaging',{
             params:{
-                limit:5,
+                limit:1,
                 page:1
             }
         }).then(res=>{
             this.setState({studentdata:res.data.rows,countstudent:res.data.count})
+            console.log(this.state.studentdata)
+            console.log(this.state.countstudent)
         })
     }
     renderListstudent=()=>{
@@ -164,7 +166,6 @@ class Studentlist extends Component {
     }
 
     render() { 
-        if(this.props.role === 'User Admin') {
             return (
                 <div>
                     <Table className='mt-2' striped hover>
@@ -174,7 +175,12 @@ class Studentlist extends Component {
                                     <th>Nama murid</th>
                                     <th>foto murid</th>
                                     <th>sekolah</th>
-                                    <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
+                                    {
+                                        this.props.role ?
+                                        <th><button onClick={() => this.setState({ openModal: true })} className='btn btn-primary'>Tambah student</button></th>
+                                        :
+                                        null
+                                    }
                                     <th></th>
                                 </tr>
                             </thead>
@@ -182,28 +188,7 @@ class Studentlist extends Component {
                                 {this.renderListstudent()}
                             </tbody>
                     </Table>
-                                {this.renderModal()}
-                </div>
-              );
-        }
-
-        return (
-            <div>
-                    <Table className='mt-2' striped hover>
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama murid</th>
-                                    <th>foto murid</th>
-                                    <th>sekolah</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderListstudent()}
-                            </tbody>
-                    </Table>
-                                
+                            {this.renderModal()}
                 </div>
         )
     }

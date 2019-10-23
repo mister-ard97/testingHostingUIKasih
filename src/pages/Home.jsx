@@ -1,88 +1,77 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 
 import Carousel from '../components/carousel';
+import ProjectList from '../pages/ProjectList';
+import ProjectDetails from '../pages/ProjectDetails';
+import StudentList from '../pages/StudentData';
 
 class Home extends Component {
     state = {
         studentdata: [],
-        countstudent: 0
+        ProjectList: [],
     }
     componentDidMount() {
         // document.title = 'Testing App'
         window.scrollTo(0, 0);
-        // Axios.get(URL_API+'/student/getstudentdatapaging',{
-        //     params:{
-        //         limit:5,
-        //         page:1
-        //     }
-        // }).then(res=>{
-        //     this.setState({studentdata:res.data.rows,countstudent:res.data.count})
-        // })
+        Axios.get(URL_API+'/student/getstudentdatapaging',{
+            params:{
+                limit:5
+            }
+        }).then((resStudent) =>{
+
+            Axios.get(URL_API + `/project/getAllProject?page=${1}&limit=5`)
+            .then((resProject) => {
+                var results = resProject.data.result.map((val,id)=>{
+                    var hasil = {...val, ...val.User}
+                    delete hasil.User
+                    return hasil
+                })
+
+                this.setState({
+                    ProjectList : results,
+                    studentdata: resStudent.data.rows
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
+    renderProjectList = () => {
+
+    }
+
+    renderStudentList = () => {
+        
+    }
+ 
     render() {
         return (
             <div>
-                {/* {
-                    this.props.username !== '' ?
-                        <Header statusPage='UserLogin' />
-                        : 
-                        null
-                }
-
-                {
-                    this.props.username === '' ?
-                    <Header statusPage='Home' />
-                    :
-                    null
-                } */}
-               
-                
-                    {/* // this.props.loading ? 
-                    //    <div className='container-fluid'>
-                    //        <div className="row">
-                    //            <div className="col-12 text-center">
-                    //                 <div className="spinner-border" role="status">
-                    //                     <span className="sr-only">Loading...</span>
-                    //                 </div>
-                    //            </div>
-                    //        </div>
-                    //    </div>
-                    // : */}
-                    <div>
-                            <Carousel />
-                            <div className='row m-0'>
-                                <div className='col-6 offset-3'>
-                                    <Link to='/subscription' className='card bg-danger text-white'>
-                                        <p className='font-weight-bold'>
-                                            Subscription
-                                        </p>
-                                        <p>
-                                            Ayo Subscribe sekarang
-                                        </p>
-                                    </Link>
-                                </div>
-
-                                <div className='col-6 offset-3 mt-3'>
-                                    <Link to='/project-list?page=1' className='card bg-info text-warning'>
-                                        <p className='font-weight-bold'>
-                                            Project List
-                                        </p>
-                                        <p>
-                                            Project Yang Bersifat One Time
-                                        </p>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            
-                    </div>
-
-                
+                <div>
+                    <Carousel />
+                    <div className='row m-0'>
+                        <div className='col-10 offset-1'>
+                            <h2>Project Yang Sedang Aktif</h2>
+                            {/* <Route to='/project-list' component={ProjectList} /> */}
+                            {/* {this.renderProjectList()} */}
+                        </div>
+                        <div className='col-10 offset-1' style={{overflowX: 'auto'}}>
+                            <h2>Daftar Siswa Yang Berprestasi</h2>
+                            {/* <StudentList /> */}
+                            {/* {this.renderStudentList()} */}
+                        </div>
+                    </div>           
+                </div>
             </div>
         )
     }
