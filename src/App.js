@@ -22,6 +22,7 @@ import io from 'socket.io-client'
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
 import ProjectManage from './pages/ProjectManage';
+import AdminVerifyPage from './pages/admin/adminVerify';
 
 import ProjectList from './pages/ProjectList'
 import ProjectDetails from './pages/ProjectDetails'
@@ -91,6 +92,7 @@ class App extends Component {
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
+                <Route path='/adminverify' component={AdminVerifyPage} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />

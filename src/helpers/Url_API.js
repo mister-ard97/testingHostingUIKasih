@@ -2,7 +2,7 @@
 
 export const URL_API = 'http://localhost:1998';
 
-export const URL_API = 'http://localhost:2019'
+// export const URL_API = 'http://localhost:2019';
 
 // hosting api 
 
