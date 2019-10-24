@@ -17,7 +17,6 @@ import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
 import StudentDetail from './pages/StudentDetails'
-import io from 'socket.io-client'
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
@@ -97,7 +96,7 @@ class App extends Component {
                 <Route path='/project-detail' component={ProjectDetails} />
                 
 
-                  {/* User Admin */}
+                {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
