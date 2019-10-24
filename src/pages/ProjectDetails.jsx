@@ -3,6 +3,7 @@ import Axios from 'axios';
 import {Link} from 'react-router-dom'
 import Numeral from 'numeral'
 import { connect } from 'react-redux';
+import { Input } from 'reactstrap'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
@@ -68,7 +69,7 @@ class ProjectDetails extends Component {
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
                             </div>
     
-                            <div className='col-10'>
+                            <div className='col-10 img-small'>
                                 <h5>{val.projectName}</h5>
                                 <p>{val.projectCreator}</p>
                                 <hr/>
@@ -83,20 +84,30 @@ class ProjectDetails extends Component {
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
                                 <hr/>
                                 <h6>Rp. {val.totalTarget}</h6>
-                                <a className='btn btn-primary'>
-                                <FacebookShareButton url={`https://www.google.com`} >
-                                    <FacebookIcon size={12} round={true} />
+
+                                <FacebookShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} className='btn btn-primary'>
+                                    Share Facebook
                                 </FacebookShareButton>
-                                </a>
-                                <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`}>
-                                    <WhatsappIcon size={12} round={true} />
+                           
+                                
+                                <WhatsappShareButton url={`${UI_LINK}/project-detail?id=${val.projectId}`} className='btn btn-success'>
+                                    Share Whatsapp
                                 </WhatsappShareButton>
-                                {/* <Link to={'/payment?id='+ val.projectId}>  */}
-                                <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
-                                    <button>
-                                        Donasi
-                                    </button>
-                                </a>
+                                {
+                                    this.props.email ?
+                                    <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
+                                        <button>
+                                            Donasi
+                                        </button>
+                                    </a>
+                                    :
+                                    <a href={`/login`}> 
+                                        <button>
+                                            Donasi
+                                        </button>
+                                    </a>
+                                }
+                                
                             </div>
                             </div>
                     </div>    

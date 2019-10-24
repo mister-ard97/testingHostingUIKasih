@@ -1,4 +1,8 @@
 /* Global styling */
+.col-10.img-small img {
+  width: 200px;
+}
+
 .cursorPointer {
   cursor: pointer
 }

@@ -48,8 +48,9 @@ class Header extends Component {
                                     <DropdownToggle nav caret>
                                         {
                                             this.props.loginChecked ?
-                                                <div style={{width: 40}}>
-                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid' style={{borderRadius: 40}}/>
+                                                <div style={{width: 40}} >
+                                                 
+                                                    <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid ' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
                                                 <div className='bg-warning font-weight-bold rounded px-1'>
@@ -81,8 +82,7 @@ class Header extends Component {
                                                
                                             </div>
                                         :
-                                            this.props.role === 'User Admin'
-                                            ?
+                                            this.props.role !== 'User Admin' ?
                                             <div>
                                                 {
                                                     this.props.verified === 0 ?
@@ -92,19 +92,22 @@ class Header extends Component {
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
+                                                
                                             </div>
                                             :
                                             <div>
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
-                                                <Link to='/student-list' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/manage-project' className='border-bottom d-block'> Project List </Link>
+                                                <Link to='/post-project' className='border-bottom d-block'> Post Project </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
 
-
+                                            
                                     :
                                         <div>
                                             <p>Anda belum login silahkan login <Link to='/login'>disini</Link></p>
@@ -124,7 +127,9 @@ class Header extends Component {
     }
 
     render() {
+        console.log(this.props.auth)
 
+        console.log(this.props.role)
         return (
             <div className='sticky-top bg-info'>
                 <Navbar id='Header' expand="lg" className='font-weight-bold'>
@@ -174,12 +179,14 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        auth : state.auth,
         name: state.auth.nama,
         justRegister: state.auth.justRegister,
         userImage: state.auth.userImage,
         verified: state.auth.verified,
         loginChecked: state.auth.loginChecked,
         loading: state.auth.loading,
+        role: state.auth.role
     }
 }
 

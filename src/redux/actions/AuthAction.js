@@ -63,9 +63,9 @@ export const onUserRegister = (data) => {
                         let { 
                             id, 
                             subscriptionStatus, 
+                            subscriptionNominal,
                             nama, 
-                            email, 
-                            token, 
+                            email,
                             verified, 
                             role, 
                             userImage,
@@ -77,9 +77,10 @@ export const onUserRegister = (data) => {
                             type: USER_LOGIN_SUCCESS, payload: {
                                 id,
                                 subscriptionStatus,
+                                subscriptionNominal,
                                 nama,
                                 email,
-                                token,
+                                token : res.data.token,
                                 verified,
                                 role,
                                 userImage,
@@ -119,9 +120,9 @@ export const EmailVerification = () => {
                 let { 
                     id, 
                     subscriptionStatus, 
+                    subscriptionNominal,
                     nama, 
                     email, 
-                    token, 
                     verified, 
                     role, 
                     userImage,
@@ -133,9 +134,10 @@ export const EmailVerification = () => {
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
+                        subscriptionNominal,
                         nama,
                         email,
-                        token,
+                        token : res.data.token,
                         verified,
                         role,
                         userImage,
@@ -167,9 +169,9 @@ export const resendEmailVerification = () => {
             let { 
                 id, 
                 subscriptionStatus, 
+                subscriptionNominal,
                 nama, 
                 email, 
-                token, 
                 verified, 
                 role, 
                 userImage,
@@ -181,9 +183,10 @@ export const resendEmailVerification = () => {
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
+                    subscriptionNominal,
                     nama,
                     email,
-                    token,
+                    token : res.data.token,
                     verified,
                     role,
                     userImage,
@@ -212,9 +215,9 @@ export const userLogin = (email, password) => {
             let { 
                 id, 
                 subscriptionStatus, 
+                subscriptionNominal,
                 nama, 
                 email, 
-                token, 
                 verified, 
                 role, 
                 userImage,
@@ -226,9 +229,10 @@ export const userLogin = (email, password) => {
                 type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
+                    subscriptionNominal,
                     nama,
                     email,
-                    token,
+                    token : res.data.token,
                     verified,
                     role,
                     userImage,
@@ -259,24 +263,26 @@ export const userLoginWithGoogle = (data) => {
                 let { 
                     id, 
                     subscriptionStatus, 
+                    subscriptionNominal,
                     nama, 
                     email, 
-                    token, 
                     verified, 
                     role, 
                     userImage,
                     phoneNumber
                 } = res.data.dataUser
-                console.log(res.data.dataUser)
+                let token = res.data.token
+           
 
                 localStorage.setItem('token', res.data.token);
                 dispatch({
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
+                        subscriptionNominal,
                         nama,
                         email,
-                        token,
+                        token : res.data.token,
                         verified,
                         role,
                         userImage,
@@ -307,10 +313,10 @@ export const userLoginWithFacebook = (data) => {
                 
                 let { 
                     id, 
-                    subscriptionStatus, 
+                    subscriptionStatus,
+                    subscriptionNominal,
                     nama, 
                     email, 
-                    token, 
                     verified, 
                     role, 
                     userImage,
@@ -322,9 +328,10 @@ export const userLoginWithFacebook = (data) => {
                     type: USER_LOGIN_SUCCESS, payload: {
                         id,
                         subscriptionStatus,
+                        subscriptionNominal,
                         nama,
                         email,
-                        token,
+                        token : res.data.token,
                         verified,
                         role,
                         userImage,
@@ -361,23 +368,24 @@ export const KeepLogin = () => {
             let { 
                 id, 
                 subscriptionStatus, 
+                subscriptionNominal,
                 nama, 
                 email, 
-                token, 
                 verified, 
                 role, 
                 userImage,
-                phoneNumber
+                phoneNumber,
             } = res.data.dataUser
-
+            let token = res.data.token
                localStorage.setItem('token', res.data.token);
                dispatch({
                    type: USER_LOGIN_SUCCESS, payload: {
                     id,
                     subscriptionStatus,
+                    subscriptionNominal,
                     nama,
                     email,
-                    token,
+                    token : res.data.token,
                     verified,
                     role,
                     userImage,

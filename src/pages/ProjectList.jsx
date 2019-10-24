@@ -14,31 +14,33 @@ class ProjectList extends Component {
     }
 
     componentDidMount() {
+        this.props.location.search = this.props.location.search ? this.props.location.search : null
         const parsed = queryString.parse(this.props.location.search);
 
-        console.log(parsed)
-        if(!parsed.page){
-            parsed.page = 1
-        }
+            console.log(parsed)
+            if(!parsed.page){
+                parsed.page = 1
+            }
 
-        let limit = 4
+            let limit = 4
+            
+            Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
+            .then((res) => {
+                var results = res.data.result.map((val,id)=>{
+                    var hasil = {...val, ...val.User}
+                    delete hasil.User
+                    return hasil
+                })
+
+                this.setState({
+                    ProjectList : results,
+                    totalpage : Math.ceil(res.data.total / limit)
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         
-        Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
-        .then((res) => {
-            var results = res.data.result.map((val,id)=>{
-                var hasil = {...val, ...val.User}
-                delete hasil.User
-                return hasil
-            })
-
-            this.setState({
-                ProjectList : results,
-                totalpage : Math.ceil(res.data.total / limit)
-            })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
     }
 
     renderPagingButton = () =>{

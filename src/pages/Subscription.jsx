@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Numeral from 'numeral'
 import { connect } from 'react-redux'
-import { applySub, getSub } from '../redux/actions' 
+import { getSub, applySub } from '../redux/actions' 
 import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
 import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
@@ -21,6 +21,7 @@ class Subscription extends Component {
             return this.setState({ redirectHome: true })
         }
         this.props.getSub(this.props.email)
+        // console.log(this.props.applySub())
     }
 
     formatDisplay (num) {
@@ -50,92 +51,103 @@ class Subscription extends Component {
         if(!this.props.email){
             return null
         }
-        var randInt = Math.floor(Math.random()*(999-100+1)+100)
+        // var date = this.refs.inputremainderdate.value
+        // console.log(date)
+        // var randInt = Math.floor(Math.random()*(999-100+1)+100)
         var gross_amount = 0
         if(this.state.lain){
             // var subPriceBebas = this.refs.nominalBebas.value
             
-            gross_amount = this.refs.nominalBebas.value
+            gross_amount = parseInt(this.state.nominal)
         }else{
             gross_amount = this.refs.nominal.value
         }
-        var parameter = {
-            parameter:{
-                transaction_details: {
-                  order_id : 'dev-'+randInt,
-                  gross_amount
-                },
-                item_details: [
-                  {
-                    id: 'camp-'+randInt,
-                    price: gross_amount,
-                    quantity: 1,
-                    name: "Subscription"
-                  }
-                ],
-                customer_details: {
-                  first_name: this.props.nama,
-                  email: this.props.email
-                },
-                // gopay: {
-                //   enable_callback: true,
-                //   // callback_url: "https://hisbudev.herokuapp.com/finish"
-                //   callback_url: `http://ec2-13-251-27-243.ap-southeast-1.compute.amazonaws.com:3000/finish`
-                // }
-              },
-            userData:{
-                userId: this.props.id,
-                projectId: 2,
-                komentar: '-' ,
-                anonim: 0
-            }
-        }
+
+        //console.log(gross_amount)
+
+        this.props.applySub(gross_amount, this.props.email, this.reminderDate.value)
+        alert('Anda berhasil Subscribe. Terima Kasih')
+        this.setState({
+            redirectHome: true
+        })
+        // var parameter = {
+        //     parameter:{
+        //         transaction_details: {
+        //           order_id : 'dev-'+randInt,
+        //           gross_amount
+        //         },
+        //         item_details: [
+        //           {
+        //             id: 'camp-'+randInt,
+        //             price: gross_amount,
+        //             quantity: 1,
+        //             name: "Subscription"
+        //           }
+        //         ],
+        //         customer_details: {
+        //           first_name: this.props.nama,
+        //           email: this.props.email
+        //         },
+        //         // gopay: {
+        //         //   enable_callback: true,
+        //         //   // callback_url: "https://hisbudev.herokuapp.com/finish"
+        //         //   callback_url: `http://ec2-13-251-27-243.ap-southeast-1.compute.amazonaws.com:3000/finish`
+        //         // }
+        //       },
+        //     userData:{
+        //         userId: this.props.id,
+        //         projectId: 0,
+        //         komentar: '-' ,
+        //         anonim: 0
+        //     }
+        // }
         
-          console.log(parameter)
-          Axios.post(`${URL_API}/payment/getSnapMd`, parameter)
-          .then((res)=>{
-            console.log(res.data)
-            localStorage.setItem('order_id', res.data.order_id)
-            window.snap.pay(res.data.transactionToken, {
-              onSuccess: (result) => {
-                console.log('success')
-                console.log(result)
-                console.log(result.finish_redirect_url)
-                Axios.post(`${URL_API}/payment/updatePayment`, result)
-                .then((res)=>{
-                    console.log(res.data)
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/finish?${link}`})
-                this.props.applySub(gross_amount, this.props.email)
-               }
-               ,
-               onPending: function(result){
-                 console.log('pending')
-                 console.log(result)
+        //   console.log(parameter)
+        //   Axios.post(`${URL_API}/payment/getSnapMd`, parameter)
+        //   .then((res)=>{
+        //     console.log(res.data)
+        //     localStorage.setItem('order_id', res.data.order_id)
+        //     window.snap.pay(res.data.transactionToken, {
+        //       onSuccess: (result) => {
+        //         console.log('success')
+        //         console.log(result)
+        //         console.log(result.finish_redirect_url)
+        //         Axios.post(`${URL_API}/payment/updatePayment`, result)
+        //         .then((res)=>{
+        //             console.log(res.data)
+        //         })
+        //         .catch((err)=>{
+        //             console.log(err)
+        //         })
+        //         var link = result.finish_redirect_url.split('?')[1]
+        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+        //         this.setState({lompatan: `/finish?${link}`})
+        //         console.log(this.props.applySub(gross_amount, this.props.email))
+        //         this.props.applySub(gross_amount, this.props.email)
+        //        }
+        //        ,
+        //        onPending: function(result){
+        //          console.log('pending')
+        //          console.log(result)
                  
-                console.log(result.finish_redirect_url)
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/unfinish?${link}`})
-                },
-                onError: function(result){
-                 console.log('error')
-                 console.log(result)
-                 console.log(result.finish_redirect_url)
-                 var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/error?${link}`})
-                }
+        //         console.log(result.finish_redirect_url)
+        //         var link = result.finish_redirect_url.split('?')[1]
+        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+        //         this.setState({lompatan: `/unfinish?${link}`})
+        //         },
+        //         onError: function(result){
+        //          console.log('error')
+        //          console.log(result)
+        //          console.log(result.finish_redirect_url)
+        //          var link = result.finish_redirect_url.split('?')[1]
+        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+        //         this.setState({lompatan: `/error?${link}`})
+        //         }
              
-            })
-          }).catch((err)=>{
-            console.log(err)
-          })
+        //     })
+        //   }).catch((err)=>{
+        //     console.log(err)
+        //   })
     }
 
     getSubPrice = () => {
@@ -165,17 +177,18 @@ class Subscription extends Component {
 
     render() { 
         console.log(this.props.email)
+        console.log(this.props.subStatus)
         if(this.state.redirectHome){
             return(
                 <Redirect to='/login' />
             )
         }
-        if(this.props.subStatus === 1){
+        if(this.props.subStatus === 1 || this.props.subStatusFromDb === 1){
             return(
                 <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-control'>
-                        Nominal langganan anda adalah : Rp. {Numeral(this.props.subNominal).format('0,0')}
+                        Nominal langganan anda adalah : Rp. {Numeral(this.props.subNominalFromDb).format('0,0')}
                     </div>
                 </form>
             </div>
@@ -185,6 +198,7 @@ class Subscription extends Component {
             <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-group'>
+              
                     <label for="exampleInputEmail1">Silahkan pilih jumlah nominal langganan</label>
                         <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
                             <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
@@ -193,12 +207,13 @@ class Subscription extends Component {
                             <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
                             <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
                         </select>
+              
                         <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <Button className="bg-white text-dark border-right-0"  hidden={!this.state.lain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>
-        </InputGroupAddon>
-        <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.lain} ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
-      </InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                            <Button className="bg-white text-dark border-right-0"  hidden={!this.state.lain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>
+                            </InputGroupAddon>
+                            <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.lain} innerRef='nominalBebas' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
+                        </InputGroup>
                         {/* <input type='text' hidden={!this.state.lain} defaultValue={`Rp. ${this.state.nominalDisplay}`} className='form-control' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly}/> */}
                             <Switch 
                                 onChange={this.handleChange}
@@ -206,6 +221,10 @@ class Subscription extends Component {
                             />
                         <span className="text-gray">Klik Untuk Pilih Nominal </span>
                     </div>
+
+                    <label>Pada tanggal berapa anda ingin diingatkan</label>
+                    <input type='date' className='form-control' ref={(reminderDate) => this.reminderDate = reminderDate }/>
+
                     <div className='form-group'>
                         <div className='d-flex justify-content-center'>
                             <input type='button' onClick={this.renderMidtrans} className='btn btn-primary' value='Berlangganan Sekarang' />
@@ -223,6 +242,8 @@ const mapStatetoProps = ({ auth, sub }) => {
         id: auth.id,
         nama: auth.nama,
         email: auth.email,
+        subStatusFromDb: auth.subscriptionStatus,
+        subNominalFromDb: auth.subscriptionNominal,
         subStatus: sub.subscriptionStatus,
         subNominal: sub.subscriptionNominal
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import Axios from 'axios';
 import { URL_API } from '../../helpers/Url_API';
+import { Redirect } from 'react-router-dom';
 import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
@@ -8,7 +9,7 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 class postProject extends React.Component{
     constructor(props) {
         super(props)
-        this.state = { text: '', imageFile : null } // You can also pass a Quill Delta here
+        this.state = { text: '', imageFile : null, loading: false, redirectToHome: false } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
     }
     modules = {
@@ -57,6 +58,7 @@ class postProject extends React.Component{
 
     onSubmitClick = () =>{
    
+        this.setState({loading: true})
         var formData = new FormData()
         let token = localStorage.getItem('token')
         var headers ={
@@ -84,9 +86,15 @@ class postProject extends React.Component{
         Axios.post(URL_API+'/project/postproject', formData, headers)
         .then((res)=>{
             window.alert("insert success")
+            this.setState({
+                loading: false, redirectToHome: true
+            })
         })
         .catch((err)=>{
             window.alert(err)
+            this.setState({
+                loading: true
+            })
         })
     }
 
@@ -99,6 +107,11 @@ class postProject extends React.Component{
 
 
     render(){
+        if(this.state.redirectToHome) {
+            return (
+                <Redirect to='/' />
+            )
+        }
         return(
             <div className='container mt-4'>
                 <h1 className="mb-4">GALANG DANA</h1>
@@ -125,7 +138,13 @@ class postProject extends React.Component{
                 <h5>Ajakan Campaign</h5>
                 <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
                 <p>Maks 100 Karakter</p>
-                <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
+                {
+                    this.state.loading ?
+                    <p>Loading...</p>
+                    :
+                    <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
+                }
+                
             </div>
         )
     }

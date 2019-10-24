@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
-import { API_URL } from '../API'
 import { CustomInput } from 'reactstrap';
+import { URL_API } from '../helpers/Url_API';
 
 
 class StudentDetails extends Component {
     state = { 
         data: [],
         raportUser: [],
+        detail: [],
         edit: false,
         addImageFileName: null,
         addImageFile: null,
@@ -17,89 +18,140 @@ class StudentDetails extends Component {
     }
 
     componentDidMount(){
+
+
+        // GANTI JADI POST YANG NERIMA REQ.BODY
+
+
         var id = this.props.location.search.split('=')[1]
         // Axios.get(API_URL + `/student/get-student-detail/1` )
-        
-        // Firliandy
-        // Axios.get(API_URL + `/student-detail/get-student-detail/${id}`)
-        // .then((res) => {
-        //     this.setState({ data: res.data })
-        //     console.log(this.state.data)
-        // })
-
-        // Dino
-        Axios.get(URL_API+'/studentdetail/get-student-detail/1')
-        .then(res=>{
-            this.setState({data: res.data[0], raportUser:res.data[0].StudentDetails})
-        }).catch(err=>{
+        console.log(id)
+        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
+        .then((res) => {
+            this.setState({ data: res.data })
+            console.log(this.state.data)
+        })
+        .catch((err) => {
             console.log(err)
         })
+
+        // Dino
+        // Axios.get(API_URL+'/studentdetail/get-student-detail/1')
+        // .then(res=>{
+        //     this.setState({data: res.data[0], raportUser:res.data[0].StudentDetails})
+        // }).catch(err=>{
+        //     console.log(err)
+        // })
 
     }
 
     deleteDetail = (id) => {
         var studentId = this.props.location.search.split('=')[1]
-        Axios.post(API_URL + `/student-detail/delete-student-detail/${id}`, { id, studentId })
+        Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
         .then((res) => {
-            console.log(res.data)
-            this.setState({ data: res.data })
+            // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+            // .then((res) => {
+                this.setState({ data: res.data })
+                console.log(this.state.data)
+            // })
         })
     }
 
-    renderRaport=()=>{
+    // renderRaport=()=>{
+    //     if(this.state.raportUser.length !==0){
+    //         return this.state.raportUser.map((item,index)=>{
+    //             return(
+    //                 <img key={index} src={API_URL+item.pictureReport} alt={`${item.pictureReport}`}/>
+    //             )
+    //         })
+    //     }
 
-        return this.state.raportUser.map((item,index)=>{
-            return(
-                <img key={index} src={URL_API+item.pictureReport} alt={`${item.pictureReport}`}/>
+    // }
+
+    renderStudentDetailForGuest = () => {
+        return this.state.data.map((val) => {
+            return (
+             <div className='col-12'>
+                 <p>Foto Siswa</p>
+                 <img src={URL_API + val.studentImage} alt={val.studentImage} style={{width: '300px'}}/>
+                 <p>Nama: {val.name}</p>
+                 <p>Pendidikan Terakhir: {val.pendidikanTerakhir}</p>
+                 <p>Gender: {val.gender}</p>
+                 <p>Status Keluarga: {val.status}</p>
+                 <p>Story : {val.story}</p>
+                 <p></p>
+                  <table>
+                    <thead>
+                        <th className='pr-3'> Report Image</th>
+                        <th className='pr-5'>Description</th>
+                    </thead>
+                <tbody>
+                    {
+                         val.StudentDetails.map((item) => {
+                            return(
+                                
+                                <tr>
+                                    <td>
+                                        <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
+                                    </td>
+                                    <td>
+                                        {item.deskripsi}
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+              </table>
+             </div>
             )
         })
-
     }
 
 
-    renderStudentData = () => {
-        // eslint-disable-next-line
-        return this.state.data.map((val, index) => {
-            if(val.id === this.state.selectedId){
+    renderStudentDetail = () => {
+        return this.state.data.map((val) => {
+            return val.StudentDetails.map((item) => {
+                if(item.id === this.state.selectedId){
+                    return(
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
+                                </td>
+                                <td>
+                                    <input type="text" defaultValue={item.deskripsi} ref='descEdit'/>
+                                </td>
+                                <td>
+                                    <input type="button" value='cancel' onClick={() => this.setState({ selectedId: 0 })}/>
+                                </td>
+                                <td>
+                                    <input type="button" value='confirm' onClick={() => this.confirmEdit(item.id)}/>
+                                </td>
+                            </tr>
+                        </tbody>
+                )}
                 return(
                     <tbody>
-                        <tr>
-                            <td>
-                                <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
-                            </td>
-                            <td>
-                                <input type="text" defaultValue={val.deskripsi} ref='descEdit'/>
-                            </td>
-                            <td>
-                                <button onClick={() => this.setState({ selectedId: 0})}>Cancel</button>
-                                <button onClick={() => this.confirmEdit(val.id)}>Confirm</button>
-                            </td>
-                            
-                        </tr>
-                    </tbody>
+                            <tr>
+                                <td>
+                                    <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
+                                </td>
+                                <td>
+                                    {item.deskripsi}
+                                </td>
+                                <td>
+                                    <input type="button" value='edit' onClick={() => this.setState({ selectedId: item.id })}/>
+                                </td>
+                                <td>
+                                    <input type="button" value='delete' onClick={() => this.deleteDetail(item.id)}/>
+                                </td>
+                            </tr>
+                        </tbody>
                 )
-
-            }
-
-            if(val.pictureReport !== null){
-                return(
-                    <tbody key={index}>
-                        <th><img src={API_URL+val.pictureReport} alt={`${val.pictureReport}`} style={{ width: '50%' }} /></th>
-                        <th>{val.deskripsi}</th>
-                        {
-                            this.props.role === 'User Admin' ?
-                            <th>
-                                <button onClick={() => this.setState({ selectedId: val.id })}>Edit</button>
-                                <button onClick={() => this.deleteDetail(val.id)}>Delete</button>
-                            </th>
-                            :
-                            null
-                        }
-                    </tbody>
-                )
-            }
             })
-        }
+        })    
+    }
 
     onAddImageFileChange = (e) => {
         console.log(e.target.files[0])
@@ -120,10 +172,15 @@ class StudentDetails extends Component {
         console.log(newObj)
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/student-detail/edit-student-detail/${newObj.studentId}`, formData)
-        .then((res) => {
-            console.log(res.data)
-            this.setState({ data: res.data, selectedId: 0 })
+        Axios.post(URL_API + `/studentdetail/edit-student-detail/${newObj.studentId}`, formData)
+        .then(() => {
+            // console.log(res.data)
+            id = this.props.location.search.split('=')[1]
+            Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
+            .then((res) => {
+                this.setState({ data: res.data, selectedId: 0 })
+                console.log(this.state.data)
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -141,14 +198,18 @@ class StudentDetails extends Component {
         }
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(API_URL + `/student-detail/add-student-detail/${newObj.studentId}`, formData)
+        Axios.post(URL_API + `/studentdetail/add-student-detail/${newObj.studentId}`, formData)
         .then((res) => {
-            console.log(res.data)
-            this.setState({ 
-                data: res.data,
-                addImageFile: null,
-                addImageFileName: null
+            Axios.get(URL_API + `/studentdetail/get-student-detail/${newObj.studentId}`)
+            .then((res) => {
+                this.setState({ 
+                    data: res.data,
+                    addImageFile: null,
+                    addImageFileName: null
+                })
+                console.log(this.state.data)
             })
+            
             this.refs.deskripsi.value = ''
         })
         .catch((err) => {
@@ -157,40 +218,46 @@ class StudentDetails extends Component {
     }
 
     render() { 
-
+       if(this.props.role === 'User Admin') {
         return ( 
             <div className='row'>
                     <div className='container'>
-
-                    <table>
-                        <thead>
-                            <th className='pr-3'> Report Image</th>
-                            <th className='pr-5'>Description</th>
-                            <th>Actions</th>
-                        </thead>
-                        {this.renderStudentData()}
-                        {
-                            this.props.role === 'User Admin' ? 
-                            <tbody style={{ marginTop: 60 }}>
-                                <tr>
-                                    <td>
-                                        <button onClick={this.addNewDetail}>
-                                            upload
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <input type='text' ref='deskripsi' placeholder='description'/>
-                                        <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                            :
-                            null
-                        }
-                    </table>
+                        <div className='col-12'>
+                        <table>
+                      
+                      {this.renderStudentDetail()}
+                      {
+                          this.props.role === 'User Admin' ? 
+                          <tbody style={{ marginTop: 60 }}>
+                              <tr>
+                                  <td>
+                                      <button onClick={this.addNewDetail}>
+                                          upload
+                                      </button>
+                                  </td>
+                                  <td>
+                                      <input type='text' ref='deskripsi' placeholder='description'/>
+                                      <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
+                                  </td>
+                              </tr>
+                          </tbody>
+                          :
+                          null
+                      }
+                  </table>
+                        </div>
                 </div>
             </div>
         );
+       }
+       
+       return ( 
+        <div className='container'>
+                <div className='row'>
+                {this.renderStudentDetailForGuest()}
+            </div>
+        </div>
+    );
     }
 }
 
