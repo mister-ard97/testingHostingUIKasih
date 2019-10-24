@@ -3,13 +3,16 @@ import Axios from 'axios'
 import {URL_API} from '../helpers/Url_API'
 import { CircularProgress } from '@material-ui/core'
 import Numeral from 'numeral'
+import Moment from 'moment'
+import { connect } from 'react-redux'
+
 class HistoryDonasi extends Component {
     state = {
         historyData:null
     }
     componentDidMount(){
         let parameter = {
-            userId : 1
+            userId : this.props.id
         }        
         Axios.post(`${URL_API}/payment/getHistory`, parameter)
         .then((res) => {
@@ -26,7 +29,7 @@ class HistoryDonasi extends Component {
             return(
                 <div className='cardHistory row mb-2'>
                     <div className='imageProject col-md-1  p-0 '>
-                        <img src={val.Project.projectImage} width='100%' alt='img'/>
+                        <img src={'http://localhost:1998/' + val.Project.projectImage} width='100%' alt='img'/>
                     </div>
                     <div className='projectDetail col-md-10 p-0 pl-2'>
                         <div>
@@ -35,6 +38,9 @@ class HistoryDonasi extends Component {
                             </div>
                             <div className='komentarDonasi'>
                                 {val.komentar}
+                            </div>
+                            <div className='dateDonasi'> 
+                                {Moment( val.createdAt ).format("DD MMMM YYYY, H:mm")+' wib'}
                             </div>
                         </div>
                         <div className='nominalDonasi'>
@@ -88,4 +94,11 @@ class HistoryDonasi extends Component {
     }
 }
 
-export default HistoryDonasi;
+
+const mapStatetoProps = ({ auth }) => {
+    return{
+        id: auth.id
+    }
+}
+
+export default connect(mapStatetoProps,{}) (HistoryDonasi);

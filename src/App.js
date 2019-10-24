@@ -33,6 +33,8 @@ import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
 import History from './pages/historyDonasi'
 import PaymentFinish from './pages/paymentFinish'
+import PaymentError from './pages/paymentError'
+import PaymentPending from './pages/paymentPending'
 
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
@@ -84,7 +86,9 @@ class App extends Component {
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
                 <Route path='/studentdetail' component={StudentDetail} />
-                <Route path='/paymentStatus' component={PaymentFinish}/>
+                <Route path='/paymentFinish' component={PaymentFinish}/>
+                <Route path='/paymentError' component={PaymentError}/>
+                <Route path='/paymentPending' component={PaymentPending}/>
 
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
