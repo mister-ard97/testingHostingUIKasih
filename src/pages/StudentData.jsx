@@ -10,14 +10,15 @@ class Studentlist extends Component {
         studentdata:[],
         countstudent:0,
         addImageFileName: null,
-        addImageFile: null
+        addImageFile: null,
+        openModal: false
       }
     componentDidMount(){
-        Axios.get(URL_API+'/student/getstudentdatapaging',{
-            params:{
+        Axios.post(URL_API+'/student/getstudentdatapaging',{
+            
                 limit:1,
                 page:1
-            }
+            
         }).then(res=>{
             this.setState({studentdata:res.data.rows,countstudent:res.data.count})
             console.log(this.state.studentdata)
@@ -160,9 +161,20 @@ class Studentlist extends Component {
                     page:1
                 }
             }).then(res=>{
-                this.setState({studentdata:res.data.rows,countstudent:res.data.count})
+                this.setState({
+                    studentdata:res.data.rows,
+                    countstudent:res.data.count
+                })
             })
         })
+    }
+
+    toggle = () => {
+        if(this.state.openModal) {
+            this.setState({
+                openModal: !this.state.openModal
+            })
+        }
     }
 
     render() { 
