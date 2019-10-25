@@ -250,7 +250,9 @@ class AdminVerify extends Component {
             .then((res)=>{
                 window.alert('success update approve')
                 this.setState({
-                    compareModal : false
+                    compareModal : false,
+                    idSelected : null,
+                    comparedata : []
                 })
                 this.getStudentUnverified()
             })
@@ -266,7 +268,9 @@ class AdminVerify extends Component {
             .then((res)=>{
                 window.alert('success update reject')
                 this.setState({
-                    compareModal : false
+                    compareModal : false,
+                    idSelected : null,
+                    comparedata : []
                 })
                 this.getStudentUnverified()
             })
