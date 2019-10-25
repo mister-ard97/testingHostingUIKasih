@@ -34,7 +34,7 @@ import History from './pages/historyDonasi'
 import PaymentFinish from './pages/paymentFinish'
 import PaymentError from './pages/paymentError'
 import PaymentPending from './pages/paymentPending'
-
+import ScholarshipAdd from './pages/ScholarshipAdd'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
@@ -90,7 +90,7 @@ class App extends Component {
                 <Route path='/paymentFinish' component={PaymentFinish}/>
                 <Route path='/paymentError' component={PaymentError}/>
                 <Route path='/paymentPending' component={PaymentPending}/>
-
+                <Route path='/addScholarship' component={ScholarshipAdd}/>
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} />
