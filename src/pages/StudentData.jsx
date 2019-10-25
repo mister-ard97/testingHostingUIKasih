@@ -4,17 +4,20 @@ import { URL_API } from '../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import queryString from 'query-string'
 
 class Studentlist extends Component {
     state = {
         studentdata:[],
-        countstudent:0,
+        totalstudent : 0,
         addImageFileName: null,
         addImageFile: null,
         schooldata : [],
         editselected : null,
         imageFile : null,
-        editmodal : false
+        editmodal : false,
+        limit : 5
       }
     componentDidMount(){
           // formatbody : {
@@ -23,10 +26,61 @@ class Studentlist extends Component {
         //     page : '1',
         //     limit : '3'
         // }
+        const parsed = queryString.parse(this.props.location.search);
         this.getSchool()
-        this.getStudentData()
+        this.getStudentData({
+            limit : this.state.limit,
+            page : parseInt(parsed.page)
+        })
 
     }      
+
+    renderPagingButton = () =>{
+        if(this.state.totalstudent !== 0){
+            
+            var jsx = []
+            for(var i = 0; i<Math.ceil(this.state.totalstudent/this.state.limit); i++){
+                jsx.push(
+                     <PaginationItem>
+                        <PaginationLink href={`/studentlist?page=${i+1}`}>
+                            {i+1}
+                        </PaginationLink>
+                    </PaginationItem>
+                )
+            }
+            return jsx
+        }
+    }
+
+    printPagination = () =>{
+        if(this.state.totalstudent !== 0){
+            const parsed = queryString.parse(this.props.location.search);
+            var currentpage = parsed.page
+            return (
+                <Pagination aria-label="Page navigation example">
+                <PaginationItem>
+                    <PaginationLink first href={`/studentlist?page=1`} />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink previous
+                     href={`/studentlist?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                  </PaginationItem>
+                    {this.renderPagingButton()}
+                  <PaginationItem>
+                    <PaginationLink next 
+                    href={`/studentlist?page=${this.state.totalstudent === parseInt(currentpage) || parseInt(currentpage) > this.state.totalstudent ? 
+                    this.state.totalstudent 
+                :
+                parseInt(currentpage) + 1}`} />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink last href={`/studentlist?page=${this.state.totalstudent}`} />
+                  </PaginationItem>
+                </Pagination>
+            )
+        }
+    }
+
 
     getSchool() {
         
@@ -42,7 +96,8 @@ class Studentlist extends Component {
         })
     }
 
-    getStudentData(obj = {limit :4,page:1}){
+    getStudentData(obj = {limit :this.state.limit,page:1}){
+        console.log(obj)
 
         let token = localStorage.getItem('token')
         var headers ={
@@ -59,7 +114,8 @@ class Studentlist extends Component {
                 delete hasil.School
                 return hasil
             })
-            this.setState({studentdata:results,countstudent:res.data.count})
+            console.log(res)
+            this.setState({studentdata:results,totalstudent:res.data.count})
         
         })
     
@@ -111,6 +167,22 @@ class Studentlist extends Component {
         }
     }
 
+    revertChanges = async (id) =>{
+        try{
+
+            var result = await Axios.get(URL_API+'/studentrev/revertchange/'+id)
+            window.alert('success revert')
+            this.getSchool()
+            this.getStudentData()
+            console.log(result)
+        }
+        catch(err){
+            window.alert(err)
+        }
+    }
+
+ 
+
 
 
 
@@ -124,9 +196,12 @@ class Studentlist extends Component {
                     <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
                     <td>{item.schoolName}</td>
                     <td>
+                        {item.dataStatus === 'Rejected' ? null : 
+                    
                     <a href={`/studentdetail?id=${item.id}`} style={{textDecoration:'none'}}>
                         <button className='btn btn-primary'>Lihat student</button>
                     </a>   
+                    }
                     </td>
         
                     <td>
@@ -134,6 +209,12 @@ class Studentlist extends Component {
                             
                             {item.dataStatus === 'Update Unverified' ?
                                    <input type="text" className='form-control' value="Please wait for your verification..." disabled/>
+                            :
+                            item.dataStatus === 'Rejected' ?
+                            <div>
+                                <input type="button" className='btn btn-danger mr-3' value="Revert Changes" onClick={()=>this.revertChanges(item.id)} />
+                                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+                            </div>
                             :
                             <div>
                             <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(item.id)}>delete student</button> 
@@ -143,7 +224,17 @@ class Studentlist extends Component {
            
                         </div>
                     </td>
-                    <td>{item.dataStatus}</td>
+                    <td>
+                        {item.dataStatus !== 'Rejected' 
+                    ?
+                    item.dataStatus
+                    :
+                        <div>
+                            <div className="mb-3 text-danger">{item.dataStatus}</div>
+                            <div>Note : {item.statusNote}</div>
+                        </div>
+                    }
+                    </td>
                     
                 </tr>
             )
@@ -176,14 +267,15 @@ class Studentlist extends Component {
             statusNote : data[i].statusNote,
             pendidikanTerakhir : data[i].pendidikanTerakhir,
             story : data[i].story,
+            userId : this.props.id,
             alamat : data[i].alamat,
             status : data[i].status,
-            schoolId : data[i].schoolId
+            schoolId : data[i].schoolId,
+            studentId : id
         }
-        console.log(data)
 
         var updated = {
-            id : id,
+            id : id, // dipakai buat where, bukan insert
             changeImage : this.state.imageFile ? true : false,
             pendidikanTerakhir : this.refs.editpendidikan.value,
             story :       this.refs.editstory.value,
@@ -198,6 +290,7 @@ class Studentlist extends Component {
         formData.append('image', this.state.imageFile) 
         formData.append('data', JSON.stringify(obj))
 
+
         Axios.post(URL_API +'/studentrev/poststudentrev', formData, headers)
         .then((res) => {
             window.alert('Update Success! Your update will be verified by the admin')
@@ -206,21 +299,17 @@ class Studentlist extends Component {
                 editmodal : false
             })
 
-   
+    
         })
+        
+
     }
 
     deleteStudent = (id) => {
         Axios.delete(URL_API + `/student/deletestudentdata/${id}`)
         .then((res) => {
-            Axios.get(URL_API+'/student/getstudentdatapaging',{
-                params:{
-                    limit:5,
-                    page:1
-                }
-            }).then(res=>{
-                this.setState({studentdata:res.data.rows,countstudent:res.data.count})
-            })
+            window.alert('delete success')
+            this.getStudentData()
         })
     }
 
@@ -438,7 +527,12 @@ class Studentlist extends Component {
                             <tbody>
                                 {this.renderListstudent()}
                             </tbody>
+                            
                     </Table>
+                    <div className="d-flex flex-row justify-content-center">
+
+                        {this.printPagination()}    
+                    </div>
                             {this.renderModal()}
                             {this.renderModalEdit()}
                 </div>
