@@ -189,6 +189,8 @@ class AdminVerify extends Component {
                         <input type="text" className="form-control mb-2" value={olddata.gender} disabled/>
                         <h5 className="mb-2">Sekolah</h5>
                         <input type="text" className="form-control mb-2" value={olddata.schoolName} disabled/>
+                        <h5 className="mb-2">Alamat</h5>
+                        <input type="text" className="form-control mb-2" value={olddata.alamat} disabled/>
                         <h5 className="mb-2">Old Image</h5>
                         <img src={URL_API+olddata.studentImage} alt="" width='200' height="150"/>
                     </div>
@@ -206,6 +208,8 @@ class AdminVerify extends Component {
                         <input type="text" className="form-control mb-2" value={data.gender} disabled/>
                         <h5 className="mb-2">Sekolah</h5>
                         <input type="text" className="form-control mb-2" value={data.schoolName} disabled/>
+                        <h5 className="mb-2">Alamat</h5>
+                        <input type="text" className="form-control mb-2" value={data.alamat} disabled/>
                         <h5 className="mb-2">New Image</h5>
                         <img src={URL_API+data.studentImage} alt="" width='200' height="150"/>
 
