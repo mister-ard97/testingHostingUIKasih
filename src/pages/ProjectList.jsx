@@ -21,10 +21,20 @@ class ProjectList extends Component {
         
         const parsed = queryString.parse(this.props.location.search);
         console.log(parsed)
-        if(parsed.search && parsed.orderby && parsed.page) {
+        if(parsed.search || parsed.orderby || parsed.page) {
+
+            let searchOrder = document.getElementById('searchOrder').options
+            
+            for(let x = 0; x < searchOrder.length; x++) {
+               if(searchOrder[x].value === parsed.orderby) {
+                    searchOrder[x].selected = true
+               }
+            }
+
             this.selectOrder.value = parsed.orderby
             this.searchText.value = parsed.search
-            this.searchProject()
+            this.searchProject();
+            
         } else {
             console.log(parsed)
             if(!parsed.page){
@@ -88,7 +98,7 @@ class ProjectList extends Component {
             if(!parsed.page) {
                 currentpage =  1
             }
-            if(parsed.search && parsed.page && parsed.orderby) {
+            if (parsed.search || parsed.orderby) {
                 console.log('Masuk')
                 return (
                     <Pagination aria-label="Page navigation example">
@@ -263,7 +273,7 @@ class ProjectList extends Component {
                                 <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
                             </div>
                             <div className='col-6'>
-                                <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                <select id='searchOrder' className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
                                     <option value='asc'>Newest Post</option>
                                     <option value='desc'>Older Post</option>
                                 </select>
