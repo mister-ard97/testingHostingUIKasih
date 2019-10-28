@@ -25,11 +25,13 @@ class AdminVerify extends Component {
         Axios.get(URL_API+'/studentrev/admingetstudent?type='+parsed.type)
         .then((res)=>{
          
+            console.log(res.data)
             var results = res.data.map((val,id)=>{
                 var hasil = {...val, ...val.School}
                 delete hasil.School
                 return hasil
             })
+            console.log(results)
             this.setState({
                 data : results,
                 type : parsed.type
@@ -68,7 +70,7 @@ class AdminVerify extends Component {
 
     renderListstudent=()=>{
         if(this.state.data.length !== 0 && this.state.type === 'new'){
-
+            
             return this.state.data.map((item,index)=>{
     
                 return (

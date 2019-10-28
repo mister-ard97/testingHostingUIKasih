@@ -19,7 +19,8 @@ import StudentList from './pages/StudentData'
 import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 
-import AdminVerifyDetail from './pages/admin/verifydetail'
+import AdminVerifyDetail from './pages/admin/verifydetail';
+import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 
 import io from 'socket.io-client'
 //PROJECT
@@ -98,6 +99,7 @@ class App extends Component {
                 <Route path='/post-project' component={PostProject} />
                 <Route path='/adminverify-detail' component={AdminVerifyDetail} />
                 <Route path='/adminverify' component={AdminVerifyPage} />
+                <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />

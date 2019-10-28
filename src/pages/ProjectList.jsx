@@ -33,6 +33,7 @@ class ProjectList extends Component {
 
             this.selectOrder.value = parsed.orderby
             this.searchText.value = parsed.search
+            
             this.searchProject();
             
         } else {
