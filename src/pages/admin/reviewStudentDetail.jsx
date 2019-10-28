@@ -10,9 +10,13 @@ class AdminReviewStudentDetail extends Component {
         openModalReject: false,
         openModalCompare: false,
         rejectId : null,
+        type: null,
 
         dataBaru: null,
-        dataLama: null
+        dataLama: null,
+        idDetailSelected: null,
+
+        rejectNote: null
     }
     componentDidMount(){
         this.getDetailUnverified()
@@ -31,17 +35,19 @@ class AdminReviewStudentDetail extends Component {
         }
         Axios.get(URL_API + `/studentdetailrev/get-student-detailrev/${parsed.id}/?type=${parsed.type}`, options)
         .then((res) => {
-            // console.log(res.data)
+            console.log(res.data)
             // console.log(res.data[0].StudentDetails)
             if(res.data.length === 0) {
                 this.setState({
                     data: [],
                     name: null,
+                    type: parsed.type
                 })
             } else {
                 this.setState({
                     data: res.data[0].StudentDetails,
                     name: res.data[0].name,
+                    type: parsed.type
                 })
             }
             
@@ -125,7 +131,7 @@ class AdminReviewStudentDetail extends Component {
                                 {item.deskripsi}
                             </td>
                             {
-                                item.dataStatus === 'Unverified' ?
+                                item.dataStatus === 'Unverified' || this.state.type === 'new' ?
                                 <td>
                                     <input type='button' value='Accept' className='btn btn-success' onClick={() => this.onAcceptedDetail(item.id) }/>
                                     <input type='button' value='Rejected' className='btn btn-danger' onClick={() => this.setState({openModalReject: true, rejectId: item.id})}/>
@@ -134,16 +140,17 @@ class AdminReviewStudentDetail extends Component {
                                 null
                             }
                             {
-                                item.dataStatus === 'Update Unverified' ?
+                                item.dataStatus === 'Update Unverified' || this.state.type === 'update' ?
                                 <td>
 
                                     {/* <input type='button' value='Accept Updated' className='btn btn-success' />
                                     <input type='button' value='Rejected Updated' className='btn btn-danger' /> */}
                                     <input type='button' className='btn btn-dark' value='Compare Changes' 
                                         onClick={() => this.showCompareDetails(item.id, {
-                                            newKelas: item.kelas,
-                                            newDeskripsi: item.deskripsi,
-                                            newPictureReport: item.pictureReport
+                                            id: item.id,
+                                            kelas: item.kelas,
+                                            deskripsi: item.deskripsi,
+                                            pictureReport: item.pictureReport
                                         })}
                                     />
                                 </td>
@@ -182,28 +189,138 @@ class AdminReviewStudentDetail extends Component {
         .then((res) => {
             console.log(res.data)
             this.setState({
-                openModalCompare: true,
                 dataLama: res.data[0],
-                dataBaru
+                dataBaru,
+                idDetailSelected: id
+            }, () => {
+                this.setState({
+                    openModalCompare: true
+                })
             })
+            console.log(this.state.dataLama)
         })
         .catch((err) => {
             console.log(err)
         })
     }
 
+    updateDetailApprove = (idBaru, idLama) => {
+        console.log(idBaru)
+        console.log(idLama)
+
+        let data = {
+            detailId: this.state.idDetailSelected,
+            idStudentDetail: idBaru,
+            idrev: idLama
+        }
+
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + `/studentdetailrev/studentdetail-update-approve`, {data} , options)
+            .then((res) => {
+                console.log(res.data)
+               this.setState({
+                   openModalCompare: false, 
+                   dataLama: null,
+                    dataBaru: null, 
+                    idDetailSelected: null
+               })
+                this.getDetailUnverified()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    updateDetailReject = (idBaru, idLama) => {
+        console.log(idBaru)
+        console.log(idLama)
+
+        let data = {
+            detailId: this.state.idDetailSelected,
+            idStudentDetail: idBaru,
+            idrev: idLama,
+            statusNote: this.rejectNote.value
+        }
+
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + `/studentdetailrev/studentdetail-update-reject`, { data }, options)
+            .then((res) => {
+                console.log(res.data)
+                this.setState({
+                    openModalCompare: false,
+                    dataLama: null,
+                    dataBaru: null,
+                    idDetailSelected: null
+                })
+                this.getDetailUnverified()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+
     renderModalCompareDetails = () => {
         return (
             <div className='row m-0'>
-                <div className='col-6'>
-                    Data Lama
-                    <p>Kelas {this.state.dataLama.kelas}</p>
+                <div className='col-5'>
+                    Data Lama 
+                    <p>Kelas: {this.state.dataLama.kelas}</p>
+                    <p>Deskripsi: {this.state.dataLama.deskripsi}</p>
+                    <img src={URL_API + this.state.dataLama.pictureReport} alt={this.state.dataLama.pictureReport} className='img-fluid' />
                 </div>
-                <div className='col-6'>
+                <div className='col-1'>
+                    <p>&raquo;</p>
+                </div>
+                <div className='col-5'>
                     Data Baru
-                    <p>Kelas {this.state.dataBaru.kelas}</p>
+                    <p>Kelas: {this.state.dataBaru.kelas}</p>
+                    <p>Deskripsi: {this.state.dataBaru.deskripsi}</p>
+                    <img src={URL_API + this.state.dataBaru.pictureReport} alt={this.state.dataBaru.pictureReport} className='img-fluid' />
                 </div>
             </div>
+        )
+    }
+
+    renderModalFooterCompare = () => {
+        return (
+            <div>
+                <div className="p-3">
+                    <h3 className="mx-2">Alasan Reject</h3>
+                    <input type="text" className="form-control mx-2 " ref={(rejectNote) => this.rejectNote = rejectNote} onChange={() => this.setState({ rejectNote: this.rejectNote.value })} placeholder='Isi alasan untuk me-reject' />
+                </div>
+
+                <div className="d-flex flex-row my-4 mx-4">
+
+                    
+
+                    {
+                        this.state.rejectNote ?
+                            <input type="button" className="btn btn-danger form-control mx-2" value="reject update" onClick={() => this.updateDetailReject(this.state.dataBaru.id, this.state.dataLama.id)} />
+                            :
+                            <input type="button" className="btn btn-success form-control mx-2 " value="approve update" onClick={() => this.updateDetailApprove(this.state.dataBaru.id, this.state.dataLama.id)} />
+                    }
+
+                </div>
+
+                {/* <div className="p-3">
+                    <h3 className="mx-2">Alasan Reject</h3>
+                    <input type="text" className="form-control mx-2 " ref="reject" />
+                </div> */}
+            </div>
+
         )
     }
 
@@ -229,16 +346,21 @@ class AdminReviewStudentDetail extends Component {
 
                 {/* Modal Compare */}
 
-                <Modal isOpen={this.state.openModalCompare} toggle={()=>this.setState({ openModalCompare : false})}  size="xl">
-                    <ModalHeader>
-                        Compare  Student Details
+                {
+                    this.state.dataLama ?
+                        <Modal isOpen={this.state.openModalCompare} toggle={() => this.setState({ openModalCompare: false, dataLama: null, dataBaru: null, idDetailSelected: null })} size="xl">
+                            <ModalHeader>
+                                Compare  Student Details
                     </ModalHeader>
-                    <ModalBody>
-                        {this.renderModalCompareDetails()}
-                         
-                    </ModalBody>
-                        {/* {this.renderModalFooterCompare()} */}
-                </Modal>
+                            <ModalBody>
+                                {this.renderModalCompareDetails()}
+
+                            </ModalBody>
+                            {this.renderModalFooterCompare()}
+                        </Modal>
+                        :
+                        null
+                }
 
                 <div className='row m-0'>
                     {

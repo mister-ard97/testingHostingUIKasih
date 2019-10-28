@@ -109,6 +109,7 @@ class Studentlist extends Component {
         
         Axios.post(URL_API+`/student/getstudentdatapaging`,obj, headers)
         .then(res=>{
+            console.log(res.data)
             var results = res.data.rows.map((val,id)=>{
                 var hasil = {...val, ...val.School}
                 delete hasil.School
@@ -117,6 +118,9 @@ class Studentlist extends Component {
             console.log(res)
             this.setState({studentdata:results,totalstudent:res.data.count})
         
+        })
+        .catch((err) => {
+            console.log(err)
         })
     
     }

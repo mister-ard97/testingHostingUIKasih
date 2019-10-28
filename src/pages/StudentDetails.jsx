@@ -27,19 +27,8 @@ class StudentDetails extends Component {
 
         // GANTI JADI POST YANG NERIMA REQ.BODY
 
-
-        var id = this.props.location.search.split('=')[1]
-        // Axios.get(API_URL + `/student/get-student-detail/1` )
-        console.log(id)
-        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
-        .then((res) => {
-            this.setState({ data: res.data, pendidikan: res.data[0].pendidikanTerakhir })
-            console.log(this.state.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-
+        this.getStudentDetail()
+      
         // Dino
         // Axios.get(API_URL+'/studentdetail/get-student-detail/1')
         // .then(res=>{
@@ -47,6 +36,21 @@ class StudentDetails extends Component {
         // }).catch(err=>{
         //     console.log(err)
         // })
+
+    }
+
+    getStudentDetail = () => {
+        var id = this.props.location.search.split('=')[1]
+        // Axios.get(API_URL + `/student/get-student-detail/1` )
+        console.log(id)
+        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
+            .then((res) => {
+                this.setState({ data: res.data, pendidikan: res.data[0].pendidikanTerakhir })
+                console.log(this.state.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
 
     }
 
@@ -187,6 +191,7 @@ class StudentDetails extends Component {
                                             <div>
                                             <p>Status Rejected</p>
                                             <p className='text-danger'>Note : {item.statusNote}</p>
+                                            <input type='button' className='btn btn-dark' value='Revert Changes' onClick={() => this.revertDetailChange(item.id)} />
                                             <input type='button' className='btn btn-primary' value='Change Document' onClick={() => this.setState({selectedId: item.id})}/>
                                         </div>
                                         :
@@ -210,6 +215,24 @@ class StudentDetails extends Component {
         })    
     }
 
+    revertDetailChange =  (id) => {
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+               
+            }
+        }
+        Axios.get(URL_API + `/studentdetailrev/revertDetail/${id}`, options)
+        .then((res) => {
+            alert('Success Revert');
+            this.getStudentDetail()
+        })
+        .catch((err) => {
+            alert(err)
+        })
+    }
+
     onAddImageFileChange = (e) => {
         console.log(e.target.files[0])
         if(e.target.files[0]){
@@ -231,8 +254,7 @@ class StudentDetails extends Component {
 
     // Untuk USER ketika direject dapat mengganti data yang dia inginkan
     confirmEdit = (id, obj) => {
-        console.log(obj)
-
+        
         let token = localStorage.getItem('token')
         var options ={
             headers: {
@@ -267,8 +289,14 @@ class StudentDetails extends Component {
             id = this.props.location.search.split('=')[1]
             Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
             .then((res) => {
-                this.setState({ data: res.data, selectedId: 0 })
-                console.log(this.state.data)
+                this.setState({ 
+                    data: res.data, 
+                    selectedId: 0,
+                    editImageFileName: 'Select Image', 
+                    editImageFile: undefined
+                })
+                this.refs.descEdit.value = ''
+                this.KelasEdit.value = ''
             })
             .catch((err) => {
                 console.log(err)
