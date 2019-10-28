@@ -182,11 +182,11 @@ class Home extends Component {
     }
  
     render() {
-        if(this.state.searchProject) {
-            return (
-                <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
-            )
-        }
+        // if(this.state.searchProject) {
+        //     return (
+        //         <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
+        //     )
+        // }
         return (
             <div>
                 <div>
@@ -197,16 +197,18 @@ class Home extends Component {
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
                                 </div>
                                 <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value})}>
                                         <option value='asc'>Newest Post</option>
                                         <option value='desc'>Older Post</option>
                                     </select>
                                 </div>
                             </div>
-                            <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
+                            <a  className='btn btn-success mt-3 p-3' href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} > Search </a>
+                            {/* <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/> */}
+                         
                             {/* <ProjectList /> */}
                             {/* <Route to='/project-list' component={ProjectList} /> */}
                             {this.renderProjectList()}

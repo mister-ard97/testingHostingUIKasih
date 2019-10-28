@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { URL_API } from '../helpers/Url_API';
 import { Link } from 'react-router-dom';
 
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink, Progress } from 'reactstrap';
 
 import queryString from 'query-string';
 
@@ -42,23 +42,60 @@ class ProjectList extends Component {
             }
 
         let limit = 1
-        
-        Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+        Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
-            var results = res.data.result.map((val,id)=>{
-                var hasil = {...val, ...val.User}
+            console.log(res.data.results)
+            var results = res.data.results.map((val,id)=>{
+                
+                var hasil = {...val, ...val.User,...val.Payments[0]}
+                console.log(hasil)
                 delete hasil.User
+                delete hasil.Payments
+      
+                
                 return hasil
             })
 
+            console.log(results)
+
+            // this.setState({
+            //     ProjectList : results,
+            //     totalpage : Math.ceil(res.data.total / limit)
+            // })
+            //console.log(res.data)
+            
             this.setState({
-                ProjectList : results,
-                totalpage : Math.ceil(res.data.total / limit)
+                ProjectList: results,
+                totalpage: Math.ceil(res.data.total / limit),
             })
         })
         .catch((err) => {
             console.log(err)
         })
+        
+        // Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
+        // .then((res) => {
+        //     var results = res.data.result.map((val,id)=>{
+        //         var hasil = {...val, ...val.User}
+        //         delete hasil.User
+          
+        //         return hasil
+        //     })
+
+        //     this.setState({
+        //         ProjectList : results,
+        //         totalpage : Math.ceil(res.data.total / limit)
+        //     })
+        // })
+        // .catch((err) => {
+        //     console.log(err)
+        // })
         }
         
     }
@@ -165,7 +202,19 @@ class ProjectList extends Component {
                                 <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
-                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                                <h6 className="mb-5">Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                                <h5>Yang terkumpul sekarang : </h5>
+                                <h6>Rp. {numeral(val.totalNominal).format(0,0)}</h6>
+                                {/* <div className="d-flex flex-row">
+
+                                    <Progress animated value={(val.totalNominal / val.totalTarget) * 100} />
+                                    <div className="text-gray">{(val.totalNominal / val.totalTarget) * 100} %</div>
+                                </div> */}
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                             </div>
                         </div>
                     </a>    
@@ -237,9 +286,15 @@ class ProjectList extends Component {
 
             Axios.post(URL_API + `/project/searchproject`, data)
             .then((res) => {
+                console.log(res.data.results)
                 var results = res.data.results.map((val,id)=>{
-                    var hasil = {...val, ...val.User}
+                    
+                    var hasil = {...val, ...val.User,...val.Payments[0]}
+                    console.log(hasil)
                     delete hasil.User
+                    delete hasil.Payments
+          
+                    
                     return hasil
                 })
 
