@@ -21,7 +21,6 @@ import StudentDetail from './pages/StudentDetails'
 // ADMIN 
 import AdminVerifyDetail from './pages/admin/verifydetail'
 
-import io from 'socket.io-client'
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';

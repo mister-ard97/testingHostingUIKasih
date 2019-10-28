@@ -3,7 +3,8 @@ import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'r
 import Axios from 'axios'
 import {URL_API} from '../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
-
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -135,7 +136,27 @@ class ScholarshipAdd extends Component{
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Description</Label>
-                        <Input type='textarea' name='description' id='description'/>
+                        {/* <Input type='textarea' name='description' id='description'/>
+                     */}
+                     <CKEditor
+                        editor={ ClassicEditor }
+                        data="<p>Hello from CKEditor 5!</p>"
+                        onInit={ editor => {
+                            // You can store the "editor" and use when it is needed.
+                            console.log( 'Editor is ready to use!', editor );
+                        } }
+                        onChange={ ( event, editor ) => {
+                            const data = editor.getData();
+                            console.log( { event, editor, data } );
+                        } }
+                        onBlur={ ( event, editor ) => {
+                            console.log( 'Blur.', editor );
+                        } }
+                        onFocus={ ( event, editor ) => {
+                            console.log( 'Focus.', editor );
+                        } }
+                    />
+                    
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Targer Galangan Dana</Label>
