@@ -1,10 +1,11 @@
 import React, { Component} from 'react'
 import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'reactstrap'
 import Axios from 'axios'
-import {URL_API} from '../helpers/Url_API'
+import {URL_API} from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -27,7 +28,15 @@ const useStyles = makeStyles(theme => ({
 class ScholarshipAdd extends Component{
     state = {
         datasiswa : '',
-        siswa: ''
+        siswa: '',
+        sekolah: '',
+        kelas:'',
+        bulan:'',
+        deskripsi:'',
+        sDeskripsi:'',
+        nominal: 0,
+        judul:''
+
     }
     componentDidMount = () => {
         let token = localStorage.getItem('token')
@@ -46,22 +55,50 @@ class ScholarshipAdd extends Component{
         })
     }
     onChangeSiswa = (name) => {
-        console.log(this.refs.siswa.value)
+        // console.log(this.refs.siswa.value)
     }
     renderSiswa = () =>{
         var data = this.state.datasiswa
         return data.map((val, i) =>{
             return (
-                <MenuItem key={val.id} value={val.name}>{val.name}</MenuItem>
+                <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem>
             )
         })
     }
 
+
+    renderBulan = () => {
+        let bulan = 12
+        let result = ''
+        for(var i = 1; i< bulan; i++){
+            result += `<MenuItem key = ${i} value=${i}>${i} Bulan</MenuItem>`
+        }
+        console.log(result)
+        document.getElementById('bulan').innerHTML=`<MenuItem key =1 value=1>1 Bulan</MenuItem>`
+        // return result
+    }
+
     handleChangesiswa = name => event => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({siswa: event.target.value})
-    // setValues({ ...values, [name]: event.target.value });
+        
+        let id = event.target.value
+        Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
+        .then((res) => {
+            // console.log(res.data[0])
+            this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
+        })
+        .catch((err)=> {
+            console.log(err)
+        })
     };
+    
+    handleChangeBulan = name => event => {
+        this.setState({ bulan: event.target.value})
+    }
+
+
+
     renderFormAddScholarship = () => {
         const {textField, menu, formControl} = useStyles
         var bulan = 12
@@ -70,17 +107,9 @@ class ScholarshipAdd extends Component{
                 <Form>
                     <FormGroup>
                         <Label for="judul">Judul Galangan Dana</Label>
-                        <Input type="text" name='judul' id='judul' placeholder='Ringankan biaya sekolah agus'/>
+                        <Input ref='judul' type="text" name='judul' id='judul' placeholder='Ringankan biaya sekolah agus' onChange={(e)=>this.setState({judul: e.target.value})}/>
                     </FormGroup>
                     <FormGroup>
-                        {/* <Label for="namaSiswa">Pilih siswa</Label> */}
-                        {/* <select name='siswa' id='siswa' multiple  ref='siswa' >
-                            {this.state.datasiswa.map((val)=>{
-                                return (
-                                    <option value={val.name} name='siswa' >{val.name}</option>
-                                )
-                            })} */}
-                        {/* </select> */}
                         <TextField
                             id="kelas"
                             multiple
@@ -103,23 +132,55 @@ class ScholarshipAdd extends Component{
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Nama Sekolah/Perguruan tinggi</Label>
-                        <Input type='text' name='sekolah' id='sekolah' defaultValue='SMA satu dua' disabled/>
+                        <Input type='text' name='sekolah' id='sekolah' defaultValue={this.state.sekolah.namaSekolah} disabled/>
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Kelas/Semester</Label>
-                        <Input type='text' name='kelas' id='kelas' defaultValue='XI IPA' disabled/>
+                        <Input type='text' name='kelas' id='kelas' defaultValue={this.state.kelas} disabled/>
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Jurusan</Label>
                         <Input type='text' name='sekolah' id='sekolah' defaultValue='TKJ' disabled/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="Sekolah">Targer Galangan Dana</Label>
-                        <Input type='number' name='nominal' id='nominal'/>
+                        <Label for="Sekolah">Target Galangan Dana</Label>
+                        <Input ref='nominal' type='number' name='nominal' id='nominal' onChange={(e)=>this.setState({nominal: e.target.value})}/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="namaSiswa">Durasi Galangan dana</Label>
-                        <Input type='select' name='siswa' id='bulan'>
+                        <TextField
+                            id="bulan"
+                            multiple
+                            select
+                            label="Durasi galangan dana"
+                            className={textField, formControl}
+                            value={this.state.bulan}
+                            onChange={this.handleChangeBulan()}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: menu,
+                                },
+                            }}
+                            margin="normal"
+                            fullWidth
+                        >
+                            {/* Render dropwodn menu */}
+                            {/* {this.renderBulan()} 
+                            <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem> */}
+                            <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
+                            <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
+                            <MenuItem key={3} value={3}> 3 Bulan </MenuItem>
+                            <MenuItem key={4} value={4}> 4 Bulan </MenuItem>
+                            <MenuItem key={5} value={5}> 5 Bulan </MenuItem>
+                            <MenuItem key={6} value={6}> 6 Bulan </MenuItem>
+                            <MenuItem key={7} value={7}> 7 Bulan </MenuItem>
+                            <MenuItem key={8} value={8}> 8 Bulan </MenuItem>
+                            <MenuItem key={9} value={9}> 9 Bulan </MenuItem>
+                            <MenuItem key={10} value={10}> 10 Bulan </MenuItem>
+                            <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
+                            <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
+                        </TextField>
+                        {/* <Label for="namaSiswa">Durasi Galangan dana</Label>
+                        <Input ref='bulan' type='select' name='siswa' id='bulan'>
                             <option> 1 Bulan </option>
                             <option> 2 Bulan </option>
                             <option> 3 Bulan </option>
@@ -132,7 +193,7 @@ class ScholarshipAdd extends Component{
                             <option> 10 Bulan </option>
                             <option> 11 Bulan </option>
                             <option> 12 Bulan </option>
-                        </Input>
+                        </Input> */}
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Description</Label>
@@ -147,7 +208,9 @@ class ScholarshipAdd extends Component{
                         } }
                         onChange={ ( event, editor ) => {
                             const data = editor.getData();
-                            console.log( { event, editor, data } );
+                            // console.log( { event, editor, data } );
+                            this.setState({deskripsi: data})
+                            // console.log(this.state.deskripsi)
                         } }
                         onBlur={ ( event, editor ) => {
                             console.log( 'Blur.', editor );
@@ -159,27 +222,42 @@ class ScholarshipAdd extends Component{
                     
                     </FormGroup>
                     <FormGroup>
-                        <Label for="Sekolah">Targer Galangan Dana</Label>
-                        <Input type='textarea' name='shareDescription' id='shareDescription'/>
+                        <Label for="Sekolah">Pesan ajakan</Label>
+                        <Input type='textarea' name='shareDescription' id='shareDescription' onChange={(text)=> this.sDeskripsi(text.target.value)} maxLength='240'/>
+                        <p style={{fontStyle:'italic'}}>{this.state.sDeskripsi.length} / 240</p>
                     </FormGroup>
-                    <Button color='success'>Submit</Button>
+                    <Button color='success' onClick={this.handleSubmitBtn}>Submit</Button>
                 </Form>
             </div>
         )
     }
+    sDeskripsi = (text) => {
+        this.setState({sDeskripsi: text})
+       
+    }
 
-    renderBulan = () => {
-        var bulan = 12
-        var result = "<option>${i} bulan</option>"
-        for(var i = 1 ; i<= bulan ; i++){
-            // result += `<option>${i} bulan</option>`
-            console.log(i)
+    handleSubmitBtn = () => {
+        let data = {
+            judul : this.state.judul,
+            studentId : this.state.siswa,
+            schoolId : this.state.sekolah.id,
+            userId : this.props.userId,
+            nominal : this.state.nominal,
+            durasi : this.state.bulan,
+            description : this.state.deskripsi,
+            shareDescription : this.state.sDeskripsi
         }
-        console.log(result)
-        return document.getElementById('bulan').innerHTML = "<option>masuk</option>"
+        console.log(data)
+        Axios.post(URL_API + '/scholarship/addScholarship', data)
+        .then((res) => {
+            console.log(res.data)
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
     render(){
-        
+        // console.log(this.state.detailSiswa.namaSekolah)
+        // console.log(this.state.sDeskripsi)
         if(!this.state.datasiswa){
             return <h2>Loading</h2>
         }
@@ -192,4 +270,9 @@ class ScholarshipAdd extends Component{
     }
 }
 
-export default ScholarshipAdd;
+const mapStatetoProps = ({auth}) =>{
+    return{
+        userId : auth.id
+    }
+}
+export default connect(mapStatetoProps,{}) (ScholarshipAdd);

@@ -114,6 +114,7 @@ class Studentlist extends Component {
                 delete hasil.School
                 return hasil
             })
+            console.log(res.data)
             console.log(res)
             this.setState({studentdata:results,totalstudent:res.data.count})
         
