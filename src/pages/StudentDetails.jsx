@@ -79,6 +79,7 @@ class StudentDetails extends Component {
                  <p>Pendidikan Terakhir: {val.pendidikanTerakhir}</p>
                  <p>Gender: {val.gender}</p>
                  <p>Status Keluarga: {val.status}</p>
+                 <p>Alamat: {val.alamat}</p>
                  <p>Story : {val.story}</p>
                  <p></p>
                   <table>

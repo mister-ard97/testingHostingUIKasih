@@ -15,7 +15,7 @@ class AdminVerifyDetail extends Component {
                 'Authorization': `Bearer ${token}`,
             }
         }
-        Axios.get(URL_API + '/studentdetail/student-detail-unverified', options)
+        Axios.get(URL_API + '/studentdetailrev/student-detail-unverified', options)
         .then((res) => {
             console.log(res.data)
         })

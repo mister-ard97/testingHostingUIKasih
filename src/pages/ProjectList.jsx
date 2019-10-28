@@ -22,16 +22,26 @@ class ProjectList extends Component {
         const parsed = queryString.parse(this.props.location.search);
         console.log(parsed)
         if(parsed.search || parsed.orderby || parsed.page) {
+
+            let searchOrder = document.getElementById('searchOrder').options
+            
+            for(let x = 0; x < searchOrder.length; x++) {
+               if(searchOrder[x].value === parsed.orderby) {
+                    searchOrder[x].selected = true
+               }
+            }
+
             this.selectOrder.value = parsed.orderby
             this.searchText.value = parsed.search
-            this.searchProject()
+            this.searchProject();
+            
         } else {
             console.log(parsed)
             if(!parsed.page){
                 parsed.page = 1
             }
 
-        let limit = 4
+        let limit = 1
         
         Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
         .then((res) => {
@@ -85,7 +95,10 @@ class ProjectList extends Component {
         if(this.state.totalpage !== 0){
             const parsed = queryString.parse(this.props.location.search);
             var currentpage = parsed.page
-            if(parsed.search || parsed) {
+            if(!parsed.page) {
+                currentpage =  1
+            }
+            if (parsed.search || parsed.orderby) {
                 console.log('Masuk')
                 return (
                     <Pagination aria-label="Page navigation example">
@@ -260,7 +273,7 @@ class ProjectList extends Component {
                                 <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
                             </div>
                             <div className='col-6'>
-                                <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                <select id='searchOrder' className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
                                     <option value='asc'>Newest Post</option>
                                     <option value='desc'>Older Post</option>
                                 </select>
