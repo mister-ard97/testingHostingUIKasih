@@ -507,6 +507,14 @@ class Studentlist extends Component {
         
     }
 
+    toggle = () => {
+        if(this.state.openModal) {
+            this.setState({
+                openModal: !this.state.openModal
+            })
+        }
+    }
+
     render() { 
         console.log(this.state.studentdata)
             return (

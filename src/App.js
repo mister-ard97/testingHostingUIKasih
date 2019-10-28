@@ -17,6 +17,10 @@ import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
 import StudentList from './pages/StudentData'
 import StudentDetail from './pages/StudentDetails'
+
+// ADMIN 
+import AdminVerifyDetail from './pages/admin/verifydetail'
+
 import io from 'socket.io-client'
 //PROJECT
 // import PostStudent fro
@@ -45,7 +49,7 @@ class App extends Component {
 
   componentDidMount() {
     console.log('asd')
-    // const socket = io(URL_API) //localhost 
+    const socket = io(URL_API) //localhost 
     this.props.KeepLogin();
   }
 
@@ -92,6 +96,7 @@ class App extends Component {
                   {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
+                <Route path='/adminverify-detail' component={AdminVerifyDetail} />
                 <Route path='/adminverify' component={AdminVerifyPage} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
