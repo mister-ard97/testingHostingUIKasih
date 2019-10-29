@@ -176,8 +176,8 @@ class Subscription extends Component {
     }
 
     render() { 
-        console.log(this.props.email)
-        console.log(this.props.subStatus)
+        // console.log(this.props.email)
+        // console.log(this.props.subStatus)
         if(this.state.redirectHome){
             return(
                 <Redirect to='/login' />
@@ -198,15 +198,15 @@ class Subscription extends Component {
             <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-group'>
-              
+                    <h3>List dari Subscription Scholarship</h3>
                     <label for="exampleInputEmail1">Silahkan pilih jumlah nominal langganan</label>
-                        <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
-                            <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
-                            <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
-                            <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
-                            <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
-                            <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
-                        </select>
+                    <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
+                        <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
+                        <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
+                        <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
+                        <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
+                        <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
+                    </select>
               
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">

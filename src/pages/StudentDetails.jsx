@@ -54,17 +54,20 @@ class StudentDetails extends Component {
 
     }
 
-    deleteDetail = (id) => {
-        var studentId = this.props.location.search.split('=')[1]
-        Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
-        .then((res) => {
-            // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
-            // .then((res) => {
-                this.setState({ data: res.data })
-                console.log(this.state.data)
-            // })
-        })
-    }
+    // deleteDetail = (id) => {
+    //     var studentId = this.props.location.search.split('=')[1]
+    //     Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
+    //     .then((res) => {
+    //         // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+    //         // .then((res) => {
+    //             this.setState({ data: res.data })
+    //             console.log(this.state.data)
+    //         // })
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     // renderRaport=()=>{
     //     if(this.state.raportUser.length !==0){
@@ -153,7 +156,8 @@ class StudentDetails extends Component {
                                     <input type="button" value='confirm' onClick={() => this.confirmEdit(item.id, {
                                         oldPictureReport: item.pictureReport,
                                         oldDeskripsi: item.deskripsi,
-                                        oldKelas: item.kelas   
+                                        oldKelas: item.kelas,
+                                        dataStatus: item.dataStatus
                                     })}/>
                                 </td>
                             </tr>
@@ -203,6 +207,18 @@ class StudentDetails extends Component {
                                         : 
                                         null
                                     }
+
+                                    {
+                                        item.dataStatus === 'Register Rejected' ?
+                                        <div>
+                                            <p>Status Rejected New Student</p>
+                                            <p className='text-danger'>Note : {item.statusNote}</p>
+                                            <input type='button' className='btn btn-primary' value='Change Document' onClick={() => this.setState({selectedId: item.id})}/>
+                                            {/* <input type='button' className='btn btn-danger' value='Delete Dokumen' onClick={() => this.deleteDetailDokumen(item.id)} /> */}
+                                        </div>
+                                        :
+                                        null
+                                    }
                                     {/* <input type="button" value='edit' onClick={() => this.setState({ selectedId: item.id })}/> */}
                                 </td>
                                 <td>
@@ -214,6 +230,23 @@ class StudentDetails extends Component {
             })
         })    
     }
+
+    // deleteDetailDokumen = (id) => {
+        
+    //     var studentId = this.props.location.search.split('=')[1]
+
+    //     Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
+    //     .then((res) => {
+    //         // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+    //         // .then((res) => {
+    //             this.setState({ data: res.data })
+    //             console.log(this.state.data)
+    //         // })
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     revertDetailChange =  (id) => {
         let token = localStorage.getItem('token')
@@ -268,7 +301,7 @@ class StudentDetails extends Component {
             id,
             deskripsi: this.refs.descEdit.value,
             studentId: this.props.location.search.split('=')[1],
-            dataStatus: 'Update Unverified',
+            dataStatus: obj.dataStatus,
             kelas: this.KelasEdit.value
         }
 
@@ -289,14 +322,16 @@ class StudentDetails extends Component {
             id = this.props.location.search.split('=')[1]
             Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
             .then((res) => {
+                
+                this.refs.descEdit.value = ''
+                this.KelasEdit.value = ''
+                
                 this.setState({ 
                     data: res.data, 
                     selectedId: 0,
                     editImageFileName: 'Select Image', 
                     editImageFile: undefined
                 })
-                this.refs.descEdit.value = ''
-                this.KelasEdit.value = ''
             })
             .catch((err) => {
                 console.log(err)

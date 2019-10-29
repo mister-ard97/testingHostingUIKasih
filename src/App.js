@@ -69,7 +69,7 @@ class App extends Component {
     }
     return (
         <div className='MaCommerce' >
-    
+              { /* Buat Route untuk User dan User Admin */ }
               <Header />
               <Switch>
                 <Route path='/' component={Home} exact />

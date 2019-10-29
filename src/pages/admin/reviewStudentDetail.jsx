@@ -18,6 +18,7 @@ class AdminReviewStudentDetail extends Component {
 
         rejectNote: null
     }
+    
     componentDidMount(){
         this.getDetailUnverified()
     }  
@@ -35,19 +36,37 @@ class AdminReviewStudentDetail extends Component {
         }
         Axios.get(URL_API + `/studentdetailrev/get-student-detailrev/${parsed.id}/?type=${parsed.type}`, options)
         .then((res) => {
-            console.log(res.data)
+            
             // console.log(res.data[0].StudentDetails)
             if(res.data.length === 0) {
                 this.setState({
                     data: [],
                     name: null,
-                    type: parsed.type
+                    type: parsed.type,
+                    
+                    openModalCompare: false, 
+                    openModalReject: false,
+                    dataLama: null,
+                    dataBaru: null, 
+                    idDetailSelected: null,
+
+                    rejectId : null,
+                    rejectNote: null
                 })
             } else {
                 this.setState({
                     data: res.data[0].StudentDetails,
                     name: res.data[0].name,
-                    type: parsed.type
+                    type: parsed.type,
+
+                    openModalCompare: false, 
+                    openModalReject: false,
+                    dataLama: null,
+                    dataBaru: null, 
+                    idDetailSelected: null,
+
+                    rejectId : null,
+                    rejectNote: null
                 })
             }
             
@@ -95,10 +114,10 @@ class AdminReviewStudentDetail extends Component {
         Axios.post(URL_API + `/studentdetailrev/StudentDetailRejected`, obj, options)
         .then((res) => {
             alert('Data telah direject')
-            this.setState({
-                openModalReject: false,
-                rejectId: null
-            })
+            // this.setState({
+            //     openModalReject: false,
+            //     rejectId: null
+            // })
             this.getDetailUnverified();
 
         })
@@ -118,6 +137,7 @@ class AdminReviewStudentDetail extends Component {
     renderListDetailsStudent = () => {
         if(this.state.data) {
             if(this.state.data.length !== 0) {
+                
                 return this.state.data.map((item, id) => {
                     return (
                         <tr key={id}>
@@ -161,6 +181,7 @@ class AdminReviewStudentDetail extends Component {
                     )
                 })
             } else {
+                
                 return (
                     <tr>
                         <td colSpan='4'>
@@ -224,13 +245,15 @@ class AdminReviewStudentDetail extends Component {
         Axios.post(URL_API + `/studentdetailrev/studentdetail-update-approve`, {data} , options)
             .then((res) => {
                 console.log(res.data)
-               this.setState({
-                   openModalCompare: false, 
-                   dataLama: null,
-                    dataBaru: null, 
-                    idDetailSelected: null
-               })
+                alert('Data update diapprove')
                 this.getDetailUnverified()
+            //    this.setState({
+            //        openModalCompare: false, 
+            //        dataLama: null,
+            //         dataBaru: null, 
+            //         idDetailSelected: null
+            //    })
+                
             })
             .catch((err) => {
                 console.log(err)
@@ -258,12 +281,12 @@ class AdminReviewStudentDetail extends Component {
         Axios.post(URL_API + `/studentdetailrev/studentdetail-update-reject`, { data }, options)
             .then((res) => {
                 console.log(res.data)
-                this.setState({
-                    openModalCompare: false,
-                    dataLama: null,
-                    dataBaru: null,
-                    idDetailSelected: null
-                })
+                // this.setState({
+                //     openModalCompare: false,
+                //     dataLama: null,
+                //     dataBaru: null,
+                //     idDetailSelected: null
+                // })
                 this.getDetailUnverified()
             })
             .catch((err) => {
