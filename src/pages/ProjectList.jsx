@@ -42,60 +42,33 @@ class ProjectList extends Component {
             }
 
         let limit = 2
+
+        // let limit = 1
+        
         let data = {
             name: '',
             page: 1,
             date: 'ASC',
             limit
         }
+      
         Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
-            console.log(res.data.results)
-            var results = res.data.results.map((val,id)=>{
-                
-                var hasil = {...val, ...val.User,...val.Payments[0]}
-                console.log(hasil)
+            var results = res.data.result.map((val,id)=>{
+                var hasil = {...val, ...val.User}
                 delete hasil.User
-                delete hasil.Payments
-      
-                
                 return hasil
             })
-
-            console.log(results)
-
-            // this.setState({
-            //     ProjectList : results,
-            //     totalpage : Math.ceil(res.data.total / limit)
-            // })
-            //console.log(res.data)
             
+
             this.setState({
-                ProjectList: results,
-                totalpage: Math.ceil(res.data.total / limit),
+                ProjectList : results,
+                totalpage : Math.ceil(res.data.total / limit)
             })
         })
         .catch((err) => {
             console.log(err)
         })
-        
-        // Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
-        // .then((res) => {
-        //     var results = res.data.result.map((val,id)=>{
-        //         var hasil = {...val, ...val.User}
-        //         delete hasil.User
-          
-        //         return hasil
-        //     })
-
-        //     this.setState({
-        //         ProjectList : results,
-        //         totalpage : Math.ceil(res.data.total / limit)
-        //     })
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        // })
         }
         
     }
@@ -277,7 +250,7 @@ class ProjectList extends Component {
             })
         
 
-            let limit = 1
+            let limit = 2
             
             let data = {
                 name: this.searchText.value,
@@ -290,17 +263,12 @@ class ProjectList extends Component {
 
             Axios.post(URL_API + `/project/searchproject`, data)
             .then((res) => {
-                console.log(res.data.results)
                 var results = res.data.results.map((val,id)=>{
-                    
-                    var hasil = {...val, ...val.User,...val.Payments[0]}
-                    console.log(hasil)
+                    var hasil = {...val, ...val.User}
                     delete hasil.User
-                    delete hasil.Payments
-          
-                    
                     return hasil
                 })
+                console.log(res.data.total)
 
                 console.log(results)
 
