@@ -1,6 +1,7 @@
 import React, { Component} from 'react'
 import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'reactstrap'
 import Axios from 'axios'
+import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 import CKEditor from '@ckeditor/ckeditor5-react';
@@ -35,7 +36,8 @@ class ScholarshipAdd extends Component{
         deskripsi:'',
         sDeskripsi:'',
         nominal: 0,
-        judul:''
+        judul:'',
+        success: false
 
     }
     componentDidMount = () => {
@@ -53,9 +55,6 @@ class ScholarshipAdd extends Component{
         .catch((err) => {
             console.log(err)
         })
-    }
-    onChangeSiswa = (name) => {
-        // console.log(this.refs.siswa.value)
     }
     renderSiswa = () =>{
         var data = this.state.datasiswa
@@ -83,9 +82,10 @@ class ScholarshipAdd extends Component{
         this.setState({siswa: event.target.value})
         
         let id = event.target.value
+        console.log(id)
         Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
         .then((res) => {
-            // console.log(res.data[0])
+            console.log(res.data)
             this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
         })
         .catch((err)=> {
@@ -164,8 +164,6 @@ class ScholarshipAdd extends Component{
                             fullWidth
                         >
                             {/* Render dropwodn menu */}
-                            {/* {this.renderBulan()} 
-                            <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem> */}
                             <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
                             <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
                             <MenuItem key={3} value={3}> 3 Bulan </MenuItem>
@@ -179,21 +177,7 @@ class ScholarshipAdd extends Component{
                             <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
                             <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
                         </TextField>
-                        {/* <Label for="namaSiswa">Durasi Galangan dana</Label>
-                        <Input ref='bulan' type='select' name='siswa' id='bulan'>
-                            <option> 1 Bulan </option>
-                            <option> 2 Bulan </option>
-                            <option> 3 Bulan </option>
-                            <option> 4 Bulan </option>
-                            <option> 5 Bulan </option>
-                            <option> 6 Bulan </option>
-                            <option> 7 Bulan </option>
-                            <option> 8 Bulan </option>
-                            <option> 9 Bulan </option>
-                            <option> 10 Bulan </option>
-                            <option> 11 Bulan </option>
-                            <option> 12 Bulan </option>
-                        </Input> */}
+                        
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Description</Label>
@@ -251,6 +235,7 @@ class ScholarshipAdd extends Component{
         Axios.post(URL_API + '/scholarship/addScholarship', data)
         .then((res) => {
             console.log(res.data)
+            this.setState({success: true})
         }).catch((err)=>{
             console.log(err)
         })
@@ -260,6 +245,9 @@ class ScholarshipAdd extends Component{
         // console.log(this.state.sDeskripsi)
         if(!this.state.datasiswa){
             return <h2>Loading</h2>
+        }
+        if(this.state.success){
+            return <Redirect to='/scholarshipList'/>
         }
         return(
             <div className='container mt-5 mb-5'>
