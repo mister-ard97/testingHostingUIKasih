@@ -54,6 +54,7 @@ class Studentlist extends Component {
 
     printPagination = () =>{
         if(this.state.totalstudent !== 0){
+            var totalpage = Math.ceil(this.state.totalstudent/this.state.limit)
             const parsed = queryString.parse(this.props.location.search);
             var currentpage = parsed.page
             return (
@@ -68,13 +69,13 @@ class Studentlist extends Component {
                     {this.renderPagingButton()}
                   <PaginationItem>
                     <PaginationLink next 
-                    href={`/studentlist?page=${this.state.totalstudent === parseInt(currentpage) || parseInt(currentpage) > this.state.totalstudent ? 
-                    this.state.totalstudent 
+                    href={`/studentlist?page=${totalpage === parseInt(currentpage) || parseInt(currentpage) > totalpage ? 
+                    totalpage 
                 :
                 parseInt(currentpage) + 1}`} />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink last href={`/studentlist?page=${this.state.totalstudent}`} />
+                    <PaginationLink last href={`/studentlist?page=${totalpage}`} />
                   </PaginationItem>
                 </Pagination>
             )
