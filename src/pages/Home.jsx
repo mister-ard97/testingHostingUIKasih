@@ -7,7 +7,7 @@ import { URL_API } from '../helpers/Url_API';
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
 
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
 
 var numeral = require('numeral')
 
@@ -26,28 +26,62 @@ class Home extends Component {
         //     parsed.page = 1
         // }
 
+        // let limit = 4
+
+        // window.scrollTo(0, 0);
+        // Axios.get(URL_API + `/project/getAllProject?page=${1}&limit=4`)
+        //     .then((resProject) => {
+        //         var results = resProject.data.result.map((val,id)=>{
+        //             var hasil = {...val, ...val.User}
+        //             delete hasil.User
+        //             return hasil
+        //         })
+
+        //         console.log(results)
+
+        //         this.setState({
+        //             ProjectList : results,
+        //             totalpage: Math.ceil(resProject.data.total / limit),
+        //             // studentdata: resStudent.data.rows
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
         let limit = 4
-
-        window.scrollTo(0, 0);
-        Axios.get(URL_API + `/project/getAllProject?page=${1}&limit=4`)
-            .then((resProject) => {
-                var results = resProject.data.result.map((val,id)=>{
-                    var hasil = {...val, ...val.User}
-                    delete hasil.User
-                    return hasil
-                })
-
-                console.log(results)
-
-                this.setState({
-                    ProjectList : results,
-                    totalpage: Math.ceil(resProject.data.total / limit),
-                    // studentdata: resStudent.data.rows
-                })
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+        Axios.post(URL_API + `/project/searchproject`, data)
+        .then((res) => {
+            console.log(res.data.results)
+            var results = res.data.results.map((val,id)=>{
+                
+                
+                var hasil = {...val, ...val.User,...val.Payments[0]}
+                console.log(hasil)
+                delete hasil.User
+                delete hasil.Payments
+      
+                
+                return hasil
             })
-            .catch((err) => {
-                console.log(err)
+
+            console.log(results)
+
+  
+            this.setState({
+                ProjectList: results,
+                totalpage: Math.ceil(res.data.total / limit),
             })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
 
     }
 
@@ -60,17 +94,25 @@ class Home extends Component {
                     return (
                         <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
                         <div className='row'>
-                            <div className='col-2'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
                             </div>
     
-                            <div className='col-10'>
-                                <h5>{val.projectName}</h5>
-                                <p className='font-weight-bold'>{val.projectCreator}</p>
-                                <h6>Project Created</h6>
-                                <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.projectName}</h2>
+                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+                                <h6>Project Created</h6> */}
+                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
+                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <h4>Dana yang dibutuhkan :  </h4>
                                 <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
                             </div>
                         </div>
@@ -182,11 +224,11 @@ class Home extends Component {
     }
  
     render() {
-        if(this.state.searchProject) {
-            return (
-                <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
-            )
-        }
+        // if(this.state.searchProject) {
+        //     return (
+        //         <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
+        //     )
+        // }
         return (
             <div>
                 <div>
@@ -197,16 +239,18 @@ class Home extends Component {
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
                                 </div>
                                 <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value})}>
                                         <option value='asc'>Newest Post</option>
                                         <option value='desc'>Older Post</option>
                                     </select>
                                 </div>
                             </div>
-                            <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
+                            <a  className='btn btn-success mt-3 p-3' href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} > Search </a>
+                            {/* <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/> */}
+                         
                             {/* <ProjectList /> */}
                             {/* <Route to='/project-list' component={ProjectList} /> */}
                             {this.renderProjectList()}
