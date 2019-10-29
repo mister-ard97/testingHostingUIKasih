@@ -41,7 +41,7 @@ class ProjectList extends Component {
                 parsed.page = 1
             }
 
-        let limit = 1
+        let limit = 2
         let data = {
             name: '',
             page: 1,
@@ -201,7 +201,9 @@ class ProjectList extends Component {
                                 <h6>Project Created</h6>
                                 <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
+                                <p className="mb-4">{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
+
+                                <h5 className="mb-2 font-weight-bold">Project Target : </h5>
                                 <h6 className="mb-5">Rp. {numeral(val.totalTarget).format(0,0)}</h6>
                                 <h5>Yang terkumpul sekarang : </h5>
                                 <h6>Rp. {numeral(val.totalNominal).format(0,0)}</h6>
@@ -213,6 +215,8 @@ class ProjectList extends Component {
                                 <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
                                 {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
                                 </Progress>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
                                 <h5>Sisa Hari </h5>
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                             </div>

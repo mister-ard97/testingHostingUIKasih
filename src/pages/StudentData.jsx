@@ -182,7 +182,37 @@ class Studentlist extends Component {
         }
     }
 
- 
+    renderButtonStatus= (type, id, index) =>{
+        if(type === 'Update Unverified'){
+            return (
+                <input type="text" className='form-control' value="Please wait for your verification..." disabled/>
+            )
+
+        }else if ( type === 'Rejected'){
+            return (
+                <div>
+                <input type="button" className='btn btn-danger mr-3' value="Revert Changes" onClick={()=>this.revertChanges(id)} />
+                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+            </div>
+                )
+
+        }else if ( type === 'Register Rejected'){
+            return (
+                <div>
+                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+            </div>
+                )
+
+        }else {
+            return (
+                <div>
+                    <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(id)}>delete student</button> 
+                    <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
+                </div>
+            )
+
+        }
+    }
 
 
 
@@ -207,7 +237,7 @@ class Studentlist extends Component {
         
                     <td>
                         <div className="d-flex flex-row ">
-                            
+{/*                             
                             {item.dataStatus === 'Update Unverified' ?
                                    <input type="text" className='form-control' value="Please wait for your verification..." disabled/>
                             :
@@ -217,11 +247,17 @@ class Studentlist extends Component {
                                 <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
                             </div>
                             :
+                            item.dataStatus === 'Register Rejected'?
+                            <div>
+                                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+                            </div>
+                            :
                             <div>
                             <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(item.id)}>delete student</button> 
                             <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
                             </div>
-                        }
+                        } */}
+                        {this.renderButtonStatus(item.dataStatus, item.id, index)}
            
                         </div>
                     </td>
