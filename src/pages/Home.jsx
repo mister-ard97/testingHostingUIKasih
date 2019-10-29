@@ -18,7 +18,7 @@ class Home extends Component {
         totalpage : 0,
         searchProject: false,
         searchText: '',
-        orderby: ''
+        orderby: 'asc'
     }
     componentDidMount() {
         // document.title = 'Testing App'
@@ -105,6 +105,7 @@ class Home extends Component {
                                 {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <p>{val.totalNominal}</p>
                                 <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
                                 {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
                                 </Progress>
@@ -242,7 +243,7 @@ class Home extends Component {
                                     <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
                                 </div>
                                 <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value})}>
+                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
                                         <option value='asc'>Newest Post</option>
                                         <option value='desc'>Older Post</option>
                                     </select>

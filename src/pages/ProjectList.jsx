@@ -37,48 +37,49 @@ class ProjectList extends Component {
             this.searchProject();
             
         } else {
+
             console.log(parsed)
             if(!parsed.page){
                 parsed.page = 1
             }
 
-        let limit = 2
-        let data = {
-            name: '',
-            page: 1,
-            date: 'ASC',
-            limit
-        }
-        Axios.post(URL_API + `/project/searchproject`, data)
-        .then((res) => {
-            console.log(res.data.results)
-            var results = res.data.results.map((val,id)=>{
-                
-                var hasil = {...val, ...val.User,...val.Payments[0]}
-                console.log(hasil)
-                delete hasil.User
-                delete hasil.Payments
-      
-                
-                return hasil
-            })
+            let limit = 2
+            let data = {
+                name: parsed.search,
+                page: parsed.page,
+                date: parsed.orderby,
+                limit
+            }
+            Axios.post(URL_API + `/project/searchproject`, data)
+            .then((res) => {
+                console.log(res.data.results)
+                var results = res.data.results.map((val,id)=>{
+                    
+                    var hasil = {...val, ...val.User,...val.Payments[0]}
+                    console.log(hasil)
+                    delete hasil.User
+                    delete hasil.Payments
+        
+                    
+                    return hasil
+                })
 
-            console.log(results)
+                console.log(results)
 
-            // this.setState({
-            //     ProjectList : results,
-            //     totalpage : Math.ceil(res.data.total / limit)
-            // })
-            //console.log(res.data)
-            
-            this.setState({
-                ProjectList: results,
-                totalpage: Math.ceil(res.data.total / limit),
+                // this.setState({
+                //     ProjectList : results,
+                //     totalpage : Math.ceil(res.data.total / limit)
+                // })
+                //console.log(res.data)
+                
+                this.setState({
+                    ProjectList: results,
+                    totalpage: Math.ceil(res.data.total / limit),
+                })
             })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .catch((err) => {
+                console.log(err)
+            })
         
         // Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
         // .then((res) => {
@@ -187,6 +188,7 @@ class ProjectList extends Component {
     renderProjectList = () => {
 
         if(this.state.ProjectList) {
+            console.log(this.state.ProjectList)
             if(this.state.ProjectList.length !== 0) {
                 return this.state.ProjectList.map((val, index) => {
                     return (
@@ -206,6 +208,7 @@ class ProjectList extends Component {
 
                                 <h5 className="mb-2 font-weight-bold">Project Target : </h5>
                                 <h6 className="mb-5">Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                                <p>{val.totalNominal}</p>
                                 <h5>Yang terkumpul sekarang : </h5>
                                 <h6>Rp. {numeral(val.totalNominal).format(0,0)}</h6>
                                 {/* <div className="d-flex flex-row">
@@ -272,10 +275,10 @@ class ProjectList extends Component {
             //     this.searchText.value = parsed.search
             // }
 
-            this.props.history.push({
-                pathname:'/project-list',
-                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
-            })
+            // this.props.history.push({
+            //     pathname:'/project-list',
+            //     search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
+            // })
         
 
             let limit = 1
