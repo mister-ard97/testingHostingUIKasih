@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import Numeral from 'numeral'
 import { connect } from 'react-redux';
 import { Input } from 'reactstrap'
+import Moment from 'moment'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
@@ -60,7 +61,7 @@ class ProjectDetails extends Component {
     renderProjectList = () => {
         let params = queryString.parse(this.props.location.search)
         if(this.state.ProjectDetail) {
-            return this.state.ProjectDetail.map((val, index) => {
+            return this.state.ProjectDetail.map((val, index) =>{ 
                 return (
                     <div className='card mt-3' key={index}>
                         
@@ -136,7 +137,7 @@ class ProjectDetails extends Component {
                                 Donasi Rp.  {Numeral(val.nominal).format('0,0')}
                             </div>
                             <div className='dateDonasi'>
-                                {val.updatedAt}
+                                {Moment( val.createdAt ).format("DD MMMM YYYY  |  H:mm")+' wib'}
                             </div>
                             <div className='komentar'>
                                 {val.komentar !== '-' ? val.komentar : null}
