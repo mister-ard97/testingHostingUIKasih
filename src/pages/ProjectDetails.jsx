@@ -8,14 +8,12 @@ import Moment from 'moment'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
-    WhatsappShareButton
+    WhatsappShareButton,
+    FacebookIcon,
+    WhatsappIcon
 } from 'react-share';
 
-  import {
-    FacebookIcon,
-    WhatsappIcon,
-  } from 'react-share';
-
+ 
 import queryString from 'query-string'
 
 class ProjectDetails extends Component {
