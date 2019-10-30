@@ -54,6 +54,7 @@ class Studentlist extends Component {
 
     printPagination = () =>{
         if(this.state.totalstudent !== 0){
+            var totalpage = Math.ceil(this.state.totalstudent/this.state.limit)
             const parsed = queryString.parse(this.props.location.search);
             var currentpage = parsed.page
             return (
@@ -68,13 +69,13 @@ class Studentlist extends Component {
                     {this.renderPagingButton()}
                   <PaginationItem>
                     <PaginationLink next 
-                    href={`/studentlist?page=${this.state.totalstudent === parseInt(currentpage) || parseInt(currentpage) > this.state.totalstudent ? 
-                    this.state.totalstudent 
+                    href={`/studentlist?page=${totalpage === parseInt(currentpage) || parseInt(currentpage) > totalpage ? 
+                    totalpage 
                 :
                 parseInt(currentpage) + 1}`} />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink last href={`/studentlist?page=${this.state.totalstudent}`} />
+                    <PaginationLink last href={`/studentlist?page=${totalpage}`} />
                   </PaginationItem>
                 </Pagination>
             )
@@ -182,7 +183,37 @@ class Studentlist extends Component {
         }
     }
 
- 
+    renderButtonStatus= (type, id, index) =>{
+        if(type === 'Update Unverified'){
+            return (
+                <input type="text" className='form-control' value="Please wait for your verification..." disabled/>
+            )
+
+        }else if ( type === 'Rejected'){
+            return (
+                <div>
+                <input type="button" className='btn btn-danger mr-3' value="Revert Changes" onClick={()=>this.revertChanges(id)} />
+                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+            </div>
+                )
+
+        }else if ( type === 'Register Rejected'){
+            return (
+                <div>
+                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+            </div>
+                )
+
+        }else {
+            return (
+                <div>
+                    <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(id)}>delete student</button> 
+                    <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
+                </div>
+            )
+
+        }
+    }
 
 
 
@@ -207,7 +238,7 @@ class Studentlist extends Component {
         
                     <td>
                         <div className="d-flex flex-row ">
-                            
+{/*                             
                             {item.dataStatus === 'Update Unverified' ?
                                    <input type="text" className='form-control' value="Please wait for your verification..." disabled/>
                             :
@@ -217,11 +248,17 @@ class Studentlist extends Component {
                                 <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
                             </div>
                             :
+                            item.dataStatus === 'Register Rejected'?
+                            <div>
+                                <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit again</button> 
+                            </div>
+                            :
                             <div>
                             <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(item.id)}>delete student</button> 
                             <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
                             </div>
-                        }
+                        } */}
+                        {this.renderButtonStatus(item.dataStatus, item.id, index)}
            
                         </div>
                     </td>

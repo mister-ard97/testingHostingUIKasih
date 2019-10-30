@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { URL_API } from '../helpers/Url_API';
 import { Link } from 'react-router-dom';
 
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink, Progress } from 'reactstrap';
 
 import queryString from 'query-string';
 
@@ -41,15 +41,25 @@ class ProjectList extends Component {
                 parsed.page = 1
             }
 
-        let limit = 1
+        let limit = 2
+
+        // let limit = 1
         
-        Axios.get(URL_API + `/project/getAllProject?page=${parsed.page}&limit=${limit}`)
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+      
+        Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
             var results = res.data.result.map((val,id)=>{
                 var hasil = {...val, ...val.User}
                 delete hasil.User
                 return hasil
             })
+            
 
             this.setState({
                 ProjectList : results,
@@ -164,8 +174,24 @@ class ProjectList extends Component {
                                 <h6>Project Created</h6>
                                 <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
-                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                                <p className="mb-4">{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p>
+
+                                <h5 className="mb-2 font-weight-bold">Project Target : </h5>
+                                <h6 className="mb-5">Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                                <h5>Yang terkumpul sekarang : </h5>
+                                <h6>Rp. {numeral(val.totalNominal).format(0,0)}</h6>
+                                {/* <div className="d-flex flex-row">
+
+                                    <Progress animated value={(val.totalNominal / val.totalTarget) * 100} />
+                                    <div className="text-gray">{(val.totalNominal / val.totalTarget) * 100} %</div>
+                                </div> */}
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                             </div>
                         </div>
                     </a>    
@@ -224,7 +250,7 @@ class ProjectList extends Component {
             })
         
 
-            let limit = 1
+            let limit = 2
             
             let data = {
                 name: this.searchText.value,
@@ -242,6 +268,7 @@ class ProjectList extends Component {
                     delete hasil.User
                     return hasil
                 })
+                console.log(res.data.total)
 
                 console.log(results)
 
