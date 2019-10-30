@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 class ScholarshipAdd extends Component{
     state = {
+        existSiswa:'',
         datasiswa : '',
         siswa: '',
         sekolah: '',
@@ -41,13 +42,7 @@ class ScholarshipAdd extends Component{
 
     }
     componentDidMount = () => {
-        let token = localStorage.getItem('token')
-        var param = {
-            params:{
-                userId: 1
-            }
-        }
-        Axios.get( URL_API+'/student/getstudentperuser?id=1' )
+        Axios.get( URL_API+'/student/getstudentperuser?id='+this.props.userId )
         .then((res) => {
             console.log(res.data)
             this.setState({datasiswa: res.data})
@@ -55,14 +50,28 @@ class ScholarshipAdd extends Component{
         .catch((err) => {
             console.log(err)
         })
+
+        Axios.get(URL_API+'/scholarship/getExistStudent?id='+this.props.userId)
+        .then((res) => {
+            console.log(res.data)
+            this.setState({existSiswa: res.data})
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
     renderSiswa = () =>{
         var data = this.state.datasiswa
-        return data.map((val, i) =>{
-            return (
-                <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem>
-            )
+        var exist = this.state.existSiswa
+        var siswa = []
+        let list =  data.map((val, i) =>{
+            // return exist.map((item) =>{
+            //     if(val.id === item.studentId){
+                    return <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem>
+                // }
+            // })
         })
+
+        return list
     }
 
 
@@ -111,7 +120,7 @@ class ScholarshipAdd extends Component{
                     </FormGroup>
                     <FormGroup>
                         <TextField
-                            id="kelas"
+                            id="siswa"
                             multiple
                             select
                             label="Pilih Nama Siswa "
@@ -244,6 +253,9 @@ class ScholarshipAdd extends Component{
         // console.log(this.state.detailSiswa.namaSekolah)
         // console.log(this.state.sDeskripsi)
         if(!this.state.datasiswa){
+            return <h2>Loading</h2>
+        }
+        if(!this.state.existSiswa){
             return <h2>Loading</h2>
         }
         if(this.state.success){

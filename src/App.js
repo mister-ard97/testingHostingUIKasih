@@ -20,7 +20,7 @@ import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 
 import AdminVerifyDetail from './pages/admin/verifydetail'
-
+import ManageScholarship from './pages/admin/manageScholarship'
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
@@ -111,6 +111,7 @@ class App extends Component {
                 <Route path='/post-project' component={PostProject} />
                 <Route path='/adminverify-detail' component={AdminVerifyDetail} />
                 <Route path='/adminverify' component={AdminVerifyPage} />
+                <Route path='/manageScholarship' component={ManageScholarship}/>
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
