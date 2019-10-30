@@ -9,10 +9,11 @@ import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
     WhatsappShareButton,
-    FacebookIcon, 
+    FacebookIcon,
     WhatsappIcon
 } from 'react-share';
 
+ 
 import queryString from 'query-string'
 
 class ProjectDetails extends Component {

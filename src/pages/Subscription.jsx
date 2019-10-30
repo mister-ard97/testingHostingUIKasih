@@ -4,16 +4,18 @@ import { connect } from 'react-redux'
 import { getSub, applySub } from '../redux/actions' 
 import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input, Progress } from 'reactstrap';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
+
 
 class Subscription extends Component {
     state = { 
         redirectHome: false,
         lain : false,
         nominal : 0,
-        nominalDisplay : '0'
+        nominalDisplay : '0',
+        scholarshipList : []
     }
 
     componentDidMount(){
@@ -21,9 +23,12 @@ class Subscription extends Component {
             return this.setState({ redirectHome: true })
         }
         this.props.getSub(this.props.email)
+        // this.getScholarshipList()
         // console.log(this.props.applySub())
     }
 
+   
+    
     formatDisplay (num) {
         let number = parseInt(num.split(',').join('')) 
 
@@ -151,19 +156,10 @@ class Subscription extends Component {
     }
 
     getSubPrice = () => {
-    
-        // if(this.state.lain){
-        //     var subPriceBebas = this.refs.nominalBebas.value
-        //     if(subPriceBebas < 10000){
-        //         return window.alert('Harus diatas Rp. 10.000')
-        //     }
-        //     console.log(subPriceBebas, this.props.email)
-        //     return this.props.applySub(subPriceBebas, this.props.email)
-        // }
-        // var subPrice = this.refs.nominal.value
-        // console.log(subPrice)
-        // this.props.applySub(subPrice, this.props.email)
+
     }
+
+
 
     handleChange = () => {
         var check = this.state.lain
@@ -176,29 +172,13 @@ class Subscription extends Component {
     }
 
     render() { 
-        // console.log(this.props.email)
-        // console.log(this.props.subStatus)
-        if(this.state.redirectHome){
-            return(
-                <Redirect to='/login' />
-            )
-        }
-        if(this.props.subStatus === 1 || this.props.subStatusFromDb === 1){
-            return(
-                <div className='container'>
-                <form style={{width: '100%'}}>
-                    <div className='form-control'>
-                        Nominal langganan anda adalah : Rp. {Numeral(this.props.subNominalFromDb).format('0,0')}
-                    </div>
-                </form>
-            </div>
-            )
-        }
+   
+     
         return ( 
             <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-group'>
-                    <h3>List dari Subscription Scholarship</h3>
+             
                     <label for="exampleInputEmail1">Silahkan pilih jumlah nominal langganan</label>
                     <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
                         <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
@@ -232,6 +212,11 @@ class Subscription extends Component {
                     </div>
       
                 </form>
+
+                {/* <h3>Scholarship List</h3>
+                <div>
+                    {this.renderScholarshipList()}
+                </div> */}
             </div>
          );
     }

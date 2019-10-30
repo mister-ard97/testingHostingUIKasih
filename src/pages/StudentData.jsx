@@ -212,7 +212,7 @@ class Studentlist extends Component {
             return (
                 <div>
                     <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(id)}>delete student</button> 
-                    <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
+                    {/* <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button>  */}
                 </div>
             )
 

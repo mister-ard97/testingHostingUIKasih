@@ -7,9 +7,17 @@ import { URL_API } from '../helpers/Url_API';
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
 
+import {
+    FacebookShareButton,
+    WhatsappShareButton,
+    FacebookIcon,
+    WhatsappIcon
+} from 'react-share';
+import numeral from 'numeral'
+
 import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
 
-var numeral = require('numeral')
+
 
 class Home extends Component {
     state = {
@@ -22,11 +30,50 @@ class Home extends Component {
         searchProject: false,
         searchText: '',
         orderby: 'asc',
-        orderbyScholarship: 'asc'
+        orderbyScholarship: 'asc',
     
+        scholarshipList : [],
+
+        // temporary 
+        orderId : ''
     }
     
     componentDidMount() {
+        // document.title = 'Testing App'
+        // if(!parsed.page){
+        //     parsed.page = 1
+        // }
+
+        // let limit = 4
+
+        // window.scrollTo(0, 0);
+        // Axios.get(URL_API + `/project/getAllProject?page=${1}&limit=4`)
+        //     .then((resProject) => {
+        //         var results = resProject.data.result.map((val,id)=>{
+        //             var hasil = {...val, ...val.User}
+        //             delete hasil.User
+        //             return hasil
+        //         })
+
+        //         console.log(results)
+
+        //         this.setState({
+        //             ProjectList : results,
+        //             totalpage: Math.ceil(resProject.data.total / limit),
+        //             // studentdata: resStudent.data.rows
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
+        this.getProjects()
+        
+        this.getScholarshipList()
+
+
+    }
+
+    getProjects = () =>{
         let limit = 4
         let data = {
             name: '',
@@ -49,7 +96,6 @@ class Home extends Component {
                 return hasil
             })
 
-            // console.log(results)
 
   
             //     this.setState({
@@ -78,9 +124,101 @@ class Home extends Component {
         .catch((err) => {
             console.log(err)
         })
-
-
     }
+
+    getScholarshipList = () =>{
+        Axios.get(URL_API+'/scholarship/getscholarship')
+        .then((res)=>{
+            var results = res.data.map((val)=>{
+                var hasil = {...val, ...val.School, ... val.Student}
+                delete hasil.School
+                delete hasil.Student
+                return hasil
+            })
+            this.setState({
+                scholarshipList : results
+            })
+            console.log(results)
+            
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+
+    renderScholarshipList = () =>{
+        if(this.state.scholarshipList.length !== 0){
+            return this.state.scholarshipList.map((val,id)=>{
+                val.currentSubs = parseInt(val.currentSubs)
+                return(
+                    <div className='row border border-secondary p-3'>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
+                            </div>
+    
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.judul}</h2>
+                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+                                <h6>Project Created</h6> */}
+                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+                                <h6>Project Ended</h6>
+                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <p>{val.nominal}</p>
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0} >
+                                {(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0}%
+                                </Progress>
+                                <div className="d-flex flex-row mb-3">
+                                    <div className="mr-4">
+                                        <h4>Dana yang terkumpul </h4>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs)).format(0,0)}`} disabled/>
+                                    </div>
+
+                                    <div>
+                                        <h4>Dana yang dibutuhkan :  </h4>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                    </div>
+                                </div>
+                       
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <div className="row">
+                                    <div className="col-md-5">
+                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Contribute" onClick={()=>this.renderMidtrans(val.id)}/>
+                                    </div>
+                                    <div className="col-md-7">
+                                        <div className=" d-flex flex-row justify-content-end">
+                                            <div>
+                                                <FacebookShareButton  className='btn btn-primary mr-2'>
+                                                    <div className="d-flex flex-row">
+                                                        <FacebookIcon size={32} round={true}  />
+                                                        <div className="pt-1 ml-2">Share Facebook</div>
+                                                    </div>
+                                                </FacebookShareButton>
+                                                <WhatsappShareButton className='btn btn-success'>
+                                                    <div className="d-flex flex-row">
+                                                        <WhatsappIcon size={32} round={true}  />
+                                                        <div className="pt-1 ml-2">Share Whatsapp</div>
+                                                    </div>
+                                                </WhatsappShareButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           
+
+                               
+
+                             
+                            </div>
+                        </div>
+                )
+            })
+        }
+    }
+
 
     
     renderProjectList = () => {
@@ -266,6 +404,94 @@ class Home extends Component {
             orderby: this.selectOrder.value
         })
     }
+
+
+
+    // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
+
+    renderMidtrans = (id) =>{
+        // var id = this.props.location.search.split('=')[1]
+        console.log(id)
+        var randInt = Math.floor(Math.random()*(999-100+1)+100)
+        // this.setState({orderId: 'dev'+randInt})
+        var parameter = {
+            parameter:{
+                transaction_details: {
+                  order_id :'dev'+randInt,
+                  gross_amount: 300000 // input user
+                },
+                // item_details: [
+                //   {
+                //     id: 'camp-'+randInt,
+                //     price: 300000, //input user
+                //     quantity: 1,
+                //     name: "Subscription " + randInt
+                //   }
+                // ],
+                // customer_details: {
+                //   first_name: this.props.nama,
+                //   email: this.props.email
+                // },
+              },
+            userData:{
+                userId: this.props.id,
+                scholarshipId: id,
+                remainderDate : '2019-12-30 15:00:00', // input user
+                monthLeft : 12 // input user
+
+            }
+        }
+        
+          console.log(parameter)
+          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter)
+          .then((res)=>{
+            console.log(res.data)
+            localStorage.setItem('order_id', res.data.order_id)
+            window.snap.pay(res.data.transactionToken, {
+              onSuccess: (result) => {
+                console.log('success')
+                console.log(result)
+                console.log(result.finish_redirect_url)
+                Axios.post(`${URL_API}/payment/updatePayment`, result)
+                .then((res)=>{
+                    console.log(res.data)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+                var link = result.finish_redirect_url.split('?')[1]
+                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                this.setState({lompatan: `/finish?${link}`})
+                
+               }
+               ,
+               onPending: function(result){
+                 console.log('pending')
+                 console.log(result)
+                 
+                console.log(result.finish_redirect_url)
+                var link = result.finish_redirect_url.split('?')[1]
+                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                this.setState({lompatan: `/unfinish?${link}`})
+                },
+                onError: function(result){
+                 console.log('error')
+                 console.log(result)
+                 console.log(result.finish_redirect_url)
+                 var link = result.finish_redirect_url.split('?')[1]
+                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                this.setState({lompatan: `/error?${link}`})
+                }
+             
+            })
+          }).catch((err)=>{
+            console.log(err)
+          })
+
+
+    }
+
+    //
  
     render() {
         if(this.state.searchProject) {
@@ -314,6 +540,9 @@ class Home extends Component {
                                 </div>
                             </div>
 
+                            <div>
+                                {this.renderScholarshipList()}
+                            </div>
                             {/* <StudentList /> */}
                             {/* {this.renderScholarshipStudentList()} */}
                         </div>
@@ -330,6 +559,7 @@ const mapStateToProps = ({auth, admin}) => {
         email: auth.email,
         name: auth.nama,
         role: auth.role,
+        id : auth.id
     }
 }
 

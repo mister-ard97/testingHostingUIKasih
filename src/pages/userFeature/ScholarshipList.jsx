@@ -53,7 +53,7 @@ class ScholarshipList extends Component{
     }
     renderScholarshipList = () => {
         // if(this.state.data){
-           //  console.log(this.state.data[0].Student.namaSiswa)
+            // console.log(this.state.data[0].Student.namaSiswa)
         return this.state.data.map((val, i) => {
             // console.log(this.state.data[i].Student.namaSiswa)
             // console.log(val.Student.namaSiswa)
