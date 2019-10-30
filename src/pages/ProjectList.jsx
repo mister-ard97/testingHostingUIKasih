@@ -281,7 +281,7 @@ class ProjectList extends Component {
             // })
         
 
-            let limit = 1
+            let limit = 2
             
             let data = {
                 name: this.searchText.value,
@@ -294,17 +294,12 @@ class ProjectList extends Component {
 
             Axios.post(URL_API + `/project/searchproject`, data)
             .then((res) => {
-                console.log(res.data.results)
                 var results = res.data.results.map((val,id)=>{
-                    
-                    var hasil = {...val, ...val.User,...val.Payments[0]}
-                    console.log(hasil)
+                    var hasil = {...val, ...val.User}
                     delete hasil.User
-                    delete hasil.Payments
-          
-                    
                     return hasil
                 })
+                console.log(res.data.total)
 
                 console.log(results)
 

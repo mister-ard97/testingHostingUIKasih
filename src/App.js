@@ -22,7 +22,6 @@ import StudentDetail from './pages/StudentDetails'
 import AdminVerifyDetail from './pages/admin/verifydetail';
 import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 
-import io from 'socket.io-client'
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
@@ -39,12 +38,17 @@ import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
 import History from './pages/historyDonasi'
 import PaymentFinish from './pages/paymentFinish'
-
+import PaymentError from './pages/paymentError'
+import PaymentPending from './pages/paymentPending'
+import ScholarshipAdd from './pages/userFeature/ScholarshipAdd'
+import ScholarshipList from './pages/userFeature/ScholarshipList'
+import ScholarshipDetail from './pages/userFeature/ScholarshipDetail';
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
-import { URL_API } from './helpers/Url_API';
+import {URL_API} from './helpers/Url_API'
 
+import io from 'socket.io-client'
  
 class App extends Component {
 
@@ -52,6 +56,10 @@ class App extends Component {
     console.log('asd')
     const socket = io(URL_API) //localhost 
     this.props.KeepLogin();
+
+    // const socket = io(URL_API)
+    // console.log(socket)
+    // socket.on('status_transaction', this.updateStatus)
   }
 
   render() {
@@ -87,14 +95,19 @@ class App extends Component {
                 <Route path='/verificationUser' component={VerificationUser} />
                 <Route path='/changePassword' component={ChangePassword} />
                 <Route path='/studentdetail' component={StudentDetail} />
-                <Route path='/paymentStatus' component={PaymentFinish}/>
-
+                <Route path='/paymentFinish' component={PaymentFinish}/>
+                <Route path='/paymentError' component={PaymentError}/>
+                <Route path='/paymentPending' component={PaymentPending}/>
+                
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} />
+                <Route path='/addScholarship' component={ScholarshipAdd}/>
+                <Route path='/scholarshiplist' component={ScholarshipList}/>
+                <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
                 
 
-                  {/* User Admin */}
+                {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
                 <Route path='/post-project' component={PostProject} />
                 <Route path='/adminverify-detail' component={AdminVerifyDetail} />

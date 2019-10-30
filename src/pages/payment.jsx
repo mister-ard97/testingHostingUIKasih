@@ -5,6 +5,7 @@ import {Switch, TextareaAutosize} from '@material-ui/core'
 import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
 import { Redirect } from 'react-router-dom'
+import io from 'socket.io-client'
 
 class Payment extends Component {
     state = {
@@ -14,7 +15,9 @@ class Payment extends Component {
         komentarBtn: false,
         name: this.props.nama,
         projectName: null,
-        projectId: null
+        projectId: null,
+        status:'',
+        orderId:''
     }
 
     componentDidMount(){
@@ -28,15 +31,27 @@ class Payment extends Component {
             this.setState({ redirectHome: true })
         }
         localStorage.removeItem('nama')
+
+        const socket = io(URL_API)
+        console.log(socket)
+        socket.on('status_transaction', this.updateStatus)
+
     }
+
+    updateStatus=(status)=>{
+        this.setState({status})
+        console.log('socket Status ============== > ')
+        console.log(status)
+      }
 
     renderMidtrans = () =>{
         var id = this.props.location.search.split('=')[1]
         var randInt = Math.floor(Math.random()*(999-100+1)+100)
+        this.setState({orderId: 'dev'+randInt})
         var parameter = {
             parameter:{
                 transaction_details: {
-                  order_id : 'dev-'+randInt,
+                  order_id :'dev'+randInt,
                   gross_amount: parseInt(this.state.nominal)
                 },
                 item_details: [
@@ -114,6 +129,19 @@ class Payment extends Component {
 
     }
 
+    formatDisplay (num) {
+        let number = parseInt(num.split(',').join('')) 
+
+        if (num.split(',').join('') === '' ) {
+            this.setState({nominalDisplay: '0', nominal: 0})
+        } else {
+            this.setState({
+                nominalDisplay: number.toLocaleString(),
+                nominal: number
+            })
+        }
+    }
+
     renderPayment = () => {
         return (
             <div className='row'>
@@ -124,7 +152,7 @@ class Payment extends Component {
                     </div>
                     <div className='inputBoxNominal mt-3'>
                         <div className='rpNominal'>Rp. </div>
-                        <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
+                        <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onChange={(text)=>this.formatDisplay(text.target.value)} ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
                     </div>
                     <div className='mt-3' >
                         <div style={{fontWeight:'bold'}}>{this.props.nama}</div>
@@ -181,15 +209,18 @@ class Payment extends Component {
     }
     
     render(){
+        console.log(this.state.status)
         if(this.state.redirectHome){
             return <Redirect to={`/`} />
 
         }
+        if(this.state.status !== 'settlement' && this.state.status.order_id === this.state.orderId){
+            return <Redirect to={'/paymentFinish'}/>
+        }
+        if(this.state.status !== 'failur' && this.state.status.order_id === this.state.orderId){
+            return <Redirect to={'/paymentError'}/>
+        }
         console.log(this.props.match)
-        // console.log(this.state.nominal)
-        // console.log(typeof(parseInt(this.state.nominal)))
-        // console.log(this.state.anonim ? 1 : 0)
-        // console.log(this.state.komentar)
         return(
             <div className='container mt-4'>
                 

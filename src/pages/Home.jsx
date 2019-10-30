@@ -109,6 +109,8 @@ class Home extends Component {
                                 <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
                                 {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
                                 </Progress>
+                                <h5>Dana yang terkumpul </h5>
+                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
                                 <h5>Banyaknya Donasi </h5>
                                 <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
                                 <h5>Sisa Hari </h5>
@@ -225,11 +227,11 @@ class Home extends Component {
     }
  
     render() {
-        // if(this.state.searchProject) {
-        //     return (
-        //         <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
-        //     )
-        // }
+        if(this.state.searchProject) {
+            return (
+                <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
+            )
+        }
         return (
             <div>
                 <div>
@@ -240,7 +242,7 @@ class Home extends Component {
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
+                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
                                 </div>
                                 <div className='col-6'>
                                     <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
@@ -249,9 +251,7 @@ class Home extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <a  className='btn btn-success mt-3 p-3' href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} > Search </a>
-                            {/* <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/> */}
-                         
+                            <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
                             {/* <ProjectList /> */}
                             {/* <Route to='/project-list' component={ProjectList} /> */}
                             {this.renderProjectList()}
