@@ -3,7 +3,7 @@ import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'r
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
-import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
+import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from 'react-redux'
@@ -82,7 +82,8 @@ class ScholarshipAdd extends Component{
             result += `<MenuItem key = ${i} value=${i}>${i} Bulan</MenuItem>`
         }
         console.log(result)
-        document.getElementById('bulan').innerHTML=`<MenuItem key =1 value=1>1 Bulan</MenuItem>`
+        // document.getElementById('satu').innerHTML=`<MenuItem key =1 value=1>1 Bulan</MenuItem>`
+        document.getElementById('satu').innerHTML='coba'
         // return result
     }
 
@@ -90,16 +91,27 @@ class ScholarshipAdd extends Component{
         // console.log(event.target.value)
         this.setState({siswa: event.target.value})
         
-        let id = event.target.value
+        var id = event.target.value
+        let exist = this.state.existSiswa
+        let ada = false
+        exist.map((val) => {
+            if(val.studentId === id){
+                ada = true
+                return window.alert('Penggalangan dana beasiswa untuk siswa ' + val.Student.name +' sudah dibuat, silahkan pilih siswa lain')
+            }
+        })
+
         console.log(id)
-        Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
-        .then((res) => {
-            console.log(res.data)
-            this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
-        })
-        .catch((err)=> {
-            console.log(err)
-        })
+        if(!ada){
+            Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
+            .then((res) => {
+                console.log(res.data)
+                this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
+            })
+            .catch((err)=> {
+                console.log(err)
+            })
+        }
     };
     
     handleChangeBulan = name => event => {
@@ -172,6 +184,7 @@ class ScholarshipAdd extends Component{
                             margin="normal"
                             fullWidth
                         >
+                            
                             {/* Render dropwodn menu */}
                             <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
                             <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
@@ -186,6 +199,7 @@ class ScholarshipAdd extends Component{
                             <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
                             <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
                         </TextField>
+                        
                         
                     </FormGroup>
                     <FormGroup>
@@ -263,6 +277,7 @@ class ScholarshipAdd extends Component{
         }
         return(
             <div className='container mt-5 mb-5'>
+                {/* <h3 id='satu'>{this.renderBulan()}</h3> */}
                 <h2>Galang Dana Beasiswa Biasa Sekolah</h2>
                 {this.renderFormAddScholarship()}
             </div>
