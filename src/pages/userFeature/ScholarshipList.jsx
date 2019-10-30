@@ -53,7 +53,7 @@ class ScholarshipList extends Component{
     }
     renderScholarshipList = () => {
         // if(this.state.data){
-            console.log(this.state.data[0].Student.namaSiswa)
+           //  console.log(this.state.data[0].Student.namaSiswa)
         return this.state.data.map((val, i) => {
             // console.log(this.state.data[i].Student.namaSiswa)
             // console.log(val.Student.namaSiswa)
@@ -68,7 +68,7 @@ class ScholarshipList extends Component{
                     <td>Rp. {val.nominal}</td>
                     <td>{val.durasi} Bulan</td>
                     <td style={{textAlign:'center'}}>{val.isVerified == '1' ? 'Accepted' : val.isVerified == '2' ? 'rejected' : 'Waiting' }</td>
-                    <td style={{textAlign:'center'}}>{val.isOngoing}</td>
+                    <td style={{textAlign:'center'}}>{val.isOngoing === 0 ? 'Aktif' : 'Tidak Aktif'}</td>
                     <td style={{textAlign:'center'}}><Button color='primary' onClick={()=> this.setState({openModal: true, detailId: i})}>Detail</Button></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
                     <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'Cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>

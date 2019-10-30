@@ -41,13 +41,13 @@ class ScholarshipAdd extends Component{
 
     }
     componentDidMount = () => {
-        let token = localStorage.getItem('token')
-        var param = {
-            params:{
-                userId: 1
+        const token = localStorage.getItem('token');
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
             }
         }
-        Axios.get( URL_API+'/student/getstudentperuser?id=1' )
+        Axios.get( URL_API+'/student/getstudentperuser', options )
         .then((res) => {
             console.log(res.data)
             this.setState({datasiswa: res.data})
@@ -138,10 +138,10 @@ class ScholarshipAdd extends Component{
                         <Label for="Sekolah">Kelas/Semester</Label>
                         <Input type='text' name='kelas' id='kelas' defaultValue={this.state.kelas} disabled/>
                     </FormGroup>
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label for="Sekolah">Jurusan</Label>
                         <Input type='text' name='sekolah' id='sekolah' defaultValue='TKJ' disabled/>
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup>
                         <Label for="Sekolah">Target Galangan Dana</Label>
                         <Input ref='nominal' type='number' name='nominal' id='nominal' onChange={(e)=>this.setState({nominal: e.target.value})}/>

@@ -34,8 +34,11 @@ class AdminVerify extends Component {
             console.log(results)
             this.setState({
                 data : results,
-                type : parsed.type
-
+                type : parsed.type,
+                idSelected : null,
+                rejectId : null,
+                compareModal : false,
+                comparedata : []
             })
         })
         .catch((err)=>{

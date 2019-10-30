@@ -15,7 +15,11 @@ class ScholarshipDetail extends Component {
             console.log(res.data)
             this.setState({data: res.data[0]})
         })
+        .catch((err) => {
+            console.log(err)
+        })
     }
+    
     render(){
         if(!this.state.data){
             return <p>Loading</p>

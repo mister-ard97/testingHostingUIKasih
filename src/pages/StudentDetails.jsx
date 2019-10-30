@@ -113,7 +113,7 @@ class StudentDetails extends Component {
                                         <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
                                     </td>
                                     <td>
-                                        {item.kelas}
+                                        {item.class}
                                     </td>
                                     <td>
                                         {item.deskripsi}
@@ -143,7 +143,7 @@ class StudentDetails extends Component {
                                     {/* <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} /> */}
                                 </td>
                                 <td>
-                                <small>Kelas Sebelumnya {item.kelas}</small>
+                                <small>Kelas Sebelumnya {item.class}</small>
                                 {this.renderDataKelasEdit()}
                                 </td>
                                 <td>
@@ -156,7 +156,7 @@ class StudentDetails extends Component {
                                     <input type="button" value='confirm' onClick={() => this.confirmEdit(item.id, {
                                         oldPictureReport: item.pictureReport,
                                         oldDeskripsi: item.deskripsi,
-                                        oldKelas: item.kelas,
+                                        oldKelas: item.class,
                                         dataStatus: item.dataStatus
                                     })}/>
                                 </td>
@@ -170,7 +170,7 @@ class StudentDetails extends Component {
                                     <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>
                                 </td>
                                 <td>
-                                    {item.kelas}
+                                    {item.class}
                                 </td>
                                 <td>
                                     {item.deskripsi}

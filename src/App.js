@@ -29,7 +29,8 @@ import ProjectManage from './pages/ProjectManage';
 import AdminVerifyPage from './pages/admin/adminVerify';
 
 import ProjectList from './pages/ProjectList'
-import ProjectDetails from './pages/ProjectDetails'
+import ProjectDetails from './pages/ProjectDetails';
+import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
@@ -102,6 +103,7 @@ class App extends Component {
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} />
+                <Route path='/scholarship-student' component={ScholarshipStudent} />
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>

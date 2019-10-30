@@ -8,13 +8,10 @@ import Moment from 'moment'
 import { URL_API, UI_LINK } from '../helpers/Url_API';
 import {
     FacebookShareButton,
-    WhatsappShareButton
+    WhatsappShareButton,
+    FacebookIcon, 
+    WhatsappIcon
 } from 'react-share';
-
-  import {
-    FacebookIcon,
-    WhatsappIcon,
-  } from 'react-share';
 
 import queryString from 'query-string'
 
@@ -96,7 +93,7 @@ class ProjectDetails extends Component {
                                 </WhatsappShareButton>
                                 {
                                     this.props.email ?
-                                    <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
+                                    <a href={`/payment?id=${val.projectId}&projectName=${val.projectName}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
                                         <button>
                                             Donasi
                                         </button>

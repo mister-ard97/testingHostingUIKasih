@@ -13,41 +13,20 @@ var numeral = require('numeral')
 
 class Home extends Component {
     state = {
-        studentdata: [],
         ProjectList: [],
+        ScholarshipList: [],
+        
         totalpage : 0,
+        totalpagescholar: 0,
+
         searchProject: false,
         searchText: '',
-        orderby: 'asc'
+        orderby: 'asc',
+        orderbyScholarship: 'asc'
+    
     }
+    
     componentDidMount() {
-        // document.title = 'Testing App'
-        // if(!parsed.page){
-        //     parsed.page = 1
-        // }
-
-        // let limit = 4
-
-        // window.scrollTo(0, 0);
-        // Axios.get(URL_API + `/project/getAllProject?page=${1}&limit=4`)
-        //     .then((resProject) => {
-        //         var results = resProject.data.result.map((val,id)=>{
-        //             var hasil = {...val, ...val.User}
-        //             delete hasil.User
-        //             return hasil
-        //         })
-
-        //         console.log(results)
-
-        //         this.setState({
-        //             ProjectList : results,
-        //             totalpage: Math.ceil(resProject.data.total / limit),
-        //             // studentdata: resStudent.data.rows
-        //         })
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
         let limit = 4
         let data = {
             name: '',
@@ -70,13 +49,31 @@ class Home extends Component {
                 return hasil
             })
 
-            console.log(results)
+            // console.log(results)
 
   
-            this.setState({
-                ProjectList: results,
-                totalpage: Math.ceil(res.data.total / limit),
-            })
+            //     this.setState({
+            //         ProjectList: results,
+            //         totalpage: Math.ceil(res.data.total / limit),
+            //     })
+
+            Axios.post(URL_API + `/scholarship/getAllScholarship`, data)
+            .then((resultsScholarship) => {
+                console.log(resultsScholarship.data.results)
+
+  
+                this.setState({
+                    ScholarshipList: resultsScholarship.data.results,
+                    totalpagescholar: Math.ceil(resultsScholarship.data.total / limit),
+
+                    ProjectList: results,
+                    totalpage: Math.ceil(res.data.total / limit),
+                })
+                
+            })  
+            .catch((err) => {
+                console.log(err)
+            } )
         })
         .catch((err) => {
             console.log(err)
@@ -105,6 +102,52 @@ class Home extends Component {
                                 {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <p>{val.totalNominal}</p>
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Dana yang terkumpul </h5>
+                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <h4>Dana yang dibutuhkan :  </h4>
+                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                            </div>
+                        </div>
+                    </a>    
+                    )
+                })
+                
+            } else {
+                return (
+                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+                )
+            }
+        } else {
+            return (
+                <h4>Loading...</h4>
+            )
+        }
+    }
+
+    renderScholarshipStudentList = () => {
+        if(this.state.ScholarshipList) {
+            if(this.state.ScholarshipList.length !== 0) {
+                return this.state.ScholarshipList.map((val, index) => {
+                    const {namaSiswa, studentImage} = this.state.ScholarshipList[index].Student
+                    const { namaSekolah } = this.state.ScholarshipList[index].School
+                    const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.ScholarshipList[index]
+                    return (
+                        <a href={`scholarship-student?id=${val.projectId}`} className='card mt-3' key={index}>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.namaSiswa}-banner`} className='img-fluid width-100' />
+                            </div>
+    
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.projectName}</h2>
                                 <p>{val.totalNominal}</p>
                                 <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
                                 {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
@@ -214,9 +257,7 @@ class Home extends Component {
         }
     }
 
-    renderStudentList = () => {
-        
-    }
+    
 
     searchProject() {
         this.setState({
@@ -259,8 +300,22 @@ class Home extends Component {
                         </div>
                         <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
                             <h2>Scholarship yang sedang berjalan</h2>
+
+                            <h4>Filter By</h4>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship}/>
+                                </div>
+                                <div className='col-6'>
+                                    <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
+                                        <option value='asc'>Newest Post</option>
+                                        <option value='desc'>Older Post</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             {/* <StudentList /> */}
-                            {/* {this.renderStudentList()} */}
+                            {/* {this.renderScholarshipStudentList()} */}
                         </div>
                     </div>           
                 </div>
