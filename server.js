@@ -200,7 +200,7 @@ app.get('/verifiedReset', function(request, response) {
             console.log(res.data)
             data = await data.replace(/\$OG_TITLE/g, `${res.data.results[0].judul}`);
             data = await data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
-            data = await data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
+            data = await data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].Student.studentImage}`);  
             response.send(data);
         })
         .catch((err) => {

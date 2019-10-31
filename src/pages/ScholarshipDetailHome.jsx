@@ -36,7 +36,7 @@ class ScholarshipDetailHome extends Component {
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ params.id)
         .then((res) => {
             console.log(res.data)
-            console.log(res.data[0])
+            console.log(res.data[0].Student.studentImage)
             this.setState({ScholarshipDetail: res.data[0]})
         })
         .catch((err) => {

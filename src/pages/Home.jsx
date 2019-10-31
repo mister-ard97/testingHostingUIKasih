@@ -101,24 +101,13 @@ class Home extends Component {
             //         ProjectList: results,
             //         totalpage: Math.ceil(res.data.total / limit),
             //     })
-
-            Axios.post(URL_API + `/scholarship/getAllScholarship`, data)
-            .then((resultsScholarship) => {
-                console.log(resultsScholarship.data.results)
-
-  
-                this.setState({
-                    ScholarshipList: resultsScholarship.data.results,
-                    totalpagescholar: Math.ceil(resultsScholarship.data.total / limit),
-
-                    ProjectList: results,
-                    totalpage: Math.ceil(res.data.total / limit),
-                })
+            this.setState({
                 
-            })  
-            .catch((err) => {
-                console.log(err)
-            } )
+
+                ProjectList: results,
+                totalpage: Math.ceil(res.data.total / limit),
+            })
+            
         })
         .catch((err) => {
             console.log(err)
@@ -134,7 +123,7 @@ class Home extends Component {
             limit
         }
 
-        Axios.post(URL_API+'/scholarship/getscholarship', data)
+        Axios.post(URL_API+'/scholarship/getScholarship', data)
         .then((res)=>{
             var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
@@ -194,7 +183,7 @@ class Home extends Component {
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
                                     <div className="col-md-5">
-                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Lihat Detail Student" onClick={()=>this.renderMidtrans(val.id)}/>
+                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`}></a>
                                     </div>
                                     <div className="col-md-7">
                                         <div className=" d-flex flex-row justify-content-end">

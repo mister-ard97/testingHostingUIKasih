@@ -50,7 +50,7 @@ class ScholarshipListHomeUI extends Component {
                 date: parsed.orderby,
                 limit
             }
-            Axios.post(URL_API + `/scholarship/getscholarship`, data)
+            Axios.post(URL_API + `/scholarship/getScholarship`, data)
             .then((res) => {
                 console.log(res.data.results)
                 var results = res.data.results.map((val)=>{
