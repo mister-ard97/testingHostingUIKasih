@@ -13,6 +13,8 @@ import {
     FacebookIcon,
     WhatsappIcon
 } from 'react-share';
+
+
 import numeral from 'numeral'
 
 import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
