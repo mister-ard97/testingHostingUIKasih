@@ -23,17 +23,24 @@ import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstra
 
 class Home extends Component {
     state = {
-        studentdata: [],
         ProjectList: [],
+        ScholarshipList: [],
+        
         totalpage : 0,
-        searchProject: false,
+        totalpagescholar: 0,
+
         searchText: '',
+        searchTextScholarship: '',
+
         orderby: 'asc',
+        orderbyScholarship: 'asc',
+    
         scholarshipList : [],
 
         // temporary 
         orderId : ''
     }
+    
     componentDidMount() {
         // document.title = 'Testing App'
         // if(!parsed.page){
@@ -91,14 +98,29 @@ class Home extends Component {
                 
                 return hasil
             })
+  
+            //     this.setState({
+            //         ProjectList: results,
+            //         totalpage: Math.ceil(res.data.total / limit),
+            //     })
 
-
+            Axios.post(URL_API + `/scholarship/getAllScholarship`, data)
+            .then((resultsScholarship) => {
+                console.log(resultsScholarship.data.results)
 
   
-            this.setState({
-                ProjectList: results,
-                totalpage: Math.ceil(res.data.total / limit),
-            })
+                this.setState({
+                    ScholarshipList: resultsScholarship.data.results,
+                    totalpagescholar: Math.ceil(resultsScholarship.data.total / limit),
+
+                    ProjectList: results,
+                    totalpage: Math.ceil(res.data.total / limit),
+                })
+                
+            })  
+            .catch((err) => {
+                console.log(err)
+            } )
         })
         .catch((err) => {
             console.log(err)
@@ -106,14 +128,23 @@ class Home extends Component {
     }
 
     getScholarshipList = () =>{
-        Axios.get(URL_API+'/scholarship/getscholarship')
+        let limit = 4
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+
+        Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
-            var results = res.data.map((val)=>{
+            var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
                 delete hasil.School
                 delete hasil.Student
                 return hasil
             })
+
             this.setState({
                 scholarshipList : results
             })
@@ -131,7 +162,7 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <div className='row border border-secondary p-3'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
                             <div className='col-4'>
                                 <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                             </div>
@@ -165,12 +196,12 @@ class Home extends Component {
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
                                     <div className="col-md-5">
-                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Contribute" onClick={()=>this.renderMidtrans(val.id)}/>
+                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Lihat Detail Student" onClick={()=>this.renderMidtrans(val.id)}/>
                                     </div>
                                     <div className="col-md-7">
                                         <div className=" d-flex flex-row justify-content-end">
                                             <div>
-                                                <FacebookShareButton  className='btn btn-primary mr-2'>
+                                                {/* <FacebookShareButton  className='btn btn-primary mr-2'>
                                                     <div className="d-flex flex-row">
                                                         <FacebookIcon size={32} round={true}  />
                                                         <div className="pt-1 ml-2">Share Facebook</div>
@@ -181,7 +212,7 @@ class Home extends Component {
                                                         <WhatsappIcon size={32} round={true}  />
                                                         <div className="pt-1 ml-2">Share Whatsapp</div>
                                                     </div>
-                                                </WhatsappShareButton>
+                                                </WhatsappShareButton> */}
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +223,7 @@ class Home extends Component {
 
                              
                             </div>
-                        </div>
+                        </a>
                 )
             })
         }
@@ -219,6 +250,52 @@ class Home extends Component {
                                 {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <p>{val.totalNominal}</p>
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Dana yang terkumpul </h5>
+                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <h4>Dana yang dibutuhkan :  </h4>
+                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                            </div>
+                        </div>
+                    </a>    
+                    )
+                })
+                
+            } else {
+                return (
+                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+                )
+            }
+        } else {
+            return (
+                <h4>Loading...</h4>
+            )
+        }
+    }
+
+    renderScholarshipStudentList = () => {
+        if(this.state.ScholarshipList) {
+            if(this.state.ScholarshipList.length !== 0) {
+                return this.state.ScholarshipList.map((val, index) => {
+                    const {namaSiswa, studentImage} = this.state.ScholarshipList[index].Student
+                    const { namaSekolah } = this.state.ScholarshipList[index].School
+                    const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.ScholarshipList[index]
+                    return (
+                        <a href={`scholarship-student?id=${val.projectId}`} className='card mt-3' key={index}>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.namaSiswa}-banner`} className='img-fluid width-100' />
+                            </div>
+    
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.projectName}</h2>
                                 <p>{val.totalNominal}</p>
                                 <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
                                 {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
@@ -328,9 +405,7 @@ class Home extends Component {
         }
     }
 
-    renderStudentList = () => {
-        
-    }
+    
 
     searchProject() {
         this.setState({
@@ -339,8 +414,6 @@ class Home extends Component {
             orderby: this.selectOrder.value
         })
     }
-
-
 
     // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
 
@@ -422,18 +495,12 @@ class Home extends Component {
           }).catch((err)=>{
             console.log(err)
           })
-
-
     }
 
     //
  
     render() {
-        if(this.state.searchProject) {
-            return (
-                <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
-            )
-        }
+
         return (
             <div>
                 <div>
@@ -444,7 +511,7 @@ class Home extends Component {
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
                                 </div>
                                 <div className='col-6'>
                                     <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
@@ -453,19 +520,38 @@ class Home extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
+                            <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
+                                Search Project
+                            </a>
                             {/* <ProjectList /> */}
                             {/* <Route to='/project-list' component={ProjectList} /> */}
                             {this.renderProjectList()}
                             {/* {this.printPagination()} */}
                         </div>
+
                         <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
                             <h2>Scholarship yang sedang berjalan</h2>
+
+                            <h4>Filter By</h4>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship} onChange={() => this.setState({searchTextScholarship: this.searchTextScholarship.value})}/>
+                                </div>
+                                <div className='col-6'>
+                                    <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
+                                        <option value='asc'>Newest Post</option>
+                                        <option value='desc'>Older Post</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <a href={`/scholarship-list?search=${this.state.searchTextScholarship}&orderby=${this.state.orderbyScholarship}&page=1`} className='btn btn-success mt-3'>
+                                Search Scholarship
+                            </a>
                             <div>
                                 {this.renderScholarshipList()}
                             </div>
                             {/* <StudentList /> */}
-                            {/* {this.renderStudentList()} */}
+                            {/* {this.renderScholarshipStudentList()} */}
                         </div>
                     </div>           
                 </div>

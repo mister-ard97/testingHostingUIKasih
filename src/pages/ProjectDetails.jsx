@@ -94,7 +94,7 @@ class ProjectDetails extends Component {
                                 </WhatsappShareButton>
                                 {
                                     this.props.email ?
-                                    <a href={`/payment?id=${val.projectId}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
+                                    <a href={`/payment?id=${val.projectId}&projectName=${val.projectName}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
                                         <button>
                                             Donasi
                                         </button>

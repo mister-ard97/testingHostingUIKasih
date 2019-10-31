@@ -39,7 +39,6 @@ class AdminVerify extends Component {
                 rejectId : null,
                 compareModal : false,
                 comparedata : []
-
             })
         })
         .catch((err)=>{
