@@ -104,23 +104,11 @@ class Home extends Component {
             //         totalpage: Math.ceil(res.data.total / limit),
             //     })
 
-            Axios.post(URL_API + `/scholarship/getAllScholarship`, data)
-            .then((resultsScholarship) => {
-                console.log(resultsScholarship.data.results)
-
-  
-                this.setState({
-                    ScholarshipList: resultsScholarship.data.results,
-                    totalpagescholar: Math.ceil(resultsScholarship.data.total / limit),
-
-                    ProjectList: results,
-                    totalpage: Math.ceil(res.data.total / limit),
-                })
-                
-            })  
-            .catch((err) => {
-                console.log(err)
-            } )
+            this.setState({
+                    
+                ProjectList: results,
+                totalpage: Math.ceil(res.data.total / limit),
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -138,6 +126,7 @@ class Home extends Component {
 
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
+            console.log(res)
             var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
                 delete hasil.School
