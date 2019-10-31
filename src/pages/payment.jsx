@@ -90,8 +90,8 @@ class Payment extends Component {
               },
             userData:{
                 userId: this.props.id,
-                projectId: this.state.projectId ? this.state.projectId : 0,
-                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : 0, 
+                projectId: this.state.projectId ? this.state.projectId : null,
+                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
                 anonim: this.state.anonim ? 1 : 0
             }

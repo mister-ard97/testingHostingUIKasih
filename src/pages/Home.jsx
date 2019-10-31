@@ -85,17 +85,17 @@ class Home extends Component {
         Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
             console.log(res.data.results)
-            var results = res.data.results.map((val,id)=>{
+            // var results = res.data.results.map((val,id)=>{
                 
                 
-                var hasil = {...val, ...val.User,...val.Payments[0]}
-                console.log(hasil)
-                delete hasil.User
-                delete hasil.Payments
+            //     var hasil = {...val, ...val.User,...val.Payments[0]}
+            //     console.log(hasil)
+            //     delete hasil.User
+            //     delete hasil.Payments
       
                 
-                return hasil
-            })
+            //     return hasil
+            // })
   
             //     this.setState({
             //         ProjectList: results,
@@ -104,7 +104,7 @@ class Home extends Component {
             this.setState({
                 
 
-                ProjectList: results,
+                ProjectList: res.data.results,
                 totalpage: Math.ceil(res.data.total / limit),
             })
             
@@ -220,49 +220,43 @@ class Home extends Component {
     
     renderProjectList = () => {
 
-        if(this.state.ProjectList) {
-            if(this.state.ProjectList.length !== 0) {
-                return this.state.ProjectList.map((val, index) => {
-                    return (
-                        <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
-                        <div className='row'>
-                            <div className='col-4'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
-                            </div>
-    
-                            <div className='col-8'>
-                                <h2 className="mb-2">{val.projectName}</h2>
-                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-                                <h6>Project Created</h6> */}
-                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-                                <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-                                <p>{val.totalNominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
-                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
-                                </Progress>
-                                <h5>Dana yang terkumpul </h5>
-                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-                                <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-                                <h5>Sisa Hari </h5>
-                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                                <h4>Dana yang dibutuhkan :  </h4>
-                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-                            </div>
-                        </div>
-                    </a>    
-                    )
-                })
-                
-            } else {
+        if(this.state.ProjectList.length !== 0) {
+            return this.state.ProjectList.map((val, index) => {
                 return (
-                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+                    <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+                    <div className='row'>
+                        <div className='col-4'>
+                            <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                        </div>
+
+                        <div className='col-8'>
+                            <h2 className="mb-2">{val.projectName}</h2>
+                            {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+                            <h6>Project Created</h6> */}
+                            {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+                            <h6>Project Ended</h6>
+                            <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                            <p>{val.totalNominal}</p>
+                            <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
+                            {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
+                            </Progress>
+                            <h5>Dana yang terkumpul </h5>
+                            <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+                            <h5>Banyaknya Donasi </h5>
+                            <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                            <h5>Sisa Hari </h5>
+                            <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                            <h4>Dana yang dibutuhkan :  </h4>
+                            <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                        </div>
+                    </div>
+                </a>    
                 )
-            }
+            })
+            
         } else {
             return (
-                <h4>Loading...</h4>
+                <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
             )
         }
     }
