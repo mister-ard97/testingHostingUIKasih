@@ -27,8 +27,9 @@ class Home extends Component {
         totalpage : 0,
         totalpagescholar: 0,
 
-        searchProject: false,
         searchText: '',
+        searchTextScholarship: '',
+
         orderby: 'asc',
         orderbyScholarship: 'asc',
     
@@ -95,8 +96,6 @@ class Home extends Component {
                 
                 return hasil
             })
-
-
   
             //     this.setState({
             //         ProjectList: results,
@@ -127,14 +126,23 @@ class Home extends Component {
     }
 
     getScholarshipList = () =>{
-        Axios.get(URL_API+'/scholarship/getscholarship')
+        let limit = 4
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+
+        Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
-            var results = res.data.map((val)=>{
+            var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
                 delete hasil.School
                 delete hasil.Student
                 return hasil
             })
+
             this.setState({
                 scholarshipList : results
             })
@@ -152,7 +160,7 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <div className='row border border-secondary p-3'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
                             <div className='col-4'>
                                 <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                             </div>
@@ -186,12 +194,12 @@ class Home extends Component {
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
                                     <div className="col-md-5">
-                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Contribute" onClick={()=>this.renderMidtrans(val.id)}/>
+                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Lihat Detail Student" onClick={()=>this.renderMidtrans(val.id)}/>
                                     </div>
                                     <div className="col-md-7">
                                         <div className=" d-flex flex-row justify-content-end">
                                             <div>
-                                                <FacebookShareButton  className='btn btn-primary mr-2'>
+                                                {/* <FacebookShareButton  className='btn btn-primary mr-2'>
                                                     <div className="d-flex flex-row">
                                                         <FacebookIcon size={32} round={true}  />
                                                         <div className="pt-1 ml-2">Share Facebook</div>
@@ -202,7 +210,7 @@ class Home extends Component {
                                                         <WhatsappIcon size={32} round={true}  />
                                                         <div className="pt-1 ml-2">Share Whatsapp</div>
                                                     </div>
-                                                </WhatsappShareButton>
+                                                </WhatsappShareButton> */}
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +221,7 @@ class Home extends Component {
 
                              
                             </div>
-                        </div>
+                        </a>
                 )
             })
         }
@@ -405,8 +413,6 @@ class Home extends Component {
         })
     }
 
-
-
     // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
 
     renderMidtrans = (id) =>{
@@ -487,18 +493,12 @@ class Home extends Component {
           }).catch((err)=>{
             console.log(err)
           })
-
-
     }
 
     //
  
     render() {
-        if(this.state.searchProject) {
-            return (
-                <Redirect to={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} />
-            )
-        }
+
         return (
             <div>
                 <div>
@@ -509,7 +509,7 @@ class Home extends Component {
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
                                 </div>
                                 <div className='col-6'>
                                     <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
@@ -518,19 +518,22 @@ class Home extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
+                            <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
+                                Search Project
+                            </a>
                             {/* <ProjectList /> */}
                             {/* <Route to='/project-list' component={ProjectList} /> */}
                             {this.renderProjectList()}
                             {/* {this.printPagination()} */}
                         </div>
+
                         <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
                             <h2>Scholarship yang sedang berjalan</h2>
 
                             <h4>Filter By</h4>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship}/>
+                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship} onChange={() => this.setState({searchTextScholarship: this.searchTextScholarship.value})}/>
                                 </div>
                                 <div className='col-6'>
                                     <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
@@ -539,7 +542,9 @@ class Home extends Component {
                                     </select>
                                 </div>
                             </div>
-
+                            <a href={`/scholarship-list?search=${this.state.searchTextScholarship}&orderby=${this.state.orderbyScholarship}&page=1`} className='btn btn-success mt-3'>
+                                Search Scholarship
+                            </a>
                             <div>
                                 {this.renderScholarshipList()}
                             </div>

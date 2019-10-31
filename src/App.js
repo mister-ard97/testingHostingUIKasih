@@ -28,7 +28,8 @@ import PostProject from './pages/admin/postProject';
 import ProjectManage from './pages/ProjectManage';
 import AdminVerifyPage from './pages/admin/adminVerify';
 
-import ProjectList from './pages/ProjectList'
+import ProjectList from './pages/ProjectList';
+import ScholarshipListHome from './pages/ScholarshipListHomeUI';
 import ProjectDetails from './pages/ProjectDetails';
 import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
@@ -102,11 +103,13 @@ class App extends Component {
                 
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
+                <Route path='/scholarship-list' component={ScholarshipListHome} />
                 <Route path='/project-detail' component={ProjectDetails} />
                 <Route path='/scholarship-student' component={ScholarshipStudent} />
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
+
                 
 
                 {/* User Admin */}
