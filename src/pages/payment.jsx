@@ -248,10 +248,10 @@ class Payment extends Component {
             return <Redirect to={`/`} />
 
         }
-        if(this.state.status === 'settlement' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'settlement' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentFinish'}/>
         }
-        if(this.state.status === 'failure' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'failure' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentError'}/>
         }
         console.log(this.props.match)
