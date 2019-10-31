@@ -99,6 +99,7 @@ class Studentlist extends Component {
 
     getStudentData(obj = {limit :this.state.limit,page:1}){
         console.log(obj)
+        obj.userId = this.props.id
 
         let token = localStorage.getItem('token')
         var headers ={

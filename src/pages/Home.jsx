@@ -125,7 +125,7 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
-            var results = res.data.results.map((val)=>{
+            var results = res.data.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
                 delete hasil.School
                 delete hasil.Student
