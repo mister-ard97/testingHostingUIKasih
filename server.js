@@ -187,7 +187,7 @@ app.get('/verifiedReset', function(request, response) {
     });
   });
 
-  app.get(`/scholarship-detail`, function(request, response) {
+  app.get(`/scholarship-student`, function(request, response) {
     console.log('test page visited!');
     const filePath = path.resolve(__dirname, './build', 'index.html')
     fs.readFile(filePath, 'utf8', function (err,data) {
