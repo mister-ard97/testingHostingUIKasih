@@ -183,7 +183,7 @@ class Home extends Component {
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
                                     <div className="col-md-5">
-                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`}></a>
+                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
                                     </div>
                                     <div className="col-md-7">
                                         <div className=" d-flex flex-row justify-content-end">

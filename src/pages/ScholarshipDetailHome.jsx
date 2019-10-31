@@ -400,6 +400,7 @@ class ScholarshipDetailHome extends Component {
 
 const mapStateToProps = ({auth}) => {
 return {
+    id: auth.id,
     email: auth.email
 }
 }
