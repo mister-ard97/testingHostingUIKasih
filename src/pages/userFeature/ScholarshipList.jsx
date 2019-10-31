@@ -97,7 +97,7 @@ class ScholarshipList extends Component{
 
     renderModalDetail = () => {
         if(this.state.detailId !== ''){
-        // this.setState({detailId: id, openModal: true})
+            // this.setState({detailId: id, openModal: true})
         // console.log('masuk modal')
         // console.log(this.state.detailId)
         let Id = this.state.detailId    
