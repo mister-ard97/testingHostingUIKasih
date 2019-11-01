@@ -93,13 +93,13 @@ class Subscription extends Component {
                         <h6>Project Ended</h6>
                         <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
                         <p>{val.nominal}</p>
-                        <Progress  className="font-weight-bold mb-3" animated value={(val.currentSubs / val.targetScholarship) * 100 ? ((val.currentSubs / val.targetScholarship) * 100).toFixed(2)  : 0} >
-                        {(val.currentSubs / val.targetScholarship) * 100 ? ((val.currentSubs / val.targetScholarship) * 100).toFixed(2)  : 0}%
+                        <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.currentSubs + val.totaldonation) / val.targetScholarship) * 100 ? ((parseInt(val.currentSubs + val.totaldonation) / val.targetScholarship) * 100).toFixed(2)  : 0} >
+                        {(parseInt(val.currentSubs + val.totaldonation) / val.targetScholarship) * 100 ? ((parseInt(val.currentSubs + val.totaldonation) / val.targetScholarship) * 100).toFixed(2)  : 0}%
                         </Progress>
                         <div className="d-flex flex-row mb-3">
                             <div className="mr-4">
                                 <h4>Dana yang terkumpul </h4>
-                                <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs)).format(0,0)}`} disabled/>
+                                <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
                             </div>
 
                             <div>
