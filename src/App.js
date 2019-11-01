@@ -19,7 +19,8 @@ import StudentList from './pages/StudentData'
 import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 
-import AdminVerifyDetail from './pages/admin/verifydetail';
+import AdminVerifyDetail from './pages/admin/verifydetail'
+import ManageScholarship from './pages/admin/manageScholarship'
 import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 
 //PROJECT
@@ -35,6 +36,8 @@ import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
+
+import Payout from './pages/userFeature/payout'
 
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
@@ -109,6 +112,7 @@ class App extends Component {
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
+                <Route path='/payout' component={Payout}/>
 
                 
 
@@ -117,6 +121,7 @@ class App extends Component {
                 <Route path='/post-project' component={PostProject} />
                 <Route path='/adminverify-detail' component={AdminVerifyDetail} />
                 <Route path='/adminverify' component={AdminVerifyPage} />
+                <Route path='/manageScholarship' component={ManageScholarship}/>
                 <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 

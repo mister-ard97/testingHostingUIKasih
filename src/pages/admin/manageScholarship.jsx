@@ -26,23 +26,27 @@ const useStyles = makeStyles(theme => ({
       },
 }));
 
-class ScholarshipList extends Component{
+class ManageScholarship extends Component{
     state = {
         data : '',
         detailData : '',
         openModal:false,
         openEditModal:false,
+        openVerModal: false,
         detailId:'',
         bulan:'',
         deskripsi:'',
         sDeskripsi:'',
         nominal: 0,
-        judul:''
+        judul:'',
+        verifikasi:'',
+        verifikasiId:'',
+        note:''
 
     }
     componentDidMount(){
         let id= this.props.id
-        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+id)
+        Axios.get(URL_API+'/scholarship/getScholarship')
         .then((res)=>{
             console.log(res.data)
             this.setState({data: res.data})
@@ -53,7 +57,7 @@ class ScholarshipList extends Component{
     }
     renderScholarshipList = () => {
         // if(this.state.data){
-            // console.log(this.state.data[0].Student.namaSiswa)
+            console.log(this.state.data[0].Student.namaSiswa)
         return this.state.data.map((val, i) => {
             // console.log(this.state.data[i].Student.namaSiswa)
             // console.log(val.Student.namaSiswa)
@@ -63,6 +67,7 @@ class ScholarshipList extends Component{
             return (
                 <tr>
                     <td>{i+1}</td>
+                    <td>{val.Student.User.nama}</td>
                     <td>{val.Student.namaSiswa}</td>
                     {/* <td>{this.state.data[i].Student.namaSiswa}</td> */}
                     <td>Rp. {val.nominal}</td>
@@ -71,28 +76,52 @@ class ScholarshipList extends Component{
                     <td style={{textAlign:'center'}}>{val.isOngoing}</td>
                     <td style={{textAlign:'center'}}><Button color='primary' onClick={()=> this.setState({openModal: true, detailId: i})}>Detail</Button></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
-                    <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
+                    <td style={{textAlign:'center'}}><Button color='warning' onClick={()=> this.setState({openVerModal: true, verifikasiId: val.id})}>verifikasi</Button></td>
                 </tr>
             )
         })
     // }
     }
 
-    cancelBtnClick = (id) => {
-        var yakin = window.confirm('yakin kamu????')
-        if(yakin){
-            Axios.put(URL_API +'/scholarship/cancelScholarship?id='+id)
-            .then((res) => {
-                // console.log(res.data)
-                Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id)
+    verifikasiBtn = () => {
+        return (
+            <Modal isOpen={this.state.openVerModal} toggle={()=> this.setState({ openVerModal: false, detailId:''})} size='lg'>
+                <ModalHeader>Verifikasi Scholarship</ModalHeader>
+                <ModalBody>
+                    <Input type='textarea' onChange={(e)=>this.setState({note: e.target.value })} placeholder='catatan' maxLength='255'/>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color='success' onClick={()=> this.verificationActionBtn('verified')}>Verified</Button>
+                    <Button color='danger'onClick={()=> this.verificationActionBtn('rejected')}>Reject</Button>
+                    <Button color='warning' onClick={()=>this.setState({openVerModal: false, detailId: ''})}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
+        )
+    }
+
+    verificationActionBtn = (status) => {
+        // console.log(status)
+        let data = {
+            isVerified: status,
+            isOngoing: status === 'verified' ? 'on Going' : 'Cancelled',
+            note: this.state.note
+        }
+        console.log(data)
+        Axios.put(URL_API+'/scholarship/putVerification?id='+this.state.verifikasiId, data)
+        .then((res)=>{
+            console.log(res.data)
+            this.setState({openVerModal:false, detailId: ''})
+
+            Axios.get(URL_API+'/scholarship/getScholarship')
                 .then((res)=>{
                     console.log(res.data)
                     this.setState({data: res.data})
                 }).catch((err)=>{
                     console.log(err)
                 })
-            })
-        }
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
 
     renderModalDetail = () => {
@@ -294,9 +323,8 @@ class ScholarshipList extends Component{
         Axios.put(URL_API + '/scholarship/putScholarship', data)
         .then((res) => {
             // console.log(res.data)
-            Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id)
+            Axios.get(URL_API+'/scholarship/getScholarship')
             .then((res)=>{
-                // console.log(res.data)
                 this.setState({data: res.data})
             }).catch((err)=>{
                 console.log(err)
@@ -314,13 +342,17 @@ class ScholarshipList extends Component{
         if(!this.state.data){
             return <p>Loading</p>
         }
+        if(this.state.data.length === 0){
+            return <p>belum ada project yang anda buat</p>
+        }
         return(
             <div className='container mt-5 mb-5'>
                 <p>List Beasiswa</p>
-                <div className='mb-3'><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div>
+                {/* <div><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div> */}
                 <Table>
                     <tr >
                         <th>No.</th>
+                        <th>Campaigner</th>
                         <th>Nama Siswa</th>
                         <th>Target Donasi</th>
                         <th>Durasi</th>
@@ -331,6 +363,7 @@ class ScholarshipList extends Component{
                     {this.renderScholarshipList()}
                     {this.renderModalDetail()}
                     {this.renderEditModal()}
+                    {this.verifikasiBtn()}
                 </Table>
             </div>
         )
@@ -343,4 +376,4 @@ const mapStateToProps = ({auth}) => {
     }
 }
 
-export default connect(mapStateToProps, {}) (ScholarshipList);
+export default connect(mapStateToProps, {}) (ManageScholarship);
