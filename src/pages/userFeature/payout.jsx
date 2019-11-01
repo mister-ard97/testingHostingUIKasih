@@ -31,7 +31,7 @@ class Payout extends Component{
           ]
         }
         // Axios.post('https://crossorigin.me/https://app.sandbox.midtrans.com/iris/api/v1/payouts', body, {auth: {username: 'Basic SVJJUy04M2YxMzVlZC0zNTEzLTQ3YmYtODFiYi1hMDcxODIyZWU2OGY6', password:''}})
-        Axios.post('https://cors-anywhere.herokuapp.com/https://app.sandbox.midtrans.com/iris/api/v1/payouts', body, options)
+        Axios.post('https://app.sandbox.midtrans.com/iris/api/v1/payouts', body, options)
         .then((res)=>{
             console.log(res.data)
         }).catch((err)=>{
