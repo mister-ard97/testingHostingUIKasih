@@ -26,7 +26,7 @@ import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
-import ProjectManage from './pages/ProjectManage';
+import ProjectManage from './pages/admin/ProjectManage';
 import AdminVerifyPage from './pages/admin/adminVerify';
 
 import ProjectList from './pages/ProjectList';

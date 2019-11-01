@@ -10,12 +10,12 @@ class Payout extends Component{
     onClickPayout=()=>{
         let nominal = this.state.nominal
         console.log(nominal)
-        let options={
+        const options={
             header:{
                 "Authorization":"Basic SVJJUy04M2YxMzVlZC0zNTEzLTQ3YmYtODFiYi1hMDcxODIyZWU2OGY6",
                 "Content-Type":"application/json",
-                "Accept":"application/json",
-                // "Access-Control-Allow-Origin":"*"
+                // "Accept":"application/json",
+                "Access-Control-Allow-Origin":"*"
             }
         }
         let body={
