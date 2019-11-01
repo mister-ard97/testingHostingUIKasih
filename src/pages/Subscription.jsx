@@ -4,16 +4,18 @@ import { connect } from 'react-redux'
 import { getSub, applySub } from '../redux/actions' 
 import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input, Progress } from 'reactstrap';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
+
 
 class Subscription extends Component {
     state = { 
         redirectHome: false,
         lain : false,
         nominal : 0,
-        nominalDisplay : '0'
+        nominalDisplay : '0',
+        scholarshipList : []
     }
 
     componentDidMount(){
@@ -21,9 +23,12 @@ class Subscription extends Component {
             return this.setState({ redirectHome: true })
         }
         this.props.getSub(this.props.email)
+        // this.getScholarshipList()
         // console.log(this.props.applySub())
     }
 
+   
+    
     formatDisplay (num) {
         let number = parseInt(num.split(',').join('')) 
 
@@ -70,99 +75,6 @@ class Subscription extends Component {
         this.setState({
             redirectHome: true
         })
-        // var parameter = {
-        //     parameter:{
-        //         transaction_details: {
-        //           order_id : 'dev-'+randInt,
-        //           gross_amount
-        //         },
-        //         item_details: [
-        //           {
-        //             id: 'camp-'+randInt,
-        //             price: gross_amount,
-        //             quantity: 1,
-        //             name: "Subscription"
-        //           }
-        //         ],
-        //         customer_details: {
-        //           first_name: this.props.nama,
-        //           email: this.props.email
-        //         },
-        //         // gopay: {
-        //         //   enable_callback: true,
-        //         //   // callback_url: "https://hisbudev.herokuapp.com/finish"
-        //         //   callback_url: `http://ec2-13-251-27-243.ap-southeast-1.compute.amazonaws.com:3000/finish`
-        //         // }
-        //       },
-        //     userData:{
-        //         userId: this.props.id,
-        //         projectId: 0,
-        //         komentar: '-' ,
-        //         anonim: 0
-        //     }
-        // }
-        
-        //   console.log(parameter)
-        //   Axios.post(`${URL_API}/payment/getSnapMd`, parameter)
-        //   .then((res)=>{
-        //     console.log(res.data)
-        //     localStorage.setItem('order_id', res.data.order_id)
-        //     window.snap.pay(res.data.transactionToken, {
-        //       onSuccess: (result) => {
-        //         console.log('success')
-        //         console.log(result)
-        //         console.log(result.finish_redirect_url)
-        //         Axios.post(`${URL_API}/payment/updatePayment`, result)
-        //         .then((res)=>{
-        //             console.log(res.data)
-        //         })
-        //         .catch((err)=>{
-        //             console.log(err)
-        //         })
-        //         var link = result.finish_redirect_url.split('?')[1]
-        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-        //         this.setState({lompatan: `/finish?${link}`})
-        //         console.log(this.props.applySub(gross_amount, this.props.email))
-        //         this.props.applySub(gross_amount, this.props.email)
-        //        }
-        //        ,
-        //        onPending: function(result){
-        //          console.log('pending')
-        //          console.log(result)
-                 
-        //         console.log(result.finish_redirect_url)
-        //         var link = result.finish_redirect_url.split('?')[1]
-        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-        //         this.setState({lompatan: `/unfinish?${link}`})
-        //         },
-        //         onError: function(result){
-        //          console.log('error')
-        //          console.log(result)
-        //          console.log(result.finish_redirect_url)
-        //          var link = result.finish_redirect_url.split('?')[1]
-        //         document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-        //         this.setState({lompatan: `/error?${link}`})
-        //         }
-             
-        //     })
-        //   }).catch((err)=>{
-        //     console.log(err)
-        //   })
-    }
-
-    getSubPrice = () => {
-    
-        // if(this.state.lain){
-        //     var subPriceBebas = this.refs.nominalBebas.value
-        //     if(subPriceBebas < 10000){
-        //         return window.alert('Harus diatas Rp. 10.000')
-        //     }
-        //     console.log(subPriceBebas, this.props.email)
-        //     return this.props.applySub(subPriceBebas, this.props.email)
-        // }
-        // var subPrice = this.refs.nominal.value
-        // console.log(subPrice)
-        // this.props.applySub(subPrice, this.props.email)
     }
 
     handleChange = () => {
@@ -176,37 +88,21 @@ class Subscription extends Component {
     }
 
     render() { 
-        console.log(this.props.email)
-        console.log(this.props.subStatus)
-        if(this.state.redirectHome){
-            return(
-                <Redirect to='/login' />
-            )
-        }
-        if(this.props.subStatus === 1 || this.props.subStatusFromDb === 1){
-            return(
-                <div className='container'>
-                <form style={{width: '100%'}}>
-                    <div className='form-control'>
-                        Nominal langganan anda adalah : Rp. {Numeral(this.props.subNominalFromDb).format('0,0')}
-                    </div>
-                </form>
-            </div>
-            )
-        }
+   
+     
         return ( 
             <div className='container'>
                 <form style={{width: '100%'}}>
                     <div className='form-group'>
-              
+             
                     <label for="exampleInputEmail1">Silahkan pilih jumlah nominal langganan</label>
-                        <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
-                            <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
-                            <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
-                            <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
-                            <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
-                            <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
-                        </select>
+                    <select className='form-control' name="select" ref='nominal' hidden={this.state.lain}>
+                        <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
+                        <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
+                        <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
+                        <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
+                        <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
+                    </select>
               
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
@@ -232,6 +128,11 @@ class Subscription extends Component {
                     </div>
       
                 </form>
+
+                {/* <h3>Scholarship List</h3>
+                <div>
+                    {this.renderScholarshipList()}
+                </div> */}
             </div>
          );
     }

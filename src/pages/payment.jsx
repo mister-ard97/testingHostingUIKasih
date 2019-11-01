@@ -16,21 +16,37 @@ class Payment extends Component {
         name: this.props.nama,
         projectName: null,
         projectId: null,
+        scholarshipName: null,
+        scholarshipId: null,
         status:'',
         orderId:''
     }
 
     componentDidMount(){
-        var nama = localStorage.getItem('nama')
-        if(nama){
+        
+        // ---------------------- NOTE -------------------------
+        // mau pake parsed atau localStorage ?
 
-            var namaParse = JSON.parse(nama)
-            console.log(namaParse.projectId, namaParse.projectName)
-            this.setState({projectName: namaParse.projectName, projectId: namaParse.projectId})
+        var nama = localStorage.getItem('nama')
+        var namaScholarship = localStorage.getItem('namaScholarship')
+        if(nama || namaScholarship){
+
+            if(namaScholarship) {
+                var namaParse = JSON.parse(namaScholarship)
+                this.setState({scholarshipName: namaParse.scholarName, scholarshipId: namaParse.scholarId})
+            } else {
+                var namaParse = JSON.parse(nama)
+                this.setState({projectName: namaParse.projectName, projectId: namaParse.projectId})
+            }
+            
+            // console.log(namaParse.projectId, namaParse.projectName)
+            
         }else{
             this.setState({ redirectHome: true })
         }
+
         localStorage.removeItem('nama')
+        localStorage.removeItem('namaScholarship')
 
         const socket = io(URL_API)
         console.log(socket)
@@ -74,14 +90,22 @@ class Payment extends Component {
               },
             userData:{
                 userId: this.props.id,
-                projectId: id,
+                projectId: this.state.projectId ? this.state.projectId : null,
+                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
                 anonim: this.state.anonim ? 1 : 0
             }
         }
         
           console.log(parameter)
-          Axios.post(`${URL_API}/payment/getSnapMd`, parameter)
+          let token = localStorage.getItem('token')
+          const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        }
+
+          Axios.post(`${URL_API}/payment/getSnapMd`, parameter, options)
           .then((res)=>{
             console.log(res.data)
             localStorage.setItem('order_id', res.data.order_id)
@@ -93,6 +117,8 @@ class Payment extends Component {
                 Axios.post(`${URL_API}/payment/updatePayment`, result)
                 .then((res)=>{
                     console.log(res.data)
+                    localStorage.removeItem('nama')
+                    localStorage.removeItem('namaScholarship')
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -107,6 +133,9 @@ class Payment extends Component {
                  console.log('pending')
                  console.log(result)
                  
+                 localStorage.removeItem('nama')
+                 localStorage.removeItem('namaScholarship')
+
                 console.log(result.finish_redirect_url)
                 var link = result.finish_redirect_url.split('?')[1]
                 document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
@@ -116,6 +145,10 @@ class Payment extends Component {
                  console.log('error')
                  console.log(result)
                  console.log(result.finish_redirect_url)
+
+                 localStorage.removeItem('nama')
+                 localStorage.removeItem('namaScholarship')
+
                  var link = result.finish_redirect_url.split('?')[1]
                 document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
                 this.setState({lompatan: `/error?${link}`})
@@ -148,7 +181,8 @@ class Payment extends Component {
                 <div className='offset-md-2 col-md-8 p-3' >
                     <div className='titleProject'>
                         {this.props.location.state}
-                        {this.state.projectName}
+                        {console.log(this.props.location.state)}
+                        {this.state.projectName ? this.state.projectName : this.state.scholarshipName}
                     </div>
                     <div className='inputBoxNominal mt-3'>
                         <div className='rpNominal'>Rp. </div>
@@ -214,10 +248,10 @@ class Payment extends Component {
             return <Redirect to={`/`} />
 
         }
-        if(this.state.status.tran === 'settlement' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'settlement' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentFinish'}/>
         }
-        if(this.state.status === 'failur' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'failure' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentError'}/>
         }
         console.log(this.props.match)

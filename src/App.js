@@ -21,14 +21,18 @@ import StudentDetail from './pages/StudentDetails'
 // ADMIN 
 import AdminVerifyDetail from './pages/admin/verifydetail'
 import ManageScholarship from './pages/admin/manageScholarship'
+import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
+
 //PROJECT
 // import PostStudent fro
 import PostProject from './pages/admin/postProject';
 import ProjectManage from './pages/ProjectManage';
 import AdminVerifyPage from './pages/admin/adminVerify';
 
-import ProjectList from './pages/ProjectList'
-import ProjectDetails from './pages/ProjectDetails'
+import ProjectList from './pages/ProjectList';
+import ScholarshipListHome from './pages/ScholarshipListHomeUI';
+import ProjectDetails from './pages/ProjectDetails';
+import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
@@ -78,7 +82,7 @@ class App extends Component {
     }
     return (
         <div className='MaCommerce' >
-    
+              { /* Buat Route untuk User dan User Admin */ }
               <Header />
               <Switch>
                 <Route path='/' component={Home} exact />
@@ -102,11 +106,14 @@ class App extends Component {
                 
                 {/* User */}
                 <Route path='/project-list' component={ProjectList} />
+                <Route path='/scholarship-list' component={ScholarshipListHome} />
                 <Route path='/project-detail' component={ProjectDetails} />
+                <Route path='/scholarship-student' component={ScholarshipStudent} />
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
                 <Route path='/payout' component={Payout}/>
+
                 
 
                 {/* User Admin */}
@@ -115,6 +122,7 @@ class App extends Component {
                 <Route path='/adminverify-detail' component={AdminVerifyDetail} />
                 <Route path='/adminverify' component={AdminVerifyPage} />
                 <Route path='/manageScholarship' component={ManageScholarship}/>
+                <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />

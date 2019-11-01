@@ -14,6 +14,10 @@ class StudentDetails extends Component {
         edit: false,
         addImageFileName: null,
         addImageFile: null,
+
+        editImageFileName: null,
+        editImageFile: null,
+
         selectedId: 0,
         pendidikan: null
     }
@@ -23,19 +27,8 @@ class StudentDetails extends Component {
 
         // GANTI JADI POST YANG NERIMA REQ.BODY
 
-
-        var id = this.props.location.search.split('=')[1]
-        // Axios.get(API_URL + `/student/get-student-detail/1` )
-        console.log(id)
-        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
-        .then((res) => {
-            this.setState({ data: res.data, pendidikan: res.data[0].pendidikanTerakhir })
-            console.log(this.state.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-
+        this.getStudentDetail()
+      
         // Dino
         // Axios.get(API_URL+'/studentdetail/get-student-detail/1')
         // .then(res=>{
@@ -46,17 +39,35 @@ class StudentDetails extends Component {
 
     }
 
-    deleteDetail = (id) => {
-        var studentId = this.props.location.search.split('=')[1]
-        Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
-        .then((res) => {
-            // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
-            // .then((res) => {
-                this.setState({ data: res.data })
+    getStudentDetail = () => {
+        var id = this.props.location.search.split('=')[1]
+        // Axios.get(API_URL + `/student/get-student-detail/1` )
+        console.log(id)
+        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
+            .then((res) => {
+                this.setState({ data: res.data, pendidikan: res.data[0].pendidikanTerakhir })
                 console.log(this.state.data)
-            // })
-        })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
     }
+
+    // deleteDetail = (id) => {
+    //     var studentId = this.props.location.search.split('=')[1]
+    //     Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
+    //     .then((res) => {
+    //         // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+    //         // .then((res) => {
+    //             this.setState({ data: res.data })
+    //             console.log(this.state.data)
+    //         // })
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     // renderRaport=()=>{
     //     if(this.state.raportUser.length !==0){
@@ -128,7 +139,12 @@ class StudentDetails extends Component {
                         <tbody className='border-bottom'>
                             <tr className='py-5'>
                                 <td>
-                                    <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} />
+                                    <CustomInput onChange={this.onEditImageFileChange} id='onEditFileChange'type='file' label={this.state.editImageFileName} />
+                                    {/* <CustomInput onChange={this.onAddImageFileChange} id='addImagePost'type='file' label={this.state.addImageFileName} /> */}
+                                </td>
+                                <td>
+                                <small>Kelas Sebelumnya {item.class}</small>
+                                {this.renderDataKelasEdit()}
                                 </td>
                                 <td>
                                     <input type="text" defaultValue={item.deskripsi} ref='descEdit'/>
@@ -137,7 +153,12 @@ class StudentDetails extends Component {
                                     <input type="button" value='cancel' onClick={() => this.setState({ selectedId: 0 })}/>
                                 </td>
                                 <td>
-                                    <input type="button" value='confirm' onClick={() => this.confirmEdit(item.id)}/>
+                                    <input type="button" value='confirm' onClick={() => this.confirmEdit(item.id, {
+                                        oldPictureReport: item.pictureReport,
+                                        oldDeskripsi: item.deskripsi,
+                                        oldKelas: item.class,
+                                        dataStatus: item.dataStatus
+                                    })}/>
                                 </td>
                             </tr>
                         </tbody>
@@ -161,6 +182,43 @@ class StudentDetails extends Component {
                                         :
                                         null
                                     }
+                                    {
+                                        item.dataStatus === 'Update Unverified' ?
+                                        <input type='text' value='Waiting Update Confirmation' disabled />
+                                        :
+                                        null
+                                    }
+                                    {
+                                        item.dataStatus === 'Rejected' || item.dataStatus === 'Approved' ?
+                                        
+                                            item.dataStatus === 'Rejected' ?
+                                            <div>
+                                            <p>Status Rejected</p>
+                                            <p className='text-danger'>Note : {item.statusNote}</p>
+                                            <input type='button' className='btn btn-dark' value='Revert Changes' onClick={() => this.revertDetailChange(item.id)} />
+                                            <input type='button' className='btn btn-primary' value='Change Document' onClick={() => this.setState({selectedId: item.id})}/>
+                                        </div>
+                                        :
+                                        <div>
+                                            <p>Approved</p>
+                                            <input type='button' className='btn btn-primary' value='Change Document' onClick={() => this.setState({selectedId: item.id})}/>
+                                        </div>
+
+                                        : 
+                                        null
+                                    }
+
+                                    {
+                                        item.dataStatus === 'Register Rejected' ?
+                                        <div>
+                                            <p>Status Rejected New Student</p>
+                                            <p className='text-danger'>Note : {item.statusNote}</p>
+                                            <input type='button' className='btn btn-primary' value='Change Document' onClick={() => this.setState({selectedId: item.id})}/>
+                                            {/* <input type='button' className='btn btn-danger' value='Delete Dokumen' onClick={() => this.deleteDetailDokumen(item.id)} /> */}
+                                        </div>
+                                        :
+                                        null
+                                    }
                                     {/* <input type="button" value='edit' onClick={() => this.setState({ selectedId: item.id })}/> */}
                                 </td>
                                 <td>
@@ -173,6 +231,41 @@ class StudentDetails extends Component {
         })    
     }
 
+    // deleteDetailDokumen = (id) => {
+        
+    //     var studentId = this.props.location.search.split('=')[1]
+
+    //     Axios.post(URL_API + `/studentdetail/delete-student-detail/${id}`, { id, studentId })
+    //     .then((res) => {
+    //         // Axios.get(API_URL + `/studentdetail/get-student-detail/${id}`)
+    //         // .then((res) => {
+    //             this.setState({ data: res.data })
+    //             console.log(this.state.data)
+    //         // })
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
+
+    revertDetailChange =  (id) => {
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+               
+            }
+        }
+        Axios.get(URL_API + `/studentdetailrev/revertDetail/${id}`, options)
+        .then((res) => {
+            alert('Success Revert');
+            this.getStudentDetail()
+        })
+        .catch((err) => {
+            alert(err)
+        })
+    }
+
     onAddImageFileChange = (e) => {
         console.log(e.target.files[0])
         if(e.target.files[0]){
@@ -182,24 +275,66 @@ class StudentDetails extends Component {
         }
     }
 
-    confirmEdit = (id) => {
+    onEditImageFileChange = (e) => {
+        console.log(e.target.files[0])
+        if(e.target.files[0]){
+            this.setState({ editImageFileName: e.target.files[0].name, editImageFile : e.target.files[0] })
+        }else{
+            this.setState({ editImageFileName : 'Select Image', editImageFile : undefined })
+        }
+    }
+
+
+    // Untuk USER ketika direject dapat mengganti data yang dia inginkan
+    confirmEdit = (id, obj) => {
+        
+        let token = localStorage.getItem('token')
+        var options ={
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
         var formData = new FormData()
         var newObj = {
             id,
             deskripsi: this.refs.descEdit.value,
-            studentId: this.props.location.search.split('=')[1]
+            studentId: this.props.location.search.split('=')[1],
+            dataStatus: obj.dataStatus,
+            kelas: this.KelasEdit.value
         }
+
         console.log(newObj)
-        formData.append('data', JSON.stringify(newObj))
-        formData.append('image', this.state.addImageFile)
-        Axios.post(URL_API + `/studentdetail/edit-student-detail/${newObj.studentId}`, formData)
+        if(this.state.editImageFile) {
+            formData.append('image', this.state.editImageFile)
+        } else {
+            newObj.image = obj.oldPictureReport
+        }
+
+        formData.append('data', JSON.stringify(newObj));
+
+        formData.append('oldData', JSON.stringify(obj));
+        
+        Axios.post(URL_API + `/studentdetail/edit-student-detail/${newObj.studentId}`, formData, options)
         .then(() => {
             // console.log(res.data)
             id = this.props.location.search.split('=')[1]
             Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
             .then((res) => {
-                this.setState({ data: res.data, selectedId: 0 })
-                console.log(this.state.data)
+                
+                this.refs.descEdit.value = ''
+                this.KelasEdit.value = ''
+                
+                this.setState({ 
+                    data: res.data, 
+                    selectedId: 0,
+                    editImageFileName: 'Select Image', 
+                    editImageFile: undefined
+                })
+            })
+            .catch((err) => {
+                console.log(err)
             })
         })
         .catch((err) => {
@@ -250,7 +385,7 @@ class StudentDetails extends Component {
                     <select ref={(Kelas) => this.Kelas = Kelas}>
                         <option value=''>Pilih Kelas</option>
                         <option value='TK A'>Kelas TK A</option>
-                        <option value='TK B'>Kelas TK A</option>
+                        <option value='TK B'>Kelas TK B</option>
                     </select>
                 )
             }
@@ -302,6 +437,66 @@ class StudentDetails extends Component {
             }
         }
 
+    }
+
+    renderDataKelasEdit = () => {
+        if(this.state.pendidikan) {
+            if(this.state.pendidikan === 'TK') {
+                return (
+                    <select ref={(KelasEdit) => this.KelasEdit = KelasEdit}>
+                        <option value=''>Pilih Kelas</option>
+                        <option value='TK A'>Kelas TK A</option>
+                        <option value='TK B'>Kelas TK B</option>
+                    </select>
+                )
+            }
+
+            if(this.state.pendidikan === 'SD') {
+                return (
+                    <select ref={(KelasEdit) => this.KelasEdit = KelasEdit}>
+                         <option value=''>Pilih Kelas</option>
+                        <option value='1'>Kelas 1</option>
+                        <option value='2'>Kelas 2</option>
+                        <option value='3'>Kelas 3</option>
+                        <option value='4'>Kelas 4</option>
+                        <option value='5'>Kelas 5</option>
+                        <option value='6'>Kelas 6</option>
+                    </select>
+                )
+            }
+
+            if(
+                this.state.pendidikan === 'SMP' || 
+                this.state.pendidikan === 'SMA' || 
+                this.state.pendidikan === 'SMK'
+            ) {
+                return (
+                    <select ref={(KelasEdit) => this.KelasEdit = KelasEdit}>
+                         <option value=''>Pilih Kelas</option>
+                        <option value='1'>Kelas 1</option>
+                        <option value='2'>Kelas 2</option>
+                        <option value='3'>Kelas 3</option>
+                    </select>
+
+                )                
+            }
+
+            if(this.state.pendidikan === 'KULIAH') {
+                return (
+                    <select ref={(KelasEdit) => this.KelasEdit = KelasEdit}>
+                         <option value=''>Pilih Semester</option>
+                        <option value='Semester 1'>Semester 1</option>
+                        <option value='Semester 2'>Semester 2</option>
+                        <option value='Semester 3'>Semester 3</option>
+                        <option value='Semester 4'>Semester 4</option>
+                        <option value='Semester 5'>Semester 5</option>
+                        <option value='Semester 6'>Semester 6</option>
+                        <option value='Semester 7'>Semester 7</option>
+                        <option value='Semester 8'>Semester 8</option>
+                    </select>
+                )
+            }
+        }
     }
 
     render() { 

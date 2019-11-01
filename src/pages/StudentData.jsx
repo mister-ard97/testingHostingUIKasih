@@ -110,6 +110,7 @@ class Studentlist extends Component {
         
         Axios.post(URL_API+`/student/getstudentdatapaging`,obj, headers)
         .then(res=>{
+            console.log(res.data)
             var results = res.data.rows.map((val,id)=>{
                 var hasil = {...val, ...val.School}
                 delete hasil.School
@@ -119,6 +120,9 @@ class Studentlist extends Component {
             console.log(res)
             this.setState({studentdata:results,totalstudent:res.data.count})
         
+        })
+        .catch((err) => {
+            console.log(err)
         })
     
     }
@@ -208,7 +212,7 @@ class Studentlist extends Component {
             return (
                 <div>
                     <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(id)}>delete student</button> 
-                    <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
+                    {/* <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button>  */}
                 </div>
             )
 
@@ -228,7 +232,7 @@ class Studentlist extends Component {
                     <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
                     <td>{item.schoolName}</td>
                     <td>
-                        {item.dataStatus === 'Rejected' ? null : 
+                        {item.dataStatus === 'Rejected' || item.dataStatus === 'Unverified' ? null : 
                     
                     <a href={`/studentdetail?id=${item.id}`} style={{textDecoration:'none'}}>
                         <button className='btn btn-primary'>Lihat student</button>
