@@ -33,6 +33,8 @@ import ProjectDetails from './pages/ProjectDetails'
 import UserPage from './pages/User'
 import VerificationUser from './pages/userFeature/verificationUser';
 
+import Payout from './pages/userFeature/payout'
+
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
 import History from './pages/historyDonasi'
@@ -104,6 +106,7 @@ class App extends Component {
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
+                <Route path='/payout' component={Payout}/>
                 
 
                 {/* User Admin */}
