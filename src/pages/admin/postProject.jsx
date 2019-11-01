@@ -138,12 +138,12 @@ class postProject extends React.Component{
                 <h5>Ajakan Campaign</h5>
                 <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
                 <p>Maks 100 Karakter</p>
-                {
+                {/* {
                     this.state.loading ?
                     <p>Loading...</p>
-                    :
+                    : */}
                     <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
-                }
+                {/* } */}
                 
             </div>
         )

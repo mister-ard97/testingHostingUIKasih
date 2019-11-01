@@ -123,14 +123,20 @@ class Home extends Component {
             limit
         }
 
-        Axios.post(URL_API+'/scholarship/getScholarship', data)
+        Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
-            var results = res.data.results.map((val)=>{
-                var hasil = {...val, ...val.School, ... val.Student}
+            console.log(res)
+            var results = res.data.result.map((val)=>{
+                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                 delete hasil.School
                 delete hasil.Student
+                delete hasil.Subscriptions
+                hasil.totaldonation = parseInt(hasil.totaldonation)
+               
                 return hasil
             })
+
+            console.log(results)
 
             this.setState({
                 scholarshipList : results
@@ -162,13 +168,13 @@ class Home extends Component {
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
                                 <p>{val.nominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0} >
-                                {(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0}%
+                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0} >
+                                {(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0}%
                                 </Progress>
                                 <div className="d-flex flex-row mb-3">
                                     <div className="mr-4">
                                         <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
                                     </div>
 
                                     <div>
@@ -178,7 +184,7 @@ class Home extends Component {
                                 </div>
                        
                                 <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <div className="text-gray mb-3"> {val.jumlahdonation} Donasi </div>
                                 <h5>Sisa Hari </h5>
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
@@ -398,17 +404,17 @@ class Home extends Component {
 
     // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
 
-    renderMidtrans = (id) =>{
-        // var id = this.props.location.search.split('=')[1]
-        console.log(id)
-        var randInt = Math.floor(Math.random()*(999-100+1)+100)
-        // this.setState({orderId: 'dev'+randInt})
-        var parameter = {
-            parameter:{
-                transaction_details: {
-                  order_id :'dev'+randInt,
-                  gross_amount: 300000 // input user
-                },
+    // renderMidtrans = (id) =>{
+    //     // var id = this.props.location.search.split('=')[1]
+    //     console.log(id)
+    //     var randInt = Math.floor(Math.random()*(999-100+1)+100)
+    //     // this.setState({orderId: 'dev'+randInt})
+    //     var parameter = {
+    //         parameter:{
+    //             transaction_details: {
+    //               order_id :'dev'+randInt,
+    //               gross_amount: 300000 // input user
+                // },
                 // item_details: [
                 //   {
                 //     id: 'camp-'+randInt,
@@ -421,62 +427,62 @@ class Home extends Component {
                 //   first_name: this.props.nama,
                 //   email: this.props.email
                 // },
-              },
-            userData:{
-                userId: this.props.id,
-                scholarshipId: id,
-                remainderDate : '2019-12-30 15:00:00', // input user
-                monthLeft : 12 // input user
+            //   },
+            // userData:{
+            //     userId: this.props.id,
+            //     scholarshipId: id,
+            //     remainderDate : '2019-12-30 15:00:00', // input user
+            //     monthLeft : 12 // input user
 
-            }
-        }
+    //         }
+    //     }
         
-          console.log(parameter)
-          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter)
-          .then((res)=>{
-            console.log(res.data)
-            localStorage.setItem('order_id', res.data.order_id)
-            window.snap.pay(res.data.transactionToken, {
-              onSuccess: (result) => {
-                console.log('success')
-                console.log(result)
-                console.log(result.finish_redirect_url)
-                Axios.post(`${URL_API}/payment/updatePayment`, result)
-                .then((res)=>{
-                    console.log(res.data)
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/finish?${link}`})
+    //       console.log(parameter)
+    //       Axios.post(`${URL_API}/subscription/usersubscribe`, parameter)
+    //       .then((res)=>{
+    //         console.log(res.data)
+    //         localStorage.setItem('order_id', res.data.order_id)
+    //         window.snap.pay(res.data.transactionToken, {
+    //           onSuccess: (result) => {
+    //             console.log('success')
+    //             console.log(result)
+    //             console.log(result.finish_redirect_url)
+    //             Axios.post(`${URL_API}/payment/updatePayment`, result)
+    //             .then((res)=>{
+    //                 console.log(res.data)
+    //             })
+    //             .catch((err)=>{
+    //                 console.log(err)
+    //             })
+    //             var link = result.finish_redirect_url.split('?')[1]
+    //             document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+    //             this.setState({lompatan: `/finish?${link}`})
                 
-               }
-               ,
-               onPending: function(result){
-                 console.log('pending')
-                 console.log(result)
+    //            }
+    //            ,
+    //            onPending: function(result){
+    //              console.log('pending')
+    //              console.log(result)
                  
-                console.log(result.finish_redirect_url)
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/unfinish?${link}`})
-                },
-                onError: function(result){
-                 console.log('error')
-                 console.log(result)
-                 console.log(result.finish_redirect_url)
-                 var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/error?${link}`})
-                }
+    //             console.log(result.finish_redirect_url)
+    //             var link = result.finish_redirect_url.split('?')[1]
+    //             document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+    //             this.setState({lompatan: `/unfinish?${link}`})
+    //             },
+    //             onError: function(result){
+    //              console.log('error')
+    //              console.log(result)
+    //              console.log(result.finish_redirect_url)
+    //              var link = result.finish_redirect_url.split('?')[1]
+    //             document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+    //             this.setState({lompatan: `/error?${link}`})
+    //             }
              
-            })
-          }).catch((err)=>{
-            console.log(err)
-          })
-    }
+    //         })
+    //       }).catch((err)=>{
+    //         console.log(err)
+    //       })
+    // }
 
     //
  
