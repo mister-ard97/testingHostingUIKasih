@@ -45,11 +45,27 @@ class ManageScholarship extends Component{
 
     }
     componentDidMount(){
-        let id= this.props.id
-        Axios.get(URL_API+'/scholarship/getScholarship')
+        // let id= this.props.id
+        let limit = 4
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
+        }
+
+        Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res.data)
-            this.setState({data: res.data})
+            var results = res.data.result.map((val)=>{
+                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                hasil.totaldonation = parseInt(hasil.totaldonation)
+               
+                return hasil
+            })
+
+            console.log(results)
+            this.setState({data: results})
             
         }).catch((err)=>{
             console.log(err)
@@ -57,7 +73,7 @@ class ManageScholarship extends Component{
     }
     renderScholarshipList = () => {
         // if(this.state.data){
-            console.log(this.state.data[0].Student.namaSiswa)
+            // console.log(this.state.data[0].Student.namaSiswa)
         return this.state.data.map((val, i) => {
             // console.log(this.state.data[i].Student.namaSiswa)
             // console.log(val.Student.namaSiswa)
