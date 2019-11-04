@@ -123,7 +123,7 @@ class Home extends Component {
             limit
         }
 
-        Axios.post(URL_API+'/scholarship/getScholarship', data)
+        Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ... val.Student}
@@ -136,6 +136,7 @@ class Home extends Component {
                 scholarshipList : results
             })
             console.log(results)
+            console.log(res.data)
             
         })
         .catch((err)=>{
