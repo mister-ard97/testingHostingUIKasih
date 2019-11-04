@@ -1,12 +1,12 @@
 import React from 'react'
 import Axios from 'axios'
-import { URL_API } from '../helpers/Url_API'
+import { URL_API } from '../../helpers/Url_API'
 
 import { Modal, ModalHeader, ModalBody, ModalFooter,Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import ReactQuill from 'react-quill'; // ES6
 import queryString from 'query-string'
 
-import User from './User'
+import User from '../User'
 
 class ProjectManage extends React.Component{
     state = {

@@ -47,13 +47,13 @@ class ScholarshipAdd extends Component{
 
     }
     componentDidMount = () => {
-        const token = localStorage.getItem('token');
-        const options = {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        }
-        Axios.get( URL_API+'/student/getstudentperuser', options )
+        // const token = localStorage.getItem('token');
+        // const options = {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`,
+        //     }
+        // }
+        Axios.get( URL_API+'/student/getstudentperuser?id=' + this.props.userId)
         .then((res) => {
             console.log(res.data)
             this.setState({datasiswa: res.data})

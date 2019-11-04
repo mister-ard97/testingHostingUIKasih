@@ -61,12 +61,15 @@ class AdminReviewStudentDetail extends Component {
 
                     openModalCompare: false, 
                     openModalReject: false,
+                    openModalEdit: false,
                     dataLama: null,
                     dataBaru: null, 
                     idDetailSelected: null,
 
                     rejectId : null,
-                    rejectNote: null
+                    rejectNote: null,
+
+                    editDokumen: null
                 })
             }
             
@@ -145,7 +148,7 @@ class AdminReviewStudentDetail extends Component {
                                 <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '20%' }}/>
                             </td>
                             <td>
-                                {item.kelas}
+                                {item.class}
                             </td>
                             <td>
                                 {item.deskripsi}
@@ -155,6 +158,7 @@ class AdminReviewStudentDetail extends Component {
                                 <td>
                                     <input type='button' value='Accept' className='btn btn-success' onClick={() => this.onAcceptedDetail(item.id) }/>
                                     <input type='button' value='Rejected' className='btn btn-danger' onClick={() => this.setState({openModalReject: true, rejectId: item.id})}/>
+                                    <input type='button' value='Edit Dokument' className='btn btn-edit' onClick={() => this.setState({openModalEdit: true, editDokumen: item})} />
                                 </td>
                                 :
                                 null
@@ -168,7 +172,7 @@ class AdminReviewStudentDetail extends Component {
                                     <input type='button' className='btn btn-dark' value='Compare Changes' 
                                         onClick={() => this.showCompareDetails(item.id, {
                                             id: item.id,
-                                            kelas: item.kelas,
+                                            class: item.class,
                                             deskripsi: item.deskripsi,
                                             pictureReport: item.pictureReport
                                         })}
@@ -300,7 +304,7 @@ class AdminReviewStudentDetail extends Component {
             <div className='row m-0'>
                 <div className='col-5'>
                     Data Lama 
-                    <p>Kelas: {this.state.dataLama.kelas}</p>
+                    <p>Kelas: {this.state.dataLama.class}</p>
                     <p>Deskripsi: {this.state.dataLama.deskripsi}</p>
                     <img src={URL_API + this.state.dataLama.pictureReport} alt={this.state.dataLama.pictureReport} className='img-fluid' />
                 </div>
@@ -309,7 +313,7 @@ class AdminReviewStudentDetail extends Component {
                 </div>
                 <div className='col-5'>
                     Data Baru
-                    <p>Kelas: {this.state.dataBaru.kelas}</p>
+                    <p>Kelas: {this.state.dataBaru.class}</p>
                     <p>Deskripsi: {this.state.dataBaru.deskripsi}</p>
                     <img src={URL_API + this.state.dataBaru.pictureReport} alt={this.state.dataBaru.pictureReport} className='img-fluid' />
                 </div>
@@ -384,6 +388,23 @@ class AdminReviewStudentDetail extends Component {
                         :
                         null
                 }
+
+                {/* Edit Modal */}
+
+                <Modal isOpen={this.state.openModalEdit} toggle={()=>this.setState({ openModalEdit : false, editDokumen: null})} >
+                    <ModalHeader>
+                        Edit Dokumen
+                    </ModalHeader>
+                    <ModalBody>
+                         {/* <h5>Plase enter your note here : </h5>
+                         <small>Maks 45 karakter</small>
+                         <input type="text" ref="rejectinput" className="form-control"/> */}
+                         {console.log(this.state.editDokumen)}
+                    </ModalBody>
+                    <ModalFooter>
+                        {/* <input type="button" onClick={()=>this.onRejectedDetail(this.state.rejectId, this.refs.rejectinput.value)} value="REJECT" className="form-control btn btn-danger"/> */}
+                    </ModalFooter>
+                </Modal>
 
                 <div className='row m-0'>
                     {

@@ -99,6 +99,7 @@ class Studentlist extends Component {
 
     getStudentData(obj = {limit :this.state.limit,page:1}){
         console.log(obj)
+        obj.userId = this.props.id
 
         let token = localStorage.getItem('token')
         var headers ={
@@ -212,7 +213,7 @@ class Studentlist extends Component {
             return (
                 <div>
                     <button className='btn btn-danger mr-3' onClick={() => this.deleteStudent(id)}>delete student</button> 
-                    {/* <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button>  */}
+                    <button className='btn btn-dark ' onClick={() =>this.setState({editselected : index, editmodal : true})}>edit student</button> 
                 </div>
             )
 
