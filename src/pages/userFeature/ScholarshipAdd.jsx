@@ -4,8 +4,11 @@ import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
+
+// import {  ClassicEditor } from '../../components/Ckeditor';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { } from '@ckeditor/ckeditor5-upload';
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -232,7 +235,6 @@ class ScholarshipAdd extends Component{
                             console.log( 'Focus.', editor );
                         } }
                     />
-                    
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Pesan ajakan</Label>

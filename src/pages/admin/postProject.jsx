@@ -2,8 +2,11 @@ import React from 'react'
 import Axios from 'axios';
 import { URL_API } from '../../helpers/Url_API';
 import { Redirect } from 'react-router-dom';
-import ReactQuill from 'react-quill'; // ES6
-import 'react-quill/dist/quill.snow.css'; // ES6
+
+// import {  DokumenEditor } from '../../components/Ckeditor'
+// import CKEditor from '@ckeditor/ckeditor5-react';
+// import DokumenEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+
 import { Modal, ModalBody} from 'reactstrap';
 
 // Link custom toolbar reqct quiil (tombol menambahkan icon)
@@ -140,11 +143,14 @@ class postProject extends React.Component{
                 <input type="text" ref='prname' className="form-control mb-4" placeholder="masukkan nama project"/>
                 <button onClick={()=>this.setState({modalopen:true})}>add image</button>
 
-                <ReactQuill value={this.state.text}
+                {/* <ReactQuill value={this.state.text}
                             modules={this.modules}
                             formats={this.formats}
                             onChange={this.handleChange} 
-                />
+                /> */}
+                {/* <CKEditor
+                    editor={ DokumenEditor }
+                /> */}
 
                 <h5>Project Target</h5>
                 <input type="number" ref='prtarget' className="form-control mb-4" placeholder="masukkan project description"/>
