@@ -17,7 +17,7 @@ import {Modal,ModalBody} from 'reactstrap'
 //   console.log('asdiasi')
 //     // console.log(cursorPosition);
 //   }
-  
+// const tombol = `button`
 
 class postProject extends React.Component{
     constructor(props) {
@@ -52,27 +52,48 @@ class postProject extends React.Component{
 
             ],
             handlers : {
-                "image":  function () { 
+                'image' :  function () { 
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'file');
+                        input.setAttribute('accept', 'image/*');
+                        input.click();
+                        input.onchange =  function() {
+                          const file = input.files[0];
+                          console.log('User trying to uplaod this:', file);
+                          console.log(file)
+                          var formData = new FormData()
+                        formData.append('image',file)
+                        Axios.post(URL_API + `/project/GenerateURL`, formData)
+                        .then((res) => {
+                            console.log(res.data)
+
+
+                                // this.quill.insertImage(this.quill.getSelection().index, `<img src=${URL_API+res.data}/>`); 
+
+                                this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
+                                // newtext+=`<img src=${URL_API+res.data}>`
+                                // this.setState({ 
+                                //    modalopen:false,
+                                //    text:newtext
+                                // })
+                
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
                     
-                  
+                        //   const id = await uploadFile(file); // I'm using react, so whatever upload function
+                        //   const range = this.quill.getSelection();
+                        //   const link = `${ROOT_URL}/file/${id}`;
+                    
+                          // this part the image is inserted
+                          // by 'image' option below, you just have to put src(link) of img here. 
+                        //   this.quill.insertEmbed(range.index, 'image', link); 
+                        }.bind(this); // react thing
                         // var newtext=this.state.text
 
 
-                        // var formData = new FormData()
-                        // formData.append('image', e.target.files[0])
-                        // await Axios.post(URL_API + `/project/GenerateURL`, formData)
-                        // .then((res) => {
-                        //     console.log(res.data)
-                        //     // newtext+=`<img src=${URL_API+res.data}>`
-                        //     // this.setState({ 
-                        //     //    modalopen:false,
-                        //     //    text:newtext
-                        //     // })
-            
-                        // })
-                        // .catch((err) => {
-                        //     console.log(err)
-                        // })
+                        
                         // this.setState({
                         //     modalopen : true
                         // })
@@ -80,7 +101,7 @@ class postProject extends React.Component{
                         // if(this.state.imageFile){
                         //     console.log('masuk')
                         // }
-                        this.quill.insertText(this.quill.getSelection().index, `<iasd>`); 
+                 
                                                       
                                     
                 }
