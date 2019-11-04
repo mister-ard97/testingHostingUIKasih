@@ -6,6 +6,10 @@ import {URL_API} from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+// import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +42,8 @@ class ScholarshipAdd extends Component{
         sDeskripsi:'',
         nominal: 0,
         judul:'',
-        success: false
+        success: false,
+        contentState: EditorState.createEmpty()
 
     }
     componentDidMount = () => {
@@ -65,6 +70,13 @@ class ScholarshipAdd extends Component{
             console.log(err)
         })
     }
+
+    onContentStateChange = (contentState) => {
+        this.setState({contentState})
+        console.log(contentState)
+
+    }
+
     renderSiswa = () =>{
         var data = this.state.datasiswa
         var exist = this.state.existSiswa
@@ -215,6 +227,13 @@ class ScholarshipAdd extends Component{
                      <CKEditor
                         editor={ ClassicEditor }
                         data=""
+                        config={{ckfinder: {
+                            // Upload the images to the server using the CKFinder QuickUpload command
+                            // You have to change this address to your server that has the ckfinder php connector
+                            // uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
+                            uploadUrl: console.log()
+
+                        }}}
                         onInit={ editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log( 'Editor is ready to use!', editor );
@@ -232,6 +251,13 @@ class ScholarshipAdd extends Component{
                             console.log( 'Focus.', editor );
                         } }
                     />
+
+                    {/* <Editor
+                            initialContentState={this.state.contentState}
+                            wrapperClassName="demo-wrapper"
+                            editorClassName="demo-editor"
+                            onContentStateChange={this.onContentStateChange}
+                        /> */}
                     
                     </FormGroup>
                     <FormGroup>
