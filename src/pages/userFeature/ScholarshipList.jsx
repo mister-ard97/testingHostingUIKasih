@@ -107,17 +107,20 @@ class ScholarshipList extends Component{
         const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.data[Id]
             return(
                 <Modal isOpen={this.state.openModal} toggle={()=>this.setState({ openModal : false, detailId: ''})} size='xl'>
-                    <ModalHeader>Detail Scholarship</ModalHeader>
+                    <ModalHeader toggle={()=>this.setState({ openModal : false, detailId: ''})}>Detail Scholarship</ModalHeader>
                     <ModalBody>
-                        <h3>{ judul }</h3>
+                        {/* <h3>{ judul }</h3> */}
                         <div className='row'>
                         
                             <div className='col-md-2'>
-                                <img src={`http://localhost:1998/${studentImage}`} width='200px'/>
+                                <img src={`http://localhost:2019/${studentImage}`} width='200px'/>
                             </div>
                             <div className='col-md-9 pl-5'>
                                 
                                 <Table>
+                                    <tr>
+                                        <td colSpan='2'><h3>{judul}</h3></td>
+                                    </tr>
                                     <tr>
                                         <td width='20%'>Nama</td>
                                         <td>: {namaSiswa}</td>
@@ -147,7 +150,8 @@ class ScholarshipList extends Component{
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={()=>this.setState({openModal: false})} color='danger'>Close</Button>
+                        
+                        {/* <Button onClick={()=>this.setState({openModal: false})} color='danger'>Close</Button> */}
                     </ModalFooter>
                 </Modal>
             )
