@@ -69,6 +69,7 @@ class ScholarshipList extends Component{
                     <td>{val.durasi} Bulan</td>
                     <td style={{textAlign:'center'}}>{val.isVerified}</td>
                     <td style={{textAlign:'center'}}>{val.isOngoing}</td>
+                    <td style={{textAlign:'center'}}>{val.note}</td>
                     <td style={{textAlign:'center'}}><Button color='primary' onClick={()=> this.setState({openModal: true, detailId: i})}>Detail</Button></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
                     <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
@@ -326,6 +327,7 @@ class ScholarshipList extends Component{
                         <th>Durasi</th>
                         <th style={{textAlign:'center'}}>Verifikasi</th>
                         <th style={{textAlign:'center'}}>Status</th>
+                        <th style={{textAlign: 'center'}}>Note From Admin</th>
                         <th colSpan='3' style={{textAlign:'center'}}>Aksi</th>
                     </tr>
                     {this.renderScholarshipList()}

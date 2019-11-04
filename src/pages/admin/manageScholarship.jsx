@@ -46,26 +46,26 @@ class ManageScholarship extends Component{
     }
     componentDidMount(){
         // let id= this.props.id
-        let limit = 4
-        let data = {
-            name: '',
-            page: 1,
-            date: 'ASC',
-            limit
-        }
+        // let limit = 4
+        // let data = {
+        //     name: '',
+        //     page: 1,
+        //     date: 'ASC',
+        //     limit
+        // }
 
-        Axios.post(URL_API+'/scholarship/getscholarship', data)
+        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id=' + this.props.id)
         .then((res)=>{
             console.log(res.data)
-            var results = res.data.result.map((val)=>{
-                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
-                hasil.totaldonation = parseInt(hasil.totaldonation)
+            // var results = res.data.result.map((val)=>{
+            //     var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+            //     hasil.totaldonation = parseInt(hasil.totaldonation)
                
-                return hasil
-            })
+            //     return hasil
+            // })
 
-            console.log(results)
-            this.setState({data: results})
+            // console.log(results)
+            this.setState({data: res.data})
             
         }).catch((err)=>{
             console.log(err)
@@ -83,7 +83,7 @@ class ManageScholarship extends Component{
             return (
                 <tr>
                     <td>{i+1}</td>
-                    <td>{val.Student.User.nama}</td>
+                    <td>{this.props.nama}</td>
                     <td>{val.Student.namaSiswa}</td>
                     {/* <td>{this.state.data[i].Student.namaSiswa}</td> */}
                     <td>Rp. {val.nominal}</td>
@@ -126,15 +126,24 @@ class ManageScholarship extends Component{
         Axios.put(URL_API+'/scholarship/putVerification?id='+this.state.verifikasiId, data)
         .then((res)=>{
             console.log(res.data)
-            this.setState({openVerModal:false, detailId: ''})
+            // this.setState({})
 
-            Axios.get(URL_API+'/scholarship/getScholarship')
-                .then((res)=>{
-                    console.log(res.data)
-                    this.setState({data: res.data})
-                }).catch((err)=>{
-                    console.log(err)
-                })
+            Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id=' + this.props.id)
+        .then((res)=>{
+            console.log(res.data)
+            // var results = res.data.result.map((val)=>{
+            //     var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+            //     hasil.totaldonation = parseInt(hasil.totaldonation)
+               
+            //     return hasil
+            // })
+
+            // console.log(results)
+            this.setState({data: res.data, openVerModal:false, detailId: ''})
+            
+        }).catch((err)=>{
+            console.log(err)
+        })
         }).catch((err)=>{
             console.log(err)
         })
@@ -388,7 +397,8 @@ class ManageScholarship extends Component{
 
 const mapStateToProps = ({auth}) => {
     return{
-        id : auth.id
+        id : auth.id,
+        nama: auth.nama
     }
 }
 
