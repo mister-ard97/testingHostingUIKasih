@@ -131,6 +131,7 @@ class Home extends Component {
                 delete hasil.Student
                 delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
+                hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
                 return hasil
             })
@@ -144,7 +145,7 @@ class Home extends Component {
             
         })
         .catch((err)=>{
-            console.log(err)
+           console.log(err)
         })
     }
 
@@ -167,13 +168,13 @@ class Home extends Component {
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
                                 <p>{val.nominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0} >
-                                {(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0}%
+                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
+                                {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
                                 </Progress>
                                 <div className="d-flex flex-row mb-3">
                                     <div className="mr-4">
                                         <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.grandtotal)).format(0,0)}`} disabled/>
                                     </div>
 
                                     <div>
