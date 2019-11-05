@@ -21,9 +21,15 @@ class CarouselCustom extends Component {
                         <img src={Banner1} alt='home-banner'
                             style={{
                                 width: '100%'
-
                             }}
                         />
+                        <div className='boxBanner px-5 font-weight-bold'>
+                            <h2 className='mb-4'>TAKE ACTION</h2>
+                            <p>
+                                Get involved, speak out, <br /> or become a donor and give every child a fair
+                                chance for education
+                            </p>
+                        </div>
                     </div>
                 </div>
            </div>

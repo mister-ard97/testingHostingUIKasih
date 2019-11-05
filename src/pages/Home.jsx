@@ -490,9 +490,8 @@ class Home extends Component {
 
         return (
             <div>
-                <div>
-                    <Carousel />
-                    <div className='row m-0'>
+                <Carousel />
+                {/* <div className='row m-0'>
                         <div className='col-10 offset-1 mb-3'>
                             <h2>Project Yang Sedang Aktif</h2>
                             <h4>Filter By</h4>
@@ -510,10 +509,8 @@ class Home extends Component {
                             <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
                                 Search Project
                             </a>
-                            {/* <ProjectList /> */}
-                            {/* <Route to='/project-list' component={ProjectList} /> */}
+                            
                             {this.renderProjectList()}
-                            {/* {this.printPagination()} */}
                         </div>
 
                         <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
@@ -537,10 +534,17 @@ class Home extends Component {
                             <div>
                                 {this.renderScholarshipList()}
                             </div>
-                            {/* <StudentList /> */}
-                            {/* {this.renderScholarshipStudentList()} */}
                         </div>
-                    </div>           
+                    </div>            */}
+
+                    {/* New Konten */}
+                <div className='container-fluid' style={{marginTop: '28%'}}>
+                    <div className='row m-0'>
+                        <div className='col-12 d-flex justify-content-center'>
+                            <button>Share your story</button>
+                            <button>Donate</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

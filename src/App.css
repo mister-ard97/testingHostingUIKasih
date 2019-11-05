@@ -3,6 +3,10 @@
   src: local('Neon80'), url(./fonts/Neon.ttf) format('truetype');
 }
 
+body {
+    font-family: 'Neon80', cursive, sans-serif !important;
+}
+
 /* Global styling */
 .col-10.img-small img {
   width: 200px;
@@ -27,7 +31,6 @@
 }
 
 .navbar-custom {
-    font-family: 'Neon80', cursive, sans-serif !important;
     font-size: 18px;
 }
 
@@ -95,8 +98,8 @@
 }
 
 /* Carousel */
-.carousel-custom {
-  /* margin-top: -100px; */
+/* .carousel-custom {
+  margin-top: -100px;
   z-index: -3;
 }
 
@@ -151,6 +154,25 @@ textarea:focus {
     border-color: rgba(229, 103, 23, 0.8) !important;
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6) !important;
     outline: 0 none !important;
+} */
+
+/*  New Banner Styling */
+.boxBanner {
+  /* position: relative; */
+  /* top: -68%; */
+  /* left: 3%; */
+  margin-top: -53%;
+  margin-left: 3%;
+  width: 400px;
+}
+
+.boxBanner h2 {
+  font-size: 40px;
+  color: red;
+}
+
+.boxBanner p {
+  font-size: 22px;
 }
 
 /* Login Page */
