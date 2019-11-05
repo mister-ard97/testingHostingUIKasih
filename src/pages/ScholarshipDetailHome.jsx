@@ -46,6 +46,7 @@ class ScholarshipDetailHome extends Component {
         .then((res) => {
             // console.log(res.data)
             // console.log(res.data[0])
+            console.log(res)
             var hasil = res.data[0]
             if(hasil.Subscriptions.length !== 0){
 

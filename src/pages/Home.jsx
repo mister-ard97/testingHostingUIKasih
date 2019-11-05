@@ -542,12 +542,18 @@ class Home extends Component {
                 <div className='container-fluid' style={{marginTop: '28%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
-                            <button>Share your story</button>
-                            <button>Donate</button>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR STORY</div>
+               
+                          
                         </div>
                     </div>
                 </div>
+
+ 
             </div>
+
+
         )
     }
 }
