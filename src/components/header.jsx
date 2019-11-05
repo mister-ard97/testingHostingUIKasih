@@ -73,7 +73,7 @@ class Header extends Component {
                                             <div>
                                                 {
                                                     this.props.verified === 0 ?
-                                                    <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
+                                                    <p style={{color: '#D32242'}}>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                     :
                                                     null
                                                 }
@@ -90,7 +90,7 @@ class Header extends Component {
                                             <div>
                                                 {
                                                     this.props.verified === 0 ?
-                                                        <p className='text-danger'>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
+                                                        <p style={{color: '#D32242'}}>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
                                                         :
                                                         null
                                                 }

@@ -39,7 +39,7 @@ body {
 }
 
 .navbar-custom a {
-  color: red !important;
+  color: #D32242 !important;
 }
 
 .link-dark svg, .link-dark a {
@@ -173,7 +173,7 @@ textarea:focus {
 
 .boxBanner h2 {
   font-size: 40px;
-  color: red;
+  color: #D32242;
 }
 
 .boxBanner p {
@@ -182,13 +182,20 @@ textarea:focus {
 
 
 /* Scholarship Slider */
-.card-custom {
+.bg-scholarship {
   width: 92% !important;
-  /* margin: 0 2rem 0 2rem; */
+  background: #FFFFFF;
 }
 
-.card-custom a {
+a.bg-scholarship {
+  text-decoration: none;
+  color: #D32242;
+}
 
+a.bg-scholarship:hover {
+  background: #D32242;
+  color: white;
+  text-decoration: none !important;
 }
 
 .profile-student {
@@ -198,6 +205,26 @@ textarea:focus {
   background: gray;
   object-fit: cover;
   object-position: 10% 10%;
+}
+
+.scholarship-slider .slick-dots {
+  bottom: -35px;
+}
+
+.scholarship-slider .slick-dots li button:before {
+  color: white !important;
+  opacity: 1;
+}
+
+.scholarship-slider .slick-dots .slick-active button::before {
+  color: #D32242 !important;
+}
+
+.outer-background-scholarship {
+  /* background: url('./assets/border.png') no-repeat top;
+  object-fit: cover;
+  height: 50vh; */
+  background: #D3D8D8;
 }
 
 /* Login Page */

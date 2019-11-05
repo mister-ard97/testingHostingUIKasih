@@ -109,7 +109,7 @@ class Home extends Component {
     }
 
     getScholarshipList = () =>{
-        let limit = 4
+        let limit = 12
         let data = {
             name: '',
             page: 1,
@@ -221,25 +221,23 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-white text-dark border border-light card-custom text-center py-5'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-5'>
                            
                         <div className='container-fluid'>
                             <div className='col-12 d-flex justify-content-center'>
-                                <div className=''>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
                                         alt={`${val.studentImage}-banner`} className='profile-student' 
                                         // style={{width : '80px', borderRadius: '80px', height: '80px'}}
                                     />
-                                </div>
                             </div>
 
                             <div className='col-12'>
-                                
-                                <div style={{height: '70px'}}>
-                                    <p className="my-3">{val.studentName}</p>
-                                </div>
-
+                                {/* <div style={{height: '70px'}}>
+                                    
+                                </div> */}
+                                    <p className="my-3">{val.namaSiswa}</p>
+                                    <p className="my-3">{val.namaSekolah}</p>
                                 <p>{val.nominal}</p>
                             </div>
                         </div>
@@ -519,8 +517,9 @@ class Home extends Component {
     render() {
         var settings = {
             dots: true,
+            arrows: false,
             infinite: true,
-            speed: 500,
+            speed: 1000,
             slidesToShow: 4,
             slidesToScroll: 4
           };
@@ -591,10 +590,19 @@ class Home extends Component {
                         <div className='col-12 mb-5'>
                             <h2 className='text-center font-weight-bold text-danger'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 bg-dark py-5'>
+                        <div className='col-12 outer-background-scholarship py-5 scholarship-slider'>
                             <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
+                        </div>
+                    </div>
+                </div>
+
+                {/* About Us */}
+                <div className='container-fluid my-5 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 mb-5'>
+                            
                         </div>
                     </div>
                 </div>
