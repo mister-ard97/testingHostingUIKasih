@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Slider from 'react-slick';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
-
-import backgroundproject from '../../src/assets/border.png'
-
-import {
-    FacebookShareButton,
-    WhatsappShareButton,
-    FacebookIcon,
-    WhatsappIcon
-} from 'react-share';
 import numeral from 'numeral'
 
 import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
@@ -117,7 +109,7 @@ class Home extends Component {
     }
 
     getScholarshipList = () =>{
-        let limit = 4
+        let limit = 12
         let data = {
             name: '',
             page: 1,
@@ -158,7 +150,8 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                            <div className='row'>
                             <div className='col-4'>
                                 <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                             </div>
@@ -213,13 +206,46 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                           
-
-                               
-
-                             
+                            </div>
                             </div>
                         </a>
+                )
+            })
+        }
+    }
+
+
+    // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
+    
+    renderScholarshipListSlider = () => {
+        if(this.state.scholarshipList.length !== 0){
+            return this.state.scholarshipList.map((val,id)=>{
+                val.currentSubs = parseInt(val.currentSubs)
+                return(
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-5'>
+                           
+                        <div className='container-fluid'>
+                            <div className='col-12 d-flex justify-content-center'>
+                                    <img 
+                                        src={`${URL_API}${val.studentImage}`} 
+                                        alt={`${val.studentImage}-banner`} className='profile-student' 
+                                        // style={{width : '80px', borderRadius: '80px', height: '80px'}}
+                                    />
+                            </div>
+
+                            <div className='col-12'>
+                                {/* <div style={{height: '70px'}}>
+                                    
+                                </div> */}
+                                    <p className="my-3">{val.namaSiswa}</p>
+                                    <p className="my-3">{val.namaSekolah}</p>
+                                <p>{val.nominal}</p>
+                            </div>
+                        </div>
+                        
+                    
+                        
+                    </a>
                 )
             })
         }
@@ -490,6 +516,14 @@ class Home extends Component {
     //
  
     render() {
+        var settings = {
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: 4,
+            slidesToScroll: 4
+          };
 
         return (
             <div>
@@ -541,18 +575,42 @@ class Home extends Component {
                     </div>            */}
 
                     {/* New Konten */}
+        
                 <div className='container-fluid' style={{marginTop : '37%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
                             <div className="donatebutton">SHARE YOUR STORY</div>
+                </div>
+                </div>
+
+                {/* Slider */}
+
+                <div className='container-fluid my-5 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 mb-5'>
+                            <h2 className='text-center font-weight-bold text-danger'>SCHOLARSHIPS</h2>
+                        </div>
+                        <div className='col-12 outer-background-scholarship py-5 scholarship-slider'>
+                            <Slider {...settings}>
+                                {this.renderScholarshipListSlider()}
+                            </Slider>
+                        </div>
+                    </div>
+                </div>
+
+                {/* About Us */}
+                <div className='container-fluid my-5 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 mb-5'>
+                            
                         </div>
                     </div>
                 </div>
                 <div className="projectbackground" style={{height : '95vh'}} >
            
                     <div>
-                        
+
                     </div>
                 </div>
              

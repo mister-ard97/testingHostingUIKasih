@@ -15,14 +15,9 @@ class CarouselCustom extends Component {
     render() {
 
         return (
-           <div className='container-fluid p-0'>
+           <div className='container-fluid p-0 Banner-Home'>
                 <div className='row m-0 mb-3'>
                     <div className='col-12 m-0 p-0'>
-                        <img src={Banner1} alt='home-banner'
-                            style={{
-                                width: '100%'
-                            }}
-                        />
                         <div className='boxBanner px-5 font-weight-bold'>
                             <h2 className='mb-4'>TAKE ACTION</h2>
                             <p>
@@ -30,6 +25,14 @@ class CarouselCustom extends Component {
                                 chance for education
                             </p>
                         </div>
+                        <img src={Banner1} alt='home-banner'
+                            style={{
+                                width: '100%',
+                                visibility: 'hidden',
+                                height: '550px'
+                            }}
+                        />
+                        
                     </div>
                 </div>
            </div>
