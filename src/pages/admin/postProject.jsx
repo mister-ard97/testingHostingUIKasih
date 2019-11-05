@@ -66,42 +66,13 @@ class postProject extends React.Component{
                         Axios.post(URL_API + `/project/GenerateURL`, formData)
                         .then((res) => {
                             console.log(res.data)
-
-
-                                // this.quill.insertImage(this.quill.getSelection().index, `<img src=${URL_API+res.data}/>`); 
-
-                                this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
-                                // newtext+=`<img src=${URL_API+res.data}>`
-                                // this.setState({ 
-                                //    modalopen:false,
-                                //    text:newtext
-                                // })
-                
+                            this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
                         })
                         .catch((err) => {
                             console.log(err)
                         })
-                    
-                        //   const id = await uploadFile(file); // I'm using react, so whatever upload function
-                        //   const range = this.quill.getSelection();
-                        //   const link = `${ROOT_URL}/file/${id}`;
-                    
-                          // this part the image is inserted
-                          // by 'image' option below, you just have to put src(link) of img here. 
-                        //   this.quill.insertEmbed(range.index, 'image', link); 
-                        }.bind(this); // react thing
-                        // var newtext=this.state.text
-
-
-                        
-                        // this.setState({
-                        //     modalopen : true
-                        // })
-
-                        // if(this.state.imageFile){
-                        //     console.log('masuk')
-                        // }
-                 
+                        }.bind(this); 
+                   
                                                       
                                     
                 }
@@ -228,15 +199,15 @@ class postProject extends React.Component{
                 <div className="editorxd">
 
                 </div>
-                <Modal isOpen={this.state.modalopen} toggle={()=>this.setState({modalopen:false})} >
+                {/* <Modal isOpen={this.state.modalopen} toggle={()=>this.setState({modalopen:false})} >
                     <ModalBody>
                         <input type="file" onChange={this.addimagequillchange}/>
                     </ModalBody>
-                </Modal>
+                </Modal> */}
                 <h1 className="mb-4">GALANG DANA</h1>
                 <h5>Nama Project</h5>
                 <input type="text" ref='prname' className="form-control mb-4" placeholder="masukkan nama project"/>
-                <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button>
+                {/* <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button> */}
                 <ReactQuill value={this.state.text}
                             modules={this.modules}
                             formats={this.formats}

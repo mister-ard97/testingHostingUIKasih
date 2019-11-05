@@ -38,8 +38,13 @@ class ScholarshipDetailHome extends Component {
             // console.log(res.data)
             // console.log(res.data[0])
             var hasil = res.data[0]
-            hasil.currentSubs = hasil.Subscriptions[0].currentSubs
-            hasil.grandtotal = parseInt(hasil.currentSubs) + parseInt(hasil.totaldonation)
+            if(hasil.Subscriptions.length !== 0){
+
+                hasil.currentSubs = hasil.Subscriptions[0].currentSubs
+                hasil.grandtotal = parseInt(hasil.currentSubs) + parseInt(hasil.totaldonation)
+            }else {
+                hasil.grandtotal = hasil.totaldonation
+            }
             delete hasil.Subscriptions
             
             this.setState({ScholarshipDetail: hasil})
