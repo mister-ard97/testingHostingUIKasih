@@ -157,11 +157,16 @@ textarea:focus {
 } */
 
 /*  New Banner Styling */
+.Banner-Home {
+  background: url('./assets/Banner1.png') no-repeat top;
+  /* height: auto; */
+}
+
 .boxBanner {
   /* position: relative; */
   /* top: -68%; */
   /* left: 3%; */
-  margin-top: -53%;
+  margin-top: 7%;
   margin-left: 3%;
   width: 400px;
 }
@@ -173,6 +178,26 @@ textarea:focus {
 
 .boxBanner p {
   font-size: 22px;
+}
+
+
+/* Scholarship Slider */
+.card-custom {
+  width: 92% !important;
+  /* margin: 0 2rem 0 2rem; */
+}
+
+.card-custom a {
+
+}
+
+.profile-student {
+  width: 90px;
+  height: 90px;
+  border-radius: 90px;
+  background: gray;
+  object-fit: cover;
+  object-position: 10% 10%;
 }
 
 /* Login Page */

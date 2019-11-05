@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Slider from 'react-slick';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
-
-import {
-    FacebookShareButton,
-    WhatsappShareButton,
-    FacebookIcon,
-    WhatsappIcon
-} from 'react-share';
 import numeral from 'numeral'
 
 import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
@@ -155,7 +149,8 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                            <div className='row'>
                             <div className='col-4'>
                                 <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                             </div>
@@ -210,13 +205,48 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                           
-
-                               
-
-                             
+                            </div>
                             </div>
                         </a>
+                )
+            })
+        }
+    }
+
+
+    // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
+    
+    renderScholarshipListSlider = () => {
+        if(this.state.scholarshipList.length !== 0){
+            return this.state.scholarshipList.map((val,id)=>{
+                val.currentSubs = parseInt(val.currentSubs)
+                return(
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-white text-dark border border-light card-custom text-center py-5'>
+                           
+                        <div className='container-fluid'>
+                            <div className='col-12 d-flex justify-content-center'>
+                                <div className=''>
+                                    <img 
+                                        src={`${URL_API}${val.studentImage}`} 
+                                        alt={`${val.studentImage}-banner`} className='profile-student' 
+                                        // style={{width : '80px', borderRadius: '80px', height: '80px'}}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='col-12'>
+                                
+                                <div style={{height: '70px'}}>
+                                    <p className="my-3">{val.studentName}</p>
+                                </div>
+
+                                <p>{val.nominal}</p>
+                            </div>
+                        </div>
+                        
+                    
+                        
+                    </a>
                 )
             })
         }
@@ -487,6 +517,13 @@ class Home extends Component {
     //
  
     render() {
+        var settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 4,
+            slidesToScroll: 4
+          };
 
         return (
             <div>
@@ -538,11 +575,26 @@ class Home extends Component {
                     </div>            */}
 
                     {/* New Konten */}
-                <div className='container-fluid' style={{marginTop: '28%'}}>
+                <div className='container-fluid my-5 p-0' style={{marginTop: '-20%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
-                            <button>Share your story</button>
-                            <button>Donate</button>
+                            <button className='btn btn-danger mr-3'>Share your story</button>
+                            <button className='btn btn-secondary'>Donate</button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Slider */}
+
+                <div className='container-fluid my-5 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 mb-5'>
+                            <h2 className='text-center font-weight-bold text-danger'>SCHOLARSHIPS</h2>
+                        </div>
+                        <div className='col-12 bg-dark py-5'>
+                            <Slider {...settings}>
+                                {this.renderScholarshipListSlider()}
+                            </Slider>
                         </div>
                     </div>
                 </div>

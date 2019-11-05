@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Axios from 'axios'
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -107,8 +107,8 @@ class ManageScholarship extends Component{
                     <Input type='textarea' onChange={(e)=>this.setState({note: e.target.value })} placeholder='catatan' maxLength='255'/>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color='success' onClick={()=> this.verificationActionBtn('verified')}>Verified</Button>
-                    <Button color='danger'onClick={()=> this.verificationActionBtn('rejected')}>Reject</Button>
+                    <Button color='success' onClick={()=> this.verificationActionBtn(1)}>Verified</Button>
+                    <Button color='danger'onClick={()=> this.verificationActionBtn(0)}>Reject</Button>
                     <Button color='warning' onClick={()=>this.setState({openVerModal: false, detailId: ''})}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -119,7 +119,7 @@ class ManageScholarship extends Component{
         // console.log(status)
         let data = {
             isVerified: status,
-            isOngoing: status === 'verified' ? 'on Going' : 'Cancelled',
+            isOngoing: status,
             note: this.state.note
         }
         console.log(data)
@@ -167,7 +167,7 @@ class ManageScholarship extends Component{
                         <div className='row'>
                         
                             <div className='col-md-2'>
-                                <img src={`http://localhost:1998/${studentImage}`} width='200px'/>
+                                <img src={`${URL_API}/${studentImage}`} width='200px'/>
                             </div>
                             <div className='col-md-9 pl-5'>
                                 
@@ -231,7 +231,7 @@ class ManageScholarship extends Component{
                         <div className='row'>
                         
                             <div className='col-md-2'>
-                                <img src={`http://localhost:1998/${studentImage}`} width='200px'/>
+                                <img src={`${URL_API}/${studentImage}`} width='200px'/>
                             </div>
                             <div className='col-md-9 pl-5'>
                                 
