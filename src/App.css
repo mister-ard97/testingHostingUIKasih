@@ -97,6 +97,33 @@ body {
   font-size: 18px;
 }
 
+/* .btn-default {
+  font-size: 13px;
+  color: rgba(108, 88, 179, 0.75);
+  letter-spacing: 1px;
+  line-height: 15px;
+  border: 2px solid rgba(108, 89, 179, 0.75);
+  border-radius: 40px;
+  background: transparent;
+  transition: all 0.3s ease 0s;
+} */
+
+/* .btn-2 {
+	background: #cb4e4e;
+  color: #fff;
+  
+	box-shadow: 0 4px #b1b1b1;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2g {
+	border-radius: 40px;
+} */
+
+
+
 /* Carousel */
 /* .carousel-custom {
   margin-top: -100px;
@@ -549,4 +576,188 @@ a.bg-scholarship:hover {
 .dateDonasi{
   font-size: 11px;
   color: #505866;
+}
+
+/* button {
+  border: 4px solid #302f3a;
+  color: #302f3a;
+  position: relative;
+  border-radius: 18px;
+  margin: 2rem 3rem;
+  padding: 1rem 2rem;
+  font-size: 1.15rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button .test {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px; */
+  /* left: -.6rem;
+  top: -.5rem; */
+  /* right :-.6rem ;
+  bottom : -.5rem;
+  z-index: -1;
+  background-color: #F7567C;
+  transition: all 200ms ease-out;
+} */
+
+/* body {
+  display: flex;
+  justify-content: center;
+  background-color: #fdfefa;
+  flex-flow: row wrap;
+} */
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  max-width: 500px;
+  margin: 2rem 0 0;
+}
+
+/* :focus {
+  outline: none;
+} */
+
+.sharebutton:focus {outline:0;}
+
+.sharebutton {
+
+  border: 4px solid #b5b8c1;
+  color: #b5b8c1;
+  position: relative;
+  margin: 2rem 3rem;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  background-color: transparent;
+  cursor: pointer;
+ 
+ 
+}
+
+.sharebutton::before {
+  content: 'SHARE YOUR STORY';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -.4rem;
+  border-radius: 16px;
+  top: -.6rem;
+  padding-top: 13px;
+  padding-left: 25px;
+  font-size: 20px;
+  color : #FFFFFF;
+  z-index: 1;
+  background-color: #ce4948;
+  transition: all 200ms ease-out;
+  box-shadow: 0 12px 12px -4px gray;
+}
+
+
+
+
+.donatebutton:focus {outline:0;}
+
+.donatebutton {
+
+  border: 4px solid #ce4948;
+  color: #ce4948;
+  
+  position: relative;
+  margin: 2rem 3rem;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  background-color: transparent;
+  cursor: pointer;
+ 
+ 
+}
+
+.donatebutton::before {
+  content: 'DONATE';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -.4rem;
+  border-radius: 16px;
+  top: -.6rem;
+  padding-top: 13px;
+  padding-left: 65px;
+
+  color : #FFFFFF;
+  font-size: 25px;
+  z-index: 1;
+  background-color: #b5b8c1;
+  transition: all 200ms ease-out;
+  box-shadow: 0 12px 12px -4px gray;
+}
+
+.donatebutton:hover::before {
+  top: 0;
+  left: 0;
+}
+
+.sharebutton:hover::before {
+  top: 0;
+  left: 0;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.projectbackground{
+  background-image: url('../src/assets/borderbackground.png');
+  /* background-position: center; */
+  background-size:cover;
+  /* background-attachment: fixed; */
+  /* background-repeat: no-repeat;  */
+  
+
+  object-fit: cover;
 }

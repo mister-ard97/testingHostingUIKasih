@@ -3,12 +3,15 @@ import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'r
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
-import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
+import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 
-// import {  ClassicEditor } from '../../components/Ckeditor';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import { } from '@ckeditor/ckeditor5-upload';
+// import CKEditor from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import ReactQuill from 'react-quill'; // ES6
+import 'react-quill/dist/quill.snow.css'; // ES6
+
+
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -30,20 +33,93 @@ const useStyles = makeStyles(theme => ({
 }));
 
 class ScholarshipAdd extends Component{
-    state = {
-        existSiswa:'',
-        datasiswa : '',
-        siswa: '',
-        sekolah: '',
-        kelas:'',
-        bulan:'',
-        deskripsi:'',
-        sDeskripsi:'',
-        nominal: 0,
-        judul:'',
-        success: false
-
+    constructor(props) {
+        super(props)
+        this.state = { 
+            datasiswa : '',
+            siswa: '',
+            sekolah: '',
+            kelas:'',
+            bulan:'',
+            deskripsi:'',
+            sDeskripsi:'',
+            nominal: 0,
+            judul:'',
+            success: false
+           
+            } // You can also pass a Quill Delta here
+        this.handleChange = this.handleChange.bind(this)
+        // this.addimagequillchange=this.addimagequillchange.bind(this)
     }
+
+    // REACTQUILL 
+    modules = {
+        // toolbar: [
+        //   [{ 'header': [1, 2, false] }],
+        //   ['bold', 'italic', 'underline','strike', 'blockquote'],
+        //   [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        //   ['link'],
+        //   ['clean'],
+        
+        // ],
+        toolbar : {
+            container : [
+                [{ 'header': [1, 2, false] }],
+                ['bold', 'italic', 'underline','strike', 'blockquote'],
+                [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                ['link'],
+                ['clean'],
+                ['image']
+
+            ],
+            handlers : {
+                'image' :  function () { 
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'file');
+                        input.setAttribute('accept', 'image/*');
+                        input.click();
+                        input.onchange =  function() {
+                          const file = input.files[0];
+                          console.log('User trying to uplaod this:', file);
+                          console.log(file)
+                          var formData = new FormData()
+                        formData.append('image',file)
+                        Axios.post(URL_API + `/project/GenerateURL`, formData)
+                        .then((res) => {
+                            console.log(res.data)
+                            this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                        }.bind(this); 
+                   
+                                                      
+                                    
+                }
+            }
+
+        }
+        
+        // toolbar : [
+        //     'image',
+        //      this.handleChange = this.addimagequillchange
+        // ]
+       
+  
+    }
+
+    formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ]
+
+
+    // REACTQUILL
+
+
     componentDidMount = () => {
         // const token = localStorage.getItem('token');
         // const options = {
@@ -68,6 +144,9 @@ class ScholarshipAdd extends Component{
             console.log(err)
         })
     }
+
+
+
     renderSiswa = () =>{
         var data = this.state.datasiswa
         var exist = this.state.existSiswa
@@ -127,6 +206,13 @@ class ScholarshipAdd extends Component{
         this.setState({ bulan: event.target.value})
     }
 
+    
+    handleChange(value) {
+        this.setState({
+            deskripsi : value
+        })
+     }
+
 
 
     renderFormAddScholarship = () => {
@@ -134,6 +220,7 @@ class ScholarshipAdd extends Component{
         var bulan = 12
         return(
             <div>
+       
                 <Form>
                     <FormGroup>
                         <Label for="judul">Judul Galangan Dana</Label>
@@ -215,7 +302,7 @@ class ScholarshipAdd extends Component{
                         <Label for="Sekolah">Description</Label>
                         {/* <Input type='textarea' name='description' id='description'/>
                      */}
-                     <CKEditor
+                     {/* <CKEditor
                         editor={ ClassicEditor }
                         data=""
                         onInit={ editor => {
@@ -234,8 +321,16 @@ class ScholarshipAdd extends Component{
                         onFocus={ ( event, editor ) => {
                             console.log( 'Focus.', editor );
                         } }
-                    />
+                    /> */}
+                        <ReactQuill value={this.state.deskripsi}
+                            modules={this.modules}
+                            formats={this.formats}
+                            onChange={this.handleChange} 
+                        />
+               
+                    
                     </FormGroup>
+                   
                     <FormGroup>
                         <Label for="Sekolah">Pesan ajakan</Label>
                         <Input type='textarea' name='shareDescription' id='shareDescription' onChange={(text)=> this.sDeskripsi(text.target.value)} maxLength='240'/>
@@ -244,6 +339,7 @@ class ScholarshipAdd extends Component{
                     <Button color='success' onClick={this.handleSubmitBtn}>Submit</Button>
                 </Form>
             </div>
+            
         )
     }
     sDeskripsi = (text) => {
@@ -288,6 +384,7 @@ class ScholarshipAdd extends Component{
                 {/* <h3 id='satu'>{this.renderBulan()}</h3> */}
                 <h2>Galang Dana Beasiswa Biasa Sekolah</h2>
                 {this.renderFormAddScholarship()}
+              
             </div>
         )
     }

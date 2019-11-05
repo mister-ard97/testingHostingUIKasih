@@ -126,6 +126,7 @@ class Home extends Component {
                 delete hasil.Student
                 delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
+                hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
                 return hasil
             })
@@ -139,7 +140,7 @@ class Home extends Component {
             
         })
         .catch((err)=>{
-            console.log(err)
+           console.log(err)
         })
     }
 
@@ -574,21 +575,21 @@ class Home extends Component {
                     </div>            */}
 
                     {/* New Konten */}
-                <div className='container-fluid my-5 p-0'>
+                <div className='container-fluid mb-5' style={{marginTop: '-7%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
-                            <button className='btn btn-danger mr-3'>Share your story</button>
-                            <button className='btn btn-secondary'>Donate</button>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR STORY</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Slider */}
+                 {/* Slider */}
 
-                <div className='container-fluid my-5 p-0'>
+                 <div className='container-fluid my-4 p-0'>
                     <div className='row m-0'>
-                        <div className='col-12 mb-5'>
-                            <h2 className='text-center font-weight-bold text-danger'>SCHOLARSHIPS</h2>
+                        <div className='col-12 mb-3'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 outer-background-scholarship py-5 scholarship-slider'>
                             <Slider {...settings}>
@@ -597,16 +598,56 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
-
-                {/* About Us */}
-                <div className='container-fluid my-5 p-0'>
+                
+                <div className='container-fluid'>
                     <div className='row m-0'>
-                        <div className='col-12 mb-5'>
-
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR STORY</div>
                         </div>
                     </div>
                 </div>
+
+                {/* <div className='container-fluid m-0 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 p-0'>
+                            <div className="projectbackground" style={{height : '95vh'}} >
+                                <div className='font-weight-bold' 
+                                    style={{
+                                        paddingTop: '10%',
+                                        marginLeft: '12%'
+                                    }}
+                                >
+                                    <h2 className='mb-4'>TAKE ACTION</h2>
+                                    <p>
+                                        Get involved, speak out, <br /> or become a donor and give every child a fair
+                                        chance for education
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+
+                
+             
+
+               
+
+                {/* About Us */}
+                    
+
+                
+
+                {/* background-size:cover;
+    background-repeat: no-repeat; 
+    height: auto;
+    object-fit: cover; */}
+
+ 
             </div>
+
+
         )
     }
 }

@@ -44,29 +44,35 @@ class ScholarshipDetailHome extends Component {
 
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ params.id)
         .then((res) => {
+            // console.log(res.data)
+            // console.log(res.data[0])
+            console.log(res)
+            var hasil = res.data[0]
+            if(hasil.Subscriptions.length !== 0){
 
-            console.log(res.data)
+                hasil.currentSubs = hasil.Subscriptions[0].currentSubs
+                hasil.grandtotal = parseInt(hasil.currentSubs) + parseInt(hasil.totaldonation)
+            }else {
+                hasil.grandtotal = hasil.totaldonation
+            }
+            delete hasil.Subscriptions
             
-            console.log(res.data[0].Student.studentImage)
-            
-            this.setState({
-                ScholarshipDetail: res.data[0]
-            })
+            this.setState({ScholarshipDetail: hasil})
         })
         .catch((err) => {
             console.log(err)
         })
 
-        Axios.get(URL_API + '/user/getSubscription', options)
-            .then((subscription) => {
-                console.log(subscription.data.status)
-                this.setState({
-                    statusSubscription: subscription.data.status
-                })
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        // Axios.get(URL_API + '/user/getSubscription', options)
+        //     .then((subscription) => {
+        //         console.log(subscription.data.status)
+        //         this.setState({
+        //             statusSubscription: subscription.data.status
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
     }
 
     getNamaScholarship = (scholarId, scholarName) => {
@@ -278,7 +284,7 @@ class ScholarshipDetailHome extends Component {
                 durasi, 
                 scholarshipStart, 
                 scholarshipEnded,
-                
+                grandtotal,
                 currentSubs,
                 totalDonasi,
                 SisaHari
@@ -298,8 +304,8 @@ class ScholarshipDetailHome extends Component {
                                 <p>{namaSekolah}</p>
                                 <p>Nama Siswa : {namaSiswa}</p>
                                 
-                                <Progress  className="font-weight-bold mb-3" animated value={(currentSubs / nominal) * 100 ? (currentSubs / nominal) * 100  : 0} >
-                                {(currentSubs / nominal) * 100 ? (currentSubs / nominal) * 100  : 0}%
+                                <Progress  className="font-weight-bold mb-3" animated value={(grandtotal / nominal) * 100 ? (grandtotal / nominal) * 100  : 0} >
+                                {(grandtotal / nominal) * 100 ? (grandtotal / nominal) * 100  : 0}%
                                 </Progress>
 
                                 <hr/>
@@ -307,7 +313,7 @@ class ScholarshipDetailHome extends Component {
                                 <div className="d-flex flex-row mb-3">
                                     <div className="mr-4">
                                         <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(currentSubs)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(grandtotal)).format(0,0)}`} disabled/>
                                     </div>
 
                                     <div>
