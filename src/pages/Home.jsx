@@ -7,6 +7,8 @@ import { URL_API } from '../helpers/Url_API';
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
 
+import backgroundproject from '../../src/assets/border.png'
+
 import {
     FacebookShareButton,
     WhatsappShareButton,
@@ -539,16 +541,26 @@ class Home extends Component {
                     </div>            */}
 
                     {/* New Konten */}
-                <div className='container-fluid' style={{marginTop: '28%'}}>
+                <div className='container-fluid' style={{marginTop : '37%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
                             <div className="donatebutton">SHARE YOUR STORY</div>
-               
-                          
                         </div>
                     </div>
                 </div>
+                <div className="projectbackground" style={{height : '95vh'}} >
+           
+                    <div>
+                        
+                    </div>
+                </div>
+             
+
+                {/* background-size:cover;
+    background-repeat: no-repeat; 
+    height: auto;
+    object-fit: cover; */}
 
  
             </div>

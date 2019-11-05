@@ -656,57 +656,55 @@ button .test {
   left: 0;
 }
 
- /* .sharebutton--bop:active {
-  transform: translateY(3px);
-} */
-
-/* .button--flick:active {
-  animation: flick 640ms infinite;
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
 }
 
-.button--twist:active {
-  animation: twist 800ms infinite;
-} */
-
-.sharebutton--spin:active {
-  animation: spin 800ms infinite;
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
 }
 
-/* @keyframes flick {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  67% {
-    transform: translate(.4rem, -1.8rem) rotate(160deg) scale(.4);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
 }
 
-@keyframes twist {
-  0% {
-    transform: rotate(0deg);
-  }
-  30% {
-    transform: rotate(60deg);
-  }
-  60% {
-    transform: rotate(-20deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-} */
-/* 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}   */
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
 
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
 
-        
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.projectbackground{
+  background-image: url('../src/assets/borderbackground.png');
+  /* background-position: center; */
+  background-size:cover;
+  /* background-attachment: fixed; */
+  /* background-repeat: no-repeat;  */
+  
+
+  object-fit: cover;
+}
