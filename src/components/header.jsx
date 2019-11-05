@@ -4,6 +4,8 @@ import {
     Navbar,
     NavbarToggler,
     Nav,
+    NavItem,
+    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -13,8 +15,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userLogOut } from '../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { URL_API } from '../helpers/Url_API'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { URL_API } from '../helpers/Url_API';
+import Logo from '../assets/logo/logo.jpg'
 
 
 class Header extends Component {
@@ -130,50 +133,51 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.props.auth)
-
-        console.log(this.props.role)
         return (
-            <div className='sticky-top bg-info'>
+            <div className='container-fluid'>
                 <Navbar id='Header' expand="lg" className='font-weight-bold'>
-                    <div className='container'>
+                   
                         {
                             this.state.logOut ?
                             <Redirect to={`/`} />
                             : null
                         }
-                        <NavbarToggler onClick={this.toggle} className='d-none' />
-
-                        {/* Untuk Small Device  */}
-                        <Link to='/' className='navbar-brand mx-auto justify-content-start d-flex d-lg-none'>
-                            <span>Kasih</span>Nusantara
+                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-5'>
+                            <img src={Logo} alt={'Logo-Kasih Nusantara'} style={{width: '185px'}} />
                         </Link>
+                            
+                        <NavbarToggler onClick={this.toggle} />
 
-                        <div className='d-flex d-lg-none' style={{
-                            listStyle: 'none'
-                        }}>
-                            {this.renderCartAccount('text-black-50')}
-                        </div>
-
-                        <Collapse id="CollapseMaCommerce" isOpen={this.state.isOpen} navbar className='link-white d-none d-flex'>
+                        <Collapse isOpen={this.state.isOpen} navbar className='d-flex'>
                             {/* Untuk Large Device */}
-                            <div className='container m-0 p-0'>
+
+                            <div className='container-fluid m-0 p-0'>
                                 <div className='row m-0'>
-                                    <div className='col-4'>
-                                    <Link to='/' className='navbar-brand justify-content-start d-none d-lg-flex'>
-                                        <span>Kasih</span>Nusantara
-                                    </Link>
+                                    <div className='col-12 d-flex justify-content-end pr-5'>
+                                        
+                                        <Nav navbar className='d-xl-flex d-none navbar-custom'>
+                                                <NavItem className='mx-3'>
+                                                    <NavLink href="#">Home</NavLink>
+                                                </NavItem>
+                                                <NavItem className='mx-3'>
+                                                    <NavLink href="#">Scholarship</NavLink>
+                                                </NavItem>
+                                                <NavItem className='mx-3'>
+                                                    <NavLink href="#">Project</NavLink>
+                                                </NavItem>
+                                                <NavItem className='mx-3'>
+                                                    <NavLink href="#">About Us</NavLink>
+                                                </NavItem>
+                                            {this.renderCartAccount('text-black-50')}
+                                        </Nav>
                                     </div>
                                 </div>
                             </div>
 
-                            <Nav navbar className='d-lg-flex d-none'>
-                                        {this.renderCartAccount('text-black-50')}
-                                    </Nav>
+                           
                         </Collapse>
 
                         
-                    </div>
                 </Navbar>
             </div>
         )

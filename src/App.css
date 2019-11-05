@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Neon80';
+  src: local('Neon80'), url(./fonts/Neon.ttf) format('truetype');
+}
+
 /* Global styling */
 .col-10.img-small img {
   width: 200px;
@@ -16,23 +21,22 @@
 }
 
 /* Navbar */
-.navbarContainer {
-  /* background-color: #1a1a1a !important; */
-  box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.20) !important;
+
+.navbar-brand img {
+  background-repeat: no-repeat;
 }
 
-/* .navbar {
-  background-color: #1a1a1a !important;
-} */
-
-.navbar-brand {
-  font-family: 'Kaushan Script', cursive, sans-serif !important;
-  font-size: 32px !important;
-  color: #a6a5a4;
+.navbar-custom {
+    font-family: 'Neon80', cursive, sans-serif !important;
+    font-size: 18px;
 }
 
-.navbar-brand span {
-  color: #ff9500;
+.navbar-custom li {
+  line-height: 40px;
+}
+
+.navbar-custom a {
+  color: red !important;
 }
 
 .link-dark svg, .link-dark a {
