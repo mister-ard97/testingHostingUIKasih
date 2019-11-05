@@ -5,6 +5,9 @@
 
 export const URL_API = 'http://localhost:2019';
 
+export const GETTOKENURL = "https://x.rajaapi.com/poe"
+export const APIWILAYAHURL = "https://x.rajaapi.com/MeP7c5ne"
+
 // hosting api 
 
 // export const URL_API = 'http://139.162.9.11:1998'

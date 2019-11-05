@@ -611,14 +611,14 @@ button .test {
   background-color: #fdfefa;
   flex-flow: row wrap;
 } */
-
+/* 
 .container {
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
   max-width: 500px;
   margin: 2rem 0 0;
-}
+} */
 
 /* :focus {
   outline: none;

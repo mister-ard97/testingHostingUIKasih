@@ -235,12 +235,12 @@ class Home extends Component {
                                     />
                             </div>
 
-                            <div className='col-12'>
+                            <div className='col-12' >
                                 {/* <div style={{height: '70px'}}>
                                     
                                 </div> */}
-                                    <p className="my-3">{val.namaSiswa}</p>
-                                    <p className="my-3">{val.namaSekolah}</p>
+                                <p className="my-3">{val.namaSiswa}</p>
+                                <p className="my-3">{val.namaSekolah}</p>
                                 <p>{val.nominal}</p>
                             </div>
                         </div>
@@ -583,8 +583,8 @@ class Home extends Component {
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
                             <div className="donatebutton">SHARE YOUR STORY</div>
-                            </div>
-                </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Slider */}
@@ -603,19 +603,26 @@ class Home extends Component {
                 </div>
 
                 {/* About Us */}
-                <div className='container-fluid my-5 p-0'>
+                {/* <div className='container-fluid my-5 p-0'>
                     <div className='row m-0'>
                         <div className='col-12 mb-5'>
-                            
+                        
                         </div>
                     </div>
                 </div>
-                <div className="projectbackground" style={{height : '95vh'}} >
-           
-                    <div>
+                <div className="projectbackground" style={{height : '95vh', width : '100vw'}} >
+                    <div className='container-fluid' >
+                       <div className="row">
+                           <div className="col-md-4 offset-md-1 pl-5">
+                                <h1>Project</h1>
+                           </div>
+                           <div className="col-md-4 offset-md-1">
+
+                           </div>
+                       </div>
 
                     </div>
-                </div>
+                </div> */}
              
 
                 {/* background-size:cover;
