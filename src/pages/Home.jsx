@@ -523,7 +523,7 @@ class Home extends Component {
             arrows: false,
             infinite: true,
             speed: 1000,
-            slidesToShow: 4,
+            slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
             slidesToScroll: 4
           };
 
