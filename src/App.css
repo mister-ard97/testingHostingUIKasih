@@ -158,7 +158,8 @@ textarea:focus {
 
 /*  New Banner Styling */
 .Banner-Home {
-  background: url('./assets/Banner1.png') no-repeat top;
+  background: url('./assets/Banner1.png') no-repeat;
+  background-size: cover;
   /* height: auto; */
 }
 
