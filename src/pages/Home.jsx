@@ -120,7 +120,7 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
-            var results = res.data.result.map((val)=>{
+            var results = res.data.map((val)=>{
                 var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                 delete hasil.School
                 delete hasil.Student
@@ -528,53 +528,8 @@ class Home extends Component {
         return (
             <div>
                 <Carousel />
-                {/* <div className='row m-0'>
-                        <div className='col-10 offset-1 mb-3'>
-                            <h2>Project Yang Sedang Aktif</h2>
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
-                                Search Project
-                            </a>
-                            
-                            {this.renderProjectList()}
-                        </div>
 
-                        <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
-                            <h2>Scholarship yang sedang berjalan</h2>
-
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship} onChange={() => this.setState({searchTextScholarship: this.searchTextScholarship.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/scholarship-list?search=${this.state.searchTextScholarship}&orderby=${this.state.orderbyScholarship}&page=1`} className='btn btn-success mt-3'>
-                                Search Scholarship
-                            </a>
-                            <div>
-                                {this.renderScholarshipList()}
-                            </div>
-                        </div>
-                    </div>            */}
-
-                    {/* New Konten */}
+                {/* New Konten */}
                 <div className='container-fluid mb-5' style={{marginTop: '-7%'}}>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
@@ -629,9 +584,10 @@ class Home extends Component {
                     </div>
                 </div> */}
 
-                
-             
 
+                {/* Project List */}
+
+                
                
 
                 {/* About Us */}
