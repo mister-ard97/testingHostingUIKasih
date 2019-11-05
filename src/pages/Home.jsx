@@ -85,28 +85,29 @@ class Home extends Component {
         Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
             console.log(res.data.results)
-            var results = res.data.results.map((val,id)=>{
+            // var results = res.data.results.map((val,id)=>{
                 
                 
-                var hasil = {...val, ...val.User,...val.Payments[0]}
-                console.log(hasil)
-                delete hasil.User
-                delete hasil.Payments
+            //     var hasil = {...val, ...val.User,...val.Payments[0]}
+            //     console.log(hasil)
+            //     delete hasil.User
+            //     delete hasil.Payments
       
                 
-                return hasil
-            })
+            //     return hasil
+            // })
   
             //     this.setState({
             //         ProjectList: results,
             //         totalpage: Math.ceil(res.data.total / limit),
             //     })
-
             this.setState({
-                    
-                ProjectList: results,
+                
+
+                ProjectList: res.data.results,
                 totalpage: Math.ceil(res.data.total / limit),
             })
+            
         })
         .catch((err) => {
             console.log(err)
@@ -125,7 +126,7 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
-            var results = res.data.map((val)=>{
+            var results = res.data.result.map((val)=>{
                 var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                 delete hasil.School
                 delete hasil.Student
@@ -189,7 +190,7 @@ class Home extends Component {
                                 <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
                                 <div className="row">
                                     <div className="col-md-5">
-                                        <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Lihat Detail Student" onClick={()=>this.renderMidtrans(val.id)}/>
+                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
                                     </div>
                                     <div className="col-md-7">
                                         <div className=" d-flex flex-row justify-content-end">
@@ -226,49 +227,43 @@ class Home extends Component {
     
     renderProjectList = () => {
 
-        if(this.state.ProjectList) {
-            if(this.state.ProjectList.length !== 0) {
-                return this.state.ProjectList.map((val, index) => {
-                    return (
-                        <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
-                        <div className='row'>
-                            <div className='col-4'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
-                            </div>
-    
-                            <div className='col-8'>
-                                <h2 className="mb-2">{val.projectName}</h2>
-                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-                                <h6>Project Created</h6> */}
-                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-                                <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-                                <p>{val.totalNominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
-                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
-                                </Progress>
-                                <h5>Dana yang terkumpul </h5>
-                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-                                <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-                                <h5>Sisa Hari </h5>
-                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                                <h4>Dana yang dibutuhkan :  </h4>
-                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-                            </div>
-                        </div>
-                    </a>    
-                    )
-                })
-                
-            } else {
+        if(this.state.ProjectList.length !== 0) {
+            return this.state.ProjectList.map((val, index) => {
                 return (
-                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+                    <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+                    <div className='row'>
+                        <div className='col-4'>
+                            <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                        </div>
+
+                        <div className='col-8'>
+                            <h2 className="mb-2">{val.projectName}</h2>
+                            {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+                            <h6>Project Created</h6> */}
+                            {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+                            <h6>Project Ended</h6>
+                            <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                            <p>{val.totalNominal}</p>
+                            <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
+                            {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
+                            </Progress>
+                            <h5>Dana yang terkumpul </h5>
+                            <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+                            <h5>Banyaknya Donasi </h5>
+                            <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                            <h5>Sisa Hari </h5>
+                            <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                            <h4>Dana yang dibutuhkan :  </h4>
+                            <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                        </div>
+                    </div>
+                </a>    
                 )
-            }
+            })
+            
         } else {
             return (
-                <h4>Loading...</h4>
+                <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
             )
         }
     }
@@ -496,9 +491,8 @@ class Home extends Component {
 
         return (
             <div>
-                <div>
-                    <Carousel />
-                    <div className='row m-0'>
+                <Carousel />
+                {/* <div className='row m-0'>
                         <div className='col-10 offset-1 mb-3'>
                             <h2>Project Yang Sedang Aktif</h2>
                             <h4>Filter By</h4>
@@ -516,10 +510,8 @@ class Home extends Component {
                             <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
                                 Search Project
                             </a>
-                            {/* <ProjectList /> */}
-                            {/* <Route to='/project-list' component={ProjectList} /> */}
+                            
                             {this.renderProjectList()}
-                            {/* {this.printPagination()} */}
                         </div>
 
                         <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
@@ -543,10 +535,17 @@ class Home extends Component {
                             <div>
                                 {this.renderScholarshipList()}
                             </div>
-                            {/* <StudentList /> */}
-                            {/* {this.renderScholarshipStudentList()} */}
                         </div>
-                    </div>           
+                    </div>            */}
+
+                    {/* New Konten */}
+                <div className='container-fluid' style={{marginTop: '28%'}}>
+                    <div className='row m-0'>
+                        <div className='col-12 d-flex justify-content-center'>
+                            <button>Share your story</button>
+                            <button>Donate</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

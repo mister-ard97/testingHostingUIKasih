@@ -187,7 +187,7 @@ app.get('/verifiedReset', function(request, response) {
     });
   });
 
-  app.get(`/scholarship-detail`, function(request, response) {
+  app.get(`/scholarship-student`, function(request, response) {
     console.log('test page visited!');
     const filePath = path.resolve(__dirname, './build', 'index.html')
     fs.readFile(filePath, 'utf8', function (err,data) {
@@ -198,9 +198,9 @@ app.get('/verifiedReset', function(request, response) {
       Axios.get(URL_API + `/scholarship/getScholarshipDetail?id=${request.query.id}`)
         .then(async (res) => {
             console.log(res.data)
-            data = await data.replace(/\$OG_TITLE/g, `${res.data.results[0].judul}`);
-            data = await data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
-            data = await data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data.results[0].projectImage}`);  
+            data = await data.replace(/\$OG_TITLE/g, `${res.data[0].judul}`);
+            data = await data.replace(/\$OG_DESCRIPTION/g, `${res.data[0].shareDescription}`);
+            data = await data.replace(/\$OG_IMAGE/g, `${URL_API}${res.data[0].Student.studentImage}`);  
             response.send(data);
         })
         .catch((err) => {

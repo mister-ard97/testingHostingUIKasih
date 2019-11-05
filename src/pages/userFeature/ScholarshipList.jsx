@@ -71,7 +71,7 @@ class ScholarshipList extends Component{
                     <td style={{textAlign:'center'}}>{val.isOngoing === 1 ? 'Aktif' : 'Tidak Aktif'}</td>
                     <td style={{textAlign:'center'}}><Button color='primary' onClick={()=> this.setState({openModal: true, detailId: i})}>Detail</Button></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
-                    <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'Cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
+                    <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
                 </tr>
             )
         })
@@ -317,14 +317,16 @@ class ScholarshipList extends Component{
         return(
             <div className='container mt-5 mb-5'>
                 <p>List Beasiswa</p>
-                <div><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div>
+                <div className='mb-3'><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div>
                 <Table>
                     <tr >
                         <th>No.</th>
                         <th>Nama Siswa</th>
                         <th>Target Donasi</th>
                         <th>Durasi</th>
-                        <th colSpan='2' style={{textAlign:'center'}}>Status</th>
+                        <th style={{textAlign:'center'}}>Verifikasi</th>
+                        <th style={{textAlign:'center'}}>Status</th>
+                        <th style={{textAlign: 'center'}}>Note From Admin</th>
                         <th colSpan='3' style={{textAlign:'center'}}>Aksi</th>
                     </tr>
                     {this.renderScholarshipList()}

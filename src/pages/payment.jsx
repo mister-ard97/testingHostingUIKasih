@@ -90,8 +90,8 @@ class Payment extends Component {
               },
             userData:{
                 userId: this.props.id,
-                projectId: this.state.projectId ? this.state.projectId : 0,
-                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : 0, 
+                projectId: this.state.projectId ? this.state.projectId : null,
+                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
                 anonim: this.state.anonim ? 1 : 0
             }
@@ -248,10 +248,10 @@ class Payment extends Component {
             return <Redirect to={`/`} />
 
         }
-        if(this.state.status !== 'settlement' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'settlement' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentFinish'}/>
         }
-        if(this.state.status !== 'failur' && this.state.status.order_id === this.state.orderId){
+        if(this.state.status.transaction_status === 'failure' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentError'}/>
         }
         console.log(this.props.match)

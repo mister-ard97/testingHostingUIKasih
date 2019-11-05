@@ -53,10 +53,13 @@ class ScholarshipListHomeUI extends Component {
             Axios.post(URL_API + `/scholarship/getscholarship`, data)
             .then((res) => {
                 console.log(res.data.results)
-                var results = res.data.results.map((val)=>{
-                    var hasil = {...val, ...val.School, ... val.Student}
+                var results = res.data.result.map((val)=>{
+                    var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                     delete hasil.School
                     delete hasil.Student
+                    delete hasil.Subscriptions
+                    hasil.totaldonation = parseInt(hasil.totaldonation)
+                   
                     return hasil
                 })
 
@@ -317,12 +320,15 @@ class ScholarshipListHomeUI extends Component {
             
             console.log(data)
 
-            Axios.post(URL_API + `/scholarship/getscholarship`, data)
+            Axios.post(URL_API + `/scholarship/getScholarship`, data)
             .then((res) => {
-                var results = res.data.results.map((val)=>{
-                    var hasil = {...val, ...val.School, ... val.Student}
+                var results = res.data.result.map((val)=>{
+                    var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                     delete hasil.School
                     delete hasil.Student
+                    delete hasil.Subscriptions
+                    hasil.totaldonation = parseInt(hasil.totaldonation)
+                   
                     return hasil
                 })
                 console.log(res.data.total)

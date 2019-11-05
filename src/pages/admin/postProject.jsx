@@ -212,7 +212,10 @@ class postProject extends React.Component{
                             modules={this.modules}
                             formats={this.formats}
                             onChange={this.handleChange} 
-                />
+                /> */}
+                {/* <CKEditor
+                    editor={ DokumenEditor }
+                /> */}
 
                 <h5>Project Target</h5>
                 <input type="number" ref='prtarget' className="form-control mb-4" placeholder="masukkan project description"/>

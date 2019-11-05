@@ -135,17 +135,31 @@ class ScholarshipAdd extends Component{
         .catch((err) => {
             console.log(err)
         })
+
+        Axios.get(URL_API+'/scholarship/getExistStudent?id='+this.props.userId)
+        .then((res) => {
+            console.log(res.data)
+            this.setState({existSiswa: res.data})
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
 
 
 
     renderSiswa = () =>{
         var data = this.state.datasiswa
-        return data.map((val, i) =>{
-            return (
-                <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem>
-            )
+        var exist = this.state.existSiswa
+        var siswa = []
+        let list =  data.map((val, i) =>{
+            // return exist.map((item) =>{
+            //     if(val.id === item.studentId){
+                    return <MenuItem key={val.id} value={val.id}>{val.name}</MenuItem>
+                // }
+            // })
         })
+
+        return list
     }
 
 
@@ -156,7 +170,8 @@ class ScholarshipAdd extends Component{
             result += `<MenuItem key = ${i} value=${i}>${i} Bulan</MenuItem>`
         }
         console.log(result)
-        document.getElementById('bulan').innerHTML=`<MenuItem key =1 value=1>1 Bulan</MenuItem>`
+        // document.getElementById('satu').innerHTML=`<MenuItem key =1 value=1>1 Bulan</MenuItem>`
+        document.getElementById('satu').innerHTML='coba'
         // return result
     }
 
@@ -164,16 +179,27 @@ class ScholarshipAdd extends Component{
         // console.log(event.target.value)
         this.setState({siswa: event.target.value})
         
-        let id = event.target.value
+        var id = event.target.value
+        let exist = this.state.existSiswa
+        let ada = false
+        exist.map((val) => {
+            if(val.studentId === id){
+                ada = true
+                return window.alert('Penggalangan dana beasiswa untuk siswa ' + val.Student.name +' sudah dibuat, silahkan pilih siswa lain')
+            }
+        })
+
         console.log(id)
-        Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
-        .then((res) => {
-            console.log(res.data)
-            this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
-        })
-        .catch((err)=> {
-            console.log(err)
-        })
+        if(!ada){
+            Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
+            .then((res) => {
+                console.log(res.data)
+                this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
+            })
+            .catch((err)=> {
+                console.log(err)
+            })
+        }
     };
     
     handleChangeBulan = name => event => {
@@ -202,7 +228,7 @@ class ScholarshipAdd extends Component{
                     </FormGroup>
                     <FormGroup>
                         <TextField
-                            id="kelas"
+                            id="siswa"
                             multiple
                             select
                             label="Pilih Nama Siswa "
@@ -254,6 +280,7 @@ class ScholarshipAdd extends Component{
                             margin="normal"
                             fullWidth
                         >
+                            
                             {/* Render dropwodn menu */}
                             <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
                             <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
@@ -268,6 +295,7 @@ class ScholarshipAdd extends Component{
                             <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
                             <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
                         </TextField>
+                        
                         
                     </FormGroup>
                     <FormGroup>
@@ -345,11 +373,15 @@ class ScholarshipAdd extends Component{
         if(!this.state.datasiswa){
             return <h2>Loading</h2>
         }
+        if(!this.state.existSiswa){
+            return <h2>Loading</h2>
+        }
         if(this.state.success){
             return <Redirect to='/scholarshipList'/>
         }
         return(
             <div className='container mt-5 mb-5'>
+                {/* <h3 id='satu'>{this.renderBulan()}</h3> */}
                 <h2>Galang Dana Beasiswa Biasa Sekolah</h2>
                 {this.renderFormAddScholarship()}
               

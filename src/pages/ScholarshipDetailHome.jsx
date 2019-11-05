@@ -24,6 +24,7 @@ class ScholarshipDetailHome extends Component {
         objSubscription: {},
         ScholarshipDetail: null,
         SubscriptionModal: false,
+        statusSubscription: null,
         listDonasi: '',
 
         nominalLain: false,
@@ -33,6 +34,14 @@ class ScholarshipDetailHome extends Component {
     componentDidMount() {
         let params = queryString.parse(this.props.location.search)
         console.log(params.id)
+
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+       }
+
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ params.id)
         .then((res) => {
             // console.log(res.data)
@@ -52,6 +61,17 @@ class ScholarshipDetailHome extends Component {
         .catch((err) => {
             console.log(err)
         })
+
+        // Axios.get(URL_API + '/user/getSubscription', options)
+        //     .then((subscription) => {
+        //         console.log(subscription.data.status)
+        //         this.setState({
+        //             statusSubscription: subscription.data.status
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
     }
 
     getNamaScholarship = (scholarId, scholarName) => {
@@ -347,17 +367,20 @@ class ScholarshipDetailHome extends Component {
 
                                 {
                                     this.props.email ?
-                                    <a onClick={() => this.setState({
-                                        SubscriptionModal: true,
-                                        objSubscription: {
-                                            id,
-                                            durasi   
-                                        }
-                                    })}> 
-                                        <button>
-                                            Subscribe ke {namaSiswa}
-                                        </button>
-                                    </a>
+                                        this.state.statusSubscription === 0 ?
+                                        <a onClick={() => this.setState({
+                                            SubscriptionModal: true,
+                                            objSubscription: {
+                                                id,
+                                                durasi   
+                                            }
+                                        })}> 
+                                            <button>
+                                                Subscribe ke {namaSiswa}
+                                            </button>
+                                        </a>
+                                        :
+                                        null
                                     :
                                     <a href={`/login`}> 
                                         <button>
