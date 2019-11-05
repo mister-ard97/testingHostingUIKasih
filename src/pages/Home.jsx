@@ -120,7 +120,8 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
-            var results = res.data.result.map((val)=>{
+            
+            var results = res.data.map((val)=>{
                 var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                 delete hasil.School
                 delete hasil.Student
@@ -218,6 +219,7 @@ class Home extends Component {
     // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
     renderScholarshipListSlider = () => {
+        console.log(this.state.scholarshipList.length)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
@@ -576,11 +578,12 @@ class Home extends Component {
 
                     {/* New Konten */}
         
-                <div className='container-fluid' style={{marginTop : '37%'}}>
+                <div className='container-fluid my-5 p-0' >
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
                             <div className="donatebutton">SHARE YOUR STORY</div>
+                            </div>
                 </div>
                 </div>
 
