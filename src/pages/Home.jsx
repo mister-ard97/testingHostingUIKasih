@@ -194,7 +194,7 @@ class Home extends Component {
                                 <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
                                 <h1 className="mb-0 mb-md-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
                                 <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
-                                <h5>#TogetherWeCan</h5>
+                                <h5>#bersamamembangunbangsa</h5>
                             </div>
                             <div className='col-5'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
