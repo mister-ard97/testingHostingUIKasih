@@ -109,6 +109,12 @@ body {
   font-size: 18px;
 }
 
+
+/* Tambahan */
+.navbar-toggler-icon {
+  background-image: url("./assets/logo/menu-button-1.svg");
+}
+
 /* .navbar-collapse {
   flex-basis: 100%;
   flex-grow: 1;
@@ -133,6 +139,29 @@ body {
   /* height: auto; */
 }
 
+.Banner-Home .col-12 img {
+  width: 100%;
+  visibility: hidden;
+  height: 700px;
+  
+}
+
+@media only screen and (max-width: 762px) {
+  .Banner-Home {
+    background: url('./assets/Banner2.png') no-repeat top;
+    background-size: cover;
+    /* object-fit: cover; */
+    /* height: auto; */
+  }
+
+  .Banner-Home .col-12 img {
+    width: 100%;
+    visibility: hidden;
+    height: 300px;
+    
+  }
+}
+
 .boxBanner {
   position: absolute;
   top: 25%;
@@ -145,6 +174,21 @@ body {
   font-size: 62px;
   color: #D32242;
   text-shadow: 2px 3px 0 #FFFFFF;
+}
+
+@media only screen and (max-width: 762px) {
+  .boxBanner {
+    position: absolute;
+    top: 25%;
+    margin-left: 0%;
+    width: 300px;
+  }
+
+  .boxBanner h2 {
+    font-size: 48px;
+    color: #D32242;
+    text-shadow: 2px 3px 0 #FFFFFF;
+  }
 }
 
 .about-us {
@@ -168,6 +212,15 @@ body {
 .bg-scholarship {
   width: 92% !important;
   background: #FFFFFF;
+  height: 425px;
+}
+
+@media only screen and (max-width: 762px) {
+  .bg-scholarship {
+    width: 60% !important;
+    background: #FFFFFF;
+    height: 425px;
+  }
 }
 
 /* @media only screen and (max-width: 762px) {
@@ -178,6 +231,7 @@ body {
 } */
 
 .bg-projects {
+  height: 400px;
   width: 97% !important;
   margin: 0 2%;
   background: #4C4C4D;
@@ -186,6 +240,31 @@ body {
 
 .bg-projects .col-5 img {
   height: 400px;
+  width: 425px;
+  border-radius: 1rem;
+}
+
+.bg-projects .col-7 img {
+  width: 50px;
+}
+
+@media only screen and (max-width: 762px) {
+  .bg-projects {
+    height: 200px;
+  }
+
+  .bg-projects .col-7 img {
+    width: 25px;
+  }
+
+  .font-size-36 {
+    font-size: 12pt
+  }
+  .bg-projects .col-5 img {
+    height: 200px;
+    width: 220px;
+    border-radius: 1rem;
+  }
 }
 
 a.bg-scholarship, a.bg-projects {
@@ -662,9 +741,8 @@ button .test {
   font-size: 1.15rem;
   background-color: transparent;
   cursor: pointer;
- 
- 
 }
+
 
 .sharebutton::before {
   content: 'SHARE YOUR STORY';

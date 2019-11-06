@@ -6,7 +6,7 @@ import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
-import LogoGray from '../assets/logo/logo_text_bottom_gray.png'
+import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
 import queryString from 'query-string';
 import numeral from 'numeral'
 
@@ -145,77 +145,6 @@ class Home extends Component {
         })
     }
 
-
-    renderScholarshipList = () =>{
-        if(this.state.scholarshipList.length !== 0){
-            return this.state.scholarshipList.map((val,id)=>{
-                val.currentSubs = parseInt(val.currentSubs)
-                return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
-                            <div className='row'>
-                            <div className='col-4'>
-                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
-                            </div>
-    
-                            <div className='col-8'>
-                                <h2 className="mb-2">{val.judul}</h2>
-                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-                                <h6>Project Created</h6> */}
-                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-                                <h6>Project Ended</h6>
-                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-                                <p>{val.nominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
-                                {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
-                                </Progress>
-                                <div className="d-flex flex-row mb-3">
-                                    <div className="mr-4">
-                                        <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.grandtotal)).format(0,0)}`} disabled/>
-                                    </div>
-
-                                    <div>
-                                        <h4>Dana yang dibutuhkan :  </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
-                                    </div>
-                                </div>
-                       
-                                <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {val.jumlahdonation} Donasi </div>
-                                <h5>Sisa Hari </h5>
-                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                                <div className="row">
-                                    <div className="col-md-5">
-                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
-                                    </div>
-                                    <div className="col-md-7">
-                                        <div className=" d-flex flex-row justify-content-end">
-                                            <div>
-                                                {/* <FacebookShareButton  className='btn btn-primary mr-2'>
-                                                    <div className="d-flex flex-row">
-                                                        <FacebookIcon size={32} round={true}  />
-                                                        <div className="pt-1 ml-2">Share Facebook</div>
-                                                    </div>
-                                                </FacebookShareButton>
-                                                <WhatsappShareButton className='btn btn-success'>
-                                                    <div className="d-flex flex-row">
-                                                        <WhatsappIcon size={32} round={true}  />
-                                                        <div className="pt-1 ml-2">Share Whatsapp</div>
-                                                    </div>
-                                                </WhatsappShareButton> */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </a>
-                )
-            })
-        }
-    }
-
-
     // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
     renderScholarshipListSlider = () => {
@@ -224,7 +153,7 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-5'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5'>
                            
                         <div className='container-fluid'>
                             <div className='col-12 d-flex justify-content-center'>
@@ -241,7 +170,7 @@ class Home extends Component {
                                 </div> */}
                                 <p className="my-3">{val.namaSiswa}</p>
                                 <p className="my-3">{val.namaSekolah}</p>
-                                <p>{val.nominal}</p>
+                                <p>{val.judul}</p>
                             </div>
                         </div>
                         
@@ -253,65 +182,25 @@ class Home extends Component {
         }
     }
 
-
-    
-    // renderProjectList = () => {
-
-    //     if(this.state.ProjectList.length !== 0) {
-    //         return this.state.ProjectList.map((val, index) => {
-    //             return (
-    //                 <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
-    //                 <div className='row'>
-    //                     <div className='col-4'>
-    //                         <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
-    //                     </div>
-
-    //                     <div className='col-8'>
-    //                         <h2 className="mb-2">{val.projectName}</h2>
-    //                         <p>{val.totalNominal}</p>
-    //                         <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
-    //                         {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
-    //                         </Progress>
-    //                         <h5>Dana yang terkumpul </h5>
-    //                         <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-    //                         <h5>Banyaknya Donasi </h5>
-    //                         <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-    //                         <h5>Sisa Hari </h5>
-    //                         <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-    //                         <h4>Dana yang dibutuhkan :  </h4>
-    //                         <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-    //                     </div>
-    //                 </div>
-    //             </a>    
-    //             )
-    //         })
-            
-    //     } else {
-    //         return (
-    //             <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
-    //         )
-    //     }
-    // }
-
     renderProjectListSlider = () => {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
                     <div key={index}>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' style={{height: '400px'}}>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
                         <div className='row'>
-                            <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
-                                <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} className='mb-3' />
-                                <h1 className="mb-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
-                                <h5 className='mb-3'>{val.shareDescription}</h5>
+                            <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
+                                <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
+                                <h1 className="mb-0 mb-md-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
                                 <h5>#TogetherWeCan</h5>
                             </div>
                             <div className='col-5'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} />
                             </div>
                         </div>
-                        
                     </a>
+
                     <div className='container-fluid'>
                             <div className='row m-0'>
                                     <div className='col-12 d-flex justify-content-center'>
@@ -327,52 +216,6 @@ class Home extends Component {
         } else {
             return (
                 <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
-            )
-        }
-    }
-
-    renderScholarshipStudentList = () => {
-        if(this.state.ScholarshipList) {
-            if(this.state.ScholarshipList.length !== 0) {
-                return this.state.ScholarshipList.map((val, index) => {
-                    const {namaSiswa, studentImage} = this.state.ScholarshipList[index].Student
-                    const { namaSekolah } = this.state.ScholarshipList[index].School
-                    const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.ScholarshipList[index]
-                    return (
-                        <a href={`scholarship-student?id=${val.projectId}`} className='card mt-3' key={index}>
-                        <div className='row'>
-                            <div className='col-4'>
-                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.namaSiswa}-banner`} className='img-fluid width-100' />
-                            </div>
-    
-                            <div className='col-8'>
-                                <h2 className="mb-2">{val.projectName}</h2>
-                                <p>{val.totalNominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
-                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
-                                </Progress>
-                                <h5>Dana yang terkumpul </h5>
-                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-                                <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-                                <h5>Sisa Hari </h5>
-                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                                <h4>Dana yang dibutuhkan :  </h4>
-                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-                            </div>
-                        </div>
-                    </a>    
-                    )
-                })
-                
-            } else {
-                return (
-                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
-                )
-            }
-        } else {
-            return (
-                <h4>Loading...</h4>
             )
         }
     }
@@ -553,20 +396,41 @@ class Home extends Component {
     render() {
         var settings = {
             dots: true,
+            draggable: true,
             arrows: false,
             infinite: true,
             speed: 1000,
             slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
-            slidesToScroll: 4
+            slidesToScroll: 4,
+            responsive: [
+                {
+                  breakpoint: 1024,
+                  settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                  }
+                },
+                {
+                  breakpoint: 768,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                  }
+                }
+              ]
           };
 
         var settingsProjects = {
             dots: true,
+            draggable: true,
             arrows: false,
             infinite: true,
             speed: 1000,
             slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToScroll: 1,
+            
         }
 
         return (
@@ -590,7 +454,7 @@ class Home extends Component {
                         <div className='col-12'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 outer-background-scholarship my-3 py-5 scholarship-slider'>
+                        <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
                             <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
@@ -638,7 +502,7 @@ class Home extends Component {
                 {/* Project List */}
             <div className='container-fluid my-4 p-0'>
                     <div className='row m-0'>
-                        <div className='offset-1 col-10 py-5 projects-slider'>
+                        <div className='offset-md-1 offset-0 col-md-10 col-12 py-5 projects-slider'>
                             <Slider {...settingsProjects}>
                                 {this.renderProjectListSlider()}
                             </Slider>
@@ -651,7 +515,7 @@ class Home extends Component {
                
 
                 {/* About Us */}
-                <div className='about-us container-fluid my-4 p-0'>
+                <div className='about-us container-fluid my-5 p-0'>
                     <div className='row m-0 px-5'>
                         <div className='offset-1 col-10 my-3'>
                             <div className='card'>
@@ -673,7 +537,15 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>   
+
+                <div className='container-fluid'>
+                            <div className='row m-0'>
+                                    <div className='col-12 d-flex justify-content-center'>
+                                         <a href={`about-us`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                                    </div>
+                            </div>
+                        </div> 
 
                 
 

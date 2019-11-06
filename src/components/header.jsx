@@ -56,7 +56,7 @@ class Header extends Component {
                                                     <img src={`${URL_API}/${this.props.userImage}`} alt={'User' + this.props.name} className='img-fluid ' style={{borderRadius: 40}}/>
                                                 </div>
                                                 :
-                                                <div className='bg-warning font-weight-bold rounded px-1'>
+                                                <div className='font-weight-bold rounded px-1'>
                                                     <span className='text-dark mr-2'>Login</span>
                                                     <FontAwesomeIcon icon={faUserCircle} className={param} />
                                                 </div>
@@ -142,11 +142,11 @@ class Header extends Component {
                             <Redirect to={`/`} />
                             : null
                         }
-                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-5'>
+                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-0 pl-md-5'>
                             <img src={Logo} alt={'Logo-Kasih Nusantara'} style={{width: '185px'}} />
                         </Link>
                             
-                        <NavbarToggler onClick={() => this.toggle()} />
+                        <NavbarToggler className='costum-toggler' onClick={() => this.toggle()} />
 
                         <Collapse isOpen={this.state.isOpen} navbar>
                             {/* Untuk Large Device */}
