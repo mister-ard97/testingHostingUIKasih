@@ -6,6 +6,7 @@ import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
+import LogoGray from '../assets/logo/logo_text_bottom_gray.png'
 import queryString from 'query-string';
 import numeral from 'numeral'
 
@@ -297,16 +298,16 @@ class Home extends Component {
             return this.state.ProjectList.map((val, index) => {
                 return (
                     <div key={index}>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' style={{height: '350px'}}>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' style={{height: '400px'}}>
                         <div className='row'>
                             <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
-                                <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} />
-                                <h1 className="mb-2 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
-                                <h5>{val.shareDescription}</h5>
+                                <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} className='mb-3' />
+                                <h1 className="mb-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h5 className='mb-3'>{val.shareDescription}</h5>
                                 <h5>#TogetherWeCan</h5>
                             </div>
                             <div className='col-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} style={{height: '350px', width: '100%', backgroundSize: 'cover', objectFit: 'cover'}}/>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
                             </div>
                         </div>
                         
@@ -650,13 +651,29 @@ class Home extends Component {
                
 
                 {/* About Us */}
-                {/* <div className='container-fluid my-4 p-0'>
-                    <div className='row m-0'>
-                        <div className='col-12 my-3'>
-                            <h2 className='text-center font-weight-bold text-danger font-size-40'>PROJECTS</h2>
+                <div className='about-us container-fluid my-4 p-0'>
+                    <div className='row m-0 px-5'>
+                        <div className='offset-1 col-10 my-3'>
+                            <div className='card'>
+                                <div className='row'>
+                                    <div className='col-8 ml-5 my-5'>
+                                        <h2 className='mb-3'>ABOUT <br/> US</h2>
+                                        <p className='p-0 m-0' style={{fontSize: '25px'}}>Lorem ipsum dolor 
+                                            sit amet consectetur adipisicing elit. 
+                                            Eaque id corporis et sint autem 
+                                            Fin tempora cum voluptatibus reprehenderit, 
+                                            adipisci dolor voluptatem ducimus omnis,
+                                            eum harum. Cumque officia perspiciatis reprehenderit.
+                                        </p>
+                                    </div>
+                                    <div className='col-3 d-flex flex-column justify-content-center px-4'>
+                                        <img src={LogoGray} alt='Logo-AboutUs' className='img-fluid' />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>     */}
+                </div>     
 
                 
 

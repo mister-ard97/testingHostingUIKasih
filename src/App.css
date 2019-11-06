@@ -147,6 +147,18 @@ body {
   text-shadow: 2px 3px 0 #FFFFFF;
 }
 
+.about-us {
+  background: url('./assets/awan-merah.png') no-repeat bottom right;
+  background-size: 400px 400px;
+  object-fit: cover;
+}
+
+.about-us .card h2 {
+  font-size: 62px;
+  color: #D32242;
+  text-shadow: 5px 3px 0 #b2b2b2;
+}
+
 .boxBanner p {
   font-size: 22px;
 }
@@ -158,11 +170,22 @@ body {
   background: #FFFFFF;
 }
 
+/* @media only screen and (max-width: 762px) {
+  .bg-scholarship {
+    width: 100 !important;
+    background: #FFFFFF;
+  }
+} */
+
 .bg-projects {
   width: 97% !important;
   margin: 0 2%;
   background: #4C4C4D;
   border-radius: 1rem !important;
+}
+
+.bg-projects .col-5 img {
+  height: 400px;
 }
 
 a.bg-scholarship, a.bg-projects {
@@ -185,9 +208,9 @@ a.bg-scholarship:hover {
 
 
 .profile-student {
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
+  width: 120px;
+  height: 120px;
+  border-radius: 120px;
   background: gray;
   object-fit: cover;
   object-position: 10% 10%;
@@ -217,6 +240,12 @@ a.bg-scholarship:hover {
   object-fit: cover;
   height: 50vh; */
   background: #D3D8D8;
+}
+
+
+/* About Us */
+.about-us .card {
+  box-shadow: 0 0 30px gray;
 }
 
 /* Login Page */
