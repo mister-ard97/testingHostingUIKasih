@@ -18,7 +18,7 @@ class CarouselCustom extends Component {
            <div className='container-fluid p-0 Banner-Home'>
                 <div className='row m-0 mb-3'>
                     <div className='col-12 m-0 p-0'>
-                        <div className='boxBanner px-5 font-weight-bold'>
+                        <div className='boxBanner px-5 font-weight-bold '>
                             <h2 className='mb-4'>TAKE ACTION</h2>
                             <p>
                                 Get involved, speak out, <br /> or become a donor and give every child a fair

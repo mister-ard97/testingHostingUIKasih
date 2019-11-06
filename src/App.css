@@ -762,3 +762,11 @@ button .test {
 
   object-fit: cover;
 }
+
+.classfooter{
+  /* style={{backgroundColor : '#ce4948', minHeight : '25vh', color : '#f1f1f1'}} */
+  background-color:  #ce4948;
+  min-height: 25vh;
+  
+  color:  #FFFCFD;
+}

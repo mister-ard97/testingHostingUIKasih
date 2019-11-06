@@ -291,7 +291,7 @@ class ScholarshipDetailHome extends Component {
             } = this.state.ScholarshipDetail
 
             return (
-                    <div className='card mt-3 text-dark text-left'>
+                    <div className='card mt-3 text-dark text-left py-5 px-5'>
                         {console.log(this.state.ScholarshipDetail)}
                         <div className='row'>
                             <div className='col-2'>

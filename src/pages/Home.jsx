@@ -16,7 +16,7 @@ import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstra
 class Home extends Component {
     state = {
         ProjectList: [],
-        ScholarshipList: [],
+        // ScholarshipList: [],
         
         totalpage : 0,
         totalpagescholar: 0,
