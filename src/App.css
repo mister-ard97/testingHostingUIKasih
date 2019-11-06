@@ -186,6 +186,7 @@ body {
 
 .bg-projects .col-5 img {
   height: 400px;
+  width: 400px;
 }
 
 a.bg-scholarship, a.bg-projects {
@@ -638,9 +639,14 @@ button .test {
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
   text-align: center;
-  padding-left: 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-top: 13px; */
+  text-align: center;
+  /* padding-left: 10px; */
   font-size: 20px;
   color : #FFFFFF;
   z-index: 1;
@@ -657,11 +663,18 @@ button .test {
   color: #b5b8c1;
   position: relative;
   margin: 2rem 3rem;
+  /* height: 75%; */
   padding: 1rem 2rem;
+  
   border-radius: 16px;
   font-size: 1.15rem;
   background-color: transparent;
   cursor: pointer;
+  text-align: left;
+
+  /* text-align: left;
+  height: auto;
+  font-size: 20px; */
  
  
 }
@@ -669,14 +682,24 @@ button .test {
 .sharebutton::before {
   content: 'SHARE YOUR STORY';
   position: absolute;
+  /* text-align: center; */
   text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
   width: 100%;
   height: 100%;
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
+  /* padding-top: 15px  ;
+  padding-left: 10px;
+  padding-right: 10px; */
   font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   color : #FFFFFF;
   z-index: 1;
   background-color: #ce4948;
@@ -706,12 +729,19 @@ button .test {
   content: 'DONATE';
   position: absolute;
   text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   height: 100%;
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
+  /* padding-top: 13px; */
+  /* padding-top: 14px  ; */
+  /* padding-left: 10px;
+  padding-right: 10px; */
   text-align: center;
   color : #FFFFFF;
   font-size: 25px;
