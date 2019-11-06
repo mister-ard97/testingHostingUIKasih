@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
-
+import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import queryString from 'query-string';
 import numeral from 'numeral'
@@ -255,42 +255,64 @@ class Home extends Component {
 
 
     
-    renderProjectList = () => {
+    // renderProjectList = () => {
 
-        if(this.state.ProjectList.length !== 0) {
+    //     if(this.state.ProjectList.length !== 0) {
+    //         return this.state.ProjectList.map((val, index) => {
+    //             return (
+    //                 <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+    //                 <div className='row'>
+    //                     <div className='col-4'>
+    //                         <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+    //                     </div>
+
+    //                     <div className='col-8'>
+    //                         <h2 className="mb-2">{val.projectName}</h2>
+    //                         <p>{val.totalNominal}</p>
+    //                         <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
+    //                         {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
+    //                         </Progress>
+    //                         <h5>Dana yang terkumpul </h5>
+    //                         <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+    //                         <h5>Banyaknya Donasi </h5>
+    //                         <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+    //                         <h5>Sisa Hari </h5>
+    //                         <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+    //                         <h4>Dana yang dibutuhkan :  </h4>
+    //                         <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+    //                     </div>
+    //                 </div>
+    //             </a>    
+    //             )
+    //         })
+            
+    //     } else {
+    //         return (
+    //             <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+    //         )
+    //     }
+    // }
+
+    renderProjectListSlider = () => {
+        if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
-                    <div className='row'>
-                        <div className='col-4'>
-                            <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' key={index}>
+                        <div className='row'>
+                            <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
+                                <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} />
+                                <h1 className="mb-2 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h5>{val.shareDescription}</h5>
+                                <h5>#TogetherWeCan</h5>
+                            </div>
+                            <div className='col-5'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                            </div>
                         </div>
-
-                        <div className='col-8'>
-                            <h2 className="mb-2">{val.projectName}</h2>
-                            {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-                            <h6>Project Created</h6> */}
-                            {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-                            <h6>Project Ended</h6>
-                            <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-                            <p>{val.totalNominal}</p>
-                            <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
-                            {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
-                            </Progress>
-                            <h5>Dana yang terkumpul </h5>
-                            <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-                            <h5>Banyaknya Donasi </h5>
-                            <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-                            <h5>Sisa Hari </h5>
-                            <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                            <h4>Dana yang dibutuhkan :  </h4>
-                            <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-                        </div>
-                    </div>
-                </a>    
+                    </a>
                 )
             })
-            
+
         } else {
             return (
                 <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
@@ -344,94 +366,94 @@ class Home extends Component {
         }
     }
 
-    renderPagingButton = () =>{
-        if(this.state.totalpage !== 0){
+    // renderPagingButton = () =>{
+    //     if(this.state.totalpage !== 0){
             
-            var jsx = []
-            const parsed = queryString.parse(this.props.location.search);
-            for(var i = 0; i<this.state.totalpage; i++){
-                if(parsed.search || parsed.orderby) {
-                    jsx.push(
-                        <PaginationItem>
-                           <PaginationLink href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${i+1}`}>
-                               {i+1}
-                           </PaginationLink>
-                       </PaginationItem>
-                    )
-                } else {
-                    jsx.push(
-                        <PaginationItem>
-                           <PaginationLink href={`/project-list?page=${i+1}`}>
-                               {i+1}
-                           </PaginationLink>
-                       </PaginationItem>
-                   )
-                }
-            }
-            return jsx
-        }
-    }
+    //         var jsx = []
+    //         const parsed = queryString.parse(this.props.location.search);
+    //         for(var i = 0; i<this.state.totalpage; i++){
+    //             if(parsed.search || parsed.orderby) {
+    //                 jsx.push(
+    //                     <PaginationItem>
+    //                        <PaginationLink href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${i+1}`}>
+    //                            {i+1}
+    //                        </PaginationLink>
+    //                    </PaginationItem>
+    //                 )
+    //             } else {
+    //                 jsx.push(
+    //                     <PaginationItem>
+    //                        <PaginationLink href={`/project-list?page=${i+1}`}>
+    //                            {i+1}
+    //                        </PaginationLink>
+    //                    </PaginationItem>
+    //                )
+    //             }
+    //         }
+    //         return jsx
+    //     }
+    // }
 
-    printPagination = () =>{
-        if(this.state.totalpage !== 0){
-            const parsed = queryString.parse(this.props.location.search);
-            var currentpage = parsed.page
-            if(parsed.search || parsed.orderby) {
-                console.log('Masuk')
-                return (
-                    <Pagination aria-label="Page navigation example">
-                    <PaginationItem>
-                        <PaginationLink first href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=1`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink previous
-                         href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
-                      </PaginationItem>
-                        {this.renderPagingButton()}
-                      <PaginationItem>
-                        <PaginationLink next 
-                        href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
-                        this.state.totalpage : parseInt(currentpage) + 1}`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink last href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage}`} />
-                      </PaginationItem>
-                    </Pagination>
-                )
-            } else {
-                return (
-                    <Pagination aria-label="Page navigation example">
-                    <PaginationItem>
-                        <PaginationLink first href={`/project-list?page=1`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink previous
-                         href={`/project-list?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
-                      </PaginationItem>
-                        {this.renderPagingButton()}
-                      <PaginationItem>
-                        <PaginationLink next 
-                        href={`/project-list?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
-                        this.state.totalpage : parseInt(currentpage) + 1}`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink last href={`/project-list?page=${this.state.totalpage}`} />
-                      </PaginationItem>
-                    </Pagination>
-                )
-            }
-        }
-    }
+    // printPagination = () =>{
+    //     if(this.state.totalpage !== 0){
+    //         const parsed = queryString.parse(this.props.location.search);
+    //         var currentpage = parsed.page
+    //         if(parsed.search || parsed.orderby) {
+    //             console.log('Masuk')
+    //             return (
+    //                 <Pagination aria-label="Page navigation example">
+    //                 <PaginationItem>
+    //                     <PaginationLink first href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=1`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink previous
+    //                      href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+    //                   </PaginationItem>
+    //                     {this.renderPagingButton()}
+    //                   <PaginationItem>
+    //                     <PaginationLink next 
+    //                     href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+    //                     this.state.totalpage : parseInt(currentpage) + 1}`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink last href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage}`} />
+    //                   </PaginationItem>
+    //                 </Pagination>
+    //             )
+    //         } else {
+    //             return (
+    //                 <Pagination aria-label="Page navigation example">
+    //                 <PaginationItem>
+    //                     <PaginationLink first href={`/project-list?page=1`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink previous
+    //                      href={`/project-list?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+    //                   </PaginationItem>
+    //                     {this.renderPagingButton()}
+    //                   <PaginationItem>
+    //                     <PaginationLink next 
+    //                     href={`/project-list?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+    //                     this.state.totalpage : parseInt(currentpage) + 1}`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink last href={`/project-list?page=${this.state.totalpage}`} />
+    //                   </PaginationItem>
+    //                 </Pagination>
+    //             )
+    //         }
+    //     }
+    // }
 
     
 
-    searchProject() {
+    /* searchProject() {
         this.setState({
             searchProject: true,
             searchText: this.searchText.value,
             orderby: this.selectOrder.value
         })
-    }
+    } */
 
     // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
 
@@ -527,103 +549,104 @@ class Home extends Component {
             slidesToScroll: 4
           };
 
+        var settingsProjects = {
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        }
+
         return (
             <div>
                 <Carousel />
-                {/* <div className='row m-0'>
-                        <div className='col-10 offset-1 mb-3'>
-                            <h2>Project Yang Sedang Aktif</h2>
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
-                                Search Project
-                            </a>
-                            
-                            {this.renderProjectList()}
-                        </div>
 
-                        <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
-                            <h2>Scholarship yang sedang berjalan</h2>
-
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship} onChange={() => this.setState({searchTextScholarship: this.searchTextScholarship.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/scholarship-list?search=${this.state.searchTextScholarship}&orderby=${this.state.orderbyScholarship}&page=1`} className='btn btn-success mt-3'>
-                                Search Scholarship
-                            </a>
-                            <div>
-                                {this.renderScholarshipList()}
-                            </div>
-                        </div>
-                    </div>            */}
-
-                    {/* New Konten */}
-        
-                <div className='container-fluid my-5 p-0' >
+                {/* New Konten */}
+                <div className='container-fluid mb-5'>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Slider */}
+                 {/* Slider */}
 
-                <div className='container-fluid my-5 p-0'>
+                 <div className='container-fluid my-5 p-0'>
                     <div className='row m-0'>
-                        <div className='col-12 mb-5'>
-                            <h2 className='text-center font-weight-bold text-danger'>SCHOLARSHIPS</h2>
+                        <div className='col-12 my-3'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 outer-background-scholarship py-5 scholarship-slider'>
+                        <div className='col-12 outer-background-scholarship my-5 py-5 scholarship-slider'>
                             <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
                         </div>
                     </div>
                 </div>
-
-                {/* About Us */}
-                {/* <div className='container-fluid my-5 p-0'>
+                
+                <div className='container-fluid'>
                     <div className='row m-0'>
-                        <div className='col-12 mb-5'>
-                        
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
                         </div>
                     </div>
                 </div>
-                <div className="projectbackground" style={{height : '95vh', width : '100vw'}} >
-                    <div className='container-fluid' >
-                       <div className="row">
-                           <div className="col-md-4 offset-md-1 pl-5">
-                                <h1>Project</h1>
-                           </div>
-                           <div className="col-md-4 offset-md-1">
 
-                           </div>
-                       </div>
-
+                {/* <div className='container-fluid m-0 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 p-0'>
+                            <div className="projectbackground" style={{height : '95vh'}} >
+                                <div className='font-weight-bold' 
+                                    style={{
+                                        paddingTop: '10%',
+                                        marginLeft: '12%'
+                                    }}
+                                >
+                                    <h2 className='mb-4'>TAKE ACTION</h2>
+                                    <p>
+                                        Get involved, speak out, <br /> or become a donor and give every child a fair
+                                        chance for education
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div> */}
-             
+
+
+                {/* Project List */}
+            <div className='container-fluid my-4 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 my-3'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>PROJECTS</h2>
+                        </div>
+                        <div className='offset-1 col-10 py-5 projects-slider'>
+                            <Slider {...settingsProjects}>
+                                {this.renderProjectListSlider()}
+                            </Slider>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='container-fluid'>
+                    <div className='row m-0'>
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                        </div>
+                    </div>
+                </div>
+                
+               
+
+                {/* About Us */}
+                    
+
+                
 
                 {/* background-size:cover;
     background-repeat: no-repeat; 

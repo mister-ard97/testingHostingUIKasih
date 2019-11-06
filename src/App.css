@@ -7,6 +7,18 @@ body {
     font-family: 'Neon80', cursive, sans-serif !important;
 }
 
+.font-size-36 {
+  font-size: 36pt;
+}
+
+.font-size-38 {
+  font-size: 38pt;
+}
+
+.font-size-40 {
+  font-size: 40pt;
+}
+
 /* Global styling */
 .col-10.img-small img {
   width: 200px;
@@ -97,91 +109,7 @@ body {
   font-size: 18px;
 }
 
-/* .btn-default {
-  font-size: 13px;
-  color: rgba(108, 88, 179, 0.75);
-  letter-spacing: 1px;
-  line-height: 15px;
-  border: 2px solid rgba(108, 89, 179, 0.75);
-  border-radius: 40px;
-  background: transparent;
-  transition: all 0.3s ease 0s;
-} */
-
-/* .btn-2 {
-	background: #cb4e4e;
-  color: #fff;
-  
-	box-shadow: 0 4px #b1b1b1;
-	-webkit-transition: none;
-	-moz-transition: none;
-	transition: none;
-}
-
-.btn-2g {
-	border-radius: 40px;
-} */
-
-
-
 /* Carousel */
-/* .carousel-custom {
-  margin-top: -100px;
-  z-index: -3;
-}
-
-.carousel-custom .custom-items {
-    height: 200px;
-    background: grey;
-}
-
-.carousel-custom-user .custom-items {
-    height: 300px;
-    background: grey;
-}
-
-.carousel-custom-user .opacity-carousel-items .display-4 {
-    font-size: 1.75rem !important;
-    font-weight: bold;
-  }
-
-.opacity-carousel-items div.bg-light {
-  width: 400px;
-  opacity: 0.8;
-  color: #2b201f !important;
-  float: left;
-}
-
-.slick-prev:before, .slick-next:before {
-  color: #000000 !important;
-}
-
-.slick-slide>div {
-  margin: 20px 15px !important;
-}
-
-.slick-next {
-  right: -25px !important;
-}
-
-.slick-prev {
-  left: -25px !important; 
-}
-
-a.card {
-  color: black !important;
-}
-
-a.card:hover {
-  color: black !important;
-  text-decoration: none;
-}
-
-textarea:focus {   
-    border-color: rgba(229, 103, 23, 0.8) !important;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6) !important;
-    outline: 0 none !important;
-} */
 
 /*  New Banner Styling */
 .Banner-Home {
@@ -191,9 +119,6 @@ textarea:focus {
 }
 
 .boxBanner {
-  /* position: relative; */
-  /* top: -68%; */
-  /* left: 3%; */
   margin-top: 7%;
   margin-left: 3%;
   width: 400px;
@@ -215,9 +140,23 @@ textarea:focus {
   background: #FFFFFF;
 }
 
-a.bg-scholarship {
+.bg-projects {
+  width: 97% !important;
+  margin: 0 2%;
+  background: #4C4C4D;
+  border-radius: 1rem !important;
+}
+
+a.bg-scholarship, a.bg-projects {
   text-decoration: none;
-  color: #D32242;
+}
+
+a.bg-projects {
+  color: #ffffff;
+}
+
+a.bg-scholarship {
+   color: #D32242;
 }
 
 a.bg-scholarship:hover {
@@ -235,16 +174,22 @@ a.bg-scholarship:hover {
   object-position: 10% 10%;
 }
 
+/* Configuration Projects*/
+
+.projects-slider .slick-dots {
+   bottom: 10px;
+}
+
 .scholarship-slider .slick-dots {
   bottom: -35px;
 }
 
-.scholarship-slider .slick-dots li button:before {
+.scholarship-slider .slick-dots li button:before, .projects-slider .slick-dots li button:before {
   color: white !important;
   opacity: 1;
 }
 
-.scholarship-slider .slick-dots .slick-active button::before {
+.scholarship-slider .slick-dots .slick-active button::before,  .projects-slider .slick-dots .slick-active button::before {
   color: #D32242 !important;
 }
 
@@ -659,9 +604,6 @@ button .test {
   box-shadow: 0 12px 12px -4px gray;
 }
 
-
-
-
 .donatebutton:focus {outline:0;}
 
 .donatebutton {
@@ -690,8 +632,7 @@ button .test {
   border-radius: 16px;
   top: -.6rem;
   padding-top: 13px;
-
-
+  text-align: center;
   color : #FFFFFF;
   font-size: 25px;
   z-index: 1;
@@ -767,6 +708,6 @@ button .test {
   /* style={{backgroundColor : '#ce4948', minHeight : '25vh', color : '#f1f1f1'}} */
   background-color:  #ce4948;
   min-height: 25vh;
-  
+
   color:  #FFFCFD;
 }
