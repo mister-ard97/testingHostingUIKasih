@@ -65,7 +65,6 @@ class Home extends Component {
         
         this.getScholarshipList()
 
-
     }
 
     getProjects = () =>{
@@ -295,7 +294,8 @@ class Home extends Component {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' key={index}>
+                    <div key={index}>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
                         <div className='row'>
                             <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
                                 <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} />
@@ -307,7 +307,17 @@ class Home extends Component {
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
                             </div>
                         </div>
+                        
                     </a>
+                    <div className='container-fluid'>
+                            <div className='row m-0'>
+                                    <div className='col-12 d-flex justify-content-center'>
+                                         <a href={`project-detail?id=${val.projectId}`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
                 )
             })
 
@@ -574,25 +584,31 @@ class Home extends Component {
 
                  <div className='container-fluid my-5 p-0'>
                     <div className='row m-0'>
-                        <div className='col-12 my-3'>
+                        <div className='col-12'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 outer-background-scholarship my-5 py-5 scholarship-slider'>
+                        <div className='col-12 outer-background-scholarship my-3 py-5 scholarship-slider'>
                             <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
                         </div>
-                    </div>
-                </div>
-                
-                <div className='container-fluid'>
-                    <div className='row m-0'>
+
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
                             <div className="donatebutton">SHARE YOUR DONATE</div>
                         </div>
+
                     </div>
                 </div>
+                
+                {/* <div className='container-fluid'>
+                    <div className='row m-0'>
+                         <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                        </div>
+                    </div>
+                </div> */}
 
                 {/* <div className='container-fluid m-0 p-0'>
                     <div className='row m-0'>
@@ -630,19 +646,18 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <div className='container-fluid'>
-                    <div className='row m-0'>
-                        <div className='col-12 d-flex justify-content-center'>
-                            <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR DONATE</div>
-                        </div>
-                    </div>
-                </div>
+                
                 
                
 
                 {/* About Us */}
-                    
+                <div className='container-fluid my-4 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 my-3'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>PROJECTS</h2>
+                        </div>
+                    </div>
+                </div>    
 
                 
 

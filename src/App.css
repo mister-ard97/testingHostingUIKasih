@@ -109,24 +109,42 @@ body {
   font-size: 18px;
 }
 
+/* .navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+@media only screen and (max-width: 762px) {
+  .navbar-collapse {
+    flex-basis: 0%;
+    flex-grow: 0;
+    align-items: center;
+  }
+} */
+
 /* Carousel */
 
 /*  New Banner Styling */
 .Banner-Home {
-  background: url('./assets/Banner1.png') no-repeat;
+  background: url('./assets/Banner2.png') no-repeat top;
   background-size: cover;
+  /* object-fit: cover; */
   /* height: auto; */
 }
 
 .boxBanner {
-  margin-top: 7%;
+  position: absolute;
+  top: 25%;
+  /* margin-top: 0%; */
   margin-left: 3%;
   width: 400px;
 }
 
 .boxBanner h2 {
-  font-size: 40px;
+  font-size: 62px;
   color: #D32242;
+  text-shadow: 2px 3px 0 #FFFFFF;
 }
 
 .boxBanner p {
@@ -165,6 +183,7 @@ a.bg-scholarship:hover {
   text-decoration: none !important;
 }
 
+
 .profile-student {
   width: 90px;
   height: 90px;
@@ -177,7 +196,7 @@ a.bg-scholarship:hover {
 /* Configuration Projects*/
 
 .projects-slider .slick-dots {
-   bottom: 10px;
+   bottom: 150px;
 }
 
 .scholarship-slider .slick-dots {
@@ -568,6 +587,38 @@ button .test {
   outline: none;
 } */
 
+.learnmorebutton:focus {outline: 0;}
+.learnmorebutton {
+  border: 4px solid #b5b8c1;
+  color: #b5b8c1;
+  position: relative;
+  margin: 2rem 3rem;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.learnmorebutton::before {
+  content: 'LEARN MORE';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -.4rem;
+  border-radius: 16px;
+  top: -.6rem;
+  padding-top: 13px;
+  text-align: center;
+  padding-left: 10px;
+  font-size: 20px;
+  color : #FFFFFF;
+  z-index: 1;
+  background-color: #ce4948;
+  transition: all 200ms ease-out;
+  box-shadow: 0 12px 12px -4px gray;
+}
+
 .sharebutton:focus {outline:0;}
 
 .sharebutton {
@@ -649,11 +700,16 @@ button .test {
   left: 0;
 }
 
-.container {
+.learnmorebutton:hover::before {
+  top: 0;
+  left: 0;
+}
+
+/* .container {
   position: relative;
   text-align: center;
   color: white;
-}
+} */
 
 /* Bottom left text */
 .bottom-left {
