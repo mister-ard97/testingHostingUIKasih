@@ -297,7 +297,7 @@ class Home extends Component {
             return this.state.ProjectList.map((val, index) => {
                 return (
                     <div key={index}>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' style={{height: '350px'}}>
                         <div className='row'>
                             <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
                                 <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} />
@@ -306,7 +306,7 @@ class Home extends Component {
                                 <h5>#TogetherWeCan</h5>
                             </div>
                             <div className='col-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} style={{height: '350px', width: '100%', backgroundSize: 'cover', objectFit: 'cover'}}/>
                             </div>
                         </div>
                         
@@ -650,13 +650,13 @@ class Home extends Component {
                
 
                 {/* About Us */}
-                <div className='container-fluid my-4 p-0'>
+                {/* <div className='container-fluid my-4 p-0'>
                     <div className='row m-0'>
                         <div className='col-12 my-3'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>PROJECTS</h2>
                         </div>
                     </div>
-                </div>    
+                </div>     */}
 
                 
 
