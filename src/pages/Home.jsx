@@ -153,10 +153,10 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5 m-b-70 m-t-70'>
                            
                         <div className='container-fluid'>
-                            <div className='col-12 d-flex justify-content-center'>
+                            <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
                                         alt={`${val.studentImage}-banner`} className='profile-student' 
@@ -165,12 +165,13 @@ class Home extends Component {
                             </div>
 
                             <div className='col-12' >
-                                {/* <div style={{height: '70px'}}>
-                                    
-                                </div> */}
-                                <p className="my-3">{val.namaSiswa}</p>
-                                <p className="my-3">{val.namaSekolah}</p>
-                                <p>{val.judul}</p>
+                                
+                                <h5 className="my-3">{val.namaSiswa}</h5>
+                                <h5 className="my-3">{val.namaSekolah}</h5> 
+                                <div style={{height: '70px'}}>
+                                    <h5 className='my-3'>{val.judul}</h5>
+                                </div> 
+                                <h5 className='my-3'>{new Date(val.tanggalLahir).toLocaleString('id-IND', { dateStyle: 'medium'})}</h5>
                             </div>
                         </div>
                         
@@ -455,7 +456,7 @@ class Home extends Component {
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
-                            <Slider {...settings}>
+                            <Slider {...settings} className='m-b-30'>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
                         </div>

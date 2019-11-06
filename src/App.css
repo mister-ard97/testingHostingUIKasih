@@ -314,14 +314,19 @@ a.bg-scholarship:hover {
   text-decoration: none !important;
 }
 
+/* a.bg-scholarship:hover img {
+  filter: grayscale(0%);
+} */
+
 
 .profile-student {
-  width: 120px;
-  height: 120px;
-  border-radius: 120px;
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
   background: gray;
   object-fit: cover;
   object-position: 10% 10%;
+  filter: grayscale(100%);
 }
 
 /* Configuration Projects*/
@@ -334,9 +339,24 @@ a.bg-scholarship:hover {
   bottom: -35px;
 }
 
+.bg-scholarship.card {
+  border-radius: .50rem;
+}
+
+@media (max-width: 762px) {
+  .scholarship-slider .slick-dots {
+    bottom: -3px;
+  }
+}
+
+.scholarship-slider .slick-dots li, .projects-slider .slick-dots li {
+  margin-right: 30px;
+}
+
 .scholarship-slider .slick-dots li button:before, .projects-slider .slick-dots li button:before {
   color: white !important;
   opacity: 1;
+  font-size: 24px;
 }
 
 .scholarship-slider .slick-dots .slick-active button::before,  .projects-slider .slick-dots .slick-active button::before {
