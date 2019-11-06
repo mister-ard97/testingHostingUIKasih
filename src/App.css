@@ -7,6 +7,14 @@ body {
     font-family: 'Neon80', cursive, sans-serif !important;
 }
 
+.font-size-36 {
+  font-size: 36pt;
+}
+
+.font-size-38 {
+  font-size: 38pt;
+}
+
 .font-size-40 {
   font-size: 40pt;
 }
@@ -100,6 +108,7 @@ body {
 .collapse svg {
   font-size: 18px;
 }
+
 /* Carousel */
 
 /*  New Banner Styling */
@@ -131,9 +140,23 @@ body {
   background: #FFFFFF;
 }
 
-a.bg-scholarship {
+.bg-projects {
+  width: 97% !important;
+  margin: 0 2%;
+  background: #4C4C4D;
+  border-radius: 1rem !important;
+}
+
+a.bg-scholarship, a.bg-projects {
   text-decoration: none;
-  color: #D32242;
+}
+
+a.bg-projects {
+  color: #ffffff;
+}
+
+a.bg-scholarship {
+   color: #D32242;
 }
 
 a.bg-scholarship:hover {
@@ -151,16 +174,22 @@ a.bg-scholarship:hover {
   object-position: 10% 10%;
 }
 
+/* Configuration Projects*/
+
+.projects-slider .slick-dots {
+   bottom: 10px;
+}
+
 .scholarship-slider .slick-dots {
   bottom: -35px;
 }
 
-.scholarship-slider .slick-dots li button:before {
+.scholarship-slider .slick-dots li button:before, .projects-slider .slick-dots li button:before {
   color: white !important;
   opacity: 1;
 }
 
-.scholarship-slider .slick-dots .slick-active button::before {
+.scholarship-slider .slick-dots .slick-active button::before,  .projects-slider .slick-dots .slick-active button::before {
   color: #D32242 !important;
 }
 
