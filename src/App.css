@@ -191,16 +191,45 @@ body {
   }
 }
 
+
+
+
 .about-us {
   background: url('./assets/awan-merah.png') no-repeat bottom right;
   background-size: 400px 400px;
   object-fit: cover;
 }
 
-.about-us .card h2 {
+/* .about-us .card h2 {
   font-size: 62px;
   color: #D32242;
   text-shadow: 5px 3px 0 #b2b2b2;
+} */
+
+.taglinetext {
+  font-size: 55px;
+  color: #D32242;
+  text-shadow: 5px 3px 0 #b2b2b2;
+}
+
+.descriptiontext { 
+  font-size: 19px;
+}
+
+.logo-about-us{
+  height: 300px;
+}
+
+@media  (min-width : 768px){
+  .taglinetext {
+    font-size: 62px;
+  }
+
+  .descriptiontext {
+    font-size:  25px;
+  }
+
+
 }
 
 .boxBanner p {
@@ -717,9 +746,14 @@ button .test {
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
   text-align: center;
-  padding-left: 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-top: 13px; */
+  text-align: center;
+  /* padding-left: 10px; */
   font-size: 20px;
   color : #FFFFFF;
   z-index: 1;
@@ -736,7 +770,9 @@ button .test {
   color: #b5b8c1;
   position: relative;
   margin: 2rem 3rem;
+  /* height: 75%; */
   padding: 1rem 2rem;
+  
   border-radius: 16px;
   font-size: 1.15rem;
   background-color: transparent;
@@ -747,14 +783,24 @@ button .test {
 .sharebutton::before {
   content: 'SHARE YOUR STORY';
   position: absolute;
+  /* text-align: center; */
   text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
   width: 100%;
   height: 100%;
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
+  /* padding-top: 15px  ;
+  padding-left: 10px;
+  padding-right: 10px; */
   font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   color : #FFFFFF;
   z-index: 1;
   background-color: #ce4948;
@@ -784,12 +830,19 @@ button .test {
   content: 'DONATE';
   position: absolute;
   text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   height: 100%;
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-  padding-top: 13px;
+  /* padding-top: 13px; */
+  /* padding-top: 14px  ; */
+  /* padding-left: 10px;
+  padding-right: 10px; */
   text-align: center;
   color : #FFFFFF;
   font-size: 25px;

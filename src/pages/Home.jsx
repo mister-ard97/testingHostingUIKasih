@@ -196,7 +196,7 @@ class Home extends Component {
                                 <h5>#TogetherWeCan</h5>
                             </div>
                             <div className='col-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} />
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
                             </div>
                         </div>
                     </a>
@@ -517,35 +517,35 @@ class Home extends Component {
                 {/* About Us */}
                 <div className='about-us container-fluid my-5 p-0'>
                     <div className='row m-0 px-5'>
-                        <div className='offset-1 col-10 my-3'>
+                        <div className=' col-12 offset-md-1 col-md-10 my-3'>
                             <div className='card'>
                                 <div className='row'>
-                                    <div className='col-8 ml-5 my-5'>
-                                        <h2 className='mb-3'>ABOUT <br/> US</h2>
-                                        <p className='p-0 m-0' style={{fontSize: '25px'}}>Lorem ipsum dolor 
+                                    {/* <div className="col-sm-1 d-none d-sm-block">
+
+                                    </div> */}
+                                    <div className='col-sm-8  col-12 p-l-65 my-5'>
+                                        
+                                        <h2 className='mb-3 d-sm-block d-none taglinetext'>ABOUT <br/> US</h2>
+                                        <h2 className='mb-3 d-sm-none d-block taglinetext'>ABOUT US </h2>
+                                        <p className='pr-5 m-0 p-sm-0 m-sm-0 descriptiontext' >Lorem ipsum dolor 
                                             sit amet consectetur adipisicing elit. 
                                             Eaque id corporis et sint autem 
-                                            in tempora cum voluptatibus reprehenderit, 
+                                            Fin tempora cum voluptatibus reprehenderit, 
                                             adipisci dolor voluptatem ducimus omnis,
                                             eum harum. Cumque officia perspiciatis reprehenderit.
                                         </p>
                                     </div>
-                                    <div className='col-3 d-flex flex-column justify-content-center px-4'>
-                                        <img src={LogoGray} alt='Logo-AboutUs' className='img-fluid' />
+                                    <div className='col-sm-3 d-none d-lg-flex flex-column justify-content-center px-4 py-5 align-items-center'>
+                                        <img src={LogoGray} alt='Logo-AboutUs' className='logo-about-us' />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>   
-
-                <div className='container-fluid'>
-                            <div className='row m-0'>
-                                    <div className='col-12 d-flex justify-content-center'>
-                                         <a href={`about-us`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
-                                    </div>
-                            </div>
-                        </div> 
+                </div>     
+                <div className="d-flex flex-row justify-content-center">
+                    <a href='/' className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                </div>
 
                 
 
