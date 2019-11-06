@@ -635,9 +635,6 @@ class Home extends Component {
                 {/* Project List */}
             <div className='container-fluid my-4 p-0'>
                     <div className='row m-0'>
-                        <div className='col-12 my-3'>
-                            <h2 className='text-center font-weight-bold text-danger font-size-40'>PROJECTS</h2>
-                        </div>
                         <div className='offset-1 col-10 py-5 projects-slider'>
                             <Slider {...settingsProjects}>
                                 {this.renderProjectListSlider()}
