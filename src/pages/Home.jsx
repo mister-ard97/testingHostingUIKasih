@@ -122,7 +122,7 @@ class Home extends Component {
             console.log(res)
             
             var results = res.data.map((val)=>{
-                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
                 delete hasil.Subscriptions

@@ -26,7 +26,7 @@ class CarouselCustom extends Component {
                             </p>
                             <p className='d-none d-md-flex' style={{fontSize: '30px'}}>#bersamamembangunbangsa</p>
                         </div>
-                        <img src={Banner2} alt='home-banner' />
+                        <img src={Banner2} alt='home-banne' />
                     </div>
                 </div>
            </div>
