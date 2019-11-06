@@ -17,7 +17,7 @@ import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstra
 class Home extends Component {
     state = {
         ProjectList: [],
-        ScholarshipList: [],
+        // ScholarshipList: [],
         
         totalpage : 0,
         totalpagescholar: 0,
@@ -120,6 +120,7 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
+            
             var results = res.data.map((val)=>{
                 var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
                 delete hasil.School
@@ -145,79 +146,80 @@ class Home extends Component {
     }
 
 
-    // renderScholarshipList = () =>{
-    //     if(this.state.scholarshipList.length !== 0){
-    //         return this.state.scholarshipList.map((val,id)=>{
-    //             val.currentSubs = parseInt(val.currentSubs)
-    //             return(
-    //                 <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
-    //                         <div className='row'>
-    //                         <div className='col-4'>
-    //                             <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
-    //                         </div>
+    renderScholarshipList = () =>{
+        if(this.state.scholarshipList.length !== 0){
+            return this.state.scholarshipList.map((val,id)=>{
+                val.currentSubs = parseInt(val.currentSubs)
+                return(
+                    <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                            <div className='row'>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
+                            </div>
     
-    //                         <div className='col-8'>
-    //                             <h2 className="mb-2">{val.judul}</h2>
-    //                             {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-    //                             <h6>Project Created</h6> */}
-    //                             {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-    //                             <h6>Project Ended</h6>
-    //                             <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-    //                             <p>{val.nominal}</p>
-    //                             <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0} >
-    //                             {(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0}%
-    //                             </Progress>
-    //                             <div className="d-flex flex-row mb-3">
-    //                                 <div className="mr-4">
-    //                                     <h4>Dana yang terkumpul </h4>
-    //                                     <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
-    //                                 </div>
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.judul}</h2>
+                                {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+                                <h6>Project Created</h6> */}
+                                {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+                                <h6>Project Ended</h6>
+                                <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+                                <p>{val.nominal}</p>
+                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
+                                {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
+                                </Progress>
+                                <div className="d-flex flex-row mb-3">
+                                    <div className="mr-4">
+                                        <h4>Dana yang terkumpul </h4>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.grandtotal)).format(0,0)}`} disabled/>
+                                    </div>
 
-    //                                 <div>
-    //                                     <h4>Dana yang dibutuhkan :  </h4>
-    //                                     <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
-    //                                 </div>
-    //                             </div>
+                                    <div>
+                                        <h4>Dana yang dibutuhkan :  </h4>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                    </div>
+                                </div>
                        
-    //                             <h5>Banyaknya Donasi </h5>
-    //                             <div className="text-gray mb-3"> {val.jumlahdonation} Donasi </div>
-    //                             <h5>Sisa Hari </h5>
-    //                             <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-    //                             <div className="row">
-    //                                 <div className="col-md-5">
-    //                                     <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
-    //                                 </div>
-    //                                 <div className="col-md-7">
-    //                                     <div className=" d-flex flex-row justify-content-end">
-    //                                         <div>
-    //                                             {/* <FacebookShareButton  className='btn btn-primary mr-2'>
-    //                                                 <div className="d-flex flex-row">
-    //                                                     <FacebookIcon size={32} round={true}  />
-    //                                                     <div className="pt-1 ml-2">Share Facebook</div>
-    //                                                 </div>
-    //                                             </FacebookShareButton>
-    //                                             <WhatsappShareButton className='btn btn-success'>
-    //                                                 <div className="d-flex flex-row">
-    //                                                     <WhatsappIcon size={32} round={true}  />
-    //                                                     <div className="pt-1 ml-2">Share Whatsapp</div>
-    //                                                 </div>
-    //                                             </WhatsappShareButton> */}
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                         </div>
-    //                     </a>
-    //             )
-    //         })
-    //     }
-    // }
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.jumlahdonation} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <div className="row">
+                                    <div className="col-md-5">
+                                        <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
+                                    </div>
+                                    <div className="col-md-7">
+                                        <div className=" d-flex flex-row justify-content-end">
+                                            <div>
+                                                {/* <FacebookShareButton  className='btn btn-primary mr-2'>
+                                                    <div className="d-flex flex-row">
+                                                        <FacebookIcon size={32} round={true}  />
+                                                        <div className="pt-1 ml-2">Share Facebook</div>
+                                                    </div>
+                                                </FacebookShareButton>
+                                                <WhatsappShareButton className='btn btn-success'>
+                                                    <div className="d-flex flex-row">
+                                                        <WhatsappIcon size={32} round={true}  />
+                                                        <div className="pt-1 ml-2">Share Whatsapp</div>
+                                                    </div>
+                                                </WhatsappShareButton> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </a>
+                )
+            })
+        }
+    }
 
 
     // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
     renderScholarshipListSlider = () => {
+        console.log(this.state.scholarshipList.length)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
@@ -233,12 +235,12 @@ class Home extends Component {
                                     />
                             </div>
 
-                            <div className='col-12'>
+                            <div className='col-12' >
                                 {/* <div style={{height: '70px'}}>
                                     
                                 </div> */}
-                                    <p className="my-3">{val.namaSiswa}</p>
-                                    <p className="my-3">{val.namaSekolah}</p>
+                                <p className="my-3">{val.namaSiswa}</p>
+                                <p className="my-3">{val.namaSekolah}</p>
                                 <p>{val.nominal}</p>
                             </div>
                         </div>
@@ -329,51 +331,51 @@ class Home extends Component {
         }
     }
 
-    // renderScholarshipStudentList = () => {
-    //     if(this.state.ScholarshipList) {
-    //         if(this.state.ScholarshipList.length !== 0) {
-    //             return this.state.ScholarshipList.map((val, index) => {
-    //                 const {namaSiswa, studentImage} = this.state.ScholarshipList[index].Student
-    //                 const { namaSekolah } = this.state.ScholarshipList[index].School
-    //                 const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.ScholarshipList[index]
-    //                 return (
-    //                     <a href={`scholarship-student?id=${val.projectId}`} className='card mt-3' key={index}>
-    //                     <div className='row'>
-    //                         <div className='col-4'>
-    //                             <img src={`${URL_API}${val.studentImage}`} alt={`${val.namaSiswa}-banner`} className='img-fluid width-100' />
-    //                         </div>
+    renderScholarshipStudentList = () => {
+        if(this.state.ScholarshipList) {
+            if(this.state.ScholarshipList.length !== 0) {
+                return this.state.ScholarshipList.map((val, index) => {
+                    const {namaSiswa, studentImage} = this.state.ScholarshipList[index].Student
+                    const { namaSekolah } = this.state.ScholarshipList[index].School
+                    const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.ScholarshipList[index]
+                    return (
+                        <a href={`scholarship-student?id=${val.projectId}`} className='card mt-3' key={index}>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <img src={`${URL_API}${val.studentImage}`} alt={`${val.namaSiswa}-banner`} className='img-fluid width-100' />
+                            </div>
     
-    //                         <div className='col-8'>
-    //                             <h2 className="mb-2">{val.projectName}</h2>
-    //                             <p>{val.totalNominal}</p>
-    //                             <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
-    //                             {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
-    //                             </Progress>
-    //                             <h5>Dana yang terkumpul </h5>
-    //                             <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-    //                             <h5>Banyaknya Donasi </h5>
-    //                             <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-    //                             <h5>Sisa Hari </h5>
-    //                             <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-    //                             <h4>Dana yang dibutuhkan :  </h4>
-    //                             <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-    //                         </div>
-    //                     </div>
-    //                 </a>    
-    //                 )
-    //             })
+                            <div className='col-8'>
+                                <h2 className="mb-2">{val.projectName}</h2>
+                                <p>{val.totalNominal}</p>
+                                <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0} >
+                                {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}%
+                                </Progress>
+                                <h5>Dana yang terkumpul </h5>
+                                <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+                                <h5>Banyaknya Donasi </h5>
+                                <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+                                <h5>Sisa Hari </h5>
+                                <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                <h4>Dana yang dibutuhkan :  </h4>
+                                <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+                            </div>
+                        </div>
+                    </a>    
+                    )
+                })
                 
-    //         } else {
-    //             return (
-    //                 <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
-    //             )
-    //         }
-    //     } else {
-    //         return (
-    //             <h4>Loading...</h4>
-    //         )
-    //     }
-    // }
+            } else {
+                return (
+                    <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+                )
+            }
+        } else {
+            return (
+                <h4>Loading...</h4>
+            )
+        }
+    }
 
     // renderPagingButton = () =>{
     //     if(this.state.totalpage !== 0){

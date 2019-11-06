@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios'
-import { URL_API } from '../helpers/Url_API';
+import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -17,7 +17,8 @@ class Studentlist extends Component {
         editselected : null,
         imageFile : null,
         editmodal : false,
-        limit : 5
+        limit : 5,
+        province : []
       }
     componentDidMount(){
           // formatbody : {
@@ -32,8 +33,48 @@ class Studentlist extends Component {
             limit : this.state.limit,
             page : parseInt(parsed.page)
         })
+        this.getProvinsiList()
 
-    }      
+    }    
+    
+    getProvinsiList = () =>{
+        Axios.get(GETTOKENURL)
+        .then((res)=>{
+          var token = res.data.token
+          token = token + '/m/wilayah/provinsi'
+          Axios.get(APIWILAYAHURL+token)
+          .then((res)=>{
+              console.log(res.data)
+            this.setState({
+              province : res.data.data
+            })
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+      
+    }
+
+    printDataProvinsi = () => {
+        if(this.state.province.length === 0 ){
+          return (
+            <option value="" disabled selected hidden>Loading...</option>
+          )
+        }else{
+          var list = this.state.province.map((val)=>{
+            return (
+                <option value={val.name}> {val.name} </option>
+            )
+        })
+        
+        return list 
+        }
+        
+      }
 
     renderPagingButton = () =>{
         if(this.state.totalstudent !== 0){
@@ -315,6 +356,7 @@ class Studentlist extends Component {
             status : data[i].status,
             schoolId : data[i].schoolId,
             studentId : id
+            //input province 
         }
 
         var updated = {
@@ -382,6 +424,13 @@ class Studentlist extends Component {
                         <FormGroup>
                             <Label>Tanggal Lahir</Label>
                             <input type="date" className='form-control' ref='tanggalLahir'/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Temppat Lahir</Label>
+                        <select required id="myList" ref="inputprovince" className="form-control mb-5" placeholder="Choose New Residence">
+                                <option value="">CHOOSE PROVINCE</option>
+                                {this.printDataProvinsi()}
+                        </select>
                         </FormGroup>
                         <FormGroup>
                             <Label>Gender</Label>

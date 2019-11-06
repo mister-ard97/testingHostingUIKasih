@@ -46,7 +46,6 @@ class ScholarshipDetailHome extends Component {
         .then((res) => {
             // console.log(res.data)
             // console.log(res.data[0])
-            console.log(res)
             var hasil = res.data[0]
             if(hasil.Subscriptions.length !== 0){
 
@@ -272,7 +271,7 @@ class ScholarshipDetailHome extends Component {
     renderScholarshipDetails = () => {
         // let params = queryString.parse(this.props.location.search)
         if(this.state.ScholarshipDetail) {
-
+            console.log(this.state.ScholarshipDetail)
             const {namaSiswa, studentImage} = this.state.ScholarshipDetail.Student
             const { namaSekolah } = this.state.ScholarshipDetail.School
             const {
@@ -292,7 +291,7 @@ class ScholarshipDetailHome extends Component {
             } = this.state.ScholarshipDetail
 
             return (
-                    <div className='card mt-3 text-dark text-left'>
+                    <div className='card mt-3 text-dark text-left py-5 px-5'>
                         {console.log(this.state.ScholarshipDetail)}
                         <div className='row'>
                             <div className='col-2'>
