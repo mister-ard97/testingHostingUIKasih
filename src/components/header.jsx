@@ -146,16 +146,16 @@ class Header extends Component {
                             <img src={Logo} alt={'Logo-Kasih Nusantara'} style={{width: '185px'}} />
                         </Link>
                             
-                        <NavbarToggler onClick={this.toggle} />
+                        <NavbarToggler onClick={() => this.toggle()} />
 
-                        <Collapse isOpen={this.state.isOpen} navbar className='d-flex'>
+                        <Collapse isOpen={this.state.isOpen} navbar>
                             {/* Untuk Large Device */}
 
                             <div className='container-fluid m-0 p-0'>
                                 <div className='row m-0'>
-                                    <div className='col-12 d-flex justify-content-end pr-5'>
+                                    <div className='col-12 d-flex justify-content-start justify-content-md-end pr-5'>
                                         
-                                        <Nav navbar className='d-xl-flex d-none navbar-custom'>
+                                        <Nav navbar className='d-flex navbar-custom'>
                                                 <NavItem className='mx-3'>
                                                     <NavLink href="#">Home</NavLink>
                                                 </NavItem>
