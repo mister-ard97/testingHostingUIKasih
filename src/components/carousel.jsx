@@ -24,7 +24,7 @@ class CarouselCustom extends Component {
                                 Get involved, speak out, <br /> or become a donor and give every child a fair
                                 chance for education
                             </p>
-                            <p className='d-none d-md-flex' style={{fontSize: '30px'}}>#TogetherWeCan</p>
+                            <p className='d-none d-md-flex' style={{fontSize: '30px'}}>#bersamamembangunbangsa</p>
                         </div>
                         <img src={Banner2} alt='home-banner' />
                     </div>
