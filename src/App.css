@@ -147,16 +147,46 @@ body {
   text-shadow: 2px 3px 0 #FFFFFF;
 }
 
+
+
+
+
 .about-us {
   background: url('./assets/awan-merah.png') no-repeat bottom right;
   background-size: 400px 400px;
   object-fit: cover;
 }
 
-.about-us .card h2 {
+/* .about-us .card h2 {
   font-size: 62px;
   color: #D32242;
   text-shadow: 5px 3px 0 #b2b2b2;
+} */
+
+.taglinetext {
+  font-size: 55px;
+  color: #D32242;
+  text-shadow: 5px 3px 0 #b2b2b2;
+}
+
+.descriptiontext { 
+  font-size: 19px;
+}
+
+.logo-about-us{
+  height: 300px;
+}
+
+@media  (min-width : 768px){
+  .taglinetext {
+    font-size: 62px;
+  }
+
+  .descriptiontext {
+    font-size:  25px;
+  }
+
+
 }
 
 .boxBanner p {
