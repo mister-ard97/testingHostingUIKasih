@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Slider from 'react-slick';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
-
+import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
+import LogoGray from '../assets/logo/logo_text_bottom_gray.png'
 import queryString from 'query-string';
-
-import {
-    FacebookShareButton,
-    WhatsappShareButton,
-    FacebookIcon,
-    WhatsappIcon
-} from 'react-share';
 import numeral from 'numeral'
 
 import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstrap';
@@ -22,7 +17,7 @@ import { Pagination, PaginationItem, PaginationLink,  Progress } from 'reactstra
 class Home extends Component {
     state = {
         ProjectList: [],
-        ScholarshipList: [],
+        // ScholarshipList: [],
         
         totalpage : 0,
         totalpagescholar: 0,
@@ -71,7 +66,6 @@ class Home extends Component {
         
         this.getScholarshipList()
 
-
     }
 
     getProjects = () =>{
@@ -115,7 +109,7 @@ class Home extends Component {
     }
 
     getScholarshipList = () =>{
-        let limit = 4
+        let limit = 12
         let data = {
             name: '',
             page: 1,
@@ -126,12 +120,14 @@ class Home extends Component {
         Axios.post(URL_API+'/scholarship/getscholarship', data)
         .then((res)=>{
             console.log(res)
-            var results = res.data.result.map((val)=>{
-                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+            
+            var results = res.data.map((val)=>{
+                var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
                 delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
+                // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
                 return hasil
             })
@@ -146,7 +142,7 @@ class Home extends Component {
             
         })
         .catch((err)=>{
-            console.log(err)
+           console.log(err)
         })
     }
 
@@ -154,9 +150,10 @@ class Home extends Component {
     renderScholarshipList = () =>{
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
-                val.currentSubs = parseInt(val.currentSubs)
+                // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                            <div className='row'>
                             <div className='col-4'>
                                 <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                             </div>
@@ -169,13 +166,13 @@ class Home extends Component {
                                 <h6>Project Ended</h6>
                                 <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
                                 <p>{val.nominal}</p>
-                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0} >
-                                {(parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100 ? (parseInt(val.currentSubs+val.totaldonation) / val.nominal) * 100  : 0}%
+                                <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
+                                {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
                                 </Progress>
                                 <div className="d-flex flex-row mb-3">
                                     <div className="mr-4">
                                         <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.grandtotal)).format(0,0)}`} disabled/>
                                     </div>
 
                                     <div>
@@ -211,11 +208,7 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                           
-
-                               
-
-                             
+                            </div>
                             </div>
                         </a>
                 )
@@ -224,43 +217,114 @@ class Home extends Component {
     }
 
 
+    // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
-    renderProjectList = () => {
+    renderScholarshipListSlider = () => {
+        console.log(this.state.scholarshipList.length)
+        if(this.state.scholarshipList.length !== 0){
+            return this.state.scholarshipList.map((val,id)=>{
+                // val.currentSubs = parseInt(val.currentSubs)
+                return(
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-5'>
+                           
+                        <div className='container-fluid'>
+                            <div className='col-12 d-flex justify-content-center'>
+                                    <img 
+                                        src={`${URL_API}${val.studentImage}`} 
+                                        alt={`${val.studentImage}-banner`} className='profile-student' 
+                                        // style={{width : '80px', borderRadius: '80px', height: '80px'}}
+                                    />
+                            </div>
 
-        if(this.state.ProjectList.length !== 0) {
-            return this.state.ProjectList.map((val, index) => {
-                return (
-                    <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
-                    <div className='row'>
-                        <div className='col-4'>
-                            <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+                            <div className='col-12' >
+                                {/* <div style={{height: '70px'}}>
+                                    
+                                </div> */}
+                                <p className="my-3">{val.namaSiswa}</p>
+                                <p className="my-3">{val.namaSekolah}</p>
+                                <p>{val.nominal}</p>
+                            </div>
                         </div>
-
-                        <div className='col-8'>
-                            <h2 className="mb-2">{val.projectName}</h2>
-                            {/* <p className='font-weight-bold'>{val.projectCreator}</p>
-                            <h6>Project Created</h6> */}
-                            {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
-                            <h6>Project Ended</h6>
-                            <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-                            <p>{val.totalNominal}</p>
-                            <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
-                            {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
-                            </Progress>
-                            <h5>Dana yang terkumpul </h5>
-                            <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
-                            <h5>Banyaknya Donasi </h5>
-                            <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
-                            <h5>Sisa Hari </h5>
-                            <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
-                            <h4>Dana yang dibutuhkan :  </h4>
-                            <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
-                        </div>
-                    </div>
-                </a>    
+                        
+                    
+                        
+                    </a>
                 )
             })
+        }
+    }
+
+
+    
+    // renderProjectList = () => {
+
+    //     if(this.state.ProjectList.length !== 0) {
+    //         return this.state.ProjectList.map((val, index) => {
+    //             return (
+    //                 <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+    //                 <div className='row'>
+    //                     <div className='col-4'>
+    //                         <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid width-100' />
+    //                     </div>
+
+    //                     <div className='col-8'>
+    //                         <h2 className="mb-2">{val.projectName}</h2>
+    //                         <p>{val.totalNominal}</p>
+    //                         <Progress  className="font-weight-bold mb-3" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2) : 0} >
+    //                         {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}%
+    //                         </Progress>
+    //                         <h5>Dana yang terkumpul </h5>
+    //                         <div className="text-gray mb-3 font-weight-bolder"> Rp. {numeral(parseInt(val.totalNominal)).format(0,0)}  </div>
+    //                         <h5>Banyaknya Donasi </h5>
+    //                         <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
+    //                         <h5>Sisa Hari </h5>
+    //                         <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+    //                         <h4>Dana yang dibutuhkan :  </h4>
+    //                         <h6>Rp. {numeral(val.totalTarget).format(0,0)}</h6>
+    //                     </div>
+    //                 </div>
+    //             </a>    
+    //             )
+    //         })
             
+    //     } else {
+    //         return (
+    //             <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
+    //         )
+    //     }
+    // }
+
+    renderProjectListSlider = () => {
+        if (this.state.ProjectList.length !== 0) {
+            return this.state.ProjectList.map((val, index) => {
+                return (
+                    <div key={index}>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects' style={{height: '400px'}}>
+                        <div className='row'>
+                            <div className='col-7 py-5 pl-5 d-flex flex-column justify-content-between'>
+                                <img src={Logo} alt='Logo-KasihNusantara' style={{width: '50px'}} className='mb-3' />
+                                <h1 className="mb-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h5 className='mb-3'>{val.shareDescription}</h5>
+                                <h5>#TogetherWeCan</h5>
+                            </div>
+                            <div className='col-5'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
+                            </div>
+                        </div>
+                        
+                    </a>
+                    <div className='container-fluid'>
+                            <div className='row m-0'>
+                                    <div className='col-12 d-flex justify-content-center'>
+                                         <a href={`project-detail?id=${val.projectId}`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                )
+            })
+
         } else {
             return (
                 <h4 className='text-center'>Project sedang tidak ada yang jalan. Silahkan kembali lagi nanti.</h4>
@@ -314,94 +378,94 @@ class Home extends Component {
         }
     }
 
-    renderPagingButton = () =>{
-        if(this.state.totalpage !== 0){
+    // renderPagingButton = () =>{
+    //     if(this.state.totalpage !== 0){
             
-            var jsx = []
-            const parsed = queryString.parse(this.props.location.search);
-            for(var i = 0; i<this.state.totalpage; i++){
-                if(parsed.search || parsed.orderby) {
-                    jsx.push(
-                        <PaginationItem>
-                           <PaginationLink href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${i+1}`}>
-                               {i+1}
-                           </PaginationLink>
-                       </PaginationItem>
-                    )
-                } else {
-                    jsx.push(
-                        <PaginationItem>
-                           <PaginationLink href={`/project-list?page=${i+1}`}>
-                               {i+1}
-                           </PaginationLink>
-                       </PaginationItem>
-                   )
-                }
-            }
-            return jsx
-        }
-    }
+    //         var jsx = []
+    //         const parsed = queryString.parse(this.props.location.search);
+    //         for(var i = 0; i<this.state.totalpage; i++){
+    //             if(parsed.search || parsed.orderby) {
+    //                 jsx.push(
+    //                     <PaginationItem>
+    //                        <PaginationLink href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${i+1}`}>
+    //                            {i+1}
+    //                        </PaginationLink>
+    //                    </PaginationItem>
+    //                 )
+    //             } else {
+    //                 jsx.push(
+    //                     <PaginationItem>
+    //                        <PaginationLink href={`/project-list?page=${i+1}`}>
+    //                            {i+1}
+    //                        </PaginationLink>
+    //                    </PaginationItem>
+    //                )
+    //             }
+    //         }
+    //         return jsx
+    //     }
+    // }
 
-    printPagination = () =>{
-        if(this.state.totalpage !== 0){
-            const parsed = queryString.parse(this.props.location.search);
-            var currentpage = parsed.page
-            if(parsed.search || parsed.orderby) {
-                console.log('Masuk')
-                return (
-                    <Pagination aria-label="Page navigation example">
-                    <PaginationItem>
-                        <PaginationLink first href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=1`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink previous
-                         href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
-                      </PaginationItem>
-                        {this.renderPagingButton()}
-                      <PaginationItem>
-                        <PaginationLink next 
-                        href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
-                        this.state.totalpage : parseInt(currentpage) + 1}`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink last href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage}`} />
-                      </PaginationItem>
-                    </Pagination>
-                )
-            } else {
-                return (
-                    <Pagination aria-label="Page navigation example">
-                    <PaginationItem>
-                        <PaginationLink first href={`/project-list?page=1`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink previous
-                         href={`/project-list?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
-                      </PaginationItem>
-                        {this.renderPagingButton()}
-                      <PaginationItem>
-                        <PaginationLink next 
-                        href={`/project-list?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
-                        this.state.totalpage : parseInt(currentpage) + 1}`} />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink last href={`/project-list?page=${this.state.totalpage}`} />
-                      </PaginationItem>
-                    </Pagination>
-                )
-            }
-        }
-    }
+    // printPagination = () =>{
+    //     if(this.state.totalpage !== 0){
+    //         const parsed = queryString.parse(this.props.location.search);
+    //         var currentpage = parsed.page
+    //         if(parsed.search || parsed.orderby) {
+    //             console.log('Masuk')
+    //             return (
+    //                 <Pagination aria-label="Page navigation example">
+    //                 <PaginationItem>
+    //                     <PaginationLink first href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=1`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink previous
+    //                      href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+    //                   </PaginationItem>
+    //                     {this.renderPagingButton()}
+    //                   <PaginationItem>
+    //                     <PaginationLink next 
+    //                     href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+    //                     this.state.totalpage : parseInt(currentpage) + 1}`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink last href={`/project-list?search=${parsed.search}&orderby=${parsed.orderby}&page=${this.state.totalpage}`} />
+    //                   </PaginationItem>
+    //                 </Pagination>
+    //             )
+    //         } else {
+    //             return (
+    //                 <Pagination aria-label="Page navigation example">
+    //                 <PaginationItem>
+    //                     <PaginationLink first href={`/project-list?page=1`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink previous
+    //                      href={`/project-list?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+    //                   </PaginationItem>
+    //                     {this.renderPagingButton()}
+    //                   <PaginationItem>
+    //                     <PaginationLink next 
+    //                     href={`/project-list?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+    //                     this.state.totalpage : parseInt(currentpage) + 1}`} />
+    //                   </PaginationItem>
+    //                   <PaginationItem>
+    //                     <PaginationLink last href={`/project-list?page=${this.state.totalpage}`} />
+    //                   </PaginationItem>
+    //                 </Pagination>
+    //             )
+    //         }
+    //     }
+    // }
 
     
 
-    searchProject() {
+    /* searchProject() {
         this.setState({
             searchProject: true,
             searchText: this.searchText.value,
             orderby: this.selectOrder.value
         })
-    }
+    } */
 
     // FUNCTION YANG AKAN PINDAH DI SCHOLARSHIP DETAIL
 
@@ -488,62 +552,149 @@ class Home extends Component {
     //
  
     render() {
+        var settings = {
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
+            slidesToScroll: 4
+          };
+
+        var settingsProjects = {
+            dots: true,
+            arrows: false,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        }
 
         return (
             <div>
-                <div>
-                    <Carousel />
+                <Carousel />
+
+                {/* New Konten */}
+                <div className='container-fluid mb-5'>
                     <div className='row m-0'>
-                        <div className='col-10 offset-1 mb-3'>
-                            <h2>Project Yang Sedang Aktif</h2>
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText} onChange={() => this.setState({searchText: this.searchText.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder} onChange={() => this.setState({orderby: this.selectOrder.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderby}&page=1`} className='btn btn-success mt-3'>
-                                Search Project
-                            </a>
-                            {/* <ProjectList /> */}
-                            {/* <Route to='/project-list' component={ProjectList} /> */}
-                            {this.renderProjectList()}
-                            {/* {this.printPagination()} */}
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
                         </div>
-
-                        <div className='col-10 offset-1 mt-5' style={{overflowX: 'auto'}}>
-                            <h2>Scholarship yang sedang berjalan</h2>
-
-                            <h4>Filter By</h4>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <input type='text' className='form-control' ref={(searchTextScholarship) => this.searchTextScholarship = searchTextScholarship} onChange={() => this.setState({searchTextScholarship: this.searchTextScholarship.value})}/>
-                                </div>
-                                <div className='col-6'>
-                                    <select className='form-control' ref={(selectOrderScholarship) => this.selectOrderScholarship = selectOrderScholarship} onChange={() => this.setState({orderbyScholarship: this.selectOrderScholarship.value })}>
-                                        <option value='asc'>Newest Post</option>
-                                        <option value='desc'>Older Post</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <a href={`/scholarship-list?search=${this.state.searchTextScholarship}&orderby=${this.state.orderbyScholarship}&page=1`} className='btn btn-success mt-3'>
-                                Search Scholarship
-                            </a>
-                            <div>
-                                {this.renderScholarshipList()}
-                            </div>
-                            {/* <StudentList /> */}
-                            {/* {this.renderScholarshipStudentList()} */}
-                        </div>
-                    </div>           
+                    </div>
                 </div>
+
+                 {/* Slider */}
+
+                 <div className='container-fluid my-5 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
+                        </div>
+                        <div className='col-12 outer-background-scholarship my-3 py-5 scholarship-slider'>
+                            <Slider {...settings}>
+                                {this.renderScholarshipListSlider()}
+                            </Slider>
+                        </div>
+
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                {/* <div className='container-fluid'>
+                    <div className='row m-0'>
+                         <div className='col-12 d-flex justify-content-center'>
+                            <div className="sharebutton">SHARE YOUR STORY</div>
+                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                        </div>
+                    </div>
+                </div> */}
+
+                {/* <div className='container-fluid m-0 p-0'>
+                    <div className='row m-0'>
+                        <div className='col-12 p-0'>
+                            <div className="projectbackground" style={{height : '95vh'}} >
+                                <div className='font-weight-bold' 
+                                    style={{
+                                        paddingTop: '10%',
+                                        marginLeft: '12%'
+                                    }}
+                                >
+                                    <h2 className='mb-4'>TAKE ACTION</h2>
+                                    <p>
+                                        Get involved, speak out, <br /> or become a donor and give every child a fair
+                                        chance for education
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+
+
+                {/* Project List */}
+            <div className='container-fluid my-4 p-0'>
+                    <div className='row m-0'>
+                        <div className='offset-1 col-10 py-5 projects-slider'>
+                            <Slider {...settingsProjects}>
+                                {this.renderProjectListSlider()}
+                            </Slider>
+                        </div>
+                    </div>
+                </div>
+
+                
+                
+               
+
+                {/* About Us */}
+                <div className='about-us container-fluid my-4 p-0'>
+                    <div className='row m-0 px-5'>
+                        <div className=' col-12 offset-md-1 col-md-10 my-3'>
+                            <div className='card'>
+                                <div className='row'>
+                                    {/* <div className="col-sm-1 d-none d-sm-block">
+
+                                    </div> */}
+                                    <div className='col-sm-8  col-12 p-l-65 my-5'>
+                                        
+                                        <h2 className='mb-3 d-sm-block d-none taglinetext'>ABOUT <br/> US</h2>
+                                        <h2 className='mb-3 d-sm-none d-block taglinetext'>ABOUT US </h2>
+                                        <p className='pr-5 m-0 p-sm-0 m-sm-0 descriptiontext' >Lorem ipsum dolor 
+                                            sit amet consectetur adipisicing elit. 
+                                            Eaque id corporis et sint autem 
+                                            Fin tempora cum voluptatibus reprehenderit, 
+                                            adipisci dolor voluptatem ducimus omnis,
+                                            eum harum. Cumque officia perspiciatis reprehenderit.
+                                        </p>
+                                    </div>
+                                    <div className='col-sm-3 d-none d-lg-flex flex-column justify-content-center px-4 py-5 align-items-center'>
+                                        <img src={LogoGray} alt='Logo-AboutUs' className='logo-about-us' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+                <div className="d-flex flex-row justify-content-center">
+                    <a href='/' className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                </div>
+
+                
+
+                {/* background-size:cover;
+    background-repeat: no-repeat; 
+    height: auto;
+    object-fit: cover; */}
+
+ 
             </div>
+
+
         )
     }
 }

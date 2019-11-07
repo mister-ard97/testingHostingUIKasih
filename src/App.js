@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { KeepLogin } from './redux/actions';
+import './util.css'
 import './App.css';
 
 import Header from './components/header';
@@ -49,6 +50,7 @@ import PaymentPending from './pages/paymentPending'
 import ScholarshipAdd from './pages/userFeature/ScholarshipAdd'
 import ScholarshipList from './pages/userFeature/ScholarshipList'
 import ScholarshipDetail from './pages/userFeature/ScholarshipDetail';
+import Footer from './components/footer'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
@@ -85,7 +87,7 @@ class App extends Component {
       )
     }
     return (
-        <div className='MaCommerce' >
+        <div className='MaCommerce mb-0 pb-0' >
               { /* Buat Route untuk User dan User Admin */ }
               <Header />
               <Switch>
@@ -132,6 +134,7 @@ class App extends Component {
 
                 <Route path='*' component={NotFound} />
               </Switch>
+              <Footer/>
 
        
         {/* Route Admin */}

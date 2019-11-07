@@ -93,7 +93,8 @@ class Payment extends Component {
                 projectId: this.state.projectId ? this.state.projectId : null,
                 scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
-                anonim: this.state.anonim ? 1 : 0
+                anonim: this.state.anonim ? 1 : 0,
+                paymentSource : "Donation" // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
             }
         }
         
