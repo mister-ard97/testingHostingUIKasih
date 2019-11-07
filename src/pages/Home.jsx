@@ -138,6 +138,7 @@ class Home extends Component {
                 scholarshipList : results
             })
             console.log(results)
+            console.log(res.data)
             
         })
         .catch((err)=>{

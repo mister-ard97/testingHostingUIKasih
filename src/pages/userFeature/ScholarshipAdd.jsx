@@ -3,7 +3,7 @@ import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'r
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
-import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
+// import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -12,6 +12,13 @@ import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
 
+import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
+// import CKEditor from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { EditorState } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -145,7 +152,11 @@ class ScholarshipAdd extends Component{
         })
     }
 
+    // onContentStateChange = (contentState) => {
+    //     this.setState({contentState})
+    //     console.log(contentState)
 
+    // }
 
     renderSiswa = () =>{
         var data = this.state.datasiswa
@@ -305,6 +316,13 @@ class ScholarshipAdd extends Component{
                      {/* <CKEditor
                         editor={ ClassicEditor }
                         data=""
+                        config={{ckfinder: {
+                            // Upload the images to the server using the CKFinder QuickUpload command
+                            // You have to change this address to your server that has the ckfinder php connector
+                            // uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
+                            uploadUrl: console.log()
+
+                        }}}
                         onInit={ editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log( 'Editor is ready to use!', editor );
