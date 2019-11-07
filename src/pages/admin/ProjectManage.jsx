@@ -78,16 +78,15 @@ class ProjectManage extends React.Component{
             }
         }
 
-        console.log(parsed)
-        if(!parsed.page){
-            parsed.page = 1
-
-
+        let limit = 4
+        let data = {
+            name: '',
+            page: 1,
+            date: 'ASC',
+            limit
         }
 
-        let limit = 1
-
-        Axios.get(`${URL_API}/project/getproject?page=${parsed.page}&limit=${limit}`, headers)
+        Axios.post(`${URL_API}/project/getproject`,data, headers)
         .then((res)=>{
             console.log(res)
 
@@ -101,7 +100,7 @@ class ProjectManage extends React.Component{
 
             this.setState({
                 data : results,
-                totalpage : res.data.total
+                totalpage : Math.ceil(res.data.total / limit)
             })
             console.log(this.state)
             
@@ -162,8 +161,8 @@ class ProjectManage extends React.Component{
                         <th>
                             <div dangerouslySetInnerHTML={{__html:val.description? val.description : null}}></div>
                         </th>
-                        <th>{val.projectCreated.split('T')[0]}</th>
-                        <th>{val.projectEnded.split('T')[0]}</th>
+                        <th>{val.projectCreated}</th>
+                        <th>{val.projectEnded}</th>
                         <th>{val.totalTarget}</th>
                         <th><img src={`${URL_API}${val.projectImage}`} height={150} width={150}/></th>
                         <th className="d-flex flex-column">

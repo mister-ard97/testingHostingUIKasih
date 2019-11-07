@@ -20,20 +20,13 @@ class CarouselCustom extends Component {
                     <div className='col-12 m-0 p-0'>
                         <div className='boxBanner px-5 text-white '>
                             <h2 className='mb-4'>TAKE ACTION</h2>
-                            <p>
+                            <p className='d-none d-md-flex'>
                                 Get involved, speak out, <br /> or become a donor and give every child a fair
                                 chance for education
                             </p>
-                            <p style={{fontSize: '30px'}}>#TogetherWeCan</p>
+                            <p className='d-none d-md-flex' style={{fontSize: '30px'}}>#bersamamembangunbangsa</p>
                         </div>
-                        <img src={Banner2} alt='home-banner'
-                            style={{
-                                width: '100%',
-                                visibility: 'hidden',
-                                height: '700px'
-                            }}
-                        />
-                        
+                        <img src={Banner2} alt='home-banne' />
                     </div>
                 </div>
            </div>
