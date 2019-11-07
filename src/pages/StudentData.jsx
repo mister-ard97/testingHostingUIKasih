@@ -274,12 +274,12 @@ class Studentlist extends Component {
                     <td><img src={URL_API+item.studentImage} alt="" width='200'/></td>
                     <td>{item.schoolName}</td>
                     <td>
-                        {item.dataStatus === 'Rejected' || item.dataStatus === 'Unverified' ? null : 
+                        {/* {item.dataStatus === 'Rejected' || item.dataStatus === 'Unverified' ? null :  */}
                     
                     <a href={`/studentdetail?id=${item.id}`} style={{textDecoration:'none'}}>
                         <button className='btn btn-primary'>Lihat student</button>
                     </a>   
-                    }
+                    {/* } */}
                     </td>
         
                     <td>

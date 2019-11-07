@@ -14,14 +14,6 @@ class Payout extends Component{
     onClickPayout=()=>{
         let nominal = this.state.nominal
         console.log(nominal)
-        const options={
-            header:{
-                "Authorization":"Basic SVJJUy04M2YxMzVlZC0zNTEzLTQ3YmYtODFiYi1hMDcxODIyZWU2OGY6",
-                "Content-Type":"application/json",
-                // "Accept":"application/json",
-                "Access-Control-Allow-Origin":"*"
-            }
-        }
         let body={
             "payouts": [
                 {
@@ -32,24 +24,8 @@ class Payout extends Component{
                 "amount": this.state.nominal,
                 "notes": "Payout April 17"
                 }
-                // {
-                //     "beneficiary_name": 'okay',
-                //     "beneficiary_account": "",
-                //     "beneficiary_bank": "bni",
-                //     "beneficiary_email": "beneficiary@example.com",
-                //     "amount": '890989',
-                //     "notes": "Payout April 17"
-                //     }
           ]
         }
-        // Axios.post('https://crossorigin.me/https://app.sandbox.midtrans.com/iris/api/v1/payouts', body, {auth: {username: 'Basic SVJJUy04M2YxMzVlZC0zNTEzLTQ3YmYtODFiYi1hMDcxODIyZWU2OGY6', password:''}})
-        // Axios.post('https://cors-anywhere.herokuapp.com/https://app.sandbox.midtrans.com/iris/api/v1/payouts', body, options)
-        // .then((res)=>{
-        //     console.log(res.data)
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
-
         Axios.post(URL_API+'/payment/payout', body)
         .then((res)=>{
             console.log(res.data)
