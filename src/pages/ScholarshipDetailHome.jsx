@@ -47,14 +47,15 @@ class ScholarshipDetailHome extends Component {
             // console.log(res.data)
             // console.log(res.data[0])
             var hasil = res.data[0]
-            if(hasil.Subscriptions.length !== 0){
+            hasil.totaldonation = parseInt(hasil.totaldonation)
+            // if(hasil.Subscriptions.length !== 0){
 
-                hasil.currentSubs = hasil.Subscriptions[0].currentSubs
-                hasil.grandtotal = parseInt(hasil.currentSubs) + parseInt(hasil.totaldonation)
-            }else {
-                hasil.grandtotal = hasil.totaldonation
-            }
-            delete hasil.Subscriptions
+            //     hasil.currentSubs = hasil.Subscriptions[0].currentSubs
+            //     hasil.totaldonation = parseInt(hasil.currentSubs) + parseInt(hasil.totaldonation)
+            // }else {
+            //     hasil.grandtotal = hasil.totaldonation
+            // }
+            // delete hasil.Subscriptions
             
             this.setState({ScholarshipDetail: hasil})
         })
@@ -157,7 +158,8 @@ class ScholarshipDetailHome extends Component {
                 userId: this.props.id,
                 scholarshipId: this.state.objSubscription.id,
                 remainderDate : this.reminderDate.value, // input user
-                monthLeft : this.state.objSubscription.durasi // input user
+                monthLeft : this.state.objSubscription.durasi, // input user,
+                paymentSource : "Subscription"
 
             }
         }
@@ -283,9 +285,10 @@ class ScholarshipDetailHome extends Component {
                 durasi, 
                 scholarshipStart, 
                 scholarshipEnded,
-                grandtotal,
-                currentSubs,
-                totalDonasi,
+                // grandtotal,
+                // currentSubs,
+                jumlahdonation,
+                totaldonation,
                 SisaHari
 
             } = this.state.ScholarshipDetail
@@ -303,8 +306,8 @@ class ScholarshipDetailHome extends Component {
                                 <p>{namaSekolah}</p>
                                 <p>Nama Siswa : {namaSiswa}</p>
                                 
-                                <Progress  className="font-weight-bold mb-3" animated value={(grandtotal / nominal) * 100 ? (grandtotal / nominal) * 100  : 0} >
-                                {(grandtotal / nominal) * 100 ? (grandtotal / nominal) * 100  : 0}%
+                                <Progress  className="font-weight-bold mb-3" animated value={(totaldonation / nominal) * 100 ? (totaldonation / nominal) * 100  : 0} >
+                                {(totaldonation / nominal) * 100 ? (totaldonation / nominal) * 100  : 0}%
                                 </Progress>
 
                                 <hr/>
@@ -312,7 +315,7 @@ class ScholarshipDetailHome extends Component {
                                 <div className="d-flex flex-row mb-3">
                                     <div className="mr-4">
                                         <h4>Dana yang terkumpul </h4>
-                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(grandtotal)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(totaldonation)).format(0,0)}`} disabled/>
                                     </div>
 
                                     <div>
@@ -332,7 +335,7 @@ class ScholarshipDetailHome extends Component {
                                 <hr/>
                             
                                 <h5>Banyaknya Donasi </h5>
-                                <div className="text-gray mb-3"> {totalDonasi} Donasi </div>
+                                <div className="text-gray mb-3"> {jumlahdonation} Donasi </div>
                                 <h5>Sisa Hari </h5>
                                 <div className="text-gray mb-3"> {SisaHari} Hari </div>
 
@@ -365,9 +368,9 @@ class ScholarshipDetailHome extends Component {
                                     </a>
                                 }
 
-                                {
+                                {/* {
                                     this.props.email ?
-                                        this.state.statusSubscription === 0 ?
+                                        this.state.statusSubscription === 0 ? */}
                                         <a onClick={() => this.setState({
                                             SubscriptionModal: true,
                                             objSubscription: {
@@ -379,15 +382,15 @@ class ScholarshipDetailHome extends Component {
                                                 Subscribe ke {namaSiswa}
                                             </button>
                                         </a>
-                                        :
+                                        {/* :
                                         null
-                                    :
-                                    <a href={`/login`}> 
+                                    : */}
+                                    {/* <a href={`/login`}> 
                                         <button>
                                             Subscribe ke {namaSiswa}
                                         </button>
                                     </a>
-                                }
+                                } */}
                                 
                             </div>
                             </div>

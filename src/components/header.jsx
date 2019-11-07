@@ -96,6 +96,7 @@ class Header extends Component {
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/studentlist?page=1' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
                                                 <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                
@@ -113,6 +114,7 @@ class Header extends Component {
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
                                                 <Link to='/studentlist?page=1' className='border-bottom d-block'> Student List </Link>
+                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
                                                 <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                 
@@ -124,6 +126,7 @@ class Header extends Component {
                                                 <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
                                                 <Link to='/manage-project' className='border-bottom d-block'> Project List </Link>
                                                 <Link to='/post-project' className='border-bottom d-block'> Post Project </Link>
+                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
                                                 <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
@@ -156,8 +159,8 @@ class Header extends Component {
                             <Redirect to={`/`} />
                             : null
                         }
-                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-0 pl-md-5'>
-                            <img src={Logo} alt={'Logo-Kasih Nusantara'} style={{width: '185px'}} />
+                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-5'>
+                            <img src={Logo} alt={'Logo-Kasih Nusantara'}/>
                         </Link>
                             
                         <NavbarToggler className='costum-toggler' onClick={() => this.toggle()} />

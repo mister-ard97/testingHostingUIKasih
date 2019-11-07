@@ -3,7 +3,7 @@ import {  Input, Form, FormGroup, Label, FormText, Button, CustomInput } from 'r
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
-import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
+// import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -12,6 +12,13 @@ import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
 
+import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
+// import CKEditor from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { EditorState } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -145,7 +152,11 @@ class ScholarshipAdd extends Component{
         })
     }
 
+    // onContentStateChange = (contentState) => {
+    //     this.setState({contentState})
+    //     console.log(contentState)
 
+    // }
 
     renderSiswa = () =>{
         var data = this.state.datasiswa
@@ -191,12 +202,13 @@ class ScholarshipAdd extends Component{
 
         console.log(id)
         if(!ada){
+            console.log('masuk if ')
             Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
             .then((res) => {
                 console.log(res.data)
                 this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
             })
-            .catch((err)=> {
+            .catch((err)=> {    
                 console.log(err)
             })
         }
@@ -280,7 +292,6 @@ class ScholarshipAdd extends Component{
                             margin="normal"
                             fullWidth
                         >
-                            
                             {/* Render dropwodn menu */}
                             <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
                             <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
@@ -295,8 +306,6 @@ class ScholarshipAdd extends Component{
                             <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
                             <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
                         </TextField>
-                        
-                        
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Description</Label>
@@ -305,6 +314,13 @@ class ScholarshipAdd extends Component{
                      {/* <CKEditor
                         editor={ ClassicEditor }
                         data=""
+                        config={{ckfinder: {
+                            // Upload the images to the server using the CKFinder QuickUpload command
+                            // You have to change this address to your server that has the ckfinder php connector
+                            // uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
+                            uploadUrl: '/ckadapter?command=QuickUpload&type=Images&responseType=json'
+
+                        }}}
                         onInit={ editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log( 'Editor is ready to use!', editor );

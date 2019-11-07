@@ -23,6 +23,7 @@ import StudentDetail from './pages/StudentDetails'
 import AdminVerifyDetail from './pages/admin/verifydetail'
 import ManageScholarship from './pages/admin/manageScholarship'
 import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
+import ManageSchool from './pages/admin/manageSchool'
 
 //PROJECT
 // import PostStudent fro
@@ -53,8 +54,11 @@ import Footer from './components/footer'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
+import SchoolList from './pages/userFeature/SchoolList';
+import SchoolAdd from './pages/userFeature/SchoolAdd'
 import {URL_API} from './helpers/Url_API'
 
+import Adapter from './helpers/ckfinder/core/connector/php/connector.php'
 import io from 'socket.io-client'
  
 class App extends Component {
@@ -115,8 +119,8 @@ class App extends Component {
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
                 <Route path='/payout' component={Payout}/>
-
-                
+                <Route path='/schoollist' component={SchoolList}/>    
+                <Route path='/schooladd' component={SchoolAdd}/>
 
                 {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
@@ -125,6 +129,7 @@ class App extends Component {
                 <Route path='/adminverify' component={AdminVerifyPage} />
                 <Route path='/manageScholarship' component={ManageScholarship}/>
                 <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
+                <Route path='/manageSchool' component={ManageSchool}/>
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />

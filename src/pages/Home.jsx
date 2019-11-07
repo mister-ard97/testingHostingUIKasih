@@ -109,9 +109,9 @@ class Home extends Component {
                 var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
-                delete hasil.Subscriptions
+                // delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
-                hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
+                // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
                 return hasil
             })
@@ -122,6 +122,7 @@ class Home extends Component {
                 scholarshipList : results
             })
             console.log(results)
+            console.log(res.data)
             
         })
         .catch((err)=>{
@@ -129,13 +130,85 @@ class Home extends Component {
         })
     }
 
+
+    // renderScholarshipList = () =>{
+    //     if(this.state.scholarshipList.length !== 0){
+    //         return this.state.scholarshipList.map((val,id)=>{
+    //             // val.currentSubs = parseInt(val.currentSubs)
+    //             return(
+    //                 <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+    //                         <div className='row'>
+    //                         <div className='col-4'>
+    //                             <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
+    //                         </div>
+    
+    //                         <div className='col-8'>
+    //                             <h2 className="mb-2">{val.judul}</h2>
+    //                             {/* <p className='font-weight-bold'>{val.projectCreator}</p>
+    //                             <h6>Project Created</h6> */}
+    //                             {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
+    //                             <h6>Project Ended</h6>
+    //                             <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
+    //                             <p>{val.nominal}</p>
+    //                             <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
+    //                             {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
+    //                             </Progress>
+    //                             <div className="d-flex flex-row mb-3">
+    //                                 <div className="mr-4">
+    //                                     <h4>Dana yang terkumpul </h4>
+    //                                     <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.grandtotal)).format(0,0)}`} disabled/>
+    //                                 </div>
+
+    //                                 <div>
+    //                                     <h4>Dana yang dibutuhkan :  </h4>
+    //                                     <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+    //                                 </div>
+    //                             </div>
+                       
+    //                             <h5>Banyaknya Donasi </h5>
+    //                             <div className="text-gray mb-3"> {val.jumlahdonation} Donasi </div>
+    //                             <h5>Sisa Hari </h5>
+    //                             <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+    //                             <div className="row">
+    //                                 <div className="col-md-5">
+    //                                     <a className='btn btn-dark form-control font-weight-bolder' href={`/scholarship-student?id=${val.id}`} style={{textDecoration: 'none'}}>Lihat Detail Student</a>
+    //                                 </div>
+    //                                 <div className="col-md-7">
+    //                                     <div className=" d-flex flex-row justify-content-end">
+    //                                         <div>
+    //                                             {/* <FacebookShareButton  className='btn btn-primary mr-2'>
+    //                                                 <div className="d-flex flex-row">
+    //                                                     <FacebookIcon size={32} round={true}  />
+    //                                                     <div className="pt-1 ml-2">Share Facebook</div>
+    //                                                 </div>
+    //                                             </FacebookShareButton>
+    //                                             <WhatsappShareButton className='btn btn-success'>
+    //                                                 <div className="d-flex flex-row">
+    //                                                     <WhatsappIcon size={32} round={true}  />
+    //                                                     <div className="pt-1 ml-2">Share Whatsapp</div>
+    //                                                 </div>
+    //                                             </WhatsappShareButton> */}
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         </div>
+    //                     </a>
+    //             )
+    //         })
+    //     }
+    // }
+
+
     // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
     renderScholarshipListSlider = () => {
-        console.log(this.state.scholarshipList.length)
+        console.log(this.state.scholarshipList)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
-                val.currentSubs = parseInt(val.currentSubs)
+                val.totaldonation = val.totaldonation ? val.totaldonation : 0
+                // val.currentSubs = parseInt(val.currentSubs)
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5 m-b-70 m-t-70'>
                            
@@ -149,13 +222,43 @@ class Home extends Component {
                             </div>
 
                             <div className='col-12' >
-                                
-                                <h5 className="my-3">{val.namaSiswa}</h5>
-                                <h5 className="my-3">{val.namaSekolah}</h5> 
                                 <div style={{height: '70px'}}>
                                     <h5 className='my-3'>{val.judul}</h5>
                                 </div> 
-                                <h5 className='my-3'>{new Date(val.tanggalLahir).toLocaleString('id-IND', { dateStyle: 'medium'})}</h5>
+                                {/* <div className="row"> */}
+                                    <div className="mt-2 ">
+                                        {/* <div className="mt-2"> */}
+                                            <h5>Dana yang Terkumpul</h5>
+                                            <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totaldonation)).format(0,0)}`} disabled/>
+                                        {/* </div>  */}
+                                    </div>
+                                   
+                                {/* </div>
+                           */}
+                                <div className="mt-3">
+                                    <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}   color="danger" >
+                                    {(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}% 
+                                    </Progress>
+                                </div>
+
+                                <div className=" mt-2 ">
+                                    {/* <div classNanme="mt-2"> */}
+                                        <h5>Dana yang dibutuhkan</h5>
+                                        <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                    {/* </div> */}
+                                </div>
+                                
+                                <div className="mt-2">
+                                    <h4> Sisa Hari : </h4>
+                                    <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
+                                </div>
+                                
+                                {/* <h5 className="my-3">{val.namaSiswa}</h5>
+                                <h5 className="my-3">{val.namaSekolah}</h5>  */}
+                                {/* <div style={{height: '70px'}}>
+                                    <h5 className='my-3'>{val.judul}</h5>
+                                </div>  */}
+                                {/* <h5 className='my-3'>{new Date(val.tanggalLahir).toLocaleString('id-IND', { dateStyle: 'medium'})}</h5> */}
                             </div>
                         </div>
                         
@@ -171,25 +274,17 @@ class Home extends Component {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <div key={index} className='px-4'>
-                    <a 
-                        href={
-                            document.getElementsByClassName('slick-center')[0] ? 
-                            `project-detail?id=${val.projectId}`
-                            :
-                            null
-                        }
-                        className='card border-0 mt-3 bg-projects'
-                    >
+                    <div key={index} className='px-xl-0 px-4'>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
                         <div className='row'>
                             <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
                                 <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
-                                <h1 className="mb-0 mb-md-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
                                 <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
                                 <h5>#Bersamamembangunbangsa</h5>
                             </div>
-                            <div className='col-5'>
-                                {/* <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" /> */}
+                            <div className='col-5 pt-5 pb-5  d-flex flex-column justify-content-center p-5'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   className="img-fluid"/>
                             </div>
                         </div>
                     </a>
@@ -401,8 +496,8 @@ class Home extends Component {
                 {
                   breakpoint: 1024,
                   settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
                     infinite: true,
                     dots: true,
                   }
@@ -422,7 +517,7 @@ class Home extends Component {
 
         var settingsProjects = {
             centerMode: true,
-            centerPadding: '60px',
+            centerPadding : '225px',
             dots: true,
             autoplay: true,
             autoplaySpeed: 5500,
@@ -432,17 +527,18 @@ class Home extends Component {
             speed: 1000,
             slidesToShow: 1,
             slidesToScroll: 1,
-            responsive: [
+            responsive : [
                 {
-                  breakpoint: 768,
-                  settings: {
-                    centerMode: false,
-                    centerPadding: '0',
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                  }
+                    breakpoint : 768,
+                    settings : {
+                        centerMode : false,
+                        centerPadding : '0',
+                        slideToShow : 1,
+                        slidesToScroll : 1
+                    }
                 }
-              ]
+            ]
+            
         }
 
         return (
