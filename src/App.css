@@ -1,3 +1,19 @@
+/* HEADER HEADROOM */
+@media only screen and (min-width: 576px) {
+  .headroom {
+    position: fixed;
+    z-index: 1000;
+    will-change: transform;
+    transition: transform 200ms linear;
+  }
+  .headroom-pinned {
+    transform: translate(0, 0px);
+  }
+  .headroom-unpinned {
+    transform: translate(0, -120px);
+  }
+}
+
 @font-face {
   font-family: 'Neon80';
   src: local('Neon80'), url(./fonts/Neon.ttf) format('truetype');
@@ -17,6 +33,20 @@ body {
 
 .font-size-40 {
   font-size: 40pt;
+}
+
+@media only screen and (max-width: 762px) {
+  .font-size-36 {
+    font-size: 20pt;
+  }
+  
+  .font-size-38 {
+    font-size: 21pt;
+  }
+  
+  .font-size-40 {
+    font-size: 22pt;
+  }
 }
 
 /* Global styling */
@@ -54,55 +84,10 @@ body {
   color: #D32242 !important;
 }
 
-.link-dark svg, .link-dark a {
-  color: #666666 !important;
-}
-
-.link-white svg, .link-white a {
-  color: #FFFFFF !important;
-}
-
-.link-white a.navbar-brand {
-  color: #000000 !important;
-}
-
-.link-white #loginDropdown a {
-  color: #007bff !important;
-}
-
-.link-white .dropdown-item {
-  color: black !important;
-}
-
-/* Navbar Header */
 .SearchCategory .dropdown a.dropdown-toggle.nav-link::after, 
 .navbar-nav-cust .dropdown a.dropdown-toggle.nav-link::after,
 .SearchCategorySm.dropdown a.dropdown-toggle.nav-link::after {
   content: none !important;
-}
-
-.dropdown .dropdown-menu {
-  margin-top: 15px;
-  min-width: 35rem !important;
-}
-
-.dropdown .dropdown-menu.userDropdown {
-  margin-top: 15px;
-  min-width: 20rem !important;
-}
-
-.navbar-nav-cust {
-  flex-direction: row;
-}
-
-.showText {
-  opacity: 0;
-}
-
-.searchIcon:focus>.showText,
-.searchIcon:hover>.showText {
-  opacity: 1;
-  transition: opacity 0.5s;
 }
 
 .collapse svg {
@@ -114,20 +99,6 @@ body {
 .navbar-toggler-icon {
   background-image: url("./assets/logo/menu-button-1.svg");
 }
-
-/* .navbar-collapse {
-  flex-basis: 100%;
-  flex-grow: 1;
-  align-items: center;
-}
-
-@media only screen and (max-width: 762px) {
-  .navbar-collapse {
-    flex-basis: 0%;
-    flex-grow: 0;
-    align-items: center;
-  }
-} */
 
 /* Carousel */
 
@@ -252,13 +223,6 @@ body {
   }
 }
 
-/* @media only screen and (max-width: 762px) {
-  .bg-scholarship {
-    width: 100 !important;
-    background: #FFFFFF;
-  }
-} */
-
 .bg-projects {
   height: 400px;
   width: 97% !important;
@@ -314,11 +278,6 @@ a.bg-scholarship:hover {
   text-decoration: none !important;
 }
 
-/* a.bg-scholarship:hover img {
-  filter: grayscale(0%);
-} */
-
-
 .profile-student {
   width: 150px;
   height: 150px;
@@ -329,14 +288,17 @@ a.bg-scholarship:hover {
   filter: grayscale(100%);
 }
 
-/* Configuration Projects*/
+/* Configuration Projects and Scholarship Slider - (SLIDERS)*/
 
 .projects-slider .slick-dots {
    bottom: 150px;
 }
 
 .scholarship-slider .slick-dots {
-  bottom: -35px;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  /* bottom: -35px; */
 }
 
 .bg-scholarship.card {
@@ -345,7 +307,10 @@ a.bg-scholarship:hover {
 
 @media (max-width: 762px) {
   .scholarship-slider .slick-dots {
-    bottom: -3px;
+    /* bottom: -3px; */
+    position: absolute;
+    top: 90%;
+    left: 0%;
   }
 }
 
@@ -359,14 +324,19 @@ a.bg-scholarship:hover {
   font-size: 24px;
 }
 
+@media only screen and (max-width: 762px) {
+  .scholarship-slider .slick-dots li button:before, .projects-slider .slick-dots li button:before {
+    color: white !important;
+    opacity: 1;
+    font-size: 12px;
+  }
+}
+
 .scholarship-slider .slick-dots .slick-active button::before,  .projects-slider .slick-dots .slick-active button::before {
   color: #D32242 !important;
 }
 
 .outer-background-scholarship {
-  /* background: url('./assets/border.png') no-repeat top;
-  object-fit: cover;
-  height: 50vh; */
   background: #D3D8D8;
 }
 
@@ -393,123 +363,10 @@ a.bg-scholarship:hover {
     /* padding-top: 6px; */
 }
 
-/* ADMIN DASHBOARD */
-#body-row {
-    margin-left:0;
-    margin-right:0;
-}
-#sidebar-container {
-    min-height: 100vh;   
-    background-color: #333;
-    padding: 0;
-}
-
-.sidebar-expanded {
-    width: 230px;
-}
-
-#sidebar-container .list-group a {
-    height: 50px;
-    color: white;
-}
-
-#sidebar-container .list-group .sidebar-submenu a {
-    height: 45px;
-    padding-left: 30px;
-}
-.sidebar-submenu {
-    font-size: 0.9rem;
-}
-
-.sidebar-separator-title {
-    background-color: #333;
-}
-.sidebar-separator {
-    background-color: #333;
-    height: 25px;
-}
-
-/* Product Section */
-.addNewProduct {
-  text-align: center;
-}
-.addNewProduct .custom-file {
-  width: 200px;
-
-}
-
-.addNewProduct .custom-file label {
-  text-align: left;
-}
-.addNewProduct .custom-file-label {
-  font-size: 12px;
-}
-
-/* END OF ADMIN DASHBOARD */
-
-@media only screen and (min-width: 2016px) , (min-width: 2659px), (min-width: 4500px) {
-  .MaCommerce {
-  position: relative;
-  min-height: 100vh;
-}
-
-  #Footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 1900px) {
-  .MaCommerce {
-    position: static;
-    min-height: 0;
-  }
-
-  #Footer {
-    position: static;
-    bottom: 0;
-    width: 100%;
-  }
-}
-
-
-@media only screen and (max-width: 1025px) {
-  
-  .navbar-brand {
-    font-size: 24px !important;
-  }
-}
-
 @media only screen and (max-width: 992px) {
   .dropdown .dropdown-menu {
-  margin-top: 15px;
-  min-width: 20rem !important;
-}
-
-  .navbar-brand {
-    font-size: 18px !important;
-  }
-
-  .link-white svg, .link-white a {
-    color: rgba(0,0,0,.5) !important;
-  }
-
-  .link-white a.navbar-brand {
-    color: #000000 !important;
-  }
-
-  .link-white #loginDropdown a {
-    color: #007bff !important;
-  }
-
-  .carousel-custom {
-    margin-top: 0px;
-    z-index: -3;
-  }
-  .carousel-custom .custom-items {
-    height: 450px;
-    background: grey;
+    margin-top: 15px;
+    min-width: 20rem !important;  
   }
 } 
 
@@ -698,52 +555,6 @@ a.bg-scholarship:hover {
   font-size: 11px;
   color: #505866;
 }
-
-/* button {
-  border: 4px solid #302f3a;
-  color: #302f3a;
-  position: relative;
-  border-radius: 18px;
-  margin: 2rem 3rem;
-  padding: 1rem 2rem;
-  font-size: 1.15rem;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-button .test {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 18px; */
-  /* left: -.6rem;
-  top: -.5rem; */
-  /* right :-.6rem ;
-  bottom : -.5rem;
-  z-index: -1;
-  background-color: #F7567C;
-  transition: all 200ms ease-out;
-} */
-
-/* body {
-  display: flex;
-  justify-content: center;
-  background-color: #fdfefa;
-  flex-flow: row wrap;
-} */
-/* 
-.container {
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
-  max-width: 500px;
-  margin: 2rem 0 0;
-} */
-
-/* :focus {
-  outline: none;
-} */
 
 .learnmorebutton:focus {outline: 0;}
 .learnmorebutton {

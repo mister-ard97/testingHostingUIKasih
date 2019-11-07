@@ -19,6 +19,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo.jpg'
 
+import Headroom from 'headroom.js'
 
 class Header extends Component {
     state = {
@@ -26,6 +27,20 @@ class Header extends Component {
         login: false,
         loadingLogin: '',
         logOut: false
+    }
+
+    componentDidMount() {
+        let headroom = new Headroom(document.getElementById('Header'), {
+			"offset": 0,
+			"tolerance": 5,
+			"classes": {
+			  "initial": "headroom",
+			  "pinned": "headroom-pinned",
+			  "unpinned": "headroom-unpinned"
+			}
+          });
+          console.log(headroom)
+          headroom.init();
     }
 
     userLogOut = () => {
@@ -134,9 +149,8 @@ class Header extends Component {
 
     render() {
         return (
-            <div className='container-fluid'>
-                <Navbar id='Header' expand="lg" className='font-weight-bold'>
-                   
+            <div className='container-fluid' style={{marginTop: '10%'}}>
+                <Navbar id='Header' expand="lg" className='font-weight-bold bg-white' fixed='top'>
                         {
                             this.state.logOut ?
                             <Redirect to={`/`} />

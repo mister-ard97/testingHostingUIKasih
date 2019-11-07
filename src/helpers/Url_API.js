@@ -3,7 +3,7 @@
 // export const URL_API = 'http://localhost:1998';
 
 
-// export const URL_API = 'http://localhost:2019';
+export const URL_API = 'http://localhost:2019';
 
 export const GETTOKENURL = "https://x.rajaapi.com/poe"
 export const APIWILAYAHURL = "https://x.rajaapi.com/MeP7c5ne"
@@ -16,7 +16,7 @@ export const APIWILAYAHURL = "https://x.rajaapi.com/MeP7c5ne"
 
 // hosting api live
 
-export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
+// export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
 
 // hosting live
 

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
+import MagicSliderDots from 'react-magic-slider-dots';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
+
 import queryString from 'query-string';
 import numeral from 'numeral'
 
@@ -79,25 +81,7 @@ class Home extends Component {
         Axios.post(URL_API + `/project/searchproject`, data)
         .then((res) => {
             console.log(res.data.results)
-            // var results = res.data.results.map((val,id)=>{
-                
-                
-            //     var hasil = {...val, ...val.User,...val.Payments[0]}
-            //     console.log(hasil)
-            //     delete hasil.User
-            //     delete hasil.Payments
-      
-                
-            //     return hasil
-            // })
-  
-            //     this.setState({
-            //         ProjectList: results,
-            //         totalpage: Math.ceil(res.data.total / limit),
-            //     })
             this.setState({
-                
-
                 ProjectList: res.data.results,
                 totalpage: Math.ceil(res.data.total / limit),
             })
@@ -187,7 +171,7 @@ class Home extends Component {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <div key={index}>
+                    <div key={index} className='px-5'>
                     <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
                         <div className='row'>
                             <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
@@ -410,20 +394,24 @@ class Home extends Component {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     infinite: true,
-                    dots: true
+                    dots: true,
                   }
                 },
                 {
                   breakpoint: 768,
                   settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
+                    appendDots: (dots3) => {
+                        return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
+                    },
                   }
                 }
               ]
           };
 
         var settingsProjects = {
+            centerMode: true,
             dots: true,
             draggable: true,
             arrows: false,
