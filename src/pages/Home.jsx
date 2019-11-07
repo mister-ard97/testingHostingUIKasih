@@ -137,7 +137,7 @@ class Home extends Component {
             return this.state.scholarshipList.map((val,id)=>{
                 val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5 m-b-70 m-t-70'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5 m-b-70 m-t-70'>
                            
                         <div className='container-fluid'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
@@ -171,28 +171,36 @@ class Home extends Component {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <div key={index} className='px-5'>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
+                    <div key={index} className='px-4'>
+                    <a 
+                        href={
+                            document.getElementsByClassName('slick-center')[0] ? 
+                            `project-detail?id=${val.projectId}`
+                            :
+                            null
+                        }
+                        className='card border-0 mt-3 bg-projects'
+                    >
                         <div className='row'>
                             <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
                                 <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
                                 <h1 className="mb-0 mb-md-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
                                 <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
-                                <h5>#bersamamembangunbangsa</h5>
+                                <h5>#Bersamamembangunbangsa</h5>
                             </div>
                             <div className='col-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
+                                {/* <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" /> */}
                             </div>
                         </div>
                     </a>
 
-                    <div className='container-fluid'>
+                    {/* <div className='container-fluid'>
                             <div className='row m-0'>
                                     <div className='col-12 d-flex justify-content-center'>
                                          <a href={`project-detail?id=${val.projectId}`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
                                     </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                 )
@@ -381,6 +389,8 @@ class Home extends Component {
     render() {
         var settings = {
             dots: true,
+            autoplay: true,
+            autoplaySpeed: 5500,
             draggable: true,
             arrows: false,
             infinite: true,
@@ -412,14 +422,27 @@ class Home extends Component {
 
         var settingsProjects = {
             centerMode: true,
+            centerPadding: '60px',
             dots: true,
+            autoplay: true,
+            autoplaySpeed: 5500,
             draggable: true,
             arrows: false,
             infinite: true,
             speed: 1000,
             slidesToShow: 1,
             slidesToScroll: 1,
-            
+            responsive: [
+                {
+                  breakpoint: 768,
+                  settings: {
+                    centerMode: false,
+                    centerPadding: '0',
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                  }
+                }
+              ]
         }
 
         return (

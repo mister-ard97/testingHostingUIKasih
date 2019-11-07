@@ -1,4 +1,14 @@
 /* HEADER HEADROOM */
+.header {
+  margin-top: 10% !important;
+}
+
+@media only screen and (max-width: 575px) {
+  .header {
+    margin-top: 30% !important;
+  }
+}
+
 @media only screen and (min-width: 576px) {
   .headroom {
     position: fixed;
@@ -217,9 +227,9 @@ body {
 
 @media only screen and (max-width: 762px) {
   .bg-scholarship {
-    width: 60% !important;
+    width: 100% !important;
     background: #FFFFFF;
-    height: 425px;
+    height: 550px;
   }
 }
 
@@ -303,6 +313,20 @@ a.bg-scholarship:hover {
 
 .bg-scholarship.card {
   border-radius: .50rem;
+}
+
+.slick-slide.slick-center {
+  /* -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1); */
+  cursor: pointer;
+}
+
+.slick-slide {
+  /* -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  transform: scale(0.7); */
+  cursor: none;
 }
 
 @media (max-width: 762px) {

@@ -149,7 +149,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div className='container-fluid' style={{marginTop: '10%'}}>
+            <div className='container-fluid header' >
                 <Navbar id='Header' expand="lg" className='font-weight-bold bg-white' fixed='top'>
                         {
                             this.state.logOut ?
