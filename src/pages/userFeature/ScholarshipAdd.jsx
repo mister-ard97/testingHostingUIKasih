@@ -5,11 +5,13 @@ import { Redirect } from 'react-router-dom'
 import {URL_API} from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
 import CKEditor from '@ckeditor/ckeditor5-react';
+// import CKEditor from "react-ckeditor-component"
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-// import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+// import { Editor } from 'react-draft-wysiwyg';
+// import CKFinder from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
+// import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+// import apake from ''
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -74,7 +76,6 @@ class ScholarshipAdd extends Component{
     onContentStateChange = (contentState) => {
         this.setState({contentState})
         console.log(contentState)
-
     }
 
     renderSiswa = () =>{
@@ -121,12 +122,13 @@ class ScholarshipAdd extends Component{
 
         console.log(id)
         if(!ada){
+            console.log('masuk if ')
             Axios.get(URL_API + '/studentdetail/get-student-detail/'+ id)
             .then((res) => {
                 console.log(res.data)
                 this.setState({kelas: res.data[0].StudentDetails[0].class, sekolah: res.data[0].School })
             })
-            .catch((err)=> {
+            .catch((err)=> {    
                 console.log(err)
             })
         }
@@ -202,7 +204,6 @@ class ScholarshipAdd extends Component{
                             margin="normal"
                             fullWidth
                         >
-                            
                             {/* Render dropwodn menu */}
                             <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
                             <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
@@ -217,8 +218,6 @@ class ScholarshipAdd extends Component{
                             <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
                             <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
                         </TextField>
-                        
-                        
                     </FormGroup>
                     <FormGroup>
                         <Label for="Sekolah">Description</Label>
@@ -231,7 +230,7 @@ class ScholarshipAdd extends Component{
                             // Upload the images to the server using the CKFinder QuickUpload command
                             // You have to change this address to your server that has the ckfinder php connector
                             // uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
-                            uploadUrl: console.log()
+                            uploadUrl: '/ckadapter?command=QuickUpload&type=Images&responseType=json'
 
                         }}}
                         onInit={ editor => {

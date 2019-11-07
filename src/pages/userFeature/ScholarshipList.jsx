@@ -38,7 +38,6 @@ class ScholarshipList extends Component{
         sDeskripsi:'',
         nominal: 0,
         judul:''
-
     }
     componentDidMount(){
         let id= this.props.id
@@ -70,7 +69,7 @@ class ScholarshipList extends Component{
                     <td style={{textAlign:'center'}}>{val.isVerified}</td>
                     <td style={{textAlign:'center'}}>{val.isOngoing}</td>
                     <td style={{textAlign:'center'}}>{val.note}</td>
-                    <td style={{textAlign:'center'}}><Button color='primary' onClick={()=> this.setState({openModal: true, detailId: i})}>Detail</Button></td>
+                    <td style={{textAlign:'center'}}><Link to={`/scholarshipDetail?id=${val.id}`}><Button color='primary'>Detail</Button></Link></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
                     <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
                 </tr>
@@ -111,42 +110,48 @@ class ScholarshipList extends Component{
                     <ModalHeader toggle={()=>this.setState({ openModal : false, detailId: ''})}>Detail Scholarship</ModalHeader>
                     <ModalBody>
                         {/* <h3>{ judul }</h3> */}
-                        <div className='row'>
-                        
-                            <div className='col-md-2'>
-                                <img src={`http://localhost:2019/${studentImage}`} width='200px'/>
+                        <div>
+                            <div className='row'>
+                            
+                                <div className='col-md-2'>
+                                    <img src={`http://localhost:2019/${studentImage}`} width='200px'/>
+                                </div>
+                                <div className='col-md-9 pl-5'>
+                                    
+                                    <Table>
+                                        <tr>
+                                            <td colSpan='2'><h3>{judul}</h3></td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Nama</td>
+                                            <td>: {namaSiswa}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Sekolah</td>
+                                            <td>: {namaSekolah}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Target Donasi</td>
+                                            <td>: {nominal}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Durasi</td>
+                                            <td>: {durasi} Bulan</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Deskripsi</td>
+                                            <td>: {description}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Share Deskripsi</td>
+                                            <td>: {shareDescription}</td>
+                                        </tr>
+                                    </Table>
+                                </div>
                             </div>
-                            <div className='col-md-9 pl-5'>
-                                
-                                <Table>
-                                    <tr>
-                                        <td colSpan='2'><h3>{judul}</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Nama</td>
-                                        <td>: {namaSiswa}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Sekolah</td>
-                                        <td>: {namaSekolah}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Target Donasi</td>
-                                        <td>: {nominal}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Durasi</td>
-                                        <td>: {durasi} Bulan</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Deskripsi</td>
-                                        <td>: {description}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Share Deskripsi</td>
-                                        <td>: {shareDescription}</td>
-                                    </tr>
-                                </Table>
+                            <div>
+                                <span>Dana Terkumpur Rp. 350.000</span>
+                                <Button color='success' onClick={this.onClickPayout} style={{float:'right'}}>Cairkan Dana</Button>
                             </div>
                         </div>
                     </ModalBody>
@@ -157,6 +162,31 @@ class ScholarshipList extends Component{
                 </Modal>
             )
         }
+    }
+
+    onClickPayout=()=>{
+        let nominal = this.state.nominal
+        console.log(nominal)
+        let body={
+            "payouts": [
+                {
+                "beneficiary_name": 'andre',
+                "beneficiary_account": "1298987678",
+                "beneficiary_bank": "bni",
+                "beneficiary_email": "beneficiary@apake.com",
+                "amount": '350000',
+                "notes": "Payout April 17"
+                }
+          ]
+        }
+        Axios.post(URL_API+'/payment/payout', body)
+        .then((res)=>{
+            console.log(res.data)
+            this.setState({pendingPayout: res.data})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
     }
 
     handleChangeBulan = name => event => {
