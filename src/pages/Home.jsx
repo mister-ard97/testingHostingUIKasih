@@ -204,9 +204,10 @@ class Home extends Component {
     // UNTUK SLIDER FUNCTION YANG SEBELUMNYA BELUM DIHAPUS MASIH DIATASNYA
     
     renderScholarshipListSlider = () => {
-        console.log(this.state.scholarshipList.length)
+        console.log(this.state.scholarshipList)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
+                val.totaldonation = val.totaldonation ? val.totaldonation : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5 m-b-70 m-t-70'>
@@ -221,13 +222,43 @@ class Home extends Component {
                             </div>
 
                             <div className='col-12' >
-                                
-                                <h5 className="my-3">{val.namaSiswa}</h5>
-                                <h5 className="my-3">{val.namaSekolah}</h5> 
                                 <div style={{height: '70px'}}>
                                     <h5 className='my-3'>{val.judul}</h5>
                                 </div> 
-                                <h5 className='my-3'>{new Date(val.tanggalLahir).toLocaleString('id-IND', { dateStyle: 'medium'})}</h5>
+                                {/* <div className="row"> */}
+                                    <div className="mt-2 ">
+                                        {/* <div className="mt-2"> */}
+                                            <h5>Dana yang Terkumpul</h5>
+                                            <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totaldonation)).format(0,0)}`} disabled/>
+                                        {/* </div>  */}
+                                    </div>
+                                   
+                                {/* </div>
+                           */}
+                                <div className="mt-3">
+                                    <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}   color="danger" >
+                                    {(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}% 
+                                    </Progress>
+                                </div>
+
+                                <div className=" mt-2 ">
+                                    {/* <div classNanme="mt-2"> */}
+                                        <h5>Dana yang dibutuhkan</h5>
+                                        <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                    {/* </div> */}
+                                </div>
+                                
+                                <div className="mt-2">
+                                    <h4> Sisa Hari : </h4>
+                                    <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
+                                </div>
+                                
+                                {/* <h5 className="my-3">{val.namaSiswa}</h5>
+                                <h5 className="my-3">{val.namaSekolah}</h5>  */}
+                                {/* <div style={{height: '70px'}}>
+                                    <h5 className='my-3'>{val.judul}</h5>
+                                </div>  */}
+                                {/* <h5 className='my-3'>{new Date(val.tanggalLahir).toLocaleString('id-IND', { dateStyle: 'medium'})}</h5> */}
                             </div>
                         </div>
                         
@@ -243,28 +274,28 @@ class Home extends Component {
         if (this.state.ProjectList.length !== 0) {
             return this.state.ProjectList.map((val, index) => {
                 return (
-                    <div key={index} className='px-5'>
+                    <div key={index} className='px-xl-0 px-4'>
                     <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
                         <div className='row'>
                             <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
                                 <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
-                                <h1 className="mb-0 mb-md-3 font-size-36">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
                                 <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
                                 <h5>#bersamamembangunbangsa</h5>
                             </div>
-                            <div className='col-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} height="400px" />
+                            <div className='col-5 pt-5 pb-5  d-flex flex-column justify-content-center p-5'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   className="img-fluid"/>
                             </div>
                         </div>
                     </a>
 
-                    <div className='container-fluid'>
+                    {/* <div className='container-fluid'>
                             <div className='row m-0'>
                                     <div className='col-12 d-flex justify-content-center'>
                                          <a href={`project-detail?id=${val.projectId}`} className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
                                     </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                 )
@@ -463,8 +494,8 @@ class Home extends Component {
                 {
                   breakpoint: 1024,
                   settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
                     infinite: true,
                     dots: true,
                   }
@@ -484,6 +515,7 @@ class Home extends Component {
 
         var settingsProjects = {
             centerMode: true,
+            centerPadding : '225px',
             dots: true,
             draggable: true,
             arrows: false,
@@ -491,6 +523,17 @@ class Home extends Component {
             speed: 1000,
             slidesToShow: 1,
             slidesToScroll: 1,
+            responsive : [
+                {
+                    breakpoint : 768,
+                    settings : {
+                        centerMode : false,
+                        centerPadding : '0',
+                        slideToShow : 1,
+                        slidesToScroll : 1
+                    }
+                }
+            ]
             
         }
 
