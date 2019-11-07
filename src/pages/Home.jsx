@@ -275,15 +275,28 @@ class Home extends Component {
             return this.state.ProjectList.map((val, index) => {
                 return (
                     <div key={index} className='px-xl-0 px-4'>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0 mt-3 bg-projects'>
+                    <a href={`project-detail?id=${val.projectId}`} className='card border-0  bg-projects'>
                         <div className='row'>
-                            <div className='col-7 py-2 py-md-5 pl-5 d-flex flex-column justify-content-between'>
-                                <img src={Logo} alt='Logo-KasihNusantara' className='mb-3' />
-                                <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
-                                <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
-                                <h5>#bersamamembangunbangsa</h5>
+                            <div className='col-7 py-2 py-md-3 pl-5 d-flex flex-column justify-content-between'>
+                                <div className="d-flex flex-row ">
+                                    <img src={Logo} alt='Logo-KasihNusantara' className='mb-3 border border-primary mr-3' />
+                                    <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                </div>
+                             
+                                {/* <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
+                                
+                                <h5>#bersamamembangunbangsa</h5> */}
+                                <h5>Dana yang terkumpul </h5>
+                                <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
+                                <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}   color="danger" >
+                                    {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}% 
+                                </Progress>
+                                <h5>Dana yang dibutuhkan </h5>
+                                <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>
+                                <h5>Sisa hari </h5>
+                                <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
-                            <div className='col-5 pt-5 pb-5  d-flex flex-column justify-content-center p-5'>
+                            <div className='col-5 pt-5 pb-5  d-flex flex-column justify-content-center align-items-center p-5'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   className="img-fluid"/>
                             </div>
                         </div>
