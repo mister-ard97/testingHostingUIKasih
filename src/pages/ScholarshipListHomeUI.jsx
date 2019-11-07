@@ -38,9 +38,16 @@ class ScholarshipListHomeUI extends Component {
             
         } else {
 
-            console.log(parsed)
             if(!parsed.page){
                 parsed.page = 1
+            }
+
+            if(!parsed.orderby) {
+                parsed.orderby = 'ASC'
+            }
+
+            if(!parsed.search) {
+                parsed.search = ''
             }
 
             let limit = 2
@@ -53,27 +60,23 @@ class ScholarshipListHomeUI extends Component {
             Axios.post(URL_API + `/scholarship/getscholarship`, data)
             .then((res) => {
                 console.log(res.data.results)
-                var results = res.data.result.map((val)=>{
-                    var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                
+                var results = res.data.map((val)=>{
+                    var hasil = {...val, ...val.School, ...val.Student}
                     delete hasil.School
                     delete hasil.Student
-                    delete hasil.Subscriptions
+                    // delete hasil.Subscriptions
                     hasil.totaldonation = parseInt(hasil.totaldonation)
+                    // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                    
                     return hasil
                 })
 
-                console.log(results)
-
-                // this.setState({
-                //     ScholarshipListHomeUI : results,
-                //     totalpage : Math.ceil(res.data.total / limit)
-                // })
-                //console.log(res.data)
+                console.log(results.length)
                 
                 this.setState({
                     ScholarshipListHomeUI: results,
-                    totalpage: Math.ceil(res.data.total / limit),
+                    totalpage: Math.ceil(results / limit),
                 })
             })
             .catch((err) => {
@@ -320,24 +323,25 @@ class ScholarshipListHomeUI extends Component {
             
             console.log(data)
 
-            Axios.post(URL_API + `/scholarship/getScholarship`, data)
+            Axios.post(URL_API + `/scholarship/getscholarship`, data)
             .then((res) => {
-                var results = res.data.result.map((val)=>{
-                    var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                var results = res.data.map((val)=>{
+                    var hasil = {...val, ...val.School, ...val.Student}
                     delete hasil.School
                     delete hasil.Student
-                    delete hasil.Subscriptions
+                    // delete hasil.Subscriptions
                     hasil.totaldonation = parseInt(hasil.totaldonation)
+                    // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                    
                     return hasil
                 })
-                console.log(res.data.total)
+                // console.log(res.data.total)
 
-                console.log(results)
+                console.log(results.length)
                 
                 this.setState({
                     ScholarshipListHomeUI: results,
-                    totalpage: Math.ceil(res.data.total / limit),
+                    totalpage: Math.ceil(results.length / limit),
                 })
             })
             .catch((err) => {
