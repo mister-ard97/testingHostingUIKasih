@@ -19,7 +19,6 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo.jpg'
 
-
 class Header extends Component {
     state = {
         isOpen: false,
@@ -146,7 +145,7 @@ class Header extends Component {
                             : null
                         }
                         <Link to='/' className='navbar-brand justify-content-start d-flex pl-5'>
-                            <img src={Logo} alt={'Logo-Kasih Nusantara'} style={{width: '185px'}} />
+                            <img src={Logo} alt={'Logo-Kasih Nusantara'}/>
                         </Link>
                             
                         <NavbarToggler onClick={() => this.toggle()} />

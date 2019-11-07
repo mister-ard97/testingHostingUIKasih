@@ -39,7 +39,15 @@ body {
 /* Navbar */
 
 .navbar-brand img {
+  width: 185px;
   background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 762px) {
+  .navbar-brand img {
+    width: 90x;
+    background-repeat: no-repeat;
+  }
 }
 
 .navbar-custom {

@@ -125,7 +125,7 @@ class Home extends Component {
                 var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
-                delete hasil.Subscriptions
+                // delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
                 // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
