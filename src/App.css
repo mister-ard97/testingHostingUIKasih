@@ -717,15 +717,17 @@ a.bg-scholarship:hover {
 
 /* Configuration Projects and Scholarship Slider - (SLIDERS)*/
 
+
 .projects-slider .slick-dots {
-   bottom: 150px;
+  position: absolute;
+  top: 85%;
+  left: 0%;
 }
 
 .scholarship-slider .slick-dots {
   position: absolute;
   top: 100%;
   left: 0%;
-  /* bottom: -35px; */
 }
 
 .bg-scholarship.card {
@@ -748,9 +750,15 @@ a.bg-scholarship:hover {
 
 @media (max-width: 762px) {
   .scholarship-slider .slick-dots {
-    /* bottom: -3px; */
+    bottom: 10px;
+    /* position: absolute;
+    top: 60%;
+    left: 0%; */
+  }
+
+  .projects-slider .slick-dots {
     position: absolute;
-    top: 90%;
+    top: 75%;
     left: 0%;
   }
 }

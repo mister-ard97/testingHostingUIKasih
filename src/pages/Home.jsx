@@ -210,7 +210,7 @@ class Home extends Component {
                 val.totaldonation = val.totaldonation ? val.totaldonation : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5 m-b-70 m-t-70'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
                         <div className='container-fluid'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
@@ -563,7 +563,7 @@ class Home extends Component {
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
-                            <Slider {...settings} className='m-b-30'>
+                            <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
                         </div>
