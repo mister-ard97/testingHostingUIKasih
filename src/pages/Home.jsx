@@ -122,12 +122,12 @@ class Home extends Component {
             console.log(res)
             
             var results = res.data.map((val)=>{
-                var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
                 delete hasil.Subscriptions
                 hasil.totaldonation = parseInt(hasil.totaldonation)
-                hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
+                // hasil.grandtotal = parseInt(hasil.totaldonation) + parseInt(hasil.currentSubs ? hasil.currentSubs : 0)
                
                 return hasil
             })
@@ -149,7 +149,7 @@ class Home extends Component {
     renderScholarshipList = () =>{
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
-                val.currentSubs = parseInt(val.currentSubs)
+                // val.currentSubs = parseInt(val.currentSubs)
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
                             <div className='row'>
@@ -222,7 +222,7 @@ class Home extends Component {
         console.log(this.state.scholarshipList.length)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
-                val.currentSubs = parseInt(val.currentSubs)
+                // val.currentSubs = parseInt(val.currentSubs)
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-5'>
                            
