@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
+
 import MagicSliderDots from 'react-magic-slider-dots';
 import Axios from 'axios'
 import { URL_API } from '../helpers/Url_API';
@@ -37,6 +38,7 @@ class Home extends Component {
     }
     
     componentDidMount() {
+        console.log('didmount')
         window.scrollTo(0,0)
         // document.title = 'Testing App'
         // if(!parsed.page){
@@ -213,7 +215,7 @@ class Home extends Component {
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
-                        <div className='container-fluid py-4 py-sm-0'>
+                        <div className='container-fluid py-4 p-md-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
@@ -238,7 +240,7 @@ class Home extends Component {
                            */}
                                 <div className="mt-3">
                                     <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}   color="danger" >
-                                    {(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}% 
+                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100).toFixed(2)  : 0}% 
                                     </Progress>
                                 </div>
 
@@ -294,7 +296,7 @@ class Home extends Component {
                                 <h5>Dana yang terkumpul </h5>
                                 <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
                                 <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}   color="danger" >
-                                    {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}% 
+                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}% 
                                 </Progress>
                                 <h5>Dana yang dibutuhkan </h5>
                                 <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>
@@ -302,7 +304,7 @@ class Home extends Component {
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
                             <div className='col-5 pt-5 d-flex flex-column px-3'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom: 'auto'}}/>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto'}}/>
                                 <p className='text-white' style={{marginTop: 'auto'}}>#Bersamamembangunbangsa</p>
                             </div>
                         </div>
@@ -499,76 +501,149 @@ class Home extends Component {
     // }
 
     //
+    renderSliderScholarship = () =>{
+        if(this.state.scholarshipList.length !== 0 ){
+            var settings = {
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 5500,
+                draggable: true,
+                arrows: false,
+                infinite: true,
+                speed: 1000,
+                slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
+                slidesToScroll: 4,
+                responsive: [
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: true,
+                        dots: true,
+                      }
+                    },
+                    {
+                      breakpoint: 768,
+                      settings: {
+                        infinite: true,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        appendDots: (dots3) => {
+                            
+                            return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
+                        },
+                      }
+                    }
+                  ]
+              };
+            return (
+              <Slider {...settings}>
+                {this.renderScholarshipListSlider()}
+              </Slider>
+            )
+        }else {
+            return (
+                <div>
+                    Data tidak ada :)
+                </div>
+            )
+        }
+    }
+
+    renderSliderProject = () =>{
+        if(this.state.ProjectList.length !== 0 ){
+            var settingsProjects = {
+                centerMode: true,
+                centerPadding : '225px',
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 5500,
+                draggable: true,
+                arrows: false,
+                infinite: true,
+                speed: 1000,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                responsive : [
+                    {
+                        breakpoint : 768,
+                        settings : {
+                            centerMode : false,
+                            centerPadding : '0',
+                            slideToShow : 1,
+                            infinite: true,
+                            dots: true,
+                            slidesToScroll : 1,
+                            appendDots: (dots5) => {
+                            
+                                return <MagicSliderDots dots={dots5} numDotsToShow={3} dotWidth={55} />
+                            },
+                        }
+                    }
+                ]
+                
+            }
+            return (
+            <Slider {...settingsProjects}>
+                {this.renderProjectListSlider()}
+            </Slider>
+            )
+        }else {
+            return (
+                <div> 
+                    Project tidak ada :)
+                </div>
+            )
+        }
+    }
  
     render() {
-        var settings = {
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 5500,
-            draggable: true,
-            arrows: false,
-            infinite: true,
-            speed: 1000,
-            slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
-            slidesToScroll: 4,
-            responsive: [
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: true,
-                    dots: true,
-                  }
-                },
-                {
-                  breakpoint: 768,
-                  settings: {
-                    infinite: true,
-                    dots: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    // appendDots: (dots3) => {
+        // var settings = {
+        //     dots: true,
+        //     autoplay: true,
+        //     autoplaySpeed: 5500,
+        //     draggable: true,
+        //     arrows: false,
+        //     infinite: true,
+        //     speed: 1000,
+        //     slidesToShow: this.state.scholarshipList.length < 4 ? this.state.scholarshipList.length : 4,
+        //     slidesToScroll: 4,
+        //     responsive: [
+        //         {
+        //           breakpoint: 1024,
+        //           settings: {
+        //             slidesToShow: 2,
+        //             slidesToScroll: 2,
+        //             infinite: true,
+        //             dots: true,
+        //           }
+        //         },
+        //         {
+        //           breakpoint: 768,
+        //           settings: {
+        //             infinite: true,
+        //             dots: true,
+        //             slidesToShow: 1,
+        //             slidesToScroll: 1,
+        //             appendDots: (dots3) => {
                         
-                    //     return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
-                    // },
-                  }
-                }
-              ]
-          };
+        //                 return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
+        //             },
+        //           }
+        //         }
+        //       ]
+        //   };
 
-        var settingsProjects = {
-            centerMode: true,
-            centerPadding : '225px',
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 5500,
-            draggable: true,
-            arrows: false,
-            infinite: true,
-            speed: 1000,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            responsive : [
-                {
-                    breakpoint : 768,
-                    settings : {
-                        centerMode : false,
-                        centerPadding : '0',
-                        slideToShow : 1,
-                        slidesToScroll : 1
-                    }
-                }
-            ]
-            
-        }
+      
 
         return (
             <div>
                 <Carousel />
 
                 {/* New Konten */}
-                <div className='container-fluid mb-5'>
+                <div className='container-fluid mb-5 d-flex d-md-none'>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
@@ -585,9 +660,10 @@ class Home extends Component {
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
-                            <Slider {...settings}>
+                            {this.renderSliderScholarship()}
+                            {/* <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
-                            </Slider>
+                            </Slider> */}
                         </div>
 
                         <div className='col-12 d-flex justify-content-center'>
@@ -634,9 +710,10 @@ class Home extends Component {
             <div className='container-fluid mt-4 p-0'>
                     <div className='row m-0'>
                         <div className='offset-md-1 offset-0 col-md-10 col-12 py-5 projects-slider'>
-                            <Slider {...settingsProjects}>
+                            {this.renderSliderProject()}
+                            {/* <Slider {...settingsProjects}>
                                 {this.renderProjectListSlider()}
-                            </Slider>
+                            </Slider> */}
                         </div>
                     </div>
                 </div>

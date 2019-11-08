@@ -650,11 +650,13 @@ body {
 }
 
 .bg-projects {
-  height: 400px;
+  height: 425px;
+
   /* width: 97% !important; */
   margin: 0 2%;
   background: #4C4C4D;
   border-radius: 1rem !important;
+  
 }
 /* 
 .bg-projects .col-5 img {

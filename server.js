@@ -7,6 +7,7 @@ const fs = require('fs');
 const Axios = require('axios');
 
 const URL_API = 'https://apikasihnusantara.purwadhikax.com'
+// const URL_API = 'http://localhost:2019'
 
 app.get('/', function(request, response) {
   console.log('Home page visited!');
@@ -167,14 +168,19 @@ app.get('/verifiedReset', function(request, response) {
 
   app.get(`/project-detail`, function(request, response) {
     console.log('test page visited!');
+    console.log('----------------')
     const filePath = path.resolve(__dirname, './build', 'index.html')
     fs.readFile(filePath, 'utf8', function (err,data) {
       if (err) {
+        console.log('asdihasdia')
         return console.log(err);
       }
-
+      console.log('aisjdiajsdiajsdijasidjaisdjiasjdiajsdijasdijasidjaisjd')
+      console.log(request.query.id)
+      console.log(URL_API + `/project/getDetailProject?id=${request.query.id}`)
       Axios.get(URL_API + `/project/getDetailProject?id=${request.query.id}`)
         .then(async (res) => {
+          // console.log(res)
             console.log(res.data)
             data = await data.replace(/\$OG_TITLE/g, `${res.data.results[0].projectName}`);
             data = await data.replace(/\$OG_DESCRIPTION/g, `${res.data.results[0].shareDescription}`);
@@ -194,7 +200,7 @@ app.get('/verifiedReset', function(request, response) {
       if (err) {
         return console.log(err);
       }
-
+      console.log(URL_API+`/scholarship/getScholarshipDetail?id=${request.query.id}`)
       Axios.get(URL_API + `/scholarship/getScholarshipDetail?id=${request.query.id}`)
         .then(async (res) => {
             console.log(res.data)
