@@ -499,24 +499,21 @@ body {
 .Banner-Home {
   background: url('./assets/Banner2.png') no-repeat top;
   background-size: cover;
-
-  /* height: auto; */
 }
 
 .Banner-Home .col-12 img {
-  width: 100%;
+  width: auto;
   visibility: hidden;
   height: 700px;
-  
+ 
 }
 
 @media only screen and (max-width: 762px) {
   .Banner-Home {
     background: url('./assets/Banner2.png') no-repeat top;
     background-size: cover;
-    /* object-fit: cover; */
-    /* height: auto; */
-  }
+    object-fit: cover;
+ }
 
   .Banner-Home .col-12 img {
     width: 100%;
@@ -529,7 +526,6 @@ body {
 .boxBanner {
   position: absolute;
   top: 5%;
-  /* margin-top: 0%; */
   margin-left: 3%;
   width: 600px;
 }
@@ -827,10 +823,19 @@ a.bg-scholarship:hover {
   }
 }
 
+.carousel-indicators li {
+  background-color: gray;
+}
+
+.carousel-custom .custom-items {
+  height: 490px;
+  background: transparent;
+}
+
 @media only screen and (max-width: 767px) {
   .carousel-custom .custom-items {
     height: 350px;
-    background: grey;
+    background: transparent;
   }
   .slick-slide>div {
     margin: 20px 10px !important;

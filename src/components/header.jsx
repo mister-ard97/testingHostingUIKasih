@@ -152,7 +152,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div className='container-fluid header' >
+            <div className='container-fluid header' style={{zIndex: '100'}}>
                 <Navbar id='Header' expand="lg" className='font-weight-bold bg-white' fixed='top'>
                         {
                             this.state.logOut ?
