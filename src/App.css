@@ -499,7 +499,7 @@ body {
 .Banner-Home {
   background: url('./assets/Banner2.png') no-repeat top;
   background-size: cover;
-  /* object-fit: cover; */
+
   /* height: auto; */
 }
 
@@ -528,16 +528,20 @@ body {
 
 .boxBanner {
   position: absolute;
-  top: 25%;
+  top: 5%;
   /* margin-top: 0%; */
   margin-left: 3%;
-  width: 400px;
+  width: 600px;
 }
 
 .boxBanner h2 {
   font-size: 62px;
   color: #D32242;
   text-shadow: 2px 3px 0 #FFFFFF;
+}
+
+.boxBanner p {
+  text-shadow: 1px 1px 0 #000000;
 }
 
 @media only screen and (max-width: 762px) {
@@ -694,6 +698,11 @@ a.bg-scholarship, .bg-projects a {
 
 .bg-projects a {
   color: #ffffff;
+}
+
+.bg-projects a:hover {
+  color: #4C4C4D;
+  text-shadow: 1px 1px 0 #FFFFFF;
 }
 
 a.bg-scholarship {
@@ -1074,9 +1083,9 @@ a.bg-scholarship:hover {
   border: 4px solid #b5b8c1;
   color: #b5b8c1;
   position: relative;
-  margin: 2rem 3rem;
+  margin: 1rem 0rem;
   /* height: 75%; */
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
   
   border-radius: 16px;
   font-size: 1.15rem;
@@ -1121,7 +1130,9 @@ a.bg-scholarship:hover {
   color: #ce4948;
   
   position: relative;
-  margin: 2rem 3rem;
+  
+  margin: 1rem 0rem;
+
   padding: 1rem 2rem;
   border-radius: 16px;
   font-size: 1.15rem;
