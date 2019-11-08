@@ -213,7 +213,7 @@ class Home extends Component {
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
-                        <div className='container-fluid'>
+                        <div className='container-fluid py-4 py-sm-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
@@ -302,7 +302,7 @@ class Home extends Component {
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
                             <div className='col-5 pt-5 d-flex flex-column px-3'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginLeft: '-10px', marginTop: '-40px'}}/>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom: 'auto'}}/>
                                 <p className='text-white' style={{marginTop: 'auto'}}>#Bersamamembangunbangsa</p>
                             </div>
                         </div>
@@ -524,11 +524,14 @@ class Home extends Component {
                 {
                   breakpoint: 768,
                   settings: {
+                    infinite: true,
+                    dots: true,
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    appendDots: (dots3) => {
-                        return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
-                    },
+                    // appendDots: (dots3) => {
+                        
+                    //     return <MagicSliderDots dots={dots3} numDotsToShow={3} dotWidth={55} />
+                    // },
                   }
                 }
               ]
