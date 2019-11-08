@@ -304,7 +304,7 @@ class Home extends Component {
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
                             <div className='col-5 pt-5 d-flex flex-column px-3'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto'}}/>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto', maxHeight : '200px'}}/>
                                 <p className='text-white' style={{marginTop: 'auto'}}>#Bersamamembangunbangsa</p>
                             </div>
                         </div>
@@ -577,7 +577,6 @@ class Home extends Component {
                             dots: true,
                             slidesToScroll : 1,
                             appendDots: (dots5) => {
-                            
                                 return <MagicSliderDots dots={dots5} numDotsToShow={3} dotWidth={55} />
                             },
                         }

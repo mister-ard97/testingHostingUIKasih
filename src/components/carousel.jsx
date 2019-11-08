@@ -19,7 +19,7 @@ class CarouselCustom extends Component {
                 <div className='row m-0 mb-3'>
                     <div className='col-12 m-0 p-0'>
                         <div className='boxBanner px-5 text-white '>
-                            <h2 className='mb-4'>TAKE ACTION</h2>
+                            <h2 className='mb-4 animated bounce'>TAKE ACTION</h2>
                             <p className='d-none d-md-flex'>
                                 Get involved, speak out, <br /> or become a donor and give every child a fair
                                 chance for education

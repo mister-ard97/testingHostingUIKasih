@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { URL_API } from '../helpers/Url_API'
 import { Redirect } from 'react-router-dom'
 import io from 'socket.io-client'
+import queryString from 'query-string'
+import { ifStatement } from '@babel/types'
 
 class Payment extends Component {
     state = {
@@ -19,10 +21,26 @@ class Payment extends Component {
         scholarshipName: null,
         scholarshipId: null,
         status:'',
-        orderId:''
+        orderId:'',
+        paymentSource : '',
+        nominalSubscription : null,
+        loadingSubsData : true,
+        redirectLogin : false
     }
 
     componentDidMount(){
+        console.log("PAYMENTPAGE")
+        console.log(window.location.href.length)
+        console.log(window.location.href)
+        console.log(queryString.parse(this.props.location.search))
+        if(queryString.parse(this.props.location.search).type === 'subscription'){
+            this.getUserSubscriptionNominal()
+        }else {
+            this.setState({
+                loadingSubsData : false
+            })
+        }
+     
         
         // ---------------------- NOTE -------------------------
         // mau pake parsed atau localStorage ?
@@ -32,26 +50,53 @@ class Payment extends Component {
         if(nama || namaScholarship){
 
             if(namaScholarship) {
+                console.log('a')
                 var namaParse = JSON.parse(namaScholarship)
-                this.setState({scholarshipName: namaParse.scholarName, scholarshipId: namaParse.scholarId})
+                this.setState({
+                    scholarshipName: namaParse.scholarName, 
+                    scholarshipId: namaParse.scholarId, 
+                    paymentSource : queryString.parse(this.props.location.search).type,
+                })
             } else {
+                console.log('b')
                 var namaParse = JSON.parse(nama)
-                this.setState({projectName: namaParse.projectName, projectId: namaParse.projectId})
+                this.setState({
+                    projectName: namaParse.projectName,
+                    projectId: namaParse.projectId,
+                    paymentSource : queryString.parse(this.props.location.search).type
+                })
             }
             
             // console.log(namaParse.projectId, namaParse.projectName)
             
-        }else{
-            this.setState({ redirectHome: true })
+        }
+        
+        if(!this.props.email){
+        
+            this.setState({ redirectLogin: true })
         }
 
-        localStorage.removeItem('nama')
-        localStorage.removeItem('namaScholarship')
+        // localStorage.removeItem('nama')
+        // localStorage.removeItem('namaScholarship')
 
         const socket = io(URL_API)
         console.log(socket)
+        console.log(this.state)
         socket.on('status_transaction', this.updateStatus)
 
+    }
+
+    getUserSubscriptionNominal = async () =>{
+        if(this.props.id){
+            console.log(queryString.parse(this.props.location.search).id)
+            var res = await Axios.post(URL_API + '/subscription/getnominal/'+queryString.parse(this.props.location.search).id, { id : this.props.id })
+            // console.log(res.data.result.nominalSubscription)
+            this.setState({
+                loadingSubsData : false,
+                nominalSubscription : res.data.result ? res.data.result.nominalSubscription : null,
+                nominal : res.data.result ? res.data.result.nominalSubscription : null
+            })
+        }
     }
 
     updateStatus=(status)=>{
@@ -61,6 +106,7 @@ class Payment extends Component {
       }
 
     renderMidtrans = () =>{
+        console.log(this.state.paymentSource)
         var id = this.props.location.search.split('=')[1]
         var randInt = Math.floor(Math.random()*(999-100+1)+100)
         this.setState({orderId: 'dev'+randInt})
@@ -94,7 +140,7 @@ class Payment extends Component {
                 scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
                 komentar: this.state.komentar ? this.state.komentar : '-' ,
                 anonim: this.state.anonim ? 1 : 0,
-                paymentSource : "Donation" // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
+                paymentSource : this.state.paymentSource // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
             }
         }
         
@@ -176,6 +222,7 @@ class Payment extends Component {
         }
     }
 
+
     renderPayment = () => {
         return (
             <div className='row'>
@@ -187,7 +234,14 @@ class Payment extends Component {
                     </div>
                     <div className='inputBoxNominal mt-3'>
                         <div className='rpNominal'>Rp. </div>
+                        {this.state.nominalSubscription && !this.state.loadingSubsData 
+                        ?
+                        <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onChange={(text)=>this.formatDisplay(text.target.value)} ref='nominal' placeholder='0' value={this.state.nominalSubscription} disabled/>
+                        :
                         <Input className='inputNominal' type='text'  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onChange={(text)=>this.formatDisplay(text.target.value)} ref='nominal' placeholder='0' onChange={(e)=>this.setState({nominal: `${e.target.value}`})}/>
+                    }
+                        
+                       
                     </div>
                     <div className='mt-3' >
                         <div style={{fontWeight:'bold'}}>{this.props.nama}</div>
@@ -245,8 +299,11 @@ class Payment extends Component {
     
     render(){
         console.log(this.state.status)
-        if(this.state.redirectHome){
-            return <Redirect to={`/`} />
+        if(this.state.redirectLogin){
+            return <Redirect to={{
+                pathname : '/login',
+                from : this.props.location.pathname + this.props.location.search
+            }} />
 
         }
         if(this.state.status.transaction_status === 'settlement' && this.state.status.order_id === this.state.orderId){
