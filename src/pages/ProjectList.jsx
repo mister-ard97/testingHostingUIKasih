@@ -43,6 +43,14 @@ class ProjectList extends Component {
                 parsed.page = 1
             }
 
+            if(!parsed.orderby) {
+                parsed.orderby = 'asc'
+            }
+
+            if(!parsed.search) {
+                parsed.search = ''
+            }
+
             let limit = 2
             let data = {
                 name: parsed.search,
@@ -52,8 +60,8 @@ class ProjectList extends Component {
             }
             Axios.post(URL_API + `/project/searchproject`, data)
             .then((res) => {
-                console.log(res.data.results)
-                var results = res.data.results.map((val,id)=>{
+                console.log(res.data)
+                var results = res.data.map((val,id)=>{
                     
                     var hasil = {...val, ...val.User,...val.Payments[0]}
                     console.log(hasil)
@@ -68,13 +76,13 @@ class ProjectList extends Component {
 
                 // this.setState({
                 //     ProjectList : results,
-                //     totalpage : Math.ceil(res.data.total / limit)
+                //     totalpage : Math.ceil(results.length / limit)
                 // })
                 //console.log(res.data)
                 
                 this.setState({
                     ProjectList: results,
-                    totalpage: Math.ceil(res.data.total / limit),
+                    totalpage: Math.ceil(results.length / limit),
                 })
             })
             .catch((err) => {
@@ -92,7 +100,7 @@ class ProjectList extends Component {
 
         //     this.setState({
         //         ProjectList : results,
-        //         totalpage : Math.ceil(res.data.total / limit)
+        //         totalpage : Math.ceil(results.length / limit)
         //     })
         // })
         // .catch((err) => {
@@ -299,19 +307,19 @@ class ProjectList extends Component {
                     delete hasil.User
                     return hasil
                 })
-                console.log(res.data.total)
+                console.log(results.length)
 
                 console.log(results)
 
                 // this.setState({
                 //     ProjectList : results,
-                //     totalpage : Math.ceil(res.data.total / limit)
+                //     totalpage : Math.ceil(results.length / limit)
                 // })
                 //console.log(res.data)
                 
                 this.setState({
                     ProjectList: results,
-                    totalpage: Math.ceil(res.data.total / limit),
+                    totalpage: Math.ceil(results.length / limit),
                 })
             })
             .catch((err) => {

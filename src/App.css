@@ -1,4 +1,14 @@
 /* HEADER HEADROOM */
+.header {
+  margin-top: 10% !important;
+}
+
+@media only screen and (max-width: 575px) {
+  .header {
+    margin-top: 30% !important;
+  }
+}
+
 @media only screen and (min-width: 576px) {
   .headroom {
     position: fixed;
@@ -612,8 +622,7 @@ body {
 }
 
 
-
-.slick-slide.slick-center{
+.slick-slide.slick-center {
 
   -webkit-transform: scale(1.0);
   -moz-transform: scale(1.0);
@@ -679,11 +688,11 @@ body {
   } */
 }
 
-a.bg-scholarship, a.bg-projects {
+a.bg-scholarship, .bg-projects a {
   text-decoration: none;
 }
 
-a.bg-projects {
+.bg-projects a {
   color: #ffffff;
 }
 
@@ -709,17 +718,17 @@ a.bg-scholarship:hover {
 
 /* Configuration Projects and Scholarship Slider - (SLIDERS)*/
 
-.projects-slider .slick-dots {
-   position: absolute;
-   bottom: 5%;
 
+.projects-slider .slick-dots {
+  position: absolute;
+  top: 90%;
+  left: 0%;
 }
 
 .scholarship-slider .slick-dots {
   position: absolute;
   top: 100%;
   left: 0%;
-  /* bottom: -35px; */
 }
 
 .bg-scholarship.card {
@@ -728,9 +737,15 @@ a.bg-scholarship:hover {
 
 @media (max-width: 762px) {
   .scholarship-slider .slick-dots {
-    /* bottom: -3px; */
+    bottom: 10px;
+    /* position: absolute;
+    top: 60%;
+    left: 0%; */
+  }
+
+  .projects-slider .slick-dots {
     position: absolute;
-    top: 90%;
+    top: 75%;
     left: 0%;
   }
 }
@@ -977,8 +992,8 @@ a.bg-scholarship:hover {
   color: #505866;
 }
 
-.learnmorebutton:focus {outline: 0;}
-.learnmorebutton {
+.viewnextbutton:focus {outline: 0;}
+.viewnextbutton {
   border: 4px solid #b5b8c1;
   color: #b5b8c1;
   position: relative;
@@ -990,8 +1005,46 @@ a.bg-scholarship:hover {
   cursor: pointer;
 }
 
-.learnmorebutton::before {
-  content: 'LEARN MORE';
+.viewnextbutton::before {
+  content: 'LIHAT SELENGKAPNYA';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -.4rem;
+  border-radius: 16px;
+  top: -.6rem;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-top: 13px; */
+  text-align: center;
+  /* padding-left: 10px; */
+  font-size: 20px;
+  color : #FFFFFF;
+  z-index: 1;
+  background-color: #ce4948;
+  transition: all 200ms ease-out;
+  box-shadow: 0 12px 12px -4px gray;
+}
+
+
+.viewmorebutton:focus {outline: 0;}
+.viewmorebutton {
+  border: 4px solid #b5b8c1;
+  color: #b5b8c1;
+  position: relative;
+  margin: 2rem 3rem;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  font-size: 1.15rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.viewmorebutton::before {
+  content: 'LIHAT SEMUA';
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1114,16 +1167,15 @@ a.bg-scholarship:hover {
   left: 0;
 }
 
-.learnmorebutton:hover::before {
+.viewmorebutton:hover::before {
   top: 0;
   left: 0;
 }
 
-/* .container {
-  position: relative;
-  text-align: center;
-  color: white;
-} */
+.viewnextbutton:hover::before {
+  top: 0;
+  left: 0;
+}
 
 /* Bottom left text */
 .bottom-left {

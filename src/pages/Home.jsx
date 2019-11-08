@@ -38,6 +38,7 @@ class Home extends Component {
     
     componentDidMount() {
         console.log('didmount')
+        window.scrollTo(0,0)
         // document.title = 'Testing App'
         // if(!parsed.page){
         //     parsed.page = 1
@@ -211,7 +212,7 @@ class Home extends Component {
                 val.totaldonation = val.totaldonation ? val.totaldonation : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship  text-center py-3 py-sm-5 m-b-70 m-t-70'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
                         <div className='container-fluid '>
                             <div className='col-12 d-flex justify-content-center mb-3'>
@@ -276,12 +277,16 @@ class Home extends Component {
             return this.state.ProjectList.map((val, index) => {
                 return (
                     <div key={index} className='px-xl-0 px-4'>
-                    <a href={`project-detail?id=${val.projectId}`} className='card border-0  bg-projects'>
+                    <div  className='card border-0 bg-projects'>
                         <div className='row'>
                             <div className='col-7 py-2 py-md-3 pl-5 d-flex flex-column justify-content-between'>
                                 <div className="d-flex flex-row ">
                                     <img src={Logo} alt='Logo-KasihNusantara' className='mb-3 mr-3' />
-                                    <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
+                                    <a href={`project-detail?id=${val.projectId}`}>
+                                        <h1 className="mb-0 mb-md-3 font-md-25 font-18">
+                                            Help Andika to survive his illness Project-{val.projectId}
+                                        </h1>
+                                    </a>
                                 </div>
                              
                                 {/* <h5 className='mb-0 mb-md-3'>{val.shareDescription}</h5>
@@ -297,11 +302,12 @@ class Home extends Component {
                                 <h5>Sisa hari </h5>
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
-                            <div className='col-5 pt-5 pb-5  d-flex flex-column  p-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   height="245px !important" />
+                            <div className='col-5 pt-5 d-flex flex-column px-3'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginLeft: '-10px', marginTop: '-40px'}}/>
+                                <p className='text-white' style={{marginTop: 'auto'}}>#Bersamamembangunbangsa</p>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                     {/* <div className='container-fluid'>
                             <div className='row m-0'>
@@ -498,6 +504,8 @@ class Home extends Component {
     render() {
         var settings = {
             dots: true,
+            autoplay: true,
+            autoplaySpeed: 5500,
             draggable: true,
             arrows: false,
             infinite: true,
@@ -531,6 +539,8 @@ class Home extends Component {
             centerMode: true,
             centerPadding : '225px',
             dots: true,
+            autoplay: true,
+            autoplaySpeed: 5500,
             draggable: true,
             arrows: false,
             infinite: true,
@@ -573,14 +583,15 @@ class Home extends Component {
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
-                            <Slider {...settings} className='m-b-30'>
+                            <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
                             </Slider>
                         </div>
 
                         <div className='col-12 d-flex justify-content-center'>
-                            <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                            <a 
+                                href={`/scholarship-list?search=&orderby=asc&page=1`}
+                            className="viewmorebutton">LIHAT LEBIH BANYAK</a>
                         </div>
 
                     </div>
@@ -618,7 +629,7 @@ class Home extends Component {
 
 
                 {/* Project List */}
-            <div className='container-fluid my-4 p-0'>
+            <div className='container-fluid mt-4 p-0'>
                     <div className='row m-0'>
                         <div className='offset-md-1 offset-0 col-md-10 col-12 py-5 projects-slider'>
                             <Slider {...settingsProjects}>
@@ -628,7 +639,11 @@ class Home extends Component {
                     </div>
                 </div>
 
-                
+                <div className='col-12 d-flex justify-content-center' style={{marginTop: '-20px'}}>
+                    <a 
+                        href={`/project-list?search=&orderby=asc&page=1`}
+                    className="viewmorebutton">LIHAT LEBIH BANYAK</a>
+                </div>
                 
                
 
@@ -662,7 +677,7 @@ class Home extends Component {
                     </div>
                 </div>     
                 <div className="d-flex flex-row justify-content-center">
-                    <a href='/' className="learnmorebutton">PELAJARI LEBIH LANJUT</a>
+                    <a href='/about-us' className="viewnextbutton">PELAJARI LEBIH LANJUTNYA</a>
                 </div>
 
                 
