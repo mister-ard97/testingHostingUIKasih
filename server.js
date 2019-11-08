@@ -6,8 +6,8 @@ const path = require('path');
 const fs = require('fs');
 const Axios = require('axios');
 
-// const URL_API = 'https://apikasihnusantara.purwadhikax.com'
-const URL_API = 'http://localhost:2019'
+const URL_API = 'https://apikasihnusantara.purwadhikax.com'
+// const URL_API = 'http://localhost:2019'
 
 app.get('/', function(request, response) {
   console.log('Home page visited!');
@@ -200,7 +200,7 @@ app.get('/verifiedReset', function(request, response) {
       if (err) {
         return console.log(err);
       }
-
+      console.log(URL_API+`/scholarship/getScholarshipDetail?id=${request.query.id}`)
       Axios.get(URL_API + `/scholarship/getScholarshipDetail?id=${request.query.id}`)
         .then(async (res) => {
             console.log(res.data)

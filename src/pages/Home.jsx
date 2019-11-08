@@ -37,6 +37,7 @@ class Home extends Component {
     }
     
     componentDidMount() {
+        console.log('didmount')
         // document.title = 'Testing App'
         // if(!parsed.page){
         //     parsed.page = 1
@@ -210,9 +211,9 @@ class Home extends Component {
                 val.totaldonation = val.totaldonation ? val.totaldonation : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-3 py-sm-5 m-b-70 m-t-70'>
+                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship  text-center py-3 py-sm-5 m-b-70 m-t-70'>
                            
-                        <div className='container-fluid'>
+                        <div className='container-fluid '>
                             <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
@@ -237,7 +238,7 @@ class Home extends Component {
                            */}
                                 <div className="mt-3">
                                     <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}   color="danger" >
-                                    {(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}% 
+                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100).toFixed(2)  : 0}% 
                                     </Progress>
                                 </div>
 
@@ -279,7 +280,7 @@ class Home extends Component {
                         <div className='row'>
                             <div className='col-7 py-2 py-md-3 pl-5 d-flex flex-column justify-content-between'>
                                 <div className="d-flex flex-row ">
-                                    <img src={Logo} alt='Logo-KasihNusantara' className='mb-3 border border-primary mr-3' />
+                                    <img src={Logo} alt='Logo-KasihNusantara' className='mb-3 mr-3' />
                                     <h1 className="mb-0 mb-md-3 font-md-25 font-18">Help Andika to survive his illness Project-{val.projectId}</h1>
                                 </div>
                              
@@ -289,15 +290,15 @@ class Home extends Component {
                                 <h5>Dana yang terkumpul </h5>
                                 <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
                                 <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}   color="danger" >
-                                    {(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}% 
+                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}% 
                                 </Progress>
                                 <h5>Dana yang dibutuhkan </h5>
                                 <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>
                                 <h5>Sisa hari </h5>
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
-                            <div className='col-5 pt-5 pb-5  d-flex flex-column justify-content-center align-items-center p-5'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   className="img-fluid"/>
+                            <div className='col-5 pt-5 pb-5  d-flex flex-column  p-5'>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`}   height="245px !important" />
                             </div>
                         </div>
                     </a>
