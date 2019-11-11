@@ -35,44 +35,24 @@ class ScholarshipDetail extends Component {
                 <ModalBody>
                     <Table>
                         <tr>
-                            <td>
-                                Sekolah :
-                            </td>
-                            <td>
-                                {namaSekolah}
-                            </td>
+                            <td>Sekolah :</td>
+                            <td>{namaSekolah}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Bank : 
-                            </td>
-                            <td>
-                                {bank}
-                            </td>
+                            <td>Bank :</td>
+                            <td>{bank}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Nama Pemilik Rekening
-                            </td>
-                            <td>
-                                {namaPemilikRekening}
-                            </td>
+                            <td>Nama Pemilik Rekening</td>
+                            <td>{namaPemilikRekening}</td>
                         </tr>
                         <tr>
-                            <td>
-                                No. Rekening :
-                            </td>
-                            <td>
-                                {nomorRekening}
-                            </td>
+                            <td>No. Rekening :</td>
+                            <td>{nomorRekening}</td>
                         </tr>
                         <tr>
-                            <td>
-                                Nominal : 
-                            </td>
-                            <td>
-                                {nominal}
-                            </td>
+                            <td>Nominal : </td>
+                            <td>{nominal}</td>
                         </tr>
                     </Table>
                 </ModalBody>
@@ -89,7 +69,7 @@ class ScholarshipDetail extends Component {
         // console.log(nominal)
         const {namaSiswa} = this.state.data.Student
         const { namaSekolah, bank, email, namaPemilikRekening, nomorRekening  } = this.state.data.School
-        const { nominal} = this.state.data
+        const { id, nominal} = this.state.data
         let body={
             "payouts": [
                 {
@@ -103,7 +83,8 @@ class ScholarshipDetail extends Component {
           ]
         }
         console.log(body)
-        Axios.post(URL_API+'/payment/payout', body)
+        console.log(id)
+        Axios.post(`${URL_API}/payout/payout?sId=${id}`, body)
         .then((res)=>{
             console.log(res.data)
             // this.setState({pendingPayout: res.data})

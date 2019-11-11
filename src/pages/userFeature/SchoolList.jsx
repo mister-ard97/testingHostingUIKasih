@@ -33,7 +33,7 @@ class SchoolList extends Component{
                     <td>{val.nomorRekening}</td>
                     <td>{val.bank}</td>
                     <td>{val.isVerified? 'verified' : 'unverified'}</td>
-                    <td><Button color='warning' onClick={()=>this.setState({editModal: true, selectedId: i})}>Edit</Button></td>
+                    <td><Link to={`/schooledit?id=${val.id}`}><Button color='warning'>Edit</Button></Link></td>
                     <td><Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button></td>
                 </tr>
             )

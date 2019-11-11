@@ -5,11 +5,13 @@ import {Autocomplete} from '@material-ui/lab'
 import Axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
+import queryString from 'query-string'
 import LoadingOverlay from 'react-loading-overlay'
 import { URL_API } from '../../helpers/Url_API'
 
-class SchoolAdd extends Component{
+class SchoolEdit extends Component{
     state={
+        editData: '',
         listBank:'',
         bank:'',
         codeBank:'',
@@ -23,6 +25,15 @@ class SchoolAdd extends Component{
         .then((res)=>{
             // console.log(res.data)
             this.setState({listBank: res.data.beneficiary_banks})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+        let url = queryString.parse(this.props.location.search)
+        Axios.post(`${URL_API}/school/getSelectedSchool?id=${url.id}`)
+        .then((res)=>{
+            console.log(res.data)
+            this.setState({editData: res.data[0]})
         }).catch((err)=>{
             console.log(err)
         })
@@ -97,12 +108,13 @@ class SchoolAdd extends Component{
         if(this.state.success){
             return <Redirect to='/schoollist'/>
         }
+        const {nama, alamat, bank, email, namaPemilikRekening, nomorRekening, telepon} = this.state.editData
         return(
             <div className='container mt-5 p-3'>
                 <center><h3>Data Sekolah</h3></center>
                 <Paper className='p-4'>
-                    <Input className='mb-2' ref='namaSekolah' innerRef='inamaSekolah' type='text'  placeholder='Nama Sekolah' />
-                    <Input className='mb-2' type='textarea' ref='alamat' innerRef='ialamat' placeholder='Alamat' />
+                    <Input className='mb-2' ref='namaSekolah' innerRef='inamaSekolah' type='text'  defaultValue={nama} />
+                    <Input className='mb-2' type='textarea' ref='alamat' innerRef='ialamat' defaultValue={alamat} />
                     <Autocomplete
                         options={this.state.listBank}
                         getOptionLabel={option => option.name}
@@ -110,10 +122,10 @@ class SchoolAdd extends Component{
                         onChange={(event, value)=> value ? this.handleChangeBank(value) : null}
                         className='mb-2'
                         renderInput={params=>(
-                            <TextField  {...params} placeholder='Bank' variant='outlined' fullWidth />
+                            <TextField  {...params} defaultValue={bank} variant='outlined' fullWidth />
                         )}
                     />
-                    <Input className='mb-2' type='number' ref='noRek' innerRef='inoRek' placeholder='No Rekening Sekolah' id='norek' onBlur={this.validateAccount}/>
+                    <Input className='mb-2' type='number' ref='noRek' innerRef='inoRek' defaultValue={nomorRekening} id='norek' onBlur={this.validateAccount}/>
                     <LoadingOverlay
                         active={this.state.loading}
                         spinner
@@ -125,10 +137,10 @@ class SchoolAdd extends Component{
                             })
                           }}
                         >
-                            <Input className='mb-2' type='text' ref='pemilikRek' innerRef='ipemilikRek' placeholder='Nama Pemilik Rekening' defaultValue={this.state.account_name} disabled/>
+                            <Input className='mb-2' type='text' ref='pemilikRek' innerRef='ipemilikRek' defaultValue={this.state.account_name ? this.state.account_name : namaPemilikRekening} disabled/>
                     </LoadingOverlay>
-                    <Input className='mb-2' type='number' ref='noTelepon' innerRef='inoTelepon' placeholder='No Telepon' />
-                    <Input className='mb-2' type='email' ref='email' innerRef='iemail' placeholder='Email'/>
+                    <Input className='mb-2' type='number' ref='noTelepon' innerRef='inoTelepon' defaultValue={telepon} />
+                    <Input className='mb-2' type='email' ref='email' innerRef='iemail' defaultValue={email}/>
 
                     <Button className='mt-4' color='primary' onClick={this.addSekolahClick}>Simpan</Button>
                 </Paper>
@@ -137,4 +149,4 @@ class SchoolAdd extends Component{
     }
 }
 
-export default SchoolAdd;
+export default SchoolEdit;
