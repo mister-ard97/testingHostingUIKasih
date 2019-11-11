@@ -165,7 +165,14 @@ class ScholarshipDetailHome extends Component {
         }
 
         console.log(parameter)
-          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter)
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+       }
+
+          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter, options)
           .then((res)=>{
             console.log(res.data)
 

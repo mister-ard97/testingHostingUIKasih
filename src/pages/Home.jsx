@@ -643,7 +643,7 @@ class Home extends Component {
                 <Carousel />
 
                 {/* New Konten */}
-                <div className='container-fluid mb-5 d-flex d-md-none'>
+                <div className='container-fluid mb-5'>
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>

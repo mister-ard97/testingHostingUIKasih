@@ -85,7 +85,16 @@ class AdminVerify extends Component {
     }
 
     newStudentApprove = (id) =>{
-        Axios.post(URL_API+`/studentrev/newstudentapprove/${id}`)
+        const token = localStorage.getItem('token');
+        
+        var options ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API+`/studentrev/newstudentapprove/${id}`, {}, options)
         .then((res)=>{
             window.alert('admin approve success')
             this.getStudentUnverified()
@@ -96,7 +105,16 @@ class AdminVerify extends Component {
     }
 
     newStudentReject = (id, text) =>{
-        Axios.post(URL_API+`/studentrev/newstudentreject/${id}`, {text})
+        const token = localStorage.getItem('token');
+
+        var options ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API+`/studentrev/newstudentreject/${id}`, {text}, options)
         .then((res)=>{
             window.alert('admin reject success')
             this.setState({
@@ -458,11 +476,15 @@ class AdminVerify extends Component {
             if(this.state.edit){
                 var formData = new FormData()
 
-                var headers ={
+                const token = localStorage.getItem('token');
+
+                var options ={
                     headers : 
-                    {'Content-Type' : 'multipart/form-data'}
+                    {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type' : 'multipart/form-data'
+                    }
                 }
-        
            
                 var data = {
                     name : this.refs.inputnama.value,//
@@ -482,7 +504,7 @@ class AdminVerify extends Component {
                 formData.append('image', this.state.imageFile) 
                 formData.append('data', JSON.stringify(data))
         
-                Axios.put(`${URL_API}/student/putstudentdata/${studentid}`, formData, headers)
+                Axios.put(`${URL_API}/student/putstudentdata/${studentid}`, formData, options)
                 .then((res)=>{
                     window.alert('edit success')
                     Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid})
@@ -543,9 +565,14 @@ class AdminVerify extends Component {
 
         var formData = new FormData()
 
-        var headers ={
+        const token = localStorage.getItem('token');
+
+        var options ={
             headers : 
-            {'Content-Type' : 'multipart/form-data'}
+            {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'multipart/form-data'
+            }
         }
 
    
@@ -566,7 +593,7 @@ class AdminVerify extends Component {
         formData.append('image', this.state.imageFile) 
         formData.append('data', JSON.stringify(data))
 
-        Axios.put(`${URL_API}/student/putstudentdata/${id}`, formData, headers)
+        Axios.put(`${URL_API}/student/putstudentdata/${id}`, formData, options)
         .then((res)=>{
             window.alert('edit success')
             this.setState({

@@ -8,7 +8,9 @@ import {
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { URL_API } from '../helpers/Url_API';
-import Banner2 from '../assets/Banner2.png'
+import Banner1 from '../assets/Banner1.png';
+import Banner2 from '../assets/Banner2.png';
+import Banner3 from '../assets/Banner3.png';
 
 class CarouselCustom extends Component {
     constructor(props) {
@@ -18,24 +20,22 @@ class CarouselCustom extends Component {
             items: [
                 {
                     id: 1,
-                    img: Banner2,
-                    altText: 'All Categories',
-                    captionHeader: 'All Product For Men And Women',
-                    link: '/searchproduct?allproduct=true&page=1'
+                    img: Banner1,
+                    title: 'TAKE ACTION',
+                    description: <p className='d-none d-md-flex'>Get involved, speak out, <br />
+                    or become a donor and give every child a fair chance for education</p>,
                 },
                 {
                     id: 2,
                     img: Banner2,
-                    altText: 'All Categories',
-                    captionHeader: 'All Product For Men And Women',
-                    link: '/searchproduct?allproduct=true&page=1'
+                    title: 'SHARE WITH OTHERS',
+                    description: <p className='d-none d-md-flex'>Share with others can make a better world.</p>,
                 },
                 {
-                    id: 2,
-                    img: Banner2,
-                    altText: 'All Categories',
-                    captionHeader: 'All Product For Men And Women',
-                    link: '/searchproduct?allproduct=true&page=1'
+                    id: 3,
+                    img: Banner3,
+                    title: 'HELP OUR STUDENT',
+                    description: <p className='d-none d-md-flex'>Help our students. So they can make an innovation.</p>,
                 }
             ]
         };
@@ -96,16 +96,22 @@ class CarouselCustom extends Component {
         return this.state.items.map((item) => {
             return (
                 <CarouselItem
-                    className="custom-items"
+                    className=""
                     tag="div"
                     key={item.id}
                     onExiting={this.onExiting}
                     onExited={this.onExited}
                 >
-                    <img src={item.img} alt={'Carousel-' + item.altText} className='img-fluid' />
-                    {/* Untuk Text Banner Home */}
-                    <div className='boxBanner'>
-                        <h2>TAKE ACTION</h2>
+                    <div className='container-fluid p-0 Banner-Home' style={{background: `url(${item.img}) no-repeat`}}>
+                        <div className='row m-0 mb-3'>
+                            <div className='col-12 m-0 p-0'>
+                                <div className='boxBanner px-5 text-white'>
+                                    <h2 className='mb-4'>{item.title}</h2>
+                                    {item.description}
+                                    <p className='d-none d-md-flex' style={{fontSize: '30px'}}>#Bersamamembangunbangsa</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </CarouselItem>
             );
