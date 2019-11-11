@@ -525,8 +525,8 @@ body {
 
 .boxBanner {
   position: absolute;
-  top: 5%;
-  margin-left: 3%;
+  top: 15%;
+  margin-left: 10%;
   width: 600px;
 }
 
@@ -824,7 +824,7 @@ a.bg-scholarship:hover {
 }
 
 .carousel-indicators li {
-  background-color: gray;
+  display: none;
 }
 
 .carousel-custom .custom-items {

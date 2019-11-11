@@ -103,8 +103,9 @@ class CarouselCustom extends Component {
                     onExited={this.onExited}
                 >
                     <img src={item.img} alt={'Carousel-' + item.altText} className='img-fluid' />
+                    {/* Untuk Text Banner Home */}
                     <div className='boxBanner'>
-
+                        <h2>TAKE ACTION</h2>
                     </div>
                 </CarouselItem>
             );
