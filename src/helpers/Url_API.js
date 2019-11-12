@@ -4,7 +4,7 @@
 
 
 // export const URL_API = 'http://localhost:2019';
-export const URL_API = 'ec2-52-221-189-87.ap-southeast-1.compute.amazonaws.com';
+export const URL_API = 'http://ec2-52-221-189-87.ap-southeast-1.compute.amazonaws.com:2019';
 
 
 
