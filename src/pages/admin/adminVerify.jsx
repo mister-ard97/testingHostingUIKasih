@@ -328,6 +328,26 @@ class AdminVerify extends Component {
         }
     }
 
+    renderOptionPendidikan = () =>{
+        var jsx = []
+        jsx.push(<option value='TK'>TK</option>,
+        <option value='SD'>SD</option>,
+        <option value='SMP'>SMP</option>,
+        <option value='SMA'>SMA</option>,
+        <option value='SMK'>SMK</option>,
+        <option value='S1'>S1</option>)
+        return jsx
+    }
+
+    renderOptionStatus = () =>{
+        var jsx = []
+        jsx.push(<option value='normal'>Normal</option>,
+        <option value='yatim'>Yatim</option>,
+        <option value='piatu'>Piatu</option>,
+        <option value='yatimpiatu'>Yatim Piatu</option>)
+        return jsx
+    }
+
 
 
     renderModalCompareDetails = ()=>{
@@ -371,13 +391,19 @@ class AdminVerify extends Component {
                             <h5 className="mb-2">Nama</h5>
                             <input type="text" className="form-control mb-2" ref='inputnama' defaultValue={data.name}/>
                             <h5 className="mb-2">Status</h5>
-                            <input type="text" className="form-control mb-2" ref='inputstatus' defaultValue={data.status}/>
+                            {/* <input type="text" className="form-control mb-2" ref='inputstatus' defaultValue={data.status}/> */}
+                            <select className="form-control" ref="inputstatus" defaultValue={data.status}>
+                                {this.renderOptionStatus()}
+                            </select>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2" ref='inputstory' defaultValue={data.story}/>
                             <h5 className="mb-2">Birth date</h5>
                             <input type="date" className="form-control mb-2" defaultValue={moment(data.tanggalLahir).format('YYYY-MM-DD')} ref="inputdate" />
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
-                            <input type="text" className="form-control mb-2" ref='inputpendidikan' defaultValue={data.pendidikanTerakhir}/>
+                            {/* <input type="text" className="form-control mb-2" ref='inputpendidikan' defaultValue={data.pendidikanTerakhir}/> */}
+                            <select className='form-control' ref='inputpendidikan' defaultValue={data.pendidikanTerakhir}>
+                                {this.renderOptionPendidikan()}
+                            </select>
                             <h5 className="mb-2">Gender</h5>
                             <input type="text" className="form-control mb-2" ref='inputgender' defaultValue={data.gender}/>
                             <h5 className="mb-2">Sekolah</h5>

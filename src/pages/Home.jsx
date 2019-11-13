@@ -305,7 +305,7 @@ class Home extends Component {
                                 <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
                             </div>
                             <div className='col-5 pt-5 d-flex flex-column px-3'>
-                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto'}}/>
+                                <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto', maxHeight : '200px'}}/>
                                 <p className='text-white' style={{marginTop: 'auto'}}>#Bersamamembangunbangsa</p>
                             </div>
                         </div>
@@ -578,7 +578,6 @@ class Home extends Component {
                             dots: true,
                             slidesToScroll : 1,
                             appendDots: (dots5) => {
-                            
                                 return <MagicSliderDots dots={dots5} numDotsToShow={3} dotWidth={55} />
                             },
                         }
@@ -645,10 +644,10 @@ class Home extends Component {
 
                 {/* New Konten */}
                 <div className='container-fluid mb-5'>
-                    <div className='row m-0'>
-                        <div className='col-12 d-flex justify-content-center'>
-                            <div className="sharebutton">SHARE YOUR STORY</div>
-                            <Button content='DONATE NOW' text='DONATE NOW' />
+                    <div className='m-0'>
+                        <div className='row d-flex justify-content-center'>
+                            <div className="sharebutton col-8 col-md-2">SHARE YOUR STORY</div>
+                            <div className="donatebutton col-8 col-md-2">SHARE YOUR STORY </div>
                         </div>
                     </div>
                 </div>

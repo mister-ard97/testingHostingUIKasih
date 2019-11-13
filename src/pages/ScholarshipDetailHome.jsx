@@ -24,7 +24,7 @@ class ScholarshipDetailHome extends Component {
         objSubscription: {},
         ScholarshipDetail: null,
         SubscriptionModal: false,
-        statusSubscription: null,
+        nominalSubscription: null,
         listDonasi: '',
 
         nominalLain: false,
@@ -56,16 +56,22 @@ class ScholarshipDetailHome extends Component {
             console.log(err)
         })
 
-        // Axios.get(URL_API + '/user/getSubscription', options)
-        //     .then((subscription) => {
-        //         console.log(subscription.data.status)
-        //         this.setState({
-        //             statusSubscription: subscription.data.status
-        //         })
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
+        Axios.get(URL_API + '/user/getSubscription/'+params.id , options)
+            .then((subscription) => {
+                console.log(subscription)
+                console.log(subscription.data.result)
+
+                if(subscription.data.result){
+
+                    this.setState({
+                        nominalSubscription: subscription.data.result.nominalSubscription
+                    })
+
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     getNamaScholarship = (scholarId, scholarName) => {
@@ -221,52 +227,82 @@ class ScholarshipDetailHome extends Component {
 
     }
 
+    subscriptionDetails = () =>{
+        if(!this.state.nominalSubscription){
+
+        }else{
+            
+        }
+    }
+
     modalSubscription = (params) => {
         if(params) {
-            return (
-                <Modal isOpen={this.state.SubscriptionModal} toggle={()=>this.setState({ SubscriptionModal : false, nominalLain: false, objSubscription: {} })} >
-                    <ModalHeader>
-                        Subscription Nominal
-                    </ModalHeader>
-                    <ModalBody>
-                         <h5>Pilih Nominal Yang anda inginkan</h5>
-                         
-                         <select className='form-control' name="select" ref='nominal' hidden={this.state.nominalLain}>
-                            <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
-                            <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
-                            <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
-                            <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
-                            <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
-                        </select>
+            if(!this.state.nominalSubscription){
 
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                            <Button className="bg-white text-dark border-right-0"  hidden={!this.state.nominalLain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>
-                            </InputGroupAddon>
-                            <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.nominalLain} innerRef='nominalBebas' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
-                        </InputGroup>
-
-                        <Switch 
-                                onChange={this.handleChange}
-                                inputProps={{ 'aria-label' : 'secondary checkbox' }}
-                        />
-                        Klik untuk nominal lainnya
-
-                        <p>Pada tanggal berapa anda ingin diingatkan</p>
-                        <input type='date' className='form-control' ref={(reminderDate) => this.reminderDate = reminderDate }/>
-                        
-                        <small>
-                            Untuk Subscribe pertama, Anda harus bayar terlebih dahulu. 
-                            Dan nanti akan diberikan notifikasi lewat email
-                        </small>
-
-
-                    </ModalBody>
-                    <ModalFooter>
-                        <input type="button" value="Subscribe" className="form-control btn btn-danger" onClick={() => this.renderMidtransSubscription()}/>
-                    </ModalFooter>
-                </Modal>
-            )
+                return (
+                    <Modal isOpen={this.state.SubscriptionModal} toggle={()=>this.setState({ SubscriptionModal : false, nominalLain: false, objSubscription: {} })} >
+                        <ModalHeader>
+                            Subscription Nominal
+                        </ModalHeader>
+                        <ModalBody>
+                             <h5>Pilih Nominal Yang anda inginkan</h5>
+                             
+                             <select className='form-control' name="select" ref='nominal' hidden={this.state.nominalLain}>
+                                <option value={100000}>Rp.{Numeral(100000).format('0,0')}</option>
+                                <option value={250000}>Rp.{Numeral(250000).format('0,0')}</option>
+                                <option value={500000}>Rp.{Numeral(500000).format('0,0')}</option>
+                                <option value={750000}>Rp.{Numeral(750000).format('0,0')}</option>
+                                <option value={1000000}>Rp.{Numeral(1000000).format('0,0')}</option>
+                            </select>
+    
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                <Button className="bg-white text-dark border-right-0"  hidden={!this.state.nominalLain} disabled style={{borderColor : '#CED4DA' , border : '1px solid #CED4DA', opacity: 1}}>Rp. </Button>
+                                </InputGroupAddon>
+                                <Input style={{border : '1px 1px 1px 0 solid #CED4DA'}} hidden={!this.state.nominalLain} innerRef='nominalBebas' ref='nominalBebas' onChange={(text)=>this.formatDisplay(text.target.value)} onKeyPress={this.allowPositivesOnly} value={this.state.nominalDisplay}/>
+                            </InputGroup>
+    
+                            <Switch 
+                                    onChange={this.handleChange}
+                                    inputProps={{ 'aria-label' : 'secondary checkbox' }}
+                            />
+                            Klik untuk nominal lainnya
+    
+                            <p>Pada tanggal berapa anda ingin diingatkan</p>
+                            <input type='date' className='form-control' ref={(reminderDate) => this.reminderDate = reminderDate }/>
+                            
+                            <small>
+                                Untuk Subscribe pertama, Anda harus bayar terlebih dahulu. 
+                                Dan nanti akan diberikan notifikasi lewat email
+                            </small>
+    
+    
+                        </ModalBody>
+                        <ModalFooter>
+                            <input type="button" value="Subscribe" className="form-control btn btn-danger" onClick={() => this.renderMidtransSubscription()}/>
+                        </ModalFooter>
+                    </Modal>
+                )
+            }else {
+                return (
+                    <Modal isOpen={this.state.SubscriptionModal} toggle={()=>this.setState({ SubscriptionModal : false, nominalLain: false, objSubscription: {} })} >
+                        <ModalHeader>
+                            Anda telah melakukan subscribe pada scholarship ini 
+                        </ModalHeader>
+                        <ModalBody>
+                            <h5>Nominal Subscribe Sebesar : </h5>
+                            <input type="text" className="form-control" value={this.state.nominalSubscription} disabled />
+                             
+    
+                        </ModalBody>
+                        <ModalFooter>
+                            <a href={`/payment?id=${this.state.ScholarshipDetail.id}&scholarship-name=${this.state.ScholarshipDetail.judul}&type=subscription`}>
+                            <input type="button" value="Pembayaran" className="form-control btn btn-danger"/>
+                            </a>
+                        </ModalFooter>
+                    </Modal>
+                )
+            }
         }
     }
 
@@ -355,7 +391,7 @@ class ScholarshipDetailHome extends Component {
 
                                 {
                                     this.props.email ?
-                                    <a href={`/payment?id=${id}&scholarship-name=${judul}`} onClick={() => this.getNamaScholarship(id, judul)}> 
+                                    <a href={`/payment?id=${id}&scholarship-name=${judul}&type=donation`} onClick={() => this.getNamaScholarship(id, judul)}> 
                                         <button>
                                             Donasi
                                         </button>
@@ -370,7 +406,7 @@ class ScholarshipDetailHome extends Component {
 
                                 {/* {
                                     this.props.email ?
-                                        this.state.statusSubscription === 0 ? */}
+                                        this.state.nominalSubscription === 0 ? */}
                                         <a onClick={() => this.setState({
                                             SubscriptionModal: true,
                                             objSubscription: {

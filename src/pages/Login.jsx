@@ -13,6 +13,8 @@ class Login extends Component {
     componentDidMount() {
         // document.title = 'Login Page'
         this.props.cleanError();
+        console.log(this.props)
+        console.log(this.state)
     }
 
     handleSubmitLogin = (e) => {
@@ -109,6 +111,30 @@ class Login extends Component {
         } 
     }
 
+    renderRedirect = () =>{
+        if(this.props.location.from){
+            console.log(window.location.href)
+            // this.props.history.push(this.props.location.from)
+            return (
+            
+                // <Redirect to={this.props.location.from ? this.props.location.from : '/'} />
+                <Redirect to={{
+                    pathname :this.props.location.from.split('?')[0],
+                    search : this.props.location.from.split('?')[1],
+                    from : this.props.location.pathname + this.props.location.search
+                }} />
+            )
+        }else {
+            return (
+
+                <Redirect to={{
+                    pathname : '/',
+                    from : this.props.location.pathname + this.props.location.search
+                }} />
+            )
+        }
+    }
+
     render() {
         if(this.props.email === '') {
             return (
@@ -167,7 +193,7 @@ class Login extends Component {
             );
         }
 
-        return <Redirect to='/' />
+        return this.renderRedirect()
     }
 
 }

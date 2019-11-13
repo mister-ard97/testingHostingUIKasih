@@ -114,7 +114,7 @@ class Subscription extends Component {
                         <div className="d-flex flex-row mb-3">
                             <div className="mr-4">
                                 <h4>Dana yang terkumpul </h4>
-                                <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs + val.totaldonation)).format(0,0)}`} disabled/>
+                                <input type="text" className="form-control" value={`Rp. ${numeral(parseInt( val.totaldonation)).format(0,0)}`} disabled/>
                             </div>
 
                             <div>

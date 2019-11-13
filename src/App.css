@@ -404,9 +404,15 @@
   src: local('Neon80'), url(./fonts/Neon.ttf) format('truetype');
 }
 
-body {
-    font-family: 'Neon80', cursive, sans-serif !important;
-}
+/* body { */
+    
+    /* min-height: 100vh !important; */
+    /*  */
+/* } */
+
+/* body #root {
+  min-height: 100 !important;
+} */
 
 .font-size-36 {
   font-size: 36pt;
@@ -521,12 +527,35 @@ body {
 .boxBanner h2 {
   font-size: 62px;
   color: #D32242;
+  transition: all 500ms;
   text-shadow: 2px 3px 0 #FFFFFF;
 }
 
 .boxBanner p {
   text-shadow: 1px 1px 0 #000000;
 }
+ .boxBanner:hover h2 {
+  font-size: 65px;
+  color: #D32242;
+  transition: all 500ms;
+  cursor: pointer;
+  text-shadow: 3px 5px 0 #FFFFFF;
+}
+/*
+.animated {
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-30px);}
+  60% {transform: translateY(-15px);}
+}
+.bounce {
+  animation-name: bounce;
+} */
 
 @media only screen and (max-width: 762px) {
   .boxBanner {
@@ -606,6 +635,7 @@ body {
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
   transform: scale(0.8);
+  transition: all 500ms;
 }
 
 
@@ -614,6 +644,7 @@ body {
   -webkit-transform: scale(1.0);
   -moz-transform: scale(1.0);
   transform: scale(1.0);
+  transition: all 500ms;
 
 }
 
@@ -1230,7 +1261,87 @@ a.bg-scholarship:hover {
 .classfooter{
   /* style={{backgroundColor : '#ce4948', minHeight : '25vh', color : '#f1f1f1'}} */
   background-color:  #ce4948;
-  min-height: 25vh;
+  /* position: absolute; 
+  bottom:0; 
+  width:100%;  */
+  /* height:100px;  */
+  min-height: 41vh;
 
   color:  #FFFCFD;
+}
+
+
+
+
+/* Fadein Animation */
+
+/* .userDropdown:hover .fade-in{
+  opacity: 1;
+}
+
+.userDropdown .fade-in{
+  opacity: 0;
+} */
+
+
+
+.fade-in {
+  opacity: 0;
+
+   animation: fadeIn ease-in-out .5s;
+  -webkit-animation: fadeIn ease-in-out .5s;
+  -moz-animation: fadeIn ease-in-out .5s;
+  -o-animation: fadeIn ease-in-out .5s;
+  -ms-animation: fadeIn ease-in-out .5s; 
+  -webkit-animation-fill-mode: forwards;    
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)   */
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode:forwards; 
+}
+
+
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }

@@ -469,6 +469,7 @@ class Studentlist extends Component {
                             <Label>Status</Label>
                          
                             <select className='form-control' ref='status'>
+                                <option value='normal'>Normal</option>
                                 <option value='yatim'>Yatim</option>
                                 <option value='piatu'>Piatu</option>
                                 <option value='yatimpiatu'>Yatim Piatu</option>

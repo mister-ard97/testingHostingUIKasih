@@ -26,10 +26,12 @@ class Header extends Component {
         isOpen: false,
         login: false,
         loadingLogin: '',
-        logOut: false
+        logOut: false,
+        dropdownOpen : false
     }
 
     componentDidMount() {
+        
         let headroom = new Headroom(document.getElementById('Header'), {
 			"offset": 0,
 			"tolerance": 5,
@@ -43,20 +45,30 @@ class Header extends Component {
           headroom.init();
     }
 
+
     userLogOut = () => {
         this.props.userLogOut();
         this.setState({
-            logOut: true
+            logOut: true,
+            dropdownOpen : false
         })
+    }
+
+    onMouseEnter() {
+        this.setState({dropdownOpen: true});
+    }
+    
+    onMouseLeave() {
+        this.setState({dropdownOpen: false});
     }
 
     renderCartAccount = (param) => {
         return (
             <div className='navbar-nav-cust d-flex font-weight-normal'>
-                        <UncontrolledDropdown nav inNavbar>                            
+                        <UncontrolledDropdown  onMouseOver={()=>this.onMouseEnter()} onMouseLeave={()=>this.onMouseLeave()} isOpen={this.state.dropdownOpen} nav inNavbar>                            
                             {
                                 this.props.loading ?
-
+ 
                                 <DropdownToggle nav caret >
                                         <div className="spinner-border" role="status">
                                             <span className="sr-only">Loading...</span>
@@ -80,12 +92,12 @@ class Header extends Component {
 
                                     </DropdownToggle>
                             }
-                            <DropdownMenu right={true} className='px-2 userDropdown' id='loginDropdown'>
+                            <DropdownMenu right={true} className='px-2 userDropdown' id='loginDropdown' style={{width : '19vw'}} >
                                 {
                                     this.props.name !== '' ?
                                         
                                         this.props.justRegister ?
-                                            <div>
+                                            <div className="fade-in">
                                                 {
                                                     this.props.verified === 0 ?
                                                     <p style={{color: '#D32242'}}>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
@@ -103,7 +115,7 @@ class Header extends Component {
                                             </div>
                                         :
                                             this.props.role !== 'User Admin' ?
-                                            <div>
+                                            <div className="fade-in">
                                                 {
                                                     this.props.verified === 0 ?
                                                         <p style={{color: '#D32242'}}>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
@@ -120,7 +132,7 @@ class Header extends Component {
                                                 
                                             </div>
                                             :
-                                            <div>
+                                            <div className="fade-in">
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
                                                 <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
                                                 <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
@@ -133,7 +145,7 @@ class Header extends Component {
 
                                             
                                     :
-                                        <div>
+                                        <div className="fade-in">
                                             <p>Anda belum login silahkan login <Link to='/login'>disini</Link></p>
                                             <p>Anda belum mendaftar? <Link to='/register'>Daftar</Link> Sekarang</p>
                                         </div>
