@@ -9,7 +9,7 @@ import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
-import Button from '../components/button';
+// import Button from '../components/button';
 
 import queryString from 'query-string';
 import numeral from 'numeral'
@@ -646,8 +646,8 @@ class Home extends Component {
                 <div className='container-fluid mb-5'>
                     <div className='m-0'>
                         <div className='row d-flex justify-content-center'>
-                            <div className="sharebutton col-8 col-md-2">SHARE YOUR STORY</div>
-                            <div className="donatebutton col-8 col-md-2">SHARE YOUR STORY </div>
+                            <div className="sharebutton col-6 col-md-2 ">SHARE YOUR STORY</div>
+                            <div className="donatebutton col-6 col-md-2 ">SHARE YOUR STORY </div>
                         </div>
                     </div>
                 </div>
