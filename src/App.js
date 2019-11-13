@@ -16,7 +16,7 @@ import VerifiedResetPassword from './pages/VerifiedPasswordToken';
 import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
-import StudentList from './pages/StudentData'
+import StudentList from './pages/AllStudentList'
 import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 

@@ -142,15 +142,15 @@ class Studentlist extends Component {
         console.log(obj)
         obj.userId = this.props.id
 
-        let token = localStorage.getItem('token')
-        var headers ={
-            headers : 
-            {
-                'Authorization': `Bearer ${token}`
-            }
-        }
+        // let token = localStorage.getItem('token')
+        // var options ={
+        //     headers : 
+        //     {
+        //         'Authorization': `Bearer ${token}`
+        //     }
+        // }
         
-        Axios.post(URL_API+`/student/getstudentdatapaging`,obj, headers)
+        Axios.post(URL_API+`/student/getstudentdatapaging`, obj)
         .then(res=>{
             console.log(res.data)
             var results = res.data.rows.map((val,id)=>{
@@ -218,7 +218,14 @@ class Studentlist extends Component {
     revertChanges = async (id) =>{
         try{
 
-            var result = await Axios.get(URL_API+'/studentrev/revertchange/'+id)
+            const token = localStorage.getItem('token');
+            const options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            }
+
+            var result = await Axios.get(URL_API+'/studentrev/revertchange/'+id, options)
             window.alert('success revert')
             this.getSchool()
             this.getStudentData()
@@ -330,9 +337,14 @@ class Studentlist extends Component {
 
         var formData = new FormData()
 
-        var headers ={
+        const token = localStorage.getItem('token');
+
+        var options ={
             headers : 
-            {'Content-Type' : 'multipart/form-data'}
+            {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'multipart/form-data'
+            }
         }
 
    
@@ -376,7 +388,7 @@ class Studentlist extends Component {
         formData.append('data', JSON.stringify(obj))
 
 
-        Axios.post(URL_API +'/studentrev/poststudentrev', formData, headers)
+        Axios.post(URL_API +'/studentrev/poststudentrev', formData, options)
         .then((res) => {
             window.alert('Update Success! Your update will be verified by the admin')
             this.getStudentData()
@@ -391,7 +403,17 @@ class Studentlist extends Component {
     }
 
     deleteStudent = (id) => {
-        Axios.delete(URL_API + `/student/deletestudentdata/${id}`)
+
+        const token = localStorage.getItem('token');
+
+        var options ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.delete(URL_API + `/student/deletestudentdata/${id}`, options)
         .then((res) => {
             window.alert('delete success')
             this.getStudentData()
@@ -587,7 +609,15 @@ class Studentlist extends Component {
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
 
-        Axios.post(URL_API +'/student/poststudentdata', formData)
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+               'Content-Type' : 'multipart/form-data'
+           }
+       }
+
+        Axios.post(URL_API +'/student/poststudentdata', formData, options)
         .then((res) => {
             window.alert('Add Success! Your submission will be verified by the admin')
             this.setState({

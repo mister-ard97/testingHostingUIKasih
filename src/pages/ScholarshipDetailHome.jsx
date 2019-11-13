@@ -35,13 +35,6 @@ class ScholarshipDetailHome extends Component {
         let params = queryString.parse(this.props.location.search)
         console.log(params.id)
 
-        const token = localStorage.getItem('token');
-       const options = {
-           headers: {
-               'Authorization': `Bearer ${token}`,
-           }
-       }
-
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ params.id)
         .then((res) => {
             // console.log(res.data)
@@ -171,7 +164,14 @@ class ScholarshipDetailHome extends Component {
         }
 
         console.log(parameter)
-          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter)
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+       }
+
+          Axios.post(`${URL_API}/subscription/usersubscribe`, parameter, options)
           .then((res)=>{
             console.log(res.data)
 

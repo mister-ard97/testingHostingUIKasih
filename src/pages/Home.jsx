@@ -9,6 +9,7 @@ import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
+import Button from '../components/button';
 
 import queryString from 'query-string';
 import numeral from 'numeral'
@@ -215,7 +216,7 @@ class Home extends Component {
                 return(
                     <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
-                        <div className='container-fluid '>
+                        <div className='container-fluid py-4 p-md-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
@@ -240,7 +241,7 @@ class Home extends Component {
                            */}
                                 <div className="mt-3">
                                     <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? (val.totaldonation / val.nominal) * 100  : 0}   color="danger" >
-                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100).toFixed(2)  : 0}% 
+                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100)  : 0}% 
                                     </Progress>
                                 </div>
 
@@ -296,7 +297,7 @@ class Home extends Component {
                                 <h5>Dana yang terkumpul </h5>
                                 <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
                                 <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? (val.totalNominal / val.totalTarget) * 100  : 0}   color="danger" >
-                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}% 
+                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100)  : 0}% 
                                 </Progress>
                                 <h5>Dana yang dibutuhkan </h5>
                                 <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>

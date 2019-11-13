@@ -164,14 +164,14 @@ class Header extends Component {
 
     render() {
         return (
-            <div className='container-fluid header' >
+            <div className='container-fluid header' style={{zIndex: '100'}}>
                 <Navbar id='Header' expand="lg" className='font-weight-bold bg-white' fixed='top'>
                         {
                             this.state.logOut ?
                             <Redirect to={`/`} />
                             : null
                         }
-                        <Link to='/' className='navbar-brand justify-content-start d-flex pl-5'>
+                        <Link to='/' className='navbar-brand justify-content-start d-flex p-0 pl-md-5'>
                             <img src={Logo} alt={'Logo-Kasih Nusantara'}/>
                         </Link>
                             

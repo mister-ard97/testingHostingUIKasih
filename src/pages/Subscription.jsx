@@ -43,7 +43,14 @@ class Subscription extends Component {
     }
 
     getSubscribeList = () =>{
-        Axios.get(URL_API + '/subscription/subscribelist/' + this.props.id)
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+       }
+
+        Axios.get(URL_API + '/subscription/subscribelist/' + this.props.id, options)
         .then((res)=>{
             console.log(res.data.result)
             this.setState({
@@ -57,11 +64,19 @@ class Subscription extends Component {
 
     cancelSubscription = async (id) =>{
         var confirmation = window.confirm('apakah anda yakin untuk cancel subscription ini ?')
+        
+        const token = localStorage.getItem('token');
+       const options = {
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+       }
+        
         if(confirmation){
 
             try{
     
-                await Axios.post(URL_API + '/subscription/cancelsubscription', { id })
+                await Axios.post(URL_API + '/subscription/cancelsubscription', { id }, options)
                 this.getSubscribeList()
                 window.alert('cancel success')
     
