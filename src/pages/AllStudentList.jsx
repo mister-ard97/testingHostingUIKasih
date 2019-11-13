@@ -142,15 +142,15 @@ class Studentlist extends Component {
         console.log(obj)
         obj.userId = this.props.id
 
-        let token = localStorage.getItem('token')
-        var options ={
-            headers : 
-            {
-                'Authorization': `Bearer ${token}`
-            }
-        }
+        // let token = localStorage.getItem('token')
+        // var options ={
+        //     headers : 
+        //     {
+        //         'Authorization': `Bearer ${token}`
+        //     }
+        // }
         
-        Axios.post(URL_API+`/student/getstudentdatapaging`,obj, options)
+        Axios.post(URL_API+`/student/getstudentdatapaging`, obj)
         .then(res=>{
             console.log(res.data)
             var results = res.data.rows.map((val,id)=>{
@@ -218,7 +218,14 @@ class Studentlist extends Component {
     revertChanges = async (id) =>{
         try{
 
-            var result = await Axios.get(URL_API+'/studentrev/revertchange/'+id)
+            const token = localStorage.getItem('token');
+            const options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            }
+
+            var result = await Axios.get(URL_API+'/studentrev/revertchange/'+id, options)
             window.alert('success revert')
             this.getSchool()
             this.getStudentData()
@@ -605,6 +612,7 @@ class Studentlist extends Component {
        const options = {
            headers: {
                'Authorization': `Bearer ${token}`,
+               'Content-Type' : 'multipart/form-data'
            }
        }
 

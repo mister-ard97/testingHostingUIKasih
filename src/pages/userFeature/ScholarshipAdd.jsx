@@ -91,7 +91,17 @@ class ScholarshipAdd extends Component{
                           console.log(file)
                           var formData = new FormData()
                         formData.append('image',file)
-                        Axios.post(URL_API + `/project/GenerateURL`, formData)
+
+                        let token = localStorage.getItem('token')
+
+                        var options ={
+                            headers : 
+                            {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+
+                        Axios.post(URL_API + `/project/GenerateURL`, formData, options)
                         .then((res) => {
                             console.log(res.data)
                             this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
@@ -153,7 +163,7 @@ class ScholarshipAdd extends Component{
             console.log(err)
         })
 
-        Axios.get(URL_API+'/scholarship/getExistStudent?id='+this.props.userId)
+        Axios.get(URL_API+'/scholarship/getExistStudent?id='+this.props.userId, options)
         .then((res) => {
             console.log(res.data)
             this.setState({existSiswa: res.data})
@@ -385,7 +395,15 @@ class ScholarshipAdd extends Component{
             shareDescription : this.state.sDeskripsi
         }
         console.log(data)
-        Axios.post(URL_API + '/scholarship/addScholarship', data)
+
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            } 
+        }
+
+        Axios.post(URL_API + '/scholarship/addScholarship', data, options)
         .then((res) => {
             console.log(res.data)
             this.setState({success: true})

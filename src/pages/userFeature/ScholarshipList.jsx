@@ -40,8 +40,15 @@ class ScholarshipList extends Component{
         judul:''
     }
     componentDidMount(){
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
         let id= this.props.id
-        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+id)
+        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+id, options)
         .then((res)=>{
             console.log(res.data)
             this.setState({data: res.data})
@@ -81,10 +88,18 @@ class ScholarshipList extends Component{
     cancelBtnClick = (id) => {
         var yakin = window.confirm('yakin kamu????')
         if(yakin){
-            Axios.put(URL_API +'/scholarship/cancelScholarship?id='+id)
+
+            let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.put(URL_API +'/scholarship/cancelScholarship?id='+id, options)
             .then((res) => {
                 // console.log(res.data)
-                Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id)
+                Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id, options)
                 .then((res)=>{
                     console.log(res.data)
                     this.setState({data: res.data})
@@ -326,10 +341,18 @@ class ScholarshipList extends Component{
             shareDescription : this.state.sDeskripsi ? this.state.sDeskripsi :  this.state.data[Id].shareDescription
         }
         console.log(data)
-        Axios.put(URL_API + '/scholarship/putScholarship', data)
+
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+        Axios.put(URL_API + '/scholarship/putScholarship', data, options)
         .then((res) => {
             // console.log(res.data)
-            Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id)
+            Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id, options)
             .then((res)=>{
                 // console.log(res.data)
                 this.setState({data: res.data})

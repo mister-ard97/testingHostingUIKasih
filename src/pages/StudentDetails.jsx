@@ -356,9 +356,17 @@ class StudentDetails extends Component {
             kelas: this.Kelas.value
         }
 
+        const token = localStorage.getItem('token');
+            const options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type' : 'multipart/form-data'
+                }
+            }
+
         formData.append('data', JSON.stringify(newObj))
         formData.append('image', this.state.addImageFile)
-        Axios.post(URL_API + `/studentdetail/add-student-detail/${newObj.studentId}`, formData)
+        Axios.post(URL_API + `/studentdetail/add-student-detail/${newObj.studentId}`, formData, options)
         .then((res) => {
             Axios.get(URL_API + `/studentdetail/get-student-detail/${newObj.studentId}`)
             .then((res) => {

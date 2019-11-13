@@ -63,7 +63,17 @@ class postProject extends React.Component{
                           console.log(file)
                           var formData = new FormData()
                         formData.append('image',file)
-                        Axios.post(URL_API + `/project/GenerateURL`, formData)
+
+                        let token = localStorage.getItem('token')
+
+                        var options ={
+                            headers : 
+                            {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+
+                        Axios.post(URL_API + `/project/GenerateURL`, formData, options)
                         .then((res) => {
                             console.log(res.data)
                             this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
@@ -174,7 +184,17 @@ class postProject extends React.Component{
             var newtext=this.state.text
             var formData = new FormData()
             formData.append('image', e.target.files[0])
-            Axios.post(URL_API + `/project/GenerateURL`, formData)
+
+            let token = localStorage.getItem('token')
+
+            var options ={
+                headers : 
+                {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.post(URL_API + `/project/GenerateURL`, formData, options)
             .then((res) => {
                 console.log(res.data)
                 newtext+=`<img src=${URL_API+res.data}>`

@@ -130,7 +130,17 @@ class ProjectManage extends React.Component{
     deleteProject =(id) =>{
         var confirm = window.confirm('delete this project ?')
         if(confirm){
-            Axios.put(URL_API+`/project/deleteproject/${id}`)
+
+            let token = localStorage.getItem('token')
+
+            var options ={
+                headers : 
+                {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.put(URL_API+`/project/deleteproject/${id}`, options)
             .then((res)=>{
                 console.log(res)
                 window.alert("delete success")
@@ -215,9 +225,14 @@ class ProjectManage extends React.Component{
         
         var formData = new FormData()
 
-        var headers ={
+        let token = localStorage.getItem('token')
+
+        var options ={
             headers : 
-            {'Content-Type' : 'multipart/form-data'}
+            {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'multipart/form-data'
+            }
         }
 
         var data = {
@@ -236,7 +251,7 @@ class ProjectManage extends React.Component{
         formData.append('data', JSON.stringify(data))
 
 
-        Axios.put(`${URL_API}/project/editproject/${id}`, formData, headers)
+        Axios.put(`${URL_API}/project/editproject/${id}`, formData, options)
         .then((res)=>{
             window.alert('edit success')
             this.getProjectList()

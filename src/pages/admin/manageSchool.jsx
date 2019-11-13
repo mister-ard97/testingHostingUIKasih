@@ -111,8 +111,15 @@ class ManageSchool extends Component{
             "alias_name": alias,
             "email": email
         }
+
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
         
-        Axios.post(URL_API+'/school/verifiedSchool?id='+id)
+        Axios.post(URL_API+'/school/verifiedSchool?id='+id, options)
         .then((res)=>{
             // console.log(res.data)
             Axios.get(URL_API+'/school/getSchool')
@@ -222,7 +229,14 @@ class ManageSchool extends Component{
 
         console.log(data)
 
-        Axios.post(URL_API + '/school/addSchool', data)
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + '/school/addSchool', data, options)
         .then((res) => {
             console.log(res.data)
             Axios.get(URL_API+'/school/getSchool')
@@ -280,7 +294,14 @@ class ManageSchool extends Component{
             email
         }
 
-        Axios.post(URL_API + '/school/putSchool?id='+id, data)
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + '/school/putSchool?id='+id, data, options)
         .then((res) => {
             Axios.get(URL_API+'/school/getSchool')
             .then((res)=>{
@@ -300,7 +321,15 @@ class ManageSchool extends Component{
         console.log(konfirmasi)
         if(konfirmasi){
             console.log('masuk')
-            Axios.post(URL_API+'/school/deleteSchool?id='+id)
+
+            let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.post(URL_API+'/school/deleteSchool?id='+id, options)
             .then((res)=>{
                 Axios.get(URL_API+'/school/getSchool')
                 .then((res)=>{

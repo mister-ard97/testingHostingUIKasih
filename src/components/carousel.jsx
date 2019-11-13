@@ -113,6 +113,7 @@ class CarouselCustom extends Component {
                             </div>
                         </div>
                     </div>
+                    
                 </CarouselItem>
             );
         });

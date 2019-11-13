@@ -9,6 +9,7 @@ import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
+import Button from '../components/button';
 
 import queryString from 'query-string';
 import numeral from 'numeral'
@@ -647,7 +648,7 @@ class Home extends Component {
                     <div className='row m-0'>
                         <div className='col-12 d-flex justify-content-center'>
                             <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                            <Button content='DONATE NOW' text='DONATE NOW' />
                         </div>
                     </div>
                 </div>

@@ -58,7 +58,16 @@ class AdminVerify extends Component {
 
     getStudentUnverified = () =>{
         const parsed = queryString.parse(this.props.location.search);
-        Axios.get(URL_API+'/studentrev/admingetstudent?type='+parsed.type)
+
+        let token = localStorage.getItem('token')
+        var options ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.get(URL_API+'/studentrev/admingetstudent?type=' + parsed.type, options)
         .then((res)=>{
          
             console.log(res.data)
@@ -193,12 +202,21 @@ class AdminVerify extends Component {
     showCompare = async (id, i) =>{ // id = studrev studentId
         try{
 
-            var res = await Axios.get(URL_API+'/studentrev/getstudentrev/'+id)
+            let token = localStorage.getItem('token')
+            var options ={
+                headers : 
+                {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            var res = await Axios.get(URL_API+'/studentrev/getstudentrev/'+id, options)
         }
         catch(err){
             console.log(err)
             return err
         }
+        
         var result = {...res.data.result[0], ...res.data.result[0].School}
         delete result.School
         // var result = {...res.data.result[0], ...res.data.result[0].School}
@@ -507,7 +525,7 @@ class AdminVerify extends Component {
                 Axios.put(`${URL_API}/student/putstudentdata/${studentid}`, formData, options)
                 .then((res)=>{
                     window.alert('edit success')
-                    Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid})
+                    Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid}, options)
                     .then((res)=>{
                         window.alert('success update approve')
                         this.setState({
@@ -526,7 +544,8 @@ class AdminVerify extends Component {
 
                
             }else {
-                Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid})
+
+                Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid}, options)
                 .then((res)=>{
                     window.alert('success update approve')
                     this.setState({
@@ -547,7 +566,16 @@ class AdminVerify extends Component {
     updateReject = (revid, studentid) =>{
         var confirm = window.confirm('are you sure you want to reject this update')
         if(confirm){
-            Axios.put(URL_API+'/studentrev/updatereject', {revid, studentid, message : this.refs.reject.value})
+
+            let token = localStorage.getItem('token')
+            var options ={
+                headers : 
+                {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.put(URL_API+'/studentrev/updatereject', {revid, studentid, message : this.refs.reject.value}, options)
             .then((res)=>{
                 window.alert('success update reject')
                 this.setState({
