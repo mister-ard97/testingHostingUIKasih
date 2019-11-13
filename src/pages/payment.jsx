@@ -100,6 +100,7 @@ class Payment extends Component {
     }
 
     updateStatus=(status)=>{
+    
         this.setState({status})
         console.log('socket Status ============== > ')
         console.log(status)

@@ -404,9 +404,15 @@
   src: local('Neon80'), url(./fonts/Neon.ttf) format('truetype');
 }
 
-body {
-    font-family: 'Neon80', cursive, sans-serif !important;
-}
+/* body { */
+    
+    /* min-height: 100vh !important; */
+    /*  */
+/* } */
+
+/* body #root {
+  min-height: 100 !important;
+} */
 
 .font-size-36 {
   font-size: 36pt;
@@ -499,6 +505,7 @@ body {
 .Banner-Home {
   background: url('./assets/Banner2.png') no-repeat top;
   background-size: cover;
+  height: 60vh;
   /* object-fit: cover; */
   /* height: auto; */
 }
@@ -1253,7 +1260,87 @@ a.bg-scholarship:hover {
 .classfooter{
   /* style={{backgroundColor : '#ce4948', minHeight : '25vh', color : '#f1f1f1'}} */
   background-color:  #ce4948;
-  min-height: 25vh;
+  /* position: absolute; 
+  bottom:0; 
+  width:100%;  */
+  /* height:100px;  */
+  min-height: 41vh;
 
   color:  #FFFCFD;
+}
+
+
+
+
+/* Fadein Animation */
+
+/* .userDropdown:hover .fade-in{
+  opacity: 1;
+}
+
+.userDropdown .fade-in{
+  opacity: 0;
+} */
+
+
+
+.fade-in {
+  opacity: 0;
+
+   animation: fadeIn ease-in-out .5s;
+  -webkit-animation: fadeIn ease-in-out .5s;
+  -moz-animation: fadeIn ease-in-out .5s;
+  -o-animation: fadeIn ease-in-out .5s;
+  -ms-animation: fadeIn ease-in-out .5s; 
+  -webkit-animation-fill-mode: forwards;    
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)   */
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode:forwards; 
+}
+
+
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }

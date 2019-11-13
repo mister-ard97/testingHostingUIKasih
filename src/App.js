@@ -87,8 +87,9 @@ class App extends Component {
       )
     }
     return (
-        <div className='MaCommerce mb-0 pb-0' >
+        <div className='mb-0 pb-0 ' >
               { /* Buat Route untuk User dan User Admin */ }
+              <div style={{minHeight : '40vh'}}>
               <Header />
               <Switch>
                 <Route path='/' component={Home} exact />
@@ -134,7 +135,9 @@ class App extends Component {
 
                 <Route path='*' component={NotFound} />
               </Switch>
+              </div>
               <Footer/>
+         
 
        
         {/* Route Admin */}

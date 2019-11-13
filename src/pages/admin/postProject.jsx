@@ -7,7 +7,9 @@ import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
 
+import { CloudinaryContext, Image } from 'cloudinary-react';
 import {Modal,ModalBody} from 'reactstrap'
+import{  Progress } from 'reactstrap';
 
 
 // function insertStar() {
@@ -27,6 +29,8 @@ class postProject extends React.Component{
              imageFile : null,
              imagequill:null,
              modalopen:false ,
+             uploadProgress : 0,
+             redirectHome : false
            
             } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
@@ -65,6 +69,7 @@ class postProject extends React.Component{
                         formData.append('image',file)
                         Axios.post(URL_API + `/project/GenerateURL`, formData)
                         .then((res) => {
+                        
                             console.log(res.data)
                             this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
                         })
@@ -95,9 +100,14 @@ class postProject extends React.Component{
         'link', 'image'
     ]
 
+    
+
     previewFile = (event) => {
         var preview = document.getElementById('imgpreview')
         var file    = document.getElementById('imgprojectinput').files[0];
+        // console.log(file.size)
+        // var size = document.getElementById('myfile').files[0].size;
+
         var imgfile = event.target.files[0]
 
        
@@ -122,16 +132,31 @@ class postProject extends React.Component{
         }
     }
 
+    updateUploadProgress = (progress) =>{
+        this.setState({
+            uploadProgress : progress
+        })
+    }
+
     onSubmitClick = () =>{
    
         var formData = new FormData()
         let token = localStorage.getItem('token')
         var headers ={
+            onUploadProgress: (progressEvent) => {
+                const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
+                console.log("onUploadProgress", totalLength);
+                if (totalLength !== null) {
+                    this.updateUploadProgress(Math.round( (progressEvent.loaded * 100) / totalLength ));
+                    console.log(Math.round( (progressEvent.loaded * 100) / totalLength ))
+                }
+            },
             headers : 
             {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type' : 'multipart/form-data'
-            }
+                'Content-Type' : 'multipart/form-data',
+              
+            },
         }
 
         var data = {
@@ -151,9 +176,14 @@ class postProject extends React.Component{
         Axios.post(URL_API+'/project/postproject', formData, headers)
         .then((res)=>{
             window.alert("insert success")
+            this.setState({
+                redirectHome : true
+            })
         })
         .catch((err)=>{
-            window.alert(err)
+            console.log(err.response)
+            this.updateUploadProgress(0)
+            window.alert(err.response.data.error)
         })
     }
 
@@ -194,7 +224,20 @@ class postProject extends React.Component{
     
 
     render(){
+        if(this.state.redirectHome){
+            return <Redirect to="/"/>
+        }
         return(
+            <CloudinaryContext
+            cloudName='purwadhika-startup-and-coding-school'
+            uploadPreset='enverdl'
+             >
+{/* 
+                <Image
+                    publicId="https://cloudinary.com/images/logo.png"
+                    fetch-format="auto"
+                    quality="auto"
+                /> */}
             <div>
                 <div className="editorxd">
 
@@ -227,13 +270,24 @@ class postProject extends React.Component{
                 <input type="file" id="imgprojectinput" className="form-control mb-4" placeholder="masukkan project description" onChange={this.previewFile}/>
                 <div className="mt-2 mb-4">
                     <img id="imgpreview" alt='imgpreview' width="200px" height="200px"/>
+
+                    {this.state.uploadProgress ? 
+                    <Progress  className="font-weight-bold mb-3" animated value={this.state.uploadProgress}  color="primary">
+                    {this.state.uploadProgress}
+                    </Progress>
+                    :
+                    null
+                    }
+                    
                 </div>
+
 
                 <h5>Ajakan Campaign</h5>
                 <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
                 <p>Maks 100 Karakter</p>
                 <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
             </div>
+            </CloudinaryContext>
         )
     }
 }

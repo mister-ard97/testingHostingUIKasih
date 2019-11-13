@@ -643,10 +643,10 @@ class Home extends Component {
 
                 {/* New Konten */}
                 <div className='container-fluid mb-5'>
-                    <div className='row m-0'>
-                        <div className='col-12 d-flex justify-content-center'>
-                            <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR DONATE</div>
+                    <div className='m-0'>
+                        <div className='row d-flex justify-content-center'>
+                            <div className="sharebutton col-8 col-md-2">SHARE YOUR STORY</div>
+                            <div className="donatebutton col-8 col-md-2">SHARE YOUR STORY </div>
                         </div>
                     </div>
                 </div>
