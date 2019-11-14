@@ -7,9 +7,10 @@ import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
 
-import { CloudinaryContext, Image } from 'cloudinary-react';
-import {Modal,ModalBody} from 'reactstrap'
+import { CloudinaryContext } from 'cloudinary-react';
+// import {Modal,ModalBody} from 'reactstrap'
 import{  Progress } from 'reactstrap';
+import { dateCheck, isDataValid } from '../../helpers/helpers';
 
 
 // function insertStar() {
@@ -177,24 +178,37 @@ class postProject extends React.Component{
             projectEnded : this.refs.prdateend.value,
             shareDescription: this.refs.shareDescription.value
         }
+        console.log(isDataValid(data))
+        if(!isDataValid(data)){
+            return window.alert('Harap Untuk mengisi semua form')
+        }
+
+        if(dateCheck(this.refs.prdatestart.value , this.refs.prdateend.value)){
+            return window.alert('Mohon di cek kembali tanggal project ')
+        }
+
         
-        formData.append('image', this.state.imageFile) 
-        formData.append('data', JSON.stringify(data))
 
-        console.log(data)
 
-        Axios.post(URL_API+'/project/postproject', formData, headers)
-        .then((res)=>{
-            window.alert("insert success")
-            this.setState({
-                redirectHome : true
-            })
-        })
-        .catch((err)=>{
-            console.log(err.response)
-            this.updateUploadProgress(0)
-            window.alert(err.response.data.error)
-        })
+        
+        
+        // formData.append('image', this.state.imageFile) 
+        // formData.append('data', JSON.stringify(data))
+
+        // console.log(data)
+
+        // Axios.post(URL_API+'/project/postproject', formData, headers)
+        // .then((res)=>{
+        //     window.alert("insert success")
+        //     this.setState({
+        //         redirectHome : true
+        //     })
+        // })
+        // .catch((err)=>{
+        //     console.log(err.response)
+        //     this.updateUploadProgress(0)
+        //     window.alert(err.response.data.error)
+        // })
     }
 
     handleChange(value) {
@@ -275,7 +289,7 @@ class postProject extends React.Component{
                             modules={this.modules}
                             formats={this.formats}
                             onChange={this.handleChange} 
-                /> */}
+                /> 
                 {/* <CKEditor
                     editor={ DokumenEditor }
                 /> */}

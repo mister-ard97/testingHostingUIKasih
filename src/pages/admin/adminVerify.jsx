@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios'
-import { URL_API } from '../../helpers/Url_API';
+import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
 import queryString from 'query-string'
 import moment from 'moment'
@@ -17,11 +17,13 @@ class AdminVerify extends Component {
         edit : false,
         imageFile : [],
         schooldata : [],
+        province : []
     }
 
     componentDidMount() {
       this.getStudentUnverified()
       this.getSchool()
+      this.getProvinsiList()
        
     }
 
@@ -39,6 +41,28 @@ class AdminVerify extends Component {
         })
     }
 
+    getProvinsiList = () =>{
+        Axios.get(GETTOKENURL)
+        .then((res)=>{
+          var token = res.data.token
+          token = token + '/m/wilayah/provinsi'
+          Axios.get(APIWILAYAHURL+token)
+          .then((res)=>{
+              console.log(res.data)
+            this.setState({
+              province : res.data.data
+            })
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+      
+    }
+
     renderOptionSchool = () =>{
         if(this.state.schooldata.length !== 0){
             console.log(this.state.schooldata)
@@ -54,6 +78,23 @@ class AdminVerify extends Component {
             )
         }
 
+    }
+
+    printDataProvinsi = () => {
+        if(this.state.province.length === 0 ){
+          return (
+            <option value="" disabled selected hidden>Loading...</option>
+          )
+        }else{
+          var list = this.state.province.map((val)=>{
+            return (
+                <option value={val.name}> {val.name} </option>
+            )
+        })
+        
+        return list 
+        }
+        
     }
 
     getStudentUnverified = () =>{
@@ -269,8 +310,10 @@ class AdminVerify extends Component {
                             <input type="text" className="form-control mb-2" value={data.name} disabled/>
                             <h5 className="mb-2">Status</h5>
                             <input type="text" className="form-control mb-2" value={data.status} disabled/>
-                            <h5 className="mb-2">Birth date</h5>
+                            <h5 className="mb-2">Tanggal Lahir</h5>
                             <input type="text" className="form-control mb-2" value={data.tanggalLahir} disabled/>
+                            <h5 className="mb-2">Provinsi</h5>
+                            <input type="text" className="form-control mb-2" value={data.provinsi} disabled/>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2" value={data.story} disabled/>
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
@@ -294,8 +337,13 @@ class AdminVerify extends Component {
                     <input type="text" className="form-control mb-2" defaultValue={data.name} ref="inputnama"/>
                     <h5 className="mb-2">Status</h5>
                     <input type="text" className="form-control mb-2" defaultValue={data.status} ref="inputstatus"/>
-                    <h5 className="mb-2">Birth date</h5>
+                    <h5 className="mb-2">Tanggal Lahir</h5>
                     <input type="date" className="form-control mb-2" defaultValue={moment(data.tanggalLahir).format('YYYY-MM-DD')} ref="inputdate" />
+                    <h5 className="mb-2">Tempat Lahir</h5>
+                    <select required id="myList" ref="inputprovinsi" className="form-control" placeholder="Choose New Residence" defaultValue={data.provinsi}> 
+                            <option value="">CHOOSE PROVINCE</option>
+                            {this.printDataProvinsi()}
+                    </select>
                     <h5 className="mb-2">Story</h5>
                     <input type="text" className="form-control mb-2" defaultValue={data.story} ref="inputstory"/>
                     <h5 className="mb-2">Pendidikan Terakhir</h5>
@@ -368,8 +416,14 @@ class AdminVerify extends Component {
                             <input type="text" className="form-control mb-2" value={olddata.status} disabled/>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2" value={olddata.story} disabled/>
-                            <h5 className="mb-2">Birth date</h5>
+                            <h5 className="mb-2">Tanggal Lahir</h5>
                             <input type="date" className="form-control mb-2" value={moment(olddata.tanggalLahir).format('YYYY-MM-DD')} ref="inputdate" disabled />
+                            <h5 className="mb-2">Tempat Lahir</h5>
+                            <input type="text" className="form-control mb-2" value={olddata.provinsi} disabled/>
+                            {/* <select required id="myList" ref="inputprovinsi" className="form-control" placeholder="Choose New Residence" defaultValue={olddata.provinsi}> 
+                                    <option value="">CHOOSE PROVINCE</option>
+                                    {this.printDataProvinsi()}
+                            </select> */}
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
                             <input type="text" className="form-control mb-2" value={olddata.pendidikanTerakhir} disabled/>
                             <h5 className="mb-2">Gender</h5>
@@ -397,8 +451,13 @@ class AdminVerify extends Component {
                             </select>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2" ref='inputstory' defaultValue={data.story}/>
-                            <h5 className="mb-2">Birth date</h5>
+                            <h5 className="mb-2">Tanggal Lahir</h5>
                             <input type="date" className="form-control mb-2" defaultValue={moment(data.tanggalLahir).format('YYYY-MM-DD')} ref="inputdate" />
+                            <h5 className="mb-2">Tempat Lahir</h5>
+                            <select required id="myList" ref="inputprovinsi" className="form-control" placeholder="Choose New Residence" defaultValue={data.provinsi}> 
+                                <option value="">CHOOSE PROVINCE</option>
+                                {this.printDataProvinsi()}
+                            </select>
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
                             {/* <input type="text" className="form-control mb-2" ref='inputpendidikan' defaultValue={data.pendidikanTerakhir}/> */}
                             <select className='form-control' ref='inputpendidikan' defaultValue={data.pendidikanTerakhir}>
@@ -438,8 +497,10 @@ class AdminVerify extends Component {
                             <input type="text" className="form-control mb-2" value={olddata.status} disabled/>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2" value={olddata.story} disabled/>
-                            <h5 className="mb-2">Birth date</h5>
+                            <h5 className="mb-2">Tanggal Lahir</h5>
                             <input type="date" className="form-control mb-2" value={moment(olddata.tanggalLahir).format('YYYY-MM-DD')} disabled />
+                            <h5 className="mb-2">Tempat Lahir</h5>
+                            <input type="text" className="form-control mb-2" value={olddata.provinsi} disabled/>
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
                             <input type="text" className="form-control mb-2" value={olddata.pendidikanTerakhir} disabled/>
                             <h5 className="mb-2">Gender</h5>
@@ -464,8 +525,10 @@ class AdminVerify extends Component {
                             <input type="text" className="form-control mb-2"  disabled value={data.status}/>
                             <h5 className="mb-2">Story</h5>
                             <input type="text" className="form-control mb-2"  disabled value={data.story}/>
-                            <h5 className="mb-2">Birth date</h5>
+                            <h5 className="mb-2">Tanggal Lahir</h5>
                             <input type="date" className="form-control mb-2" defaultValue={moment(data.tanggalLahir).format('YYYY-MM-DD')} ref="inputdate" disabled/>
+                            <h5 className="mb-2">Tempat Lahir</h5>
+                            <input type="text" className="form-control mb-2" value={data.provinsi} disabled/>
                             <h5 className="mb-2">Pendidikan Terakhir</h5>
                             <input type="text" className="form-control mb-2"  disabled value={data.pendidikanTerakhir}/>
                             <h5 className="mb-2">Gender</h5>
@@ -519,6 +582,7 @@ class AdminVerify extends Component {
         if(confirm){
             if(this.state.edit){
                 var formData = new FormData()
+                console.log(revid, studentid)
 
                 const token = localStorage.getItem('token');
 
@@ -534,6 +598,7 @@ class AdminVerify extends Component {
                     name : this.refs.inputnama.value,//
                     // date : this.refs.inputdate.value,
                     tanggalLahir : this.refs.inputdate.value,
+                    provinsi : this.refs.inputprovinsi.value,
                     status : this.refs.inputstatus.value,//
                     gender : this.refs.inputgender.value,//
                     schoolId : this.refs.inputsekolah.value,//
@@ -551,7 +616,22 @@ class AdminVerify extends Component {
                 Axios.put(`${URL_API}/student/putstudentdata/${studentid}`, formData, options)
                 .then((res)=>{
                     window.alert('edit success')
-                    Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid}, options)
+                    console.log(revid, studentid)
+                    console.log({
+                        revid, 
+                        studentid
+                    })
+                    options ={
+                        headers : 
+                        {
+                            'Authorization': `Bearer ${token}`,
+                            // 'Content-Type' : 'multipart/form-data'
+                        }
+                    }
+                    Axios.put(URL_API+'/studentrev/updateapprove', {
+                        revid : revid,
+                        studentid : studentid
+                    }, options)
                     .then((res)=>{
                         window.alert('success update approve')
                         this.setState({
@@ -634,6 +714,7 @@ class AdminVerify extends Component {
             name : this.refs.inputnama.value,
             tanggalLahir : this.refs.inputdate.value,
             status : this.refs.inputstatus.value,
+            provinsi : this.refs.inputprovinsi.value,
             gender : this.refs.inputgender.value,
             schoolId : this.refs.inputsekolah.value,
             pendidikanTerakhir : this.refs.inputpendidikan.value,

@@ -23,6 +23,9 @@ class HistoryDonasi extends Component {
         })
     }
 
+
+
+
     renderHistory = () => {
         return this.state.historyData.map((val, i) => {
             console.log(val)

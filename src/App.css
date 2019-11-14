@@ -1285,11 +1285,11 @@ a.bg-scholarship:hover {
 .fade-in {
   opacity: 0;
 
-   animation: fadeIn ease-in-out .5s;
-  -webkit-animation: fadeIn ease-in-out .5s;
-  -moz-animation: fadeIn ease-in-out .5s;
-  -o-animation: fadeIn ease-in-out .5s;
-  -ms-animation: fadeIn ease-in-out .5s; 
+   animation: fadeIn ease-in-out .25s;
+  -webkit-animation: fadeIn ease-in-out .25s;
+  -moz-animation: fadeIn ease-in-out .25s;
+  -o-animation: fadeIn ease-in-out .25s;
+  -ms-animation: fadeIn ease-in-out .25s; 
   -webkit-animation-fill-mode: forwards;    
   /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)   */
   -moz-animation-fill-mode: forwards;

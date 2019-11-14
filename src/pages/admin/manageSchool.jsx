@@ -6,6 +6,7 @@ import {Autocomplete} from '@material-ui/lab'
 import Axios from 'axios'
 import _ from 'lodash'
 import { URL_API } from '../../helpers/Url_API'
+import { isDataValid } from '../../helpers/helpers'
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -225,6 +226,10 @@ class ManageSchool extends Component{
             nomorRekening,
             bank,
             email
+        }
+
+        if(!isDataValid(data)){
+            return window.alert('harap untuk mengisi semua form')
         }
 
         console.log(data)

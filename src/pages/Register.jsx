@@ -8,6 +8,8 @@ import { onUserRegister, cleanError, userLoginWithGoogle, userLoginWithFacebook 
 
 import { Redirect, Link } from 'react-router-dom';
 import { URL_API } from '../helpers/Url_API'
+// import { is } from 'immutable';
+import { isDataValid } from '../helpers/helpers';
 
 class Register extends Component {
     state = {
@@ -34,6 +36,11 @@ class Register extends Component {
             // address: this.Address.value,
             UserImage: this.state.UserImageDB
         }
+        if(!isDataValid(objUserReg)){
+            return window.alert('harap mengecek kembali semua form')
+        }
+
+
 
         this.props.onUserRegister(objUserReg);
     }
@@ -41,8 +48,8 @@ class Register extends Component {
     addUserImageChange = (e) => {
         if(e.target.files[0]) {
             this.setState({ 
-                UserImageFile: URL.createObjectURL(e.target.files[0]), 
                 UserImageName: e.target.files[0].name,
+                UserImageFile: URL.createObjectURL(e.target.files[0]), 
                 UserImageDB: e.target.files[0]
             })
         } else {
