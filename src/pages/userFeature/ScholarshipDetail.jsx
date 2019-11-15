@@ -13,7 +13,7 @@ class ScholarshipDetail extends Component {
     componentDidMount(){
         let url = queryString.parse(this.props.location.search)
         console.log(url)
-        let id = 12
+        // let id = 12
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ url.id)
         .then((res) => {
             console.log(res.data)

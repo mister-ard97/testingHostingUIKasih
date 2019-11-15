@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import { CustomInput } from 'reactstrap';
 import { URL_API } from '../helpers/Url_API';
+import { isDataValid } from '../helpers/helpers';
 
 
 class StudentDetails extends Component {
@@ -354,6 +355,10 @@ class StudentDetails extends Component {
             studentId: this.props.location.search.split('=')[1],
             dataStatus: 'Unverified',
             kelas: this.Kelas.value
+        }
+
+        if(!isDataValid(newObj)){
+            return window.alert('Harap Mengisi seluruh form')
         }
 
         const token = localStorage.getItem('token');

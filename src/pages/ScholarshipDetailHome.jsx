@@ -34,6 +34,12 @@ class ScholarshipDetailHome extends Component {
     componentDidMount() {
         let params = queryString.parse(this.props.location.search)
         console.log(params.id)
+        let token = localStorage.getItem('token')
+        var options = {
+            headers : {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
 
         Axios.get(URL_API + '/scholarship/getScholarshipDetail?id='+ params.id)
         .then((res) => {

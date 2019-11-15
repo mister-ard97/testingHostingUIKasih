@@ -6,6 +6,7 @@ import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGro
 import { connect } from 'react-redux'
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import queryString from 'query-string'
+import { isDataValid } from '../helpers/helpers';
 
 class Studentlist extends Component {
     state = {
@@ -142,15 +143,15 @@ class Studentlist extends Component {
         console.log(obj)
         obj.userId = this.props.id
 
-        // let token = localStorage.getItem('token')
-        // var options ={
-        //     headers : 
-        //     {
-        //         'Authorization': `Bearer ${token}`
-        //     }
-        // }
+        let token = localStorage.getItem('token')
+        var options ={
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
         
-        Axios.post(URL_API+`/student/getstudentdatapaging`, obj)
+        Axios.post(URL_API+`/student/getstudentdatapaging`, obj, options)
         .then(res=>{
             console.log(res.data)
             var results = res.data.rows.map((val,id)=>{
@@ -365,6 +366,7 @@ class Studentlist extends Component {
             story : data[i].story,
             userId : this.props.id,
             alamat : data[i].alamat,
+            provinsi : data[i].provinsi,
             status : data[i].status,
             schoolId : data[i].schoolId,
             studentId : id
@@ -377,6 +379,7 @@ class Studentlist extends Component {
             pendidikanTerakhir : this.refs.editpendidikan.value,
             story :       this.refs.editstory.value,
             alamat :         this.refs.editalamat.value,
+            provinsi : this.refs.editprovinsi.value,
             status :    this.refs.editstatus.value,
             schoolId : this.refs.editsekolah.value
         }
@@ -449,7 +452,7 @@ class Studentlist extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label>Temppat Lahir</Label>
-                        <select required id="myList" ref="inputprovince" className="form-control mb-5" placeholder="Choose New Residence">
+                        <select required id="myList" ref="provinsi" className="form-control" placeholder="Choose New Residence">
                                 <option value="">CHOOSE PROVINCE</option>
                                 {this.printDataProvinsi()}
                         </select>
@@ -506,8 +509,8 @@ class Studentlist extends Component {
             let i = this.state.editselected
             return(
                 <div>
-                <Modal isOpen={this.state.editmodal} toggle={()=>this.setState({ editmodal : false})} size='xl' >
-                  <ModalHeader> Student</ModalHeader>
+                <Modal isOpen={this.state.editmodal} toggle={()=>this.setState({ editmodal : false})} size='xl'  >
+                  <ModalHeader toggle={()=>this.setState({ editmodal : false})}> Student</ModalHeader>
                   <ModalBody>
                     <Form>
                         <FormGroup>
@@ -529,6 +532,13 @@ class Studentlist extends Component {
                           <Label>Tanggal Lahir</Label>
                           <input type="text" className='form-control' value={Date(this.state.studentdata[i].tanggalLahir).toLocaleString('id-IND', {dateStyle : 'medium'})} disabled/>
                       </FormGroup>
+                      <FormGroup>
+                            <Label>Tempat Lahir</Label>
+                        <select required id="myList" ref="editprovinsi" className="form-control" placeholder="Choose New Residence" defaultValue={this.state.studentdata[i].provinsi}>
+                                <option value="">CHOOSE PROVINCE</option>
+                                {this.printDataProvinsi()}
+                        </select>
+                        </FormGroup>
                       <FormGroup>
                           <Label>Gender</Label>
                           <input type="text" className='form-control'  value={this.state.studentdata[i].gender} disabled/>
@@ -593,16 +603,22 @@ class Studentlist extends Component {
     }
 
     addNewStudent = () => {
+        
         var newObj = {
            name: this.refs.namaMurid.value,
            pendidikanTerakhir: this.refs.pendidikan.value,
            gender: this.refs.gender.value,
            status: this.refs.status.value,
+           provinsi : this.refs.provinsi.value,
            alamat: this.refs.alamat.value,
            tanggalLahir: this.refs.tanggalLahir.value,
            userId: this.props.id,
            story: this.refs.story.value,
            schoolId: this.refs.sekolah.value
+        }
+
+        if(!isDataValid(newObj) || !this.state.addImageFile){
+            return window.alert('harap untuk mengisi semua form')
         }
         console.log(newObj)
         var formData = new FormData()
