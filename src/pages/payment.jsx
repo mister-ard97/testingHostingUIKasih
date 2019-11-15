@@ -25,7 +25,9 @@ class Payment extends Component {
         paymentSource : '',
         nominalSubscription : null,
         loadingSubsData : true,
-        redirectLogin : false
+        redirectLogin : false,
+
+        check : false
     }
 
     componentDidMount(){
@@ -78,7 +80,9 @@ class Payment extends Component {
 
         // localStorage.removeItem('nama')
         // localStorage.removeItem('namaScholarship')
-
+        this.setState({
+            check : true
+        })
         const socket = io(URL_API)
         console.log(socket)
         console.log(this.state)
@@ -94,7 +98,8 @@ class Payment extends Component {
             this.setState({
                 loadingSubsData : false,
                 nominalSubscription : res.data.result ? res.data.result.nominalSubscription : null,
-                nominal : res.data.result ? res.data.result.nominalSubscription : null
+                nominal : res.data.result ? res.data.result.nominalSubscription : null,
+                paymentSource : 'subscription'
             })
         }
     }
@@ -299,7 +304,19 @@ class Payment extends Component {
     }
     
     render(){
-        console.log(this.state.status)
+        console.log(this.state)
+        if((this.state.paymentSource === "donation" || this.state.paymentSource === 'subscription') && this.state.check){
+            console.log('masukmasuk')
+            console.log(this.state.paymentSource, this.state.check)
+            return(
+                <div className='container mt-4'>
+                    
+                        {this.renderPayment()}
+                    
+                </div>
+            )
+           
+        }
         if(this.state.redirectLogin){
             return <Redirect to={{
                 pathname : '/login',
@@ -314,11 +331,21 @@ class Payment extends Component {
             return <Redirect to={'/paymentError'}/>
         }
         console.log(this.props.match)
-        return(
-            <div className='container mt-4'>
-                
-                    {this.renderPayment()}
-                
+        if(this.state.check ){
+
+            return(
+                <Redirect to={{
+                    pathname : '/login',
+                    from : this.props.location.pathname + this.props.location.search
+                }} />
+            )
+        }
+
+        return (
+            <div className="mt-5">
+                <h1>
+                    Loading...
+                </h1>
             </div>
         )
     }

@@ -509,8 +509,8 @@ class Studentlist extends Component {
             let i = this.state.editselected
             return(
                 <div>
-                <Modal isOpen={this.state.editmodal} toggle={()=>this.setState({ editmodal : false})} size='xl' >
-                  <ModalHeader> Student</ModalHeader>
+                <Modal isOpen={this.state.editmodal} toggle={()=>this.setState({ editmodal : false})} size='xl'  >
+                  <ModalHeader toggle={()=>this.setState({ editmodal : false})}> Student</ModalHeader>
                   <ModalBody>
                     <Form>
                         <FormGroup>
