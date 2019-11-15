@@ -3,7 +3,7 @@ import { Table, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input } from
 import { URL_API } from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Axios from 'axios'
@@ -76,7 +76,7 @@ class ScholarshipList extends Component{
                     <td style={{textAlign:'center'}}>{val.isVerified}</td>
                     <td style={{textAlign:'center'}}>{val.isOngoing}</td>
                     <td style={{textAlign:'center'}}>{val.note}</td>
-                    <td style={{textAlign:'center'}}><Link to={`/scholarshipDetail?id=${val.id}`}><Button color='primary'>Detail</Button></Link></td>
+                    <td style={{textAlign:'center'}}><a href={`/scholarshipDetail?id=${val.id}`} className='btn btn-primary'></a></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
                     <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
                 </tr>
@@ -375,7 +375,7 @@ class ScholarshipList extends Component{
         return(
             <div className='container mt-5 mb-5'>
                 <p>List Beasiswa</p>
-                <div className='mb-3'><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div>
+                <div className='mb-3'><Button color='success'><a href='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</a></Button></div>
                 <Table>
                     <tr >
                         <th>No.</th>

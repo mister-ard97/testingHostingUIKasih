@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
 import { TextField, MenuItem, makeStyles } from '@material-ui/core'
 import {Autocomplete} from '@material-ui/lab'
@@ -356,9 +356,14 @@ class ManageSchool extends Component{
                 
                 <div className='container mt-4 mb-4'>
                     <b>List Sekolah Terdaftar</b>
-                    <Link to='/schooladd'>
+                    {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' onClick={()=>this.setState({addModal:true})}>Add Sekolah</Button>
-                    </Link>
+                    </Link> */}
+
+                    <a href='/schooladd'>
+                        <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' onClick={()=>this.setState({addModal:true})}>Add Sekolah</Button>
+                    </a>
+
                     <Table className='mt-4'>
                         <tr>
                             <th>No.</th>

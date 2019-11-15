@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Numeral from 'numeral'
 import { connect } from 'react-redux'
 import { getSub, applySub } from '../redux/actions' 
-import { Redirect, Link } from 'react-router-dom'
+// import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
 import { InputGroup, InputGroupAddon, Button, Input, Progress } from 'reactstrap';
 import Axios from 'axios'

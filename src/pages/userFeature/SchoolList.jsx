@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
 import Axios from 'axios'
 import { URL_API } from '../../helpers/Url_API'
@@ -185,9 +185,14 @@ class SchoolList extends Component{
             <div>
                 <div className='container mt-4 mb-4'>
                     <b>List Sekolah Terdaftar</b>
-                    <Link to='/schooladd'>
+                    {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3'>Add Sekolah</Button>
-                    </Link>
+                    </Link> */}
+
+                    <a href='/schooladd' className='btn btn-success mb-3' style={{float:'right', textDecoration: 'none'}}>
+                        Add Sekolah
+                    </a>
+
                     <Table className='mt-4'>
                         <tr>
                             <th>No.</th>

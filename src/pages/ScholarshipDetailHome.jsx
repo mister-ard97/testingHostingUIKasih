@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Numeral from 'numeral'
 import { connect } from 'react-redux';
 import Moment from 'moment'
@@ -55,6 +55,14 @@ class ScholarshipDetailHome extends Component {
         .catch((err) => {
             console.log(err)
         })
+
+        let token = localStorage.getItem('token')
+        var options = {
+            headers : 
+            {
+                'Authorization': `Bearer ${token}`
+            }
+        }
 
         Axios.get(URL_API + '/user/getSubscription/'+params.id , options)
             .then((subscription) => {

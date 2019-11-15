@@ -172,11 +172,9 @@ app.get('/verifiedReset', function(request, response) {
     const filePath = path.resolve(__dirname, './build', 'index.html')
     fs.readFile(filePath, 'utf8', function (err,data) {
       if (err) {
-        console.log('asdihasdia')
         return console.log(err);
       }
-      console.log('aisjdiajsdiajsdijasidjaisdjiasjdiajsdijasdijasidjaisjd')
-      console.log(request.query.id)
+
       console.log(URL_API + `/project/getDetailProject?id=${request.query.id}`)
       Axios.get(URL_API + `/project/getDetailProject?id=${request.query.id}`)
         .then(async (res) => {

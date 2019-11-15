@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios'
 import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import queryString from 'query-string'

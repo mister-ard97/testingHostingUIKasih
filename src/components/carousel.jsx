@@ -5,7 +5,6 @@ import {
     CarouselControl,
     CarouselIndicators
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { URL_API } from '../helpers/Url_API';
 import Banner1 from '../assets/Banner1.png';

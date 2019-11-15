@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -72,9 +72,13 @@ class ForgotPassword extends Component {
                         <div className='row py-3'>
                             <div className="col-12">
                                 <div className='py-3 text-center'>
-                                    <Link to='/' className='navbar-brand text-dark'>
+                                    {/* <Link to='/' className='navbar-brand text-dark'>
                                         Testing<span>Ui</span>
-                                    </Link>
+                                    </Link> */}
+
+                                    <a href='/' className='navbar-brand text-dark'>
+                                        Testing<span>Ui</span>
+                                    </a>
                                 </div>
                                 <div className="card px-3">
                                     <div className="card-body">
@@ -107,7 +111,7 @@ class ForgotPassword extends Component {
                                             this.props.loading ?
                                                 <p className='mt-3'>Ingat Password Anda? Login Now!</p>
                                                 :
-                                                <p className='mt-3'>Ingat Password Anda?   <Link to='/login'>Login Now!</Link></p>
+                                                <p className='mt-3'>Ingat Password Anda?   <a href='/login'>Login Now!</a></p>
                                         }
                                     </div>
                                 </div>

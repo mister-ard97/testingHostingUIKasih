@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Axios from 'axios'
+import Axios from 'axios';
+import { connect } from 'react-redux';
 import { URL_API } from '../../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
 import queryString from 'query-string'
@@ -756,4 +757,11 @@ class AdminVerify extends Component {
     }
 }
 
-export default AdminVerify
+const mapStateToProps = ({auth}) => {
+    return {
+        role: auth.role,
+        email: auth.email
+    }
+}
+
+export default connect(mapStateToProps)(AdminVerify)

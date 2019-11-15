@@ -9,7 +9,6 @@ import { URL_API } from '../helpers/Url_API';
 import Logo from '../assets/logo/logo_without_text.png'
 import Carousel from '../components/carousel';
 import LogoGray from '../assets/logo/logo_text_bottom_gray.png';
-import Button from '../components/button';
 
 import queryString from 'query-string';
 import numeral from 'numeral'
@@ -39,8 +38,8 @@ class Home extends Component {
     }
     
     componentDidMount() {
-        console.log('didmount')
         window.scrollTo(0,0)
+        document.title = 'Kasih Nusantara';
         // document.title = 'Testing App'
         // if(!parsed.page){
         //     parsed.page = 1

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { URL_API } from '../helpers/Url_API';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { Pagination, PaginationItem, PaginationLink, Progress } from 'reactstrap';
 
