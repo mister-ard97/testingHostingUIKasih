@@ -8,18 +8,29 @@ import {URL_API} from '../../helpers/Url_API'
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import ReactQuill from 'react-quill'; // ES6
+
+import ReactQuill, {Quill} from 'react-quill'
+// import {ImageDrop} from 'quill-image-drop-module'
+import ImageResize from 'quill-image-resize-module'
 import 'react-quill/dist/quill.snow.css'; // ES6
-
-
+ 
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
+import { connect } from 'react-redux'
+Quill.register('modules/imageResize', ImageResize);
+
+// import { Quill } from 'react-quill';
+
+
+
+
+
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import { EditorState } from 'draft-js';
 // import { Editor } from 'react-draft-wysiwyg';
 // import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { connect } from 'react-redux'
+// import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -52,7 +63,8 @@ class ScholarshipAdd extends Component{
             sDeskripsi:'',
             nominal: 0,
             judul:'',
-            success: false
+            success: false,
+            listOfImages : []
            
             } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
@@ -61,6 +73,21 @@ class ScholarshipAdd extends Component{
 
     // REACTQUILL 
     modules = {
+
+        imageResize: {
+            handleStyles: {
+                backgroundColor: 'black',
+                border: 'none',
+                color: 'white'
+                // other camelCase styles for size display
+            },
+            displayStyles: {
+                backgroundColor: 'black',
+                border: 'none',
+                color: 'white'
+                // other camelCase styles for size display
+            }
+        },
         // toolbar: [
         //   [{ 'header': [1, 2, false] }],
         //   ['bold', 'italic', 'underline','strike', 'blockquote'],
@@ -101,7 +128,7 @@ class ScholarshipAdd extends Component{
                             }
                         }
 
-                        Axios.post(URL_API + `/project/GenerateURL`, formData, options)
+                        Axios.post(URL_API + `/scholarship/GenerateURL`, formData, options)
                         .then((res) => {
                             console.log(res.data)
                             this.quill.insertEmbed(this.quill.getSelection().index, 'image', URL_API+res.data); 
@@ -240,10 +267,81 @@ class ScholarshipAdd extends Component{
 
     
     handleChange(value) {
-        this.setState({
-            deskripsi : value
-        })
+        if(this.state.listOfImages.length === 0 ){
+            if(value.includes('img src=')){
+                console.log('NEW image true')
+                // let newImage = `img src=${value.split('img src=')[1].split('>')[0]}>`
+                let newImage = value.split('img src="')[1].split('"')[0]
+                let array = this.state.listOfImages
+                array.push(newImage)
+                this.setState({
+                    listOfImages : array,
+                    deskripsi : value
+                })
+            }else { 
+                this.setState({
+                    deskripsi:value
+                })
+            }
+        }else {
+            console.log(value)
+            // var check = false
+            var removeIndex = []
+            var array = this.state.listOfImages
+            var filtertext = value
+
+            this.state.listOfImages.forEach( async (element,i)  => {
+                if(!value.includes(element)){
+                    console.log(`gambar dengan ${element} hilang!!!`)
+                    this.deleteFile(element)
+                    removeIndex.push(i)
+                    var regeximg = new RegExp(`img src="${element}"`,"g");
+                    filtertext = filtertext.replace(regeximg, '')
+                }else {
+                  var regeximg = new RegExp(`img src="${element}"`,"g");
+                  filtertext = filtertext.replace(regeximg, '')
+                }
+            });
+            if(removeIndex.length !== 0) {
+                for(var y = removeIndex.length -1; y >= 0; y--){
+                    array.splice(removeIndex[y], 1)
+                }
+                if(filtertext.includes('img src="')){
+                    console.log('NEW image true')
+                    // let newImage = `img src=${value.split('img src=')[1].split('>')[0]}>`
+                    let newImage = value.split('img src="')[1].split('"')[0]
+                    let array = this.state.listOfImages
+                    array.push(newImage)
+                }
+            }else {
+                if(filtertext.includes('img src="')){
+                    console.log('NEW image true')
+                    let newImage = filtertext.split('img src="')[1].split('"')[0]
+                    let array = this.state.listOfImages
+                    array.push(newImage)
+                }
+            }
+             this.setState({
+                listOfImages : array,
+                deskripsi : value
+            })
+        }
      }
+
+     async deleteFile (filepath) {
+        console.log('delete file function')
+        filepath = filepath.replace('http://localhost:2019', '')
+        console.log(filepath)
+        try {
+            var res = await Axios.post(URL_API + '/project/deleteFileQuill', { filepath : filepath})
+            console.log(res.data.message)
+        }catch(err){
+            console.log(err)
+        }
+
+
+
+    }
 
 
 
@@ -412,6 +510,7 @@ class ScholarshipAdd extends Component{
         })
     }
     render(){
+        console.log(this.state.listOfImages)
         // console.log(this.state.detailSiswa.namaSekolah)
         // console.log(this.state.sDeskripsi)
         if(!this.state.datasiswa){

@@ -35,6 +35,7 @@ class postProject extends React.Component{
         super(props)
         this.state = { 
             text: '',
+            // filteredtext : '',
             imageFile : null,
             imagequill:null,
             modalopen:false ,
@@ -240,18 +241,27 @@ class postProject extends React.Component{
         })
     }
 
-     async handleChange (value) {
+    async deleteFile (filepath) {
+        console.log('delete file function')
+        filepath = filepath.replace('http://localhost:2019', '')
+        console.log(filepath)
+        try {
+            var res = await Axios.post(URL_API + '/project/deleteFileQuill', { filepath : filepath})
+            console.log(res.data.message)
+        }catch(err){
+            console.log(err)
+        }
 
 
-        
 
+    }
+
+    handleChange (value) {
         if(this.state.listOfImages.length === 0 ){
-            if(value.includes('<img src=')){
+            if(value.includes('img src=')){
                 console.log('NEW image true')
-                console.log(value.split('<img src="')[1].split('"')[0])
-
-                // let newImage = `<img src=${value.split('<img src=')[1].split('>')[0]}>`
-                let newImage = value.split('<img src="')[1].split('"')[0]
+                // let newImage = `img src=${value.split('img src=')[1].split('>')[0]}>`
+                let newImage = value.split('img src="')[1].split('"')[0]
                 let array = this.state.listOfImages
                 array.push(newImage)
                 this.setState({
@@ -268,147 +278,44 @@ class postProject extends React.Component{
             // var check = false
             var removeIndex = []
             var array = this.state.listOfImages
-            var filtertext = this.state.text
+            var filtertext = value
 
             this.state.listOfImages.forEach( async (element,i)  => {
                 if(!value.includes(element)){
                     console.log(`gambar dengan ${element} hilang!!!`)
+                    this.deleteFile(element)
                     removeIndex.push(i)
-                    var regeximg = new RegExp(`<img src="${element}"`,"g");
-                    //   var kalimat = ' rezap  dodol '
-                    //   kalimat = kalimat.replace(/p/g, '')
-                    //   console.log('kalimat menjadi ' + kalimat)
-                    //   var regex=/<img src=/g
+                    var regeximg = new RegExp(`img src="${element}"`,"g");
                     filtertext = filtertext.replace(regeximg, '')
-                      console.log('filtertext jadi ' , filtertext)
-                    // let newarray = this.state.listOfImages
-                    // newarray.splice(i, 1)
-                    // this.setState({
-                    //     listOfImages : newarray,
-                    //     text : value
-                    // })
-
                 }else {
-                  console.log('aman')
-               
-                    console.log(filtertext)
-                  var regeximg = new RegExp(`<img src="${element}"`,"g");
-                //   var kalimat = ' rezap  dodol '
-                //   kalimat = kalimat.replace(/p/g, '')
-                //   console.log('kalimat menjadi ' + kalimat)
-                //   var regex=/<img src=/g
-                filtertext = filtertext.replace(regeximg, '')
-                  console.log('filtertext jadi ' , filtertext)
-
-                //   for(let y = 0; y<this.state.listOfImages.length; y++){
-                //       console.log(`<img src="${this.state.listOfImages[y]}"`)
-                      
-                //     //   filtertext.replace(`<img src="${this.state.listOfImages[y]}"`, '')
-                //       await filtertext.replace(/<img/g, '')
-                //       console.log('filtertext jadi ' , filtertext)
-                //   }
-
-
-                //     if(filtertext.includes('<img src="')){
-                    //     console.log('NEW image true')
-                    //     console.log(value.split('<img src="')[1].split('"')[0])
-        
-                    //     // let newImage = `<img src=${value.split('<img src=')[1].split('>')[0]}>`
-                    //     let newImage = value.split('<img src="')[1].split('"')[0]
-                    //     let array = this.state.listOfImages
-                    //     array.push(newImage)
-                    //     this.setState({
-                    //         listOfImages : array,
-                    //         text : value
-                    //     })
-                    // }else{
-                    //     this.setState({
-                    //         text : value
-                    //     })
-                //   }
-                
+                  var regeximg = new RegExp(`img src="${element}"`,"g");
+                  filtertext = filtertext.replace(regeximg, '')
                 }
             });
-            console.log('finish loop , filtertext ' + filtertext)
-            
             if(removeIndex.length !== 0) {
                 for(var y = removeIndex.length -1; y >= 0; y--){
                     array.splice(removeIndex[y], 1)
-                    
                 }
-                console.log(array)
-                console.log(filtertext)
-                if(filtertext.includes('<img src="')){
+                if(filtertext.includes('img src="')){
                     console.log('NEW image true')
-                    console.log(filtertext.split('<img src="')[1].split('"')[0])
-    
-                    // let newImage = `<img src=${value.split('<img src=')[1].split('>')[0]}>`
-                    let newImage = value.split('<img src="')[1].split('"')[0]
+                    // let newImage = `img src=${value.split('img src=')[1].split('>')[0]}>`
+                    let newImage = value.split('img src="')[1].split('"')[0]
                     let array = this.state.listOfImages
                     array.push(newImage)
-                    
                 }
-                // else{
-                //     this.setState({
-                //         text : value
-                //     })
-                // }
             }else {
-                console.log(filtertext)
-                if(filtertext.includes('<img src="')){
+                if(filtertext.includes('img src="')){
                     console.log('NEW image true')
-                    console.log(filtertext.split('<img src="')[1].split('"')[0])
-    
-                    // let newImage = `<img src=${value.split('<img src=')[1].split('>')[0]}>`
-                    let newImage = value.split('<img src="')[1].split('"')[0]
+                    let newImage = filtertext.split('img src="')[1].split('"')[0]
                     let array = this.state.listOfImages
                     array.push(newImage)
-                    
                 }
             }
-
-            await this.setState({
+             this.setState({
                 listOfImages : array,
                 text : value
             })
         }
-   
-      
-
-      
-
-        // var newImage = false
-
-        // this.state.listOfImages.forEach((e,i) =>{
-        //     if(value.includes(e)){
-        //         if(e)
-        //         // console.log('old image number ' + i)
-        //     }
-        // })
-    
-        // if(value.includes('<img src=') && !value.includes()){
-        //     console.log('NEW image true')
-        //     console.log(value.split('<img src=')[1].split('>')[0])
-        //     let newImage = `<img src=${value.split('<img src=')[1].split('>')[0]}>`
-        //     let array = this.state.listOfImages
-        //     array.push(newImage)
-        //     this.setState({
-        //         listOfImages : array,
-        //         text : value
-        //     })
-
-        // }else {
-        //     this.setState({
-        //         text:value
-        //     })
-        // }
-        // console.log(value)
-        // if(value.includes(''))
- 
-
-    //    insertStar()
-   
-    //    console.log(this.state.text)
     }
 
     
@@ -431,53 +338,51 @@ class postProject extends React.Component{
                     quality="auto"
                 /> */
             <div>
-                <div className="editorxd">
+                <div className="editorxd row">
+                    <div className="col-8 offset-2">
+                        <h1 className="mb-4">GALANG DANA</h1>
+                        <h5>Nama Project</h5>
+                        <input type="text" ref='prname' className="form-control mb-5" placeholder="masukkan nama project"/>
+                        {/* <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button> */}
+                        <ReactQuill value={this.state.text}
+                                    modules={this.modules}
+                                    formats={this.formats}
+                                    onChange={this.handleChange} 
+                                    className="mb-5"
+                        /> 
+                        {/* <CKEditor
+                            editor={ DokumenEditor }
+                        /> */}
 
+                        <h5>Project Target</h5>
+                        <input type="number" ref='prtarget' className="form-control mb-4" placeholder="masukkan project description"/>
+                        <h5>Project Date Start</h5>
+                        <input type="date" ref='prdatestart' className="form-control mb-4" placeholder="masukkan project description"/>
+                        <h5>Project Date End</h5>
+                        <input type="date" ref='prdateend' className="form-control mb-4" placeholder="masukkan project description"/>
+                        <h5>Insert Image Here</h5>
+                        <input type="file" id="imgprojectinput" className="form-control mb-4" placeholder="masukkan project description" onChange={this.previewFile}/>
+                        <div className="mt-2 mb-4">
+                            <img id="imgpreview" alt='imgpreview' width="200px" height="200px"/>
+
+                            {this.state.uploadProgress ? 
+                            <Progress  className="font-weight-bold mb-3" animated value={this.state.uploadProgress}  color="primary">
+                            {this.state.uploadProgress}
+                            </Progress>
+                            :
+                            null
+                            }
+                            
+                        </div>
+
+
+                        <h5>Ajakan Campaign</h5>
+                        <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
+                        <p>Maks 100 Karakter</p>
+                        <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
+
+                    </div>
                 </div>
-                {/* <Modal isOpen={this.state.modalopen} toggle={()=>this.setState({modalopen:false})} >
-                    <ModalBody>
-                        <input type="file" onChange={this.addimagequillchange}/>
-                    </ModalBody>
-                </Modal> */}
-                <h1 className="mb-4">GALANG DANA</h1>
-                <h5>Nama Project</h5>
-                <input type="text" ref='prname' className="form-control mb-4" placeholder="masukkan nama project"/>
-                {/* <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button> */}
-                <ReactQuill value={this.state.text}
-                            modules={this.modules}
-                            formats={this.formats}
-                            onChange={this.handleChange} 
-                /> 
-                {/* <CKEditor
-                    editor={ DokumenEditor }
-                /> */}
-
-                <h5>Project Target</h5>
-                <input type="number" ref='prtarget' className="form-control mb-4" placeholder="masukkan project description"/>
-                <h5>Project Date Start</h5>
-                <input type="date" ref='prdatestart' className="form-control mb-4" placeholder="masukkan project description"/>
-                <h5>Project Date End</h5>
-                <input type="date" ref='prdateend' className="form-control mb-4" placeholder="masukkan project description"/>
-                <h5>Insert Image Here</h5>
-                <input type="file" id="imgprojectinput" className="form-control mb-4" placeholder="masukkan project description" onChange={this.previewFile}/>
-                <div className="mt-2 mb-4">
-                    <img id="imgpreview" alt='imgpreview' width="200px" height="200px"/>
-
-                    {this.state.uploadProgress ? 
-                    <Progress  className="font-weight-bold mb-3" animated value={this.state.uploadProgress}  color="primary">
-                    {this.state.uploadProgress}
-                    </Progress>
-                    :
-                    null
-                    }
-                    
-                </div>
-
-
-                <h5>Ajakan Campaign</h5>
-                <input type="text" ref='shareDescription' className="form-control mb-4" placeholder="Masukkan ajakan yang bisa mengajak orang lain untuk ikut berdonasi" maxLength={100}/>
-                <p>Maks 100 Karakter</p>
-                <input type="button" className="btn btn-dark" value="submit form" onClick={this.onSubmitClick}/>
             </div>
             // </CloudinaryContext>
         )
