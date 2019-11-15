@@ -34,7 +34,7 @@ class Register extends Component {
             name: this.Name.value,
             email: this.Email.value,
             // address: this.Address.value,
-            UserImage: this.state.UserImageDB
+            // UserImage: this.state.UserImageDB
         }
         if(!isDataValid(objUserReg)){
             return window.alert('harap mengecek kembali semua form')
