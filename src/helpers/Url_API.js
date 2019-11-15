@@ -4,6 +4,9 @@
 
 
 export const URL_API = 'http://localhost:2019';
+// export const URL_API = 'http://ec2-52-221-189-87.ap-southeast-1.compute.amazonaws.com:2019';
+
+
 
 export const GETTOKENURL = "https://x.rajaapi.com/poe"
 export const APIWILAYAHURL = "https://x.rajaapi.com/MeP7c5ne"

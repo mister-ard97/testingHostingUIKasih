@@ -24,6 +24,7 @@ import AdminVerifyDetail from './pages/admin/verifydetail'
 import ManageScholarship from './pages/admin/manageScholarship'
 import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 import ManageSchool from './pages/admin/manageSchool'
+import ManagePayout from './pages/admin/payoutManage'
 
 //PROJECT
 // import PostStudent fro
@@ -56,6 +57,7 @@ import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
 import SchoolList from './pages/userFeature/SchoolList';
 import SchoolAdd from './pages/userFeature/SchoolAdd'
+import SchoolEdit from './pages/userFeature/SchoolEdit'
 import {URL_API} from './helpers/Url_API'
 
 import Adapter from './helpers/ckfinder/core/connector/php/connector.php'
@@ -122,6 +124,7 @@ class App extends Component {
                 <Route path='/payout' component={Payout}/>
                 <Route path='/schoollist' component={SchoolList}/>    
                 <Route path='/schooladd' component={SchoolAdd}/>
+                <Route path='/schooledit' component={SchoolEdit}/>
 
                 {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
@@ -131,6 +134,7 @@ class App extends Component {
                 <Route path='/manageScholarship' component={ManageScholarship}/>
                 <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
                 <Route path='/manageSchool' component={ManageSchool}/>
+                <Route path='/managePayout' component={ManagePayout}/>
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />
