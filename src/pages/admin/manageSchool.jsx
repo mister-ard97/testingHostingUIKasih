@@ -366,7 +366,7 @@ class ManageSchool extends Component{
                     </Link> */}
 
                     <a href='/schooladd'>
-                        <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' onClick={()=>this.setState({addModal:true})}>Add Sekolah</Button>
+                        <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' >Add Sekolah</Button>
                     </a>
 
                     <Table className='mt-4'>
@@ -385,7 +385,7 @@ class ManageSchool extends Component{
                         {this.renderSekolah()}
                     </Table>
                 </div>
-                {this.renderAddModal()}
+                {/* {this.renderAddModal()} */}
                 {this.renderEditModal()}
                 {this.renderVerModal()}
 

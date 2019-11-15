@@ -101,7 +101,6 @@ class App extends Component {
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
                 <Route path='/history' component={History}/>
-                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
@@ -112,6 +111,7 @@ class App extends Component {
                 <Route path='/paymentPending' component={PaymentPending}/>
                 
                 {/* User */}
+                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/scholarship-list' component={ScholarshipListHome} />
                 <Route path='/project-detail' component={ProjectDetails} />

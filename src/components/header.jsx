@@ -171,7 +171,7 @@ class Header extends Component {
                             <Redirect to={`/`} />
                             : null
                         }
-                        <a to='/' className='navbar-brand justify-content-start d-flex p-0 pl-md-5'>
+                        <a href='/' className='navbar-brand justify-content-start d-flex p-0 pl-md-5'>
                             <img src={Logo} alt={'Logo-Kasih Nusantara'}/>
                         </a>
                             

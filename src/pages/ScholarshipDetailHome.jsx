@@ -62,14 +62,6 @@ class ScholarshipDetailHome extends Component {
             console.log(err)
         })
 
-        let token = localStorage.getItem('token')
-        var options = {
-            headers : 
-            {
-                'Authorization': `Bearer ${token}`
-            }
-        }
-
         Axios.get(URL_API + '/user/getSubscription/'+params.id , options)
             .then((subscription) => {
                 console.log(subscription)
