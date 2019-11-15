@@ -49,16 +49,53 @@ class Payment extends Component {
         localStorage.removeItem('namaScholarship')
 
         const socket = io(URL_API)
-        console.log(socket)
-        socket.on('status_transaction', this.updateStatus)
-
+        // console.log(socket)
+        socket.on(`status_transaction`, this.updateStatus)
+        console.log(localStorage.getItem('mp_9d99bb4fa589bb848422a53af867321e_mixpanel'))
+        if(typeof window === 'undefined'){
+            console.log('window')
+        }
     }
+    
+
 
     updateStatus=(status)=>{
         this.setState({status})
         console.log('socket Status ============== > ')
         console.log(status)
+        // console.log(status.order_id)
+        // if(status.order_id === this.state.orderId && status.transaction_status !== 'settlement' || status.transaction_status !== 'capture'){
+            
+            this.createPayment()
+            console.log('masuk add')
+        // }
       }
+
+    createPayment = () => {
+        console.log('---------------> Create Patment')
+        const data={
+            order_id: this.state.orderId,
+            userId: this.props.id,
+            gross_amount: parseInt(this.state.nominal),
+            paymentType: `${this.state.status.payment_type} ${this.state.status.bank}`,
+            statusPayment: this.state.status.transaction_status,
+            projectId: this.state.projectId ? this.state.projectId : null,
+            scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
+            komentar: this.state.komentar ? this.state.komentar : '-' ,
+            anonim: this.state.anonim ? 1 : 0,
+            noPembayaran: this.state.status.noPembayaran,
+            paymentSource : "Donation" // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
+        }
+        console.log(data)
+
+        Axios.post(`${URL_API}/payment/createPayment`, data)
+        .then((res)=>{
+            console.log(res.data)
+        }).catch((err)=>{
+            console.log(err)
+        })
+        
+    }
 
     renderMidtrans = () =>{
         var id = this.props.location.search.split('=')[1]
@@ -88,14 +125,14 @@ class Payment extends Component {
                 //   callback_url: `http://ec2-13-251-27-243.ap-southeast-1.compute.amazonaws.com:3000/finish`
                 // }
               },
-            userData:{
-                userId: this.props.id,
-                projectId: this.state.projectId ? this.state.projectId : null,
-                scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
-                komentar: this.state.komentar ? this.state.komentar : '-' ,
-                anonim: this.state.anonim ? 1 : 0,
-                paymentSource : "Donation" // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
-            }
+            // userData:{
+            //     userId: this.props.id,
+            //     projectId: this.state.projectId ? this.state.projectId : null,
+            //     scholarshipId: this.state.scholarshipId ? this.state.scholarshipId : null, 
+            //     komentar: this.state.komentar ? this.state.komentar : '-' ,
+            //     anonim: this.state.anonim ? 1 : 0,
+            //     paymentSource : "Donation" // SEMENTARA , NNATI DIUBAH BDSKAN QUERY UTK SUBSCRIPTION
+            // }
         }
         
           console.log(parameter)
@@ -110,6 +147,8 @@ class Payment extends Component {
           .then((res)=>{
             console.log(res.data)
             localStorage.setItem('order_id', res.data.order_id)
+            // req.app.io.emit(`status_transaction_${res.data.order_id}`, res.data.order_id)
+
             window.snap.pay(res.data.transactionToken, {
               onSuccess: (result) => {
                 console.log('success')
@@ -245,15 +284,15 @@ class Payment extends Component {
     
     render(){
         console.log(this.state.status)
-        if(this.state.redirectHome){
-            return <Redirect to={`/`} />
+        // if(this.state.redirectHome){
+        //     return <Redirect to={`/`} />
 
-        }
+        // }
         if(this.state.status.transaction_status === 'settlement' && this.state.status.order_id === this.state.orderId){
             return <Redirect to={'/paymentFinish'}/>
         }
-        if(this.state.status.transaction_status === 'failure' && this.state.status.order_id === this.state.orderId){
-            return <Redirect to={'/paymentError'}/>
+        if(this.state.status.transaction_status === 'pending' && this.state.status.order_id === this.state.orderId){
+            return <Redirect to={`/paymentPending?trans=${this.state.orderId}`}/>
         }
         console.log(this.props.match)
         return(
