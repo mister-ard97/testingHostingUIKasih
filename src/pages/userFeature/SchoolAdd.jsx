@@ -35,6 +35,7 @@ class SchoolAdd extends Component{
     }
 
     addSekolahClick = () => {
+        console.log('Masuk ke add school')
         let nama = this.refs.namaSekolah.refs.inamaSekolah.value
         let alamat = this.refs.alamat.refs.ialamat.value
         let telepon = this.refs.noTelepon.refs.inoTelepon.value
@@ -53,7 +54,14 @@ class SchoolAdd extends Component{
             email
         }
 
-        Axios.post(URL_API + '/school/addSchool', data)
+        let token = localStorage.getItem('token')
+        let options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + '/school/addSchool', data, options)
         .then((res) => {        
             this.setState({success: true})
         }).catch((err)=> {

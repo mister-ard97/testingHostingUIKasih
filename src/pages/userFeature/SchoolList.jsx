@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
 import Axios from 'axios'
 import { URL_API } from '../../helpers/Url_API'
@@ -63,38 +63,38 @@ class SchoolList extends Component{
     }
 
     addSekolahClick = () => {
-        let nama = this.refs.namaSekolah.refs.inamaSekolah.value
-        let alamat = this.refs.alamat.refs.ialamat.value
-        let telepon = this.refs.noTelepon.refs.inoTelepon.value
-        let namaPemilikRekening = this.refs.pemilikRek.refs.ipemilikRek.value
-        let nomorRekening = this.refs.noRek.refs.inoRek.value
-        let bank = this.refs.bank.refs.ibank.value
-        let email = this.refs.email.refs.iemail.value
+        // let nama = this.refs.namaSekolah.refs.inamaSekolah.value
+        // let alamat = this.refs.alamat.refs.ialamat.value
+        // let telepon = this.refs.noTelepon.refs.inoTelepon.value
+        // let namaPemilikRekening = this.refs.pemilikRek.refs.ipemilikRek.value
+        // let nomorRekening = this.refs.noRek.refs.inoRek.value
+        // let bank = this.refs.bank.refs.ibank.value
+        // let email = this.refs.email.refs.iemail.value
 
-        let data = {
-            nama,
-            alamat,
-            telepon,
-            namaPemilikRekening,
-            nomorRekening,
-            bank,
-            email
-        }
+        // let data = {
+        //     nama,
+        //     alamat,
+        //     telepon,
+        //     namaPemilikRekening,
+        //     nomorRekening,
+        //     bank,
+        //     email
+        // }
 
-        console.log(data)
+        // console.log(data)
 
-        Axios.post(URL_API + '/school/addSchool', data)
-        .then((res) => {
-            console.log(res.data)
-            Axios.get(URL_API+'/school/getSchool')
-            .then((res)=>{
-                this.setState({data: res.data, addModal: false})
-            }).catch((err)=>{
-                console.log(err)
-            })
-        }).catch((err)=> {
-            console.log(err)
-        })
+        // Axios.post(URL_API + '/school/addSchool', data)
+        // .then((res) => {
+        //     console.log(res.data)
+        //     Axios.get(URL_API+'/school/getSchool')
+        //     .then((res)=>{
+        //         this.setState({data: res.data, addModal: false})
+        //     }).catch((err)=>{
+        //         console.log(err)
+        //     })
+        // }).catch((err)=> {
+        //     console.log(err)
+        // })
         // console.log(nama)
     }
 
@@ -162,7 +162,15 @@ class SchoolList extends Component{
         console.log(konfirmasi)
         if(konfirmasi){
             console.log('masuk')
-            Axios.post(URL_API+'/school/deleteSchool?id='+id)
+
+            let token = localStorage.getItem('token')
+            let options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.post(URL_API+'/school/deleteSchool?id='+id, {}, options)
             .then((res)=>{
                 Axios.get(URL_API+'/school/getSchool')
                 .then((res)=>{
