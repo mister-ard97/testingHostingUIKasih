@@ -68,7 +68,7 @@ class ManageSchool extends Component{
                     <td>{val.bank}</td>
                     <td>{val.isVerified? 'verified' : 'unverified'}</td>
                     <td><Button color='primary' onClick={()=>this.setState({verifiedModal: true, selectedId: i})}>Verifikasi</Button></td>
-                    <td><Button color='warning' onClick={()=>this.setState({editModal: true, selectedId: i})}>Edit</Button></td>
+                    <td><a className='btn btn-warning' href={`/schooledit?id=${val.id}`}>Edit</a></td>
                     <td><Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button></td>
                     {/* <td><Button onClick={()=> this.verifikasiSekolah(i)}>test</Button></td> */}
                 </tr>

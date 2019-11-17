@@ -8,15 +8,15 @@ import {URL_API} from '../../helpers/Url_API'
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-
-import ReactQuill, {Quill} from 'react-quill'
 // import {ImageDrop} from 'quill-image-drop-module'
-import ImageResize from 'quill-image-resize-module'
-import 'react-quill/dist/quill.snow.css'; // ES6
+
+// import ReactQuill, {Quill} from 'react-quill'
+// import ImageResize from 'quill-image-resize-module'
+// import 'react-quill/dist/quill.snow.css'; // ES6
  
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
 import { connect } from 'react-redux'
-Quill.register('modules/imageResize', ImageResize);
+// Quill.register('modules/imageResize', ImageResize);
 
 // import { Quill } from 'react-quill';
 
@@ -64,7 +64,8 @@ class ScholarshipAdd extends Component{
             nominal: 0,
             judul:'',
             success: false,
-            listOfImages : []
+            listOfImages : [],
+            loadingButton: false
            
             } // You can also pass a Quill Delta here
         this.handleChange = this.handleChange.bind(this)
@@ -456,11 +457,11 @@ class ScholarshipAdd extends Component{
                             console.log( 'Focus.', editor );
                         } }
                     /> */}
-                        <ReactQuill value={this.state.deskripsi}
+                        {/* <ReactQuill value={this.state.deskripsi}
                             modules={this.modules}
                             formats={this.formats}
                             onChange={this.handleChange} 
-                        />
+                        /> */}
                
                     
                     </FormGroup>
@@ -470,7 +471,13 @@ class ScholarshipAdd extends Component{
                         <Input type='textarea' name='shareDescription' id='shareDescription' onChange={(text)=> this.sDeskripsi(text.target.value)} maxLength='240'/>
                         <p style={{fontStyle:'italic'}}>{this.state.sDeskripsi.length} / 240</p>
                     </FormGroup>
+                    {
+                        this.state.loadingButton ?
+                        <p>Loading...</p>
+                        :
+                        
                     <Button color='success' onClick={this.handleSubmitBtn}>Submit</Button>
+                    }
                 </Form>
             </div>
             
@@ -482,6 +489,7 @@ class ScholarshipAdd extends Component{
     }
 
     handleSubmitBtn = () => {
+        this.setState(prevState => ({loadingButton: !prevState.loadingButton}))
         let data = {
             judul : this.state.judul,
             studentId : this.state.siswa,
@@ -504,7 +512,7 @@ class ScholarshipAdd extends Component{
         Axios.post(URL_API + '/scholarship/addScholarship', data, options)
         .then((res) => {
             console.log(res.data)
-            this.setState({success: true})
+            this.setState({success: true, loadingButton: false})
         }).catch((err)=>{
             console.log(err)
         })

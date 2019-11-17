@@ -116,7 +116,7 @@ class Home extends Component {
         .then((res)=>{
             console.log(res)
             
-            var results = res.data.map((val)=>{
+            var results = res.data.results.map((val)=>{
                 var hasil = {...val, ...val.School, ...val.Student}
                 delete hasil.School
                 delete hasil.Student
@@ -221,7 +221,7 @@ class Home extends Component {
                 val.totaldonation = val.totaldonation ? val.totaldonation : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
+                    <a key={id} href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
                         <div className='container-fluid py-4 p-md-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>

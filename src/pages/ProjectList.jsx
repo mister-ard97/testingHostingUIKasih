@@ -118,7 +118,7 @@ class ProjectList extends Component {
             for(var i = 0; i < this.state.totalpage; i++){
                 if(parsed.search || parsed.orderby) {
                     jsx.push(
-                        <PaginationItem>
+                        <PaginationItem key={i}>
                            <PaginationLink href={`/project-list?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${i+1}`}>
                                {i+1}
                            </PaginationLink>
@@ -126,7 +126,7 @@ class ProjectList extends Component {
                     )
                 } else {
                     jsx.push(
-                        <PaginationItem>
+                        <PaginationItem key={i}>
                            <PaginationLink href={`/project-list?page=${i+1}`}>
                                {i+1}
                            </PaginationLink>
@@ -283,10 +283,10 @@ class ProjectList extends Component {
             //     this.searchText.value = parsed.search
             // }
 
-            // this.props.history.push({
-            //     pathname:'/project-list',
-            //     search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
-            // })
+            this.props.history.push({
+                pathname:'/project-list',
+                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
+            })
         
 
             let limit = 2
@@ -319,7 +319,7 @@ class ProjectList extends Component {
                 
                 this.setState({
                     ProjectList: results,
-                    totalpage: Math.ceil(results.length / limit),
+                    totalpage: Math.ceil(res.data.total / limit),
                 })
             })
             .catch((err) => {

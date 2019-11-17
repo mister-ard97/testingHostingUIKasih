@@ -36,7 +36,7 @@ class Subscription extends Component {
         if(!this.props.email){
             return this.setState({ redirectHome: true })
         }
-        this.props.getSub(this.props.email)
+        // this.props.getSub(this.props.email)
         this.getSubscribeList()
         // this.getScholarshipList()
         // console.log(this.props.applySub())
@@ -44,11 +44,11 @@ class Subscription extends Component {
 
     getSubscribeList = () =>{
         const token = localStorage.getItem('token');
-       const options = {
-           headers: {
-               'Authorization': `Bearer ${token}`,
-           }
-       }
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        }
 
         Axios.get(URL_API + '/subscription/subscribelist/' + this.props.id, options)
         .then((res)=>{

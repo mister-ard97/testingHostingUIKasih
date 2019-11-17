@@ -82,9 +82,9 @@ class StudentDetails extends Component {
     // }
 
     renderStudentDetailForGuest = () => {
-        return this.state.data.map((val) => {
+        return this.state.data.map((val, index) => {
             return (
-             <div className='col-12'>
+             <div className='col-12' key={index}>
                  <p>Foto Siswa</p>
                  <img src={URL_API + val.studentImage} alt={val.studentImage} style={{width: '300px'}}/>
                  <p>Nama: {val.name}</p>
@@ -96,8 +96,10 @@ class StudentDetails extends Component {
                  <p></p>
                   <table>
                     <thead>
-                        <th className='pr-3'> Report Image</th>
-                        <th className='pr-5'>Description</th>
+                        <tr>
+                                <th className='pr-3'> Report Image</th>
+                                <th className='pr-5'>Description</th>
+                        </tr>
                     </thead>
                 {
                     this.props.role === 'User' ?
@@ -133,11 +135,11 @@ class StudentDetails extends Component {
 
 
     renderStudentDetail = () => {
-        return this.state.data.map((val) => {
+        return this.state.data.map((val, index) => {
             return val.StudentDetails.map((item) => {
                 if(item.id === this.state.selectedId){
                     return(
-                        <tbody className='border-bottom'>
+                        <tbody className='border-bottom' key={index}>
                             <tr className='py-5'>
                                 <td>
                                     <CustomInput onChange={this.onEditImageFileChange} id='onEditFileChange'type='file' label={this.state.editImageFileName} />
@@ -165,7 +167,7 @@ class StudentDetails extends Component {
                         </tbody>
                 )}
                 return(
-                    <tbody className='border-bottom'>
+                    <tbody className='border-bottom' key={index}>
                             <tr className='py-5'>
                                 <td>
                                     <img src={URL_API + item.pictureReport} alt={item.pictureReport} style={{ width: '50%' }}/>

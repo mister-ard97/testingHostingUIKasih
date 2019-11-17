@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Input, Button, Spinner, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
 import { Paper, TextField} from '@material-ui/core'
-import {Autocomplete} from '@material-ui/lab'
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import Axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
@@ -77,11 +78,9 @@ class SchoolEdit extends Component{
 
     handleChangeBank = (value) => {
         // console.log(value.name)
-        if(value.name !== this.state.bank && value.code === this.state.codeBank) {
-            this.setState({
-                bank: value.name, codeBank: value.code
-            })
-        }
+        this.setState({
+            bank: value.name, codeBank: value.code
+        })
     }
 
     editSekolahClick = () => {
@@ -105,21 +104,20 @@ class SchoolEdit extends Component{
 
         console.log(data)
 
-        // let id = queryString.parse(this.props.location.search)
+        let url = queryString.parse(this.props.location.search)
+        let token = localStorage.getItem('token')
+        var options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
 
-        // let token = localStorage.getItem('token')
-        // var options = {
-        //     headers: {
-        //         'Authorization': `Bearer ${token}`
-        //     }
-        // }
-
-        // Axios.post(URL_API + '/school/putSchool?id='+id, data, options)
-        // .then((res) => {
-        //     this.setState({success: true})
-        // }).catch((err)=> {
-        //     console.log(err)
-        // })
+        Axios.post(URL_API + '/school/putSchool?id='+url.id, data, options)
+        .then((res) => {
+            this.setState({success: true})
+        }).catch((err)=> {
+            console.log(err)
+        })
 
         // Axios.post(URL_API + '/school/addSchool', data)
         // .then((res) => {        
@@ -178,6 +176,7 @@ class SchoolEdit extends Component{
         }
     }
 
+
     toggle = () => {
         this.setState(prevState => ({openModal: !prevState.openModal}))
     }
@@ -202,21 +201,19 @@ class SchoolEdit extends Component{
                     <Input className='mb-2' ref='namaSekolah' innerRef='inamaSekolah' type='text'  defaultValue={nama} placeholder='Masukkan nama sekolah' />
                     <Input className='mb-2' type='textarea' ref='alamat' innerRef='ialamat' defaultValue={alamat} placeholder='Masukkan alamat sekolah' />
                     {console.log(this.state.bank)}
-                    <div
-                        id='Testing'
-                    >
                     <Autocomplete
                         options={this.state.listBank}
-                        getOptionLabel={option => option.name}
-        
+                        getOptionLabel={(option) => 
+                           option.name
+                        }
                         // style={{width: 300}}
                         onChange={(event, value)=> value ? this.handleChangeBank(value) : null}
                         className='mb-2'
                         renderInput={params=>(
-                            <TextField  {...params} variant='outlined' fullWidth />
+                            <TextField {...params} variant='outlined' fullWidth />
                         )}
                     />
-                    </div>
+                    <p>{this.state.bank}</p>
                     
                     <Input className='mb-2' type='number' ref='noRek' innerRef='inoRek' defaultValue={nomorRekening} id='norek' onBlur={this.validateAccount} placeholder='Masukkan nomor rekening sekolah' />
                     <LoadingOverlay
@@ -230,7 +227,7 @@ class SchoolEdit extends Component{
                             })
                           }}
                         >
-                            <Input className='mb-2' type='text' ref='pemilikRek' innerRef='ipemilikRek' defaultValue={this.state.account_name ? this.state.account_name : namaPemilikRekening} disabled placeholder='Nama pemilik rekening' />
+                            <Input className='mb-2' type='text' ref='pemilikRek' innerRef='ipemilikRek' value={this.state.account_name ? this.state.account_name : namaPemilikRekening} disabled placeholder='Nama pemilik rekening' />
                     </LoadingOverlay>
                     <Input className='mb-2' type='number' ref='noTelepon' innerRef='inoTelepon' defaultValue={telepon} placeholder='Masukkan nomor telepon' />
                     <Input className='mb-2' type='email' ref='email' innerRef='iemail' defaultValue={email} placeholder='Masukkan alamat email'/>

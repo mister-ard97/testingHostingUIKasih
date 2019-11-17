@@ -16,7 +16,7 @@ import VerifiedResetPassword from './pages/VerifiedPasswordToken';
 import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
-import StudentList from './pages/AllStudentList'
+import StudentList from './pages/userFeature/AllStudentList'
 import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 
@@ -111,13 +111,14 @@ class App extends Component {
                 <Route path='/paymentFinish' component={PaymentFinish}/>
                 <Route path='/paymentError' component={PaymentError}/>
                 <Route path='/paymentPending' component={PaymentPending}/>
+                <Route path='/scholarship-list' component={ScholarshipListHome} />
+                <Route path='/scholarship-student' component={ScholarshipStudent} />  
+
+                <Route path='/project-list' component={ProjectList} />
+                <Route path='/project-detail' component={ProjectDetails} /> 
                 
                 {/* User */}
                 <Route path='/studentlist' component={StudentList}/>
-                <Route path='/project-list' component={ProjectList} />
-                <Route path='/scholarship-list' component={ScholarshipListHome} />
-                <Route path='/project-detail' component={ProjectDetails} />
-                <Route path='/scholarship-student' component={ScholarshipStudent} />
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
