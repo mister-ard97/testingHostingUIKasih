@@ -16,7 +16,7 @@ import VerifiedResetPassword from './pages/VerifiedPasswordToken';
 import WaitingVerification from './pages/WaitingVerification';
 import Verified from './pages/Verified';
 import NotFound from './pages/NotFound';
-import StudentList from './pages/AllStudentList'
+import StudentList from './pages/userFeature/AllStudentList'
 import StudentDetail from './pages/StudentDetails'
 
 // ADMIN 
@@ -24,6 +24,7 @@ import AdminVerifyDetail from './pages/admin/verifydetail'
 import ManageScholarship from './pages/admin/manageScholarship'
 import AdminReviewStudentDetail from './pages/admin/reviewStudentDetail';
 import ManageSchool from './pages/admin/manageSchool'
+import ManagePayout from './pages/admin/payoutManage'
 
 //PROJECT
 // import PostStudent fro
@@ -56,6 +57,7 @@ import BottomNav from './components/bottomNav'
 import postProject from './pages/admin/postProject';
 import SchoolList from './pages/userFeature/SchoolList';
 import SchoolAdd from './pages/userFeature/SchoolAdd'
+import SchoolEdit from './pages/userFeature/SchoolEdit'
 import {URL_API} from './helpers/Url_API'
 
 import Adapter from './helpers/ckfinder/core/connector/php/connector.php'
@@ -101,7 +103,6 @@ class App extends Component {
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
                 <Route path='/history' component={History}/>
-                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/user' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
@@ -110,18 +111,21 @@ class App extends Component {
                 <Route path='/paymentFinish' component={PaymentFinish}/>
                 <Route path='/paymentError' component={PaymentError}/>
                 <Route path='/paymentPending' component={PaymentPending}/>
+                <Route path='/scholarship-list' component={ScholarshipListHome} />
+                <Route path='/scholarship-student' component={ScholarshipStudent} />  
+
+                <Route path='/project-list' component={ProjectList} />
+                <Route path='/project-detail' component={ProjectDetails} /> 
                 
                 {/* User */}
-                <Route path='/project-list' component={ProjectList} />
-                <Route path='/scholarship-list' component={ScholarshipListHome} />
-                <Route path='/project-detail' component={ProjectDetails} />
-                <Route path='/scholarship-student' component={ScholarshipStudent} />
+                <Route path='/studentlist' component={StudentList}/>
                 <Route path='/addScholarship' component={ScholarshipAdd}/>
                 <Route path='/scholarshiplist' component={ScholarshipList}/>
                 <Route path='/scholarshipDetail' component={ScholarshipDetail}/>
                 <Route path='/payout' component={Payout}/>
                 <Route path='/schoollist' component={SchoolList}/>    
                 <Route path='/schooladd' component={SchoolAdd}/>
+                <Route path='/schooledit' component={SchoolEdit}/>
 
                 {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>
@@ -131,6 +135,7 @@ class App extends Component {
                 <Route path='/manageScholarship' component={ManageScholarship}/>
                 <Route path='/studentdetail-review' component={AdminReviewStudentDetail} />
                 <Route path='/manageSchool' component={ManageSchool}/>
+                <Route path='/managePayout' component={ManagePayout}/>
                 {/* <Route path='/post-student' component={PostStudent} /> */}
 
                 <Route path='*' component={NotFound} />

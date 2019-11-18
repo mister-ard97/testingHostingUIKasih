@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Axios from 'axios'
 import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
@@ -579,20 +580,22 @@ class AdminVerify extends Component {
 
     updateApprove = (revid, studentid) =>{
         var confirm = window.confirm('are you sure you want to approve this update')
+        console.log(revid, studentid)
+        const token = localStorage.getItem('token');
+
         if(confirm){
             if(this.state.edit){
-                var formData = new FormData()
-                console.log(revid, studentid)
 
-                const token = localStorage.getItem('token');
-
-                var options ={
+                let options ={
                     headers : 
                     {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type' : 'multipart/form-data'
                     }
                 }
+
+                var formData = new FormData()
+                console.log(revid, studentid)
            
                 var data = {
                     name : this.refs.inputnama.value,//
@@ -621,6 +624,7 @@ class AdminVerify extends Component {
                         revid, 
                         studentid
                     })
+                    console.log('OBJECTION')
                     options ={
                         headers : 
                         {
@@ -628,10 +632,14 @@ class AdminVerify extends Component {
                             // 'Content-Type' : 'multipart/form-data'
                         }
                     }
-                    Axios.put(URL_API+'/studentrev/updateapprove', {
-                        revid : revid,
-                        studentid : studentid
-                    }, options)
+
+                    let obj =  {
+                        revid,
+                        studentid
+                    }
+
+                    console.log(obj)
+                    Axios.put(URL_API+'/studentrev/updateapprove', obj, options)
                     .then((res)=>{
                         window.alert('success update approve')
                         this.setState({
@@ -649,8 +657,14 @@ class AdminVerify extends Component {
                 })
 
                
-            }else {
+            } else {
 
+                let options = {
+                    headers : 
+                    {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
                 Axios.put(URL_API+'/studentrev/updateapprove', {revid, studentid}, options)
                 .then((res)=>{
                     window.alert('success update approve')
@@ -837,4 +851,11 @@ class AdminVerify extends Component {
     }
 }
 
-export default AdminVerify
+const mapStateToProps = ({auth}) => {
+    return {
+        role: auth.role,
+        email: auth.email
+    }
+}
+
+export default connect(mapStateToProps)(AdminVerify)

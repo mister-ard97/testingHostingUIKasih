@@ -531,6 +531,9 @@
   text-shadow: 2px 3px 0 #FFFFFF;
 }
 
+.boxBanner p {
+  text-shadow: 1px 1px 0 #000000;
+}
  /* .boxBanner:hover h2 {
   font-size: 65px;
   color: #D32242;
@@ -539,6 +542,7 @@
   text-shadow: 3px 5px 0 #FFFFFF;
 } */
 /*
+
 .animated {
   animation-duration: 3s;
   animation-fill-mode: both;
@@ -553,9 +557,6 @@
 .bounce {
   animation-name: bounce;
 } */
-.boxBanner p {
-  text-shadow: 1px 1px 0 #000000;
-}
 
 @media only screen and (max-width: 762px) {
   .boxBanner {
@@ -1099,9 +1100,9 @@ a.bg-scholarship:hover {
   box-shadow: 0 12px 12px -4px gray;
 }
 
- .sharebutton:focus {outline:0;} 
+.sharebutton:focus {outline:0;} 
 
- .sharebutton {
+.sharebutton {
 
   border: 4px solid #b5b8c1;
   color: #b5b8c1;
@@ -1117,7 +1118,7 @@ a.bg-scholarship:hover {
 } 
 
 
- .sharebutton::before {
+.sharebutton::before {
   content: 'SHARE YOUR STORY';
   position: absolute;
   text-align: center;
@@ -1132,15 +1133,13 @@ a.bg-scholarship:hover {
   left: -.4rem;
   border-radius: 16px;
   top: -.6rem;
-
   font-size: 20px;
-
   color : #FFFFFF;
   z-index: 1;
   background-color: #ce4948;
   transition: all 200ms ease-out;
   box-shadow: 0 12px 12px -4px gray;
-}  
+} 
 
 .donatebutton:focus {outline:0;}
 

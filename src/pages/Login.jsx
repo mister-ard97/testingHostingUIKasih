@@ -143,9 +143,13 @@ class Login extends Component {
                         <div className='row py-3'>
                             <div className="col-12">
                                 <div className='py-3 text-center'>
-                                    <Link to='/' className='navbar-brand text-dark'>
+                                    {/* <Link to='/' className='navbar-brand text-dark'>
                                         Testing<span>Ui</span>
-                                 </Link>
+                                 </Link> */}
+
+                                 <a href='/' className='navbar-brand text-dark'>
+                                        Kasih Nusantara
+                                 </a>
                                 </div>
                                 <div className="card px-3">
                                     <div className="card-body">
@@ -169,9 +173,13 @@ class Login extends Component {
                                                 <input ref={ (Password) => this.Password = Password } type="password" className="form-control" id="passwordLogin" placeholder="Password" maxLength='16' minLength='6' required />
                                             </div>
                                             <div className='d-flex justify-content-end'>
-                                                <Link to='/forgotPassword' className='text-info'>
+                                                {/* <Link to='/forgotPassword' className='text-info'>
                                                     <small>Lupa kata sandi?</small>
-                                                </Link>
+                                                </Link> */}
+
+                                                <a href='/forgotPassword' className='text-info'>
+                                                    <small>Lupa kata sandi?</small>
+                                                </a>
                                             </div>
                                             {this.renderButtonLogin()}
                                         </form>
@@ -182,7 +190,7 @@ class Login extends Component {
                                            this.props.loading ?
                                                 <p className='mt-3'>Belum Register?  Register Now!</p>
                                                 :
-                                                <p className='mt-3'>Belum Register?  <Link to='/register'>Register Now!</Link></p>
+                                                <p className='mt-3'>Belum Register?  <a href='/register'>Register Now!</a></p>
                                        }
                                     </div>
                                 </div>

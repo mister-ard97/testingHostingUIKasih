@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
 import { TextField, MenuItem, makeStyles } from '@material-ui/core'
 import {Autocomplete} from '@material-ui/lab'
@@ -68,7 +68,7 @@ class ManageSchool extends Component{
                     <td>{val.bank}</td>
                     <td>{val.isVerified? 'verified' : 'unverified'}</td>
                     <td><Button color='primary' onClick={()=>this.setState({verifiedModal: true, selectedId: i})}>Verifikasi</Button></td>
-                    <td><Button color='warning' onClick={()=>this.setState({editModal: true, selectedId: i})}>Edit</Button></td>
+                    <td><a className='btn btn-warning' href={`/schooledit?id=${val.id}`}>Edit</a></td>
                     <td><Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button></td>
                     {/* <td><Button onClick={()=> this.verifikasiSekolah(i)}>test</Button></td> */}
                 </tr>
@@ -361,9 +361,14 @@ class ManageSchool extends Component{
                 
                 <div className='container mt-4 mb-4'>
                     <b>List Sekolah Terdaftar</b>
-                    <Link to='/schooladd'>
+                    {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' onClick={()=>this.setState({addModal:true})}>Add Sekolah</Button>
-                    </Link>
+                    </Link> */}
+
+                    <a href='/schooladd'>
+                        <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' >Add Sekolah</Button>
+                    </a>
+
                     <Table className='mt-4'>
                         <tr>
                             <th>No.</th>
@@ -380,7 +385,7 @@ class ManageSchool extends Component{
                         {this.renderSekolah()}
                     </Table>
                 </div>
-                {this.renderAddModal()}
+                {/* {this.renderAddModal()} */}
                 {this.renderEditModal()}
                 {this.renderVerModal()}
 

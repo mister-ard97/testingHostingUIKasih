@@ -6,7 +6,7 @@ import { CustomInput } from 'reactstrap';
 import { connect } from 'react-redux';
 import { onUserRegister, cleanError, userLoginWithGoogle, userLoginWithFacebook } from '../redux/actions';
 
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { URL_API } from '../helpers/Url_API'
 // import { is } from 'immutable';
 import { isDataValid } from '../helpers/helpers';
@@ -157,9 +157,13 @@ class Register extends Component {
                       <div className='row py-1'>
                           <div className="col-12">
                               <div className='py-3 text-center'>
-                                  <Link to='/' className='navbar-brand text-dark'>
-                                      Testing<span>Ui</span>
-                                 </Link>
+                                   {/* <Link to='/' className='navbar-brand text-dark'>
+                                        Testing<span>Ui</span>
+                                 </Link> */}
+
+                                 <a href='/' className='navbar-brand text-dark'>
+                                        Kasih Nusantara
+                                 </a>
                               </div>
                               <div className="card px-3">
                                   <div className="card-body">
@@ -213,7 +217,7 @@ class Register extends Component {
                                       </form>
 
                                       <hr />
-                                      <p className='mt-3'>Sudah Punya Akun?  <Link to='/login'>Login Now!</Link></p>
+                                      <p className='mt-3'>Sudah Punya Akun?  <a href='/login'>Login Now!</a></p>
                                   </div>
                               </div>
                           </div>

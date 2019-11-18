@@ -2,9 +2,9 @@ import React from 'react'
 import Axios from 'axios';
 import { URL_API } from '../../helpers/Url_API';
 import { Redirect } from 'react-router-dom';
-import ReactQuill, {Quill} from 'react-quill'
+// import ReactQuill, {Quill} from 'react-quill'
 // import {ImageDrop} from 'quill-image-drop-module'
-import ImageResize from 'quill-image-resize-module'
+// import ImageResize from 'quill-image-resize-module'
  
 
 // import { Quill } from 'react-quill';
@@ -17,7 +17,7 @@ import{  Progress } from 'reactstrap';
 import { dateCheck, isDataValid } from '../../helpers/helpers';
 import { async } from 'q';
 
-Quill.register('modules/imageResize', ImageResize);
+// Quill.register('modules/imageResize', ImageResize);
 
 
 
@@ -353,12 +353,12 @@ class postProject extends React.Component{
                         <h5>Nama Project</h5>
                         <input type="text" ref='prname' className="form-control mb-5" placeholder="masukkan nama project"/>
                         {/* <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button> */}
-                        <ReactQuill value={this.state.text}
+                        {/* <ReactQuill value={this.state.text}
                                     modules={this.modules}
                                     formats={this.formats}
                                     onChange={this.handleChange} 
                                     className="mb-5"
-                        /> 
+                        />  */}
                         {/* <CKEditor
                             editor={ DokumenEditor }
                         /> */}

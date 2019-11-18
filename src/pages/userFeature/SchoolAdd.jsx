@@ -35,6 +35,7 @@ class SchoolAdd extends Component{
     }
 
     addSekolahClick = () => {
+        console.log('Masuk ke add school')
         let nama = this.refs.namaSekolah.refs.inamaSekolah.value
         let alamat = this.refs.alamat.refs.ialamat.value
         let telepon = this.refs.noTelepon.refs.inoTelepon.value
@@ -53,7 +54,14 @@ class SchoolAdd extends Component{
             email
         }
 
-        Axios.post(URL_API + '/school/addSchool', data)
+        let token = localStorage.getItem('token')
+        let options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+
+        Axios.post(URL_API + '/school/addSchool', data, options)
         .then((res) => {        
             this.setState({success: true})
         }).catch((err)=> {
@@ -63,29 +71,29 @@ class SchoolAdd extends Component{
 
     validateAccount = () => {
         // console.log('masuk validate accound')
-        this.setState({loading: true})
         let data = {
             "code" : this.state.codeBank,
             "account": this.refs.noRek.refs.inoRek.value
         }
-        console.log(data)
         if(data.code !== '' && data.account !== ''){
-            Axios.post(URL_API+'/payment/validateBankAccount', data)
-            .then((res)=>{
-                console.log(res.data)
-                
-                this.setState({account_name: res.data.account_name, loading: false})
-                console.log(this.state.account_name)
-            }).catch((err)=>{
-                console.log(err.response.data)
-                this.setState({loading: false})
-                // console.log(status)
-                if(err.response.data.message.error_message === 'An error occured when doing account validation'){
-                    window.alert(err.response.data.message.errors.account)
-                    document.getElementById('norek').value=''
+            this.setState({loading: true})
+            console.log(data)
+                Axios.post(URL_API+'/payment/validateBankAccount', data)
+                .then((res)=>{
+                    console.log(res.data)
                     
-                }
-            })
+                    this.setState({account_name: res.data.account_name, loading: false})
+                    console.log(this.state.account_name)
+                }).catch((err)=>{
+                    console.log(err.response.data)
+                    this.setState({loading: false})
+                    // console.log(status)
+                    if(err.response.data.message.error_message === 'An error occured when doing account validation'){
+                        window.alert(err.response.data.message.errors.account)
+                        document.getElementById('norek').value=''
+                        
+                    }
+                })
         }
     }
    

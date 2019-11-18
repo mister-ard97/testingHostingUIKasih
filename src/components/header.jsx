@@ -105,11 +105,11 @@ class Header extends Component {
                                                     null
                                                 }
                                                 <p>Selamat Bergabung di Kasih Nusantara, {this.props.name}</p>
-                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
-                                                <Link to='/studentlist?page=1' className='border-bottom d-block'> Student List </Link>
-                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
-                                                <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
+                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/subscription' className='border-bottom d-block'> My Subscription </a>
+                                                <a href='/studentlist?page=1' className='border-bottom d-block'> Student List </a>
+                                                <a href='/manageschool' className='border-bottom d-block'> School List </a>
+                                                <a href='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </a>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                
                                             </div>
@@ -118,36 +118,36 @@ class Header extends Component {
                                             <div className="fade-in">
                                                 {
                                                     this.props.verified === 0 ?
-                                                        <p style={{color: '#D32242'}}>Anda belum verifikasi email <Link to='/waitingverification'> Klik Untuk Verification </Link></p>
+                                                        <p style={{color: '#D32242'}}>Anda belum verifikasi email <a href='/waitingverification'> Klik Untuk Verification </a></p>
                                                         :
                                                         null
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
-                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/subscription' className='border-bottom d-block'> My Subscription </Link>
-                                                <Link to='/studentlist?page=1' className='border-bottom d-block'> Student List </Link>
-                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
-                                                <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
+                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/subscription' className='border-bottom d-block'> My Subscription </a>
+                                                <a href='/studentlist?page=1' className='border-bottom d-block'> Student List </a>
+                                                <a href='/manageschool' className='border-bottom d-block'> School List </a>
+                                                <a href='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </a>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                 
                                             </div>
                                             :
                                             <div className="fade-in">
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
-                                                <Link to='/changePassword' className='border-bottom d-block'> Change Password </Link>
-                                                <Link to='/studentlist' className='border-bottom d-block'> Student List </Link>
-                                                <Link to='/manage-project' className='border-bottom d-block'> Project List </Link>
-                                                <Link to='/post-project' className='border-bottom d-block'> Post Project </Link>
-                                                <Link to='/manageschool' className='border-bottom d-block'> School List </Link>
-                                                <Link to='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </Link>
+                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/studentlist' className='border-bottom d-block'> Student List </a>
+                                                <a href='/manage-project' className='border-bottom d-block'> Project List </a>
+                                                <a href='/post-project' className='border-bottom d-block'> Post Project </a>
+                                                <a href='/manageschool' className='border-bottom d-block'> School List </a>
+                                                <a href='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </a>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                             </div>
 
                                             
                                     :
                                         <div className="fade-in">
-                                            <p>Anda belum login silahkan login <Link to='/login'>disini</Link></p>
-                                            <p>Anda belum mendaftar? <Link to='/register'>Daftar</Link> Sekarang</p>
+                                            <p>Anda belum login silahkan login <a href='/login'>disini</a></p>
+                                            <p>Anda belum mendaftar? <a href='/register'>Daftar</a> Sekarang</p>
                                         </div>
                                 }
                             </DropdownMenu>
@@ -171,9 +171,9 @@ class Header extends Component {
                             <Redirect to={`/`} />
                             : null
                         }
-                        <Link to='/' className='navbar-brand justify-content-start d-flex p-0 pl-md-5'>
+                        <a href='/' className='navbar-brand justify-content-start d-flex p-0 pl-md-5'>
                             <img src={Logo} alt={'Logo-Kasih Nusantara'}/>
-                        </Link>
+                        </a>
                             
                         <NavbarToggler className='costum-toggler' onClick={() => this.toggle()} />
 

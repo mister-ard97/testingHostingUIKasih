@@ -26,6 +26,8 @@ const useStyles = makeStyles(theme => ({
       },
 }));
 
+// Kurang pagination
+
 class ScholarshipList extends Component{
     state = {
         data : '',
@@ -47,8 +49,7 @@ class ScholarshipList extends Component{
                 }
             }
 
-        let id= this.props.id
-        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+id, options)
+        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id='+this.props.id, options)
         .then((res)=>{
             console.log(res.data)
             this.setState({data: res.data})
@@ -66,8 +67,9 @@ class ScholarshipList extends Component{
             // if(val.isOngoing == 'Cancelled'){
             //     this.setState({cancelled: 'disabled'})
             // }
+            
             return (
-                <tr>
+                <tr key={i}>
                     <td>{i+1}</td>
                     <td>{val.Student.namaSiswa}</td>
                     {/* <td>{this.state.data[i].Student.namaSiswa}</td> */}
@@ -76,7 +78,7 @@ class ScholarshipList extends Component{
                     <td style={{textAlign:'center'}}>{val.isVerified}</td>
                     <td style={{textAlign:'center'}}>{val.isOngoing}</td>
                     <td style={{textAlign:'center'}}>{val.note}</td>
-                    <td style={{textAlign:'center'}}><Link to={`/scholarshipDetail?id=${val.id}`}><Button color='primary'>Detail</Button></Link></td>
+                    <td style={{textAlign:'center'}}><a href={`/scholarshipDetail?id=${val.id}`} className='btn btn-primary'>Detail</a></td>
                     <td style={{textAlign:'center'}}><Button color='success' onClick={()=> this.setState({openEditModal: true, detailId: i})}>Edit</Button></td>
                     <td style={{textAlign:'center'}}><Button color='danger' onClick={val.isOngoing === 'cancelled' ? null : () => this.cancelBtnClick(val.id)}>Cancel</Button></td>
                 </tr>
@@ -375,19 +377,23 @@ class ScholarshipList extends Component{
         return(
             <div className='container mt-5 mb-5'>
                 <p>List Beasiswa</p>
-                <div className='mb-3'><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div>
+                <div className='mb-3'><Button color='success'><a href='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</a></Button></div>
                 <Table>
-                    <tr >
-                        <th>No.</th>
-                        <th>Nama Siswa</th>
-                        <th>Target Donasi</th>
-                        <th>Durasi</th>
-                        <th style={{textAlign:'center'}}>Verifikasi</th>
-                        <th style={{textAlign:'center'}}>Status</th>
-                        <th style={{textAlign: 'center'}}>Note From Admin</th>
-                        <th colSpan='3' style={{textAlign:'center'}}>Aksi</th>
-                    </tr>
-                    {this.renderScholarshipList()}
+                   <thead>
+                        <tr >
+                            <th>No.</th>
+                            <th>Nama Siswa</th>
+                            <th>Target Donasi</th>
+                            <th>Durasi</th>
+                            <th style={{ textAlign: 'center' }}>Verifikasi</th>
+                            <th style={{ textAlign: 'center' }}>Status</th>
+                            <th style={{ textAlign: 'center' }}>Note From Admin</th>
+                            <th colSpan='3' style={{ textAlign: 'center' }}>Aksi</th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                        {this.renderScholarshipList()}
+                   </tbody>
                     {this.renderModalDetail()}
                     {this.renderEditModal()}
                 </Table>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Numeral from 'numeral'
 import { connect } from 'react-redux'
 import { getSub, applySub } from '../redux/actions' 
-import { Redirect, Link } from 'react-router-dom'
+// import { Redirect, Link } from 'react-router-dom'
 import { Switch } from '@material-ui/core'
 import { InputGroup, InputGroupAddon, Button, Input, Progress } from 'reactstrap';
 import Axios from 'axios'
@@ -36,7 +36,7 @@ class Subscription extends Component {
         if(!this.props.email){
             return this.setState({ redirectHome: true })
         }
-        this.props.getSub(this.props.email)
+        // this.props.getSub(this.props.email)
         this.getSubscribeList()
         // this.getScholarshipList()
         // console.log(this.props.applySub())
@@ -44,11 +44,11 @@ class Subscription extends Component {
 
     getSubscribeList = () =>{
         const token = localStorage.getItem('token');
-       const options = {
-           headers: {
-               'Authorization': `Bearer ${token}`,
-           }
-       }
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        }
 
         Axios.get(URL_API + '/subscription/subscribelist/' + this.props.id, options)
         .then((res)=>{

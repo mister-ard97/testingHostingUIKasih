@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Link } from 'react-router-dom';
+// import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Axios from 'axios'
 import { URL_API } from '../../helpers/Url_API'

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Axios from 'axios'
-import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../helpers/Url_API';
+import { URL_API, GETTOKENURL, APIWILAYAHURL } from '../../helpers/Url_API';
 import {Table, Modal, ModalBody, ModalHeader, ModalFooter, Button, Form, FormGroup, Label, CustomInput} from 'reactstrap'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import queryString from 'query-string'
-import { isDataValid } from '../helpers/helpers';
+import { isDataValid } from '../../helpers/helpers';
 
 class Studentlist extends Component {
     state = {
@@ -66,9 +66,9 @@ class Studentlist extends Component {
             <option value="" disabled selected hidden>Loading...</option>
           )
         }else{
-          var list = this.state.province.map((val)=>{
+          var list = this.state.province.map((val, id)=>{
             return (
-                <option value={val.name}> {val.name} </option>
+                <option key={id} value={val.name}> {val.name} </option>
             )
         })
         
@@ -83,7 +83,7 @@ class Studentlist extends Component {
             var jsx = []
             for(var i = 0; i<Math.ceil(this.state.totalstudent/this.state.limit); i++){
                 jsx.push(
-                     <PaginationItem>
+                     <PaginationItem key={i}>
                         <PaginationLink href={`/studentlist?page=${i+1}`}>
                             {i+1}
                         </PaginationLink>
@@ -177,7 +177,7 @@ class Studentlist extends Component {
             console.log(this.state.schooldata)
             var options = this.state.schooldata.map((val,i)=>{
                 return (
-                    <option value={val.id}>{val.nama}</option>
+                    <option key={i} value={val.id}>{val.nama}</option>
                 )
             })
             return options

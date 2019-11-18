@@ -34,46 +34,28 @@ class ScholarshipDetail extends Component {
                 </ModalHeader>
                 <ModalBody>
                     <Table>
-                        <tr>
-                            <td>
-                                Sekolah :
-                            </td>
-                            <td>
-                                {namaSekolah}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Bank : 
-                            </td>
-                            <td>
-                                {bank}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Nama Pemilik Rekening
-                            </td>
-                            <td>
-                                {namaPemilikRekening}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                No. Rekening :
-                            </td>
-                            <td>
-                                {nomorRekening}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Nominal : 
-                            </td>
-                            <td>
-                                {nominal}
-                            </td>
-                        </tr>
+                       <tbody>
+                            <tr>
+                                <td>Sekolah :</td>
+                                <td>{namaSekolah}</td>
+                            </tr>
+                            <tr>
+                                <td>Bank :</td>
+                                <td>{bank}</td>
+                            </tr>
+                            <tr>
+                                <td>Nama Pemilik Rekening</td>
+                                <td>{namaPemilikRekening}</td>
+                            </tr>
+                            <tr>
+                                <td>No. Rekening :</td>
+                                <td>{nomorRekening}</td>
+                            </tr>
+                            <tr>
+                                <td>Nominal : </td>
+                                <td>{nominal}</td>
+                            </tr>
+                       </tbody>
                     </Table>
                 </ModalBody>
                 <ModalFooter>
@@ -89,7 +71,7 @@ class ScholarshipDetail extends Component {
         // console.log(nominal)
         const {namaSiswa} = this.state.data.Student
         const { namaSekolah, bank, email, namaPemilikRekening, nomorRekening  } = this.state.data.School
-        const { nominal} = this.state.data
+        const { id, nominal} = this.state.data
         let body={
             "payouts": [
                 {
@@ -103,7 +85,8 @@ class ScholarshipDetail extends Component {
           ]
         }
         console.log(body)
-        Axios.post(URL_API+'/payment/payout', body)
+        console.log(id)
+        Axios.post(`${URL_API}/payout/payout?sId=${id}`, body)
         .then((res)=>{
             console.log(res.data)
             // this.setState({pendingPayout: res.data})
@@ -119,7 +102,7 @@ class ScholarshipDetail extends Component {
         }
         const {namaSiswa, studentImage} = this.state.data.Student
         const { namaSekolah, bank, email, namaPemilikRekening, nomorRekening  } = this.state.data.School
-        const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded} = this.state.data
+        const { judul, nominal, description, shareDescription, durasi, scholarshipStart, scholarshipEnded, jumlahdonation, totaldonation} = this.state.data
         return (
             <div className='container mt-4 mb-4'>
                 <p>detail</p>
@@ -132,35 +115,37 @@ class ScholarshipDetail extends Component {
                     <div className='col-md-9 pl-5'>
                         
                         <Table>
-                            <tr>
-                                <td width='20%'>Nama</td>
-                                <td>: {namaSiswa}</td>
-                            </tr>
-                            <tr>
-                                <td width='20%'>Sekolah</td>
-                                <td>: {namaSekolah}</td>
-                            </tr>
-                            <tr>
-                                <td width='20%'>Target Donasi</td>
-                                <td>: {nominal}</td>
-                            </tr>
-                            <tr>
-                                <td width='20%'>Durasi</td>
-                                <td>: {durasi} Bulan</td>
-                            </tr>
-                            <tr>
-                                <td width='20%'>Deskripsi</td>
-                                <td>: {description}</td>
-                            </tr>
-                            <tr>
-                                <td width='20%'>Share Deskripsi</td>
-                                <td>: {shareDescription}</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td width='20%'>Nama</td>
+                                    <td>: {namaSiswa}</td>
+                                </tr>
+                                <tr>
+                                    <td width='20%'>Sekolah</td>
+                                    <td>: {namaSekolah}</td>
+                                </tr>
+                                <tr>
+                                    <td width='20%'>Target Donasi</td>
+                                    <td>: {nominal}</td>
+                                </tr>
+                                <tr>
+                                    <td width='20%'>Durasi</td>
+                                    <td>: {durasi} Bulan</td>
+                                </tr>
+                                <tr>
+                                    <td width='20%'>Deskripsi</td>
+                                    <td>: {description}</td>
+                                </tr>
+                                <tr>
+                                    <td width='20%'>Share Deskripsi</td>
+                                    <td>: {shareDescription}</td>
+                                </tr>
+                            </tbody>
                         </Table>
                     </div>
                 </div>
                 <div>
-                    <p>Total Dana terkumpul Rp. <b>{nominal}</b></p>
+                    <p>Total Dana terkumpul Rp. <b>{totaldonation}</b></p>
                     <Button color='success' style={{float: 'right'}} onClick={()=>this.setState({modalPayout:true})}>Cairkan Dana</Button>
                 </div>
                 {this.renderModalPayout()}

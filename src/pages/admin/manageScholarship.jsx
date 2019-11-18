@@ -3,7 +3,6 @@ import { Table, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input } from
 import { URL_API } from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Axios from 'axios';
@@ -88,7 +87,7 @@ class ManageScholarship extends Component{
             //     this.setState({cancelled: 'disabled'})
             // }
             return (
-                <tr>
+                <tr key={i}>
                     <td>{i+1}</td>
                     <td>{this.props.nama}</td>
                     <td>{val.Student.namaSiswa}</td>
@@ -251,86 +250,88 @@ class ManageScholarship extends Component{
                             <div className='col-md-9 pl-5'>
                                 
                                 <Table>
-                                    <tr>
-                                        <td width='20%'>Judul</td>
-                                        <td>:<Input type='text' defaultValue={judul} onChange={(e)=>this.setState({judul: e.target.value})}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Nama</td>
-                                        <td>: {namaSiswa}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Sekolah</td>
-                                        <td>: {namaSekolah}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Target Donasi</td>
-                                        <td>: <Input type='text' defaultValue={nominal} onChange={(e)=>this.setState({nominal: e.target.value})}/></td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Durasi</td>
-                                        <td>: 
-                                        <TextField
-                                            id="bulan"
-                                            multiple
-                                            select
-                                            label="Durasi galangan dana"
-                                            className={textField, formControl}
-                                            value={this.state.bulan ? this.state.bulan : durasi}
-                                            onChange={this.handleChangeBulan()}
-                                            SelectProps={{
-                                                MenuProps: {
-                                                    className: menu,
-                                                },
-                                            }}
-                                            margin="normal"
-                                            fullWidth
-                                        >
-                                            {/* Render dropwodn menu */}
-                                            <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
-                                            <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
-                                            <MenuItem key={3} value={3}> 3 Bulan </MenuItem>
-                                            <MenuItem key={4} value={4}> 4 Bulan </MenuItem>
-                                            <MenuItem key={5} value={5}> 5 Bulan </MenuItem>
-                                            <MenuItem key={6} value={6}> 6 Bulan </MenuItem>
-                                            <MenuItem key={7} value={7}> 7 Bulan </MenuItem>
-                                            <MenuItem key={8} value={8}> 8 Bulan </MenuItem>
-                                            <MenuItem key={9} value={9}> 9 Bulan </MenuItem>
-                                            <MenuItem key={10} value={10}> 10 Bulan </MenuItem>
-                                            <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
-                                            <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
-                                        </TextField>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Deskripsi</td>
-                                        <td>: 
-                                            <CKEditor
-                                                editor={ ClassicEditor }
-                                                data={this.state.deskripsi ? this.state.deskripsi : description }
-                                                onInit={ editor => {
-                                                    // You can store the "editor" and use when it is needed.
-                                                    console.log( 'Editor is ready to use!', editor );
-                                                } }
-                                                onChange={ ( event, editor ) => {
-                                                    const data = editor.getData();
-                                                    // console.log( { event, editor, data } );
-                                                    this.setState({deskripsi: data})
-                                                    // console.log(this.state.deskripsi)
-                                                } }
-                                                onBlur={ ( event, editor ) => {
-                                                    console.log( 'Blur.', editor );
-                                                } }
-                                                onFocus={ ( event, editor ) => {
-                                                    console.log( 'Focus.', editor );
-                                                } }
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td width='20%'>Share Deskripsi</td>
-                                        <td>: <Input type='text' defaultValue={shareDescription} onChange={(text)=> this.sDeskripsi(text.target.value)} maxLength='240'/></td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td width='20%'>Judul</td>
+                                            <td>:<Input type='text' defaultValue={judul} onChange={(e)=>this.setState({judul: e.target.value})}/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Nama</td>
+                                            <td>: {namaSiswa}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Sekolah</td>
+                                            <td>: {namaSekolah}</td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Target Donasi</td>
+                                            <td>: <Input type='text' defaultValue={nominal} onChange={(e)=>this.setState({nominal: e.target.value})}/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Durasi</td>
+                                            <td>: 
+                                            <TextField
+                                                id="bulan"
+                                                multiple
+                                                select
+                                                label="Durasi galangan dana"
+                                                className={textField, formControl}
+                                                value={this.state.bulan ? this.state.bulan : durasi}
+                                                onChange={this.handleChangeBulan()}
+                                                SelectProps={{
+                                                    MenuProps: {
+                                                        className: menu,
+                                                    },
+                                                }}
+                                                margin="normal"
+                                                fullWidth
+                                            >
+                                                {/* Render dropwodn menu */}
+                                                <MenuItem key={1} value={1}> 1 Bulan </MenuItem>
+                                                <MenuItem key={2} value={2}> 2 Bulan </MenuItem>
+                                                <MenuItem key={3} value={3}> 3 Bulan </MenuItem>
+                                                <MenuItem key={4} value={4}> 4 Bulan </MenuItem>
+                                                <MenuItem key={5} value={5}> 5 Bulan </MenuItem>
+                                                <MenuItem key={6} value={6}> 6 Bulan </MenuItem>
+                                                <MenuItem key={7} value={7}> 7 Bulan </MenuItem>
+                                                <MenuItem key={8} value={8}> 8 Bulan </MenuItem>
+                                                <MenuItem key={9} value={9}> 9 Bulan </MenuItem>
+                                                <MenuItem key={10} value={10}> 10 Bulan </MenuItem>
+                                                <MenuItem key={11} value={11}> 11 Bulan </MenuItem>
+                                                <MenuItem key={12} value={12}> 12 Bulan </MenuItem>
+                                            </TextField>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Deskripsi</td>
+                                            <td>: 
+                                                <CKEditor
+                                                    editor={ ClassicEditor }
+                                                    data={this.state.deskripsi ? this.state.deskripsi : description }
+                                                    onInit={ editor => {
+                                                        // You can store the "editor" and use when it is needed.
+                                                        console.log( 'Editor is ready to use!', editor );
+                                                    } }
+                                                    onChange={ ( event, editor ) => {
+                                                        const data = editor.getData();
+                                                        // console.log( { event, editor, data } );
+                                                        this.setState({deskripsi: data})
+                                                        // console.log(this.state.deskripsi)
+                                                    } }
+                                                    onBlur={ ( event, editor ) => {
+                                                        console.log( 'Blur.', editor );
+                                                    } }
+                                                    onFocus={ ( event, editor ) => {
+                                                        console.log( 'Focus.', editor );
+                                                    } }
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width='20%'>Share Deskripsi</td>
+                                            <td>: <Input type='text' defaultValue={shareDescription} onChange={(text)=> this.sDeskripsi(text.target.value)} maxLength='240'/></td>
+                                        </tr>
+                                    </tbody>
                                 </Table>
                             </div>
                         </div>
@@ -371,9 +372,19 @@ class ManageScholarship extends Component{
         Axios.put(URL_API + '/scholarship/putScholarship', data, options)
         .then((res) => {
             // console.log(res.data)
-            Axios.get(URL_API+'/scholarship/getScholarship')
+            Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id=' + this.props.id, options)
             .then((res)=>{
+                console.log(res.data)
+                // var results = res.data.result.map((val)=>{
+                //     var hasil = {...val, ...val.School, ...val.Student, ...val.Subscriptions[0]}
+                //     hasil.totaldonation = parseInt(hasil.totaldonation)
+                
+                //     return hasil
+                // })
+
+                // console.log(results)
                 this.setState({data: res.data})
+                
             }).catch((err)=>{
                 console.log(err)
             })
@@ -395,20 +406,24 @@ class ManageScholarship extends Component{
         }
         return(
             <div className='container mt-5 mb-5'>
-                <p>List Beasiswa</p>
+                <p>Admin - List Beasiswa</p>
                 {/* <div><Button color='success'><Link to='/addScholarship' style={{textDecoration:'none', color:'#fff'}}>Add Scholarship</Link></Button></div> */}
                 <Table>
-                    <tr >
-                        <th>No.</th>
-                        <th>Campaigner</th>
-                        <th>Nama Siswa</th>
-                        <th>Target Donasi</th>
-                        <th>Durasi</th>
-                        <th style={{textAlign:'center'}}>Verifikasi</th>
-                        <th style={{textAlign:'center'}}>Status</th>
-                        <th colSpan='3' style={{textAlign:'center'}}>Aksi</th>
-                    </tr>
-                    {this.renderScholarshipList()}
+                   <thead>
+                        <tr >
+                            <th>No.</th>
+                            <th>Campaigner</th>
+                            <th>Nama Siswa</th>
+                            <th>Target Donasi</th>
+                            <th>Durasi</th>
+                            <th style={{textAlign:'center'}}>Verifikasi</th>
+                            <th style={{textAlign:'center'}}>Status</th>
+                            <th colSpan='3' style={{textAlign:'center'}}>Aksi</th>
+                        </tr>
+                   </thead>
+                   <tbody>    
+                        {this.renderScholarshipList()}
+                   </tbody>
                     {this.renderModalDetail()}
                     {this.renderEditModal()}
                     {this.verifikasiBtn()}

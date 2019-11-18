@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Numeral from 'numeral'
 import { connect } from 'react-redux';
 import { Input } from 'reactstrap'

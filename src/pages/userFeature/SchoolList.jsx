@@ -33,7 +33,7 @@ class SchoolList extends Component{
                     <td>{val.nomorRekening}</td>
                     <td>{val.bank}</td>
                     <td>{val.isVerified? 'verified' : 'unverified'}</td>
-                    <td><Button color='warning' onClick={()=>this.setState({editModal: true, selectedId: i})}>Edit</Button></td>
+                    <td><Link to={`/schooledit?id=${val.id}`}><Button color='warning'>Edit</Button></Link></td>
                     <td><Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button></td>
                 </tr>
             )
@@ -63,38 +63,38 @@ class SchoolList extends Component{
     }
 
     addSekolahClick = () => {
-        let nama = this.refs.namaSekolah.refs.inamaSekolah.value
-        let alamat = this.refs.alamat.refs.ialamat.value
-        let telepon = this.refs.noTelepon.refs.inoTelepon.value
-        let namaPemilikRekening = this.refs.pemilikRek.refs.ipemilikRek.value
-        let nomorRekening = this.refs.noRek.refs.inoRek.value
-        let bank = this.refs.bank.refs.ibank.value
-        let email = this.refs.email.refs.iemail.value
+        // let nama = this.refs.namaSekolah.refs.inamaSekolah.value
+        // let alamat = this.refs.alamat.refs.ialamat.value
+        // let telepon = this.refs.noTelepon.refs.inoTelepon.value
+        // let namaPemilikRekening = this.refs.pemilikRek.refs.ipemilikRek.value
+        // let nomorRekening = this.refs.noRek.refs.inoRek.value
+        // let bank = this.refs.bank.refs.ibank.value
+        // let email = this.refs.email.refs.iemail.value
 
-        let data = {
-            nama,
-            alamat,
-            telepon,
-            namaPemilikRekening,
-            nomorRekening,
-            bank,
-            email
-        }
+        // let data = {
+        //     nama,
+        //     alamat,
+        //     telepon,
+        //     namaPemilikRekening,
+        //     nomorRekening,
+        //     bank,
+        //     email
+        // }
 
-        console.log(data)
+        // console.log(data)
 
-        Axios.post(URL_API + '/school/addSchool', data)
-        .then((res) => {
-            console.log(res.data)
-            Axios.get(URL_API+'/school/getSchool')
-            .then((res)=>{
-                this.setState({data: res.data, addModal: false})
-            }).catch((err)=>{
-                console.log(err)
-            })
-        }).catch((err)=> {
-            console.log(err)
-        })
+        // Axios.post(URL_API + '/school/addSchool', data)
+        // .then((res) => {
+        //     console.log(res.data)
+        //     Axios.get(URL_API+'/school/getSchool')
+        //     .then((res)=>{
+        //         this.setState({data: res.data, addModal: false})
+        //     }).catch((err)=>{
+        //         console.log(err)
+        //     })
+        // }).catch((err)=> {
+        //     console.log(err)
+        // })
         // console.log(nama)
     }
 
@@ -162,7 +162,15 @@ class SchoolList extends Component{
         console.log(konfirmasi)
         if(konfirmasi){
             console.log('masuk')
-            Axios.post(URL_API+'/school/deleteSchool?id='+id)
+
+            let token = localStorage.getItem('token')
+            let options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+            Axios.post(URL_API+'/school/deleteSchool?id='+id, {}, options)
             .then((res)=>{
                 Axios.get(URL_API+'/school/getSchool')
                 .then((res)=>{
@@ -185,9 +193,14 @@ class SchoolList extends Component{
             <div>
                 <div className='container mt-4 mb-4'>
                     <b>List Sekolah Terdaftar</b>
-                    <Link to='/schooladd'>
+                    {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3'>Add Sekolah</Button>
-                    </Link>
+                    </Link> */}
+
+                    <a href='/schooladd' className='btn btn-success mb-3' style={{float:'right', textDecoration: 'none'}}>
+                        Add Sekolah
+                    </a>
+
                     <Table className='mt-4'>
                         <tr>
                             <th>No.</th>

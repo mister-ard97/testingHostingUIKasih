@@ -8,11 +8,11 @@ import {URL_API} from '../../helpers/Url_API'
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+// import {ImageDrop} from 'quill-image-drop-module'
 
 import ReactQuill, {Quill} from 'react-quill'
-// import {ImageDrop} from 'quill-image-drop-module'
 import ImageResize from 'quill-image-resize-module'
-import 'react-quill/dist/quill.snow.css'; // ES6
+// import 'react-quill/dist/quill.snow.css'; // ES6
  
 import { TextField, MenuItem, makeStyles, Modal, ModalBody, ModalHeader, ModalFooter,  } from '@material-ui/core'
 import { connect } from 'react-redux'
@@ -797,7 +797,7 @@ class ScholarshipAdd extends Component{
         Axios.post(URL_API + '/scholarship/addScholarship', data, options)
         .then((res) => {
             console.log(res.data)
-            this.setState({success: true})
+            this.setState({success: true, loadingButton: false})
         }).catch((err)=>{
             console.log(err)
         })

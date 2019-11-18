@@ -9,6 +9,7 @@ class VerifiedPage extends Component {
     componentDidMount() {
         document.title = 'Verified Account'      
         this.props.EmailVerification()
+        console.log(this.props.verified)
     }
     
     render() {
@@ -19,9 +20,13 @@ class VerifiedPage extends Component {
                         <div className='row py-1'>
                             <div className="offset-2 offset-md-3 col-8 col-md-6 py-3">
                                 <div className='py-3 text-center'>
-                                    <Link to='/' className='navbar-brand text-dark'>
+                                     {/* <Link to='/' className='navbar-brand text-dark'>
                                         Testing<span>Ui</span>
-                                    </Link>
+                                 </Link> */}
+
+                                 <a href='/' className='navbar-brand text-dark'>
+                                        Kasih Nusantara
+                                 </a>
                                 </div>
                                 <div className="card p-3 font-weight-bold text-center">
                                     {
@@ -38,7 +43,7 @@ class VerifiedPage extends Component {
                                                 :
                                                 null
                                     }
-                                    <p className='mt-3'><Link to='/'>Back to Home</Link></p>
+                                    <p className='mt-3'><a href='/'>Back to Home</a></p>
                                 </div>
                             </div>
                         </div>

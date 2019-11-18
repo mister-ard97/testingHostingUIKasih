@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import imagefooter from '../assets/logo/logo_white_and_grey.png'
 
 class Footer extends React.Component{

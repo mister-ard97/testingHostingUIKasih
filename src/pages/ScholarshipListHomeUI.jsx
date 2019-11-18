@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { URL_API } from '../helpers/Url_API';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { Pagination, PaginationItem, PaginationLink, Progress } from 'reactstrap';
 
@@ -112,7 +112,7 @@ class ScholarshipListHomeUI extends Component {
             for(var i = 0; i < this.state.totalpage; i++){
                 if(parsed.search || parsed.orderby) {
                     jsx.push(
-                        <PaginationItem>
+                        <PaginationItem key={i}>
                            <PaginationLink href={`/scholarship-list?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${i+1}`}>
                                {i+1}
                            </PaginationLink>
@@ -120,7 +120,7 @@ class ScholarshipListHomeUI extends Component {
                     )
                 } else {
                     jsx.push(
-                        <PaginationItem>
+                        <PaginationItem key={i}>
                            <PaginationLink href={`/scholarship-list?page=${i+1}`}>
                                {i+1}
                            </PaginationLink>
@@ -195,7 +195,7 @@ class ScholarshipListHomeUI extends Component {
                 return this.state.ScholarshipListHomeUI.map((val, index) => {
                     val.currentSubs = parseInt(val.currentSubs)
                     return(
-                        <a href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
+                        <a key={index} href={`/scholarship-student?id=${val.id}`} className='row p-3 text-dark border border-light my-3' style={{textDecoration: 'none'}}>
                                 <div className='col-4'>
                                     <img src={`${URL_API}${val.studentImage}`} alt={`${val.studentImage}-banner`} className='img-fluid width-100' style={{height : '410px'}}/>
                                 </div>
@@ -298,18 +298,18 @@ class ScholarshipListHomeUI extends Component {
             // console.log(this.searchText.value)
             // console.log(parsed.search)
 
-            if(this.searchText.value !== parsed.search || this.selectOrder.value !== parsed.orderby) {
-                parsed.page = 1
-            }      
+            // if(this.searchText.value !== parsed.search || this.selectOrder.value !== parsed.orderby) {
+            //     parsed.page = 1
+            // }      
 
             // if(parsed.search !== this.searchText.value) {
             //     this.searchText.value = parsed.search
             // }
 
-            // this.props.history.push({
-            //     pathname:'/scholarship-list',
-            //     search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
-            // })
+            this.props.history.push({
+                pathname:'/scholarship-list',
+                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
+            })
         
 
             let limit = 2
@@ -325,7 +325,7 @@ class ScholarshipListHomeUI extends Component {
 
             Axios.post(URL_API + `/scholarship/getscholarship`, data)
             .then((res) => {
-                var results = res.data.map((val)=>{
+                var results = res.data.results.map((val)=>{
                     var hasil = {...val, ...val.School, ...val.Student}
                     delete hasil.School
                     delete hasil.Student
@@ -341,7 +341,7 @@ class ScholarshipListHomeUI extends Component {
                 
                 this.setState({
                     ScholarshipListHomeUI: results,
-                    totalpage: Math.ceil(results.length / limit),
+                    totalpage: Math.ceil(res.data.total / limit),
                 })
             })
             .catch((err) => {
