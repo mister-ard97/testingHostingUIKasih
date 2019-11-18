@@ -116,7 +116,7 @@ export const EmailVerification = () => {
         }
         Axios.put(URL_API + '/user/emailVerification', {}, options)
             .then((res) => {
-                
+                console.log(res)
                 let { 
                     id, 
                     subscriptionStatus, 

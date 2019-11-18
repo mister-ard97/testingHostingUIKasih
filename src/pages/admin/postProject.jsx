@@ -15,6 +15,7 @@ import { CloudinaryContext } from 'cloudinary-react';
 // import {Modal,ModalBody} from 'reactstrap'
 import{  Progress } from 'reactstrap';
 import { dateCheck, isDataValid } from '../../helpers/helpers';
+import { async } from 'q';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -321,8 +322,8 @@ class postProject extends React.Component{
     
 
     render(){
-        console.log(this.state.text)
-        console.log(this.state.listOfImages)
+        // console.log(this.state.text)
+        // console.log(this.state.listOfImages)
         if(this.state.redirectHome){
             return <Redirect to="/"/>
         }
@@ -338,6 +339,14 @@ class postProject extends React.Component{
                     quality="auto"
                 /> */
             <div>
+                {/* <div className="d-flex flex-row">
+                    <div className="col-md-5 border border-danger" >
+                            TEST
+                    </div>
+                    <div className="col-md-5 border border-primary">
+                            TEST 
+                    </div>
+                </div> */}
                 <div className="editorxd row">
                     <div className="col-8 offset-2">
                         <h1 className="mb-4">GALANG DANA</h1>
