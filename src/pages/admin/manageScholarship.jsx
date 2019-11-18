@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
-import { Table, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input } from 'reactstrap'
+import { Table, Button, Modal, ModalBody, ModalHeader, ModalFooter, Input, Pagination, PaginationItem, PaginationLink, Progress} from 'reactstrap'
+
+// import { Pagination, PaginationItem, PaginationLink, Progress } from 'reactstrap';
 import { URL_API } from '../../helpers/Url_API'
 import { TextField, MenuItem, makeStyles  } from '@material-ui/core'
 import { connect } from 'react-redux'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Axios from 'axios';
+
+import queryString from 'query-string';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -40,18 +44,27 @@ class ManageScholarship extends Component{
         judul:'',
         verifikasi:'',
         verifikasiId:'',
-        note:''
-
+        note:'',
+        totalpage: ''
     }
     componentDidMount(){
         // let id= this.props.id
-        // let limit = 4
-        // let data = {
-        //     name: '',
-        //     page: 1,
-        //     date: 'ASC',
-        //     limit
-        // }
+        let limit = 5
+
+        
+        const parsed = queryString.parse(this.props.location.search);
+        
+        if(!parsed.page) {
+            parsed.page = 1
+        }
+
+        let data = {
+            id: this.props.id,
+            name: '',
+            page: parsed.page,
+            date: 'ASC',
+            limit
+        }
 
         let token = localStorage.getItem('token')
             var options = {
@@ -60,7 +73,7 @@ class ManageScholarship extends Component{
                 }
             }
 
-        Axios.get(URL_API+'/scholarship/getScholarshipPerUser?id=' + this.props.id, options)
+        Axios.post(URL_API+'/scholarship/getScholarshipAllUserByAdmin', data, options)
         .then((res)=>{
             console.log(res.data)
             // var results = res.data.result.map((val)=>{
@@ -71,7 +84,10 @@ class ManageScholarship extends Component{
             // })
 
             // console.log(results)
-            this.setState({data: res.data})
+            this.setState({
+                data: res.data.results,
+                totalpage: Math.ceil(res.data.total / limit)
+            })
             
         }).catch((err)=>{
             console.log(err)
@@ -347,8 +363,91 @@ class ManageScholarship extends Component{
 
     sDeskripsi = (text) => {
         this.setState({sDeskripsi: text})
-       
     }
+
+    renderPagingButton = () =>{
+        if(this.state.totalpage !== 0){
+            
+            var jsx = []
+            const parsed = queryString.parse(this.props.location.search);
+            for(var i = 0; i < this.state.totalpage; i++){
+                if(parsed.search || parsed.orderby) {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/manageScholarship?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                    )
+                } else {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/manageScholarship?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                   )
+                }
+            }
+            return jsx
+        }
+    }
+
+    printPagination = () =>{
+        if(this.state.totalpage !== 0){
+            const parsed = queryString.parse(this.props.location.search);
+            var currentpage = parsed.page
+            if(!parsed.page) {
+                currentpage =  1
+            }
+            if (parsed.search || parsed.orderby) {
+                console.log('Masuk')
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/manageScholarship?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/manageScholarship?&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/manageScholarship?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/manageScholarship?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            } else {
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/manageScholarship?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/manageScholarship?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/manageScholarship?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/manageScholarship?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            }
+        }
+    }
+
+
 
     onSumbitClick = ({id, Id}) => {
         this.setState({openEditModal: false})
@@ -427,6 +526,9 @@ class ManageScholarship extends Component{
                     {this.renderModalDetail()}
                     {this.renderEditModal()}
                     {this.verifikasiBtn()}
+                    <tfoot>
+                    {this.printPagination()}
+                    </tfoot>
                 </Table>
             </div>
         )
