@@ -105,8 +105,8 @@ class Header extends Component {
                                                     null
                                                 }
                                                 <p>Selamat Bergabung di Kasih Nusantara, {this.props.name}</p>
-                                                <a href='/profile' className='border-bottom d-block'> Setting User </a>
-                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/settings' className='border-bottom d-block'> Setting User </a>
+                                                {/* <a href='/changePassword' className='border-bottom d-block'> Change Password </a> */}
                                                 <a href='/subscription' className='border-bottom d-block'> My Subscription </a>
                                                 <a href='/studentlist?page=1' className='border-bottom d-block'> Student List </a>
                                                 <a href='/manageschool' className='border-bottom d-block'> School List </a>
@@ -124,8 +124,8 @@ class Header extends Component {
                                                         null
                                                 }
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
-                                                <a href='/profile' className='border-bottom d-block'> Setting User </a>
-                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/settings' className='border-bottom d-block'> Setting User </a>
+                                                {/* <a href='/changePassword' className='border-bottom d-block'> Change Password </a> */}
                                                 <a href='/subscription' className='border-bottom d-block'> My Subscription </a>
                                                 <a href='/studentlist?page=1' className='border-bottom d-block'> Student List </a>
                                                 <a href='/manageschool' className='border-bottom d-block'> School List </a>
@@ -136,8 +136,8 @@ class Header extends Component {
                                             :
                                             <div className="fade-in">
                                                 <p>Selamat Datang Kembali, {this.props.name}</p>
-                                                <a href='/profile' className='border-bottom d-block'> Setting User </a>
-                                                <a href='/changePassword' className='border-bottom d-block'> Change Password </a>
+                                                <a href='/settings' className='border-bottom d-block'> Setting User </a>
+                                                {/* <a href='/changePassword' className='border-bottom d-block'> Change Password </a> */}
                                                 <a href='/studentlist' className='border-bottom d-block'> Student List </a>
                                                 <a href='/manage-project' className='border-bottom d-block'> Project List </a>
                                                 <a href='/post-project' className='border-bottom d-block'> Post Project </a>

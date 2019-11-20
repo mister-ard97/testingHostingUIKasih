@@ -732,9 +732,9 @@ a.bg-scholarship:hover {
 }
 
 .profile-student {
-  width: 150px;
-  height: 150px;
-  border-radius: 150px;
+  width: 130px;
+  height: 130px;
+  border-radius: 130px;
   background: gray;
   object-fit: cover;
   object-position: 10% 10%;

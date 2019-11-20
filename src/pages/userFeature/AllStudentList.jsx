@@ -18,7 +18,7 @@ class Studentlist extends Component {
         editselected : null,
         imageFile : null,
         editmodal : false,
-        limit : 5,
+        limit : 3,
         province : []
       }
     componentDidMount(){
@@ -167,11 +167,8 @@ class Studentlist extends Component {
         .catch((err) => {
             console.log(err)
         })
-    
     }
     
-
-
     renderOptionSchool = () =>{
         if(this.state.schooldata.length !== 0){
             console.log(this.state.schooldata)

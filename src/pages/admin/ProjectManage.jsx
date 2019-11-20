@@ -6,7 +6,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter,Pagination, PaginationItem, 
 import ReactQuill from 'react-quill'; // ES6
 import queryString from 'query-string'
 
-import User from '../User'
+import User from '../userFeature/settingUser';
 
 class ProjectManage extends React.Component{
     state = {

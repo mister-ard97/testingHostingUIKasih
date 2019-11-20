@@ -201,7 +201,7 @@ class ProjectList extends Component {
             if(this.state.ProjectList.length !== 0) {
                 return this.state.ProjectList.map((val, index) => {
                     return (
-                        <a href={`project-detail?id=${val.projectId}`} className='card mt-3' key={index}>
+                        <a href={`project-detail?id=${val.projectId}`} className='card mt-3 text-dark' key={index}>
                         <div className='row'>
                             <div className='col-2'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className='img-fluid'/>
