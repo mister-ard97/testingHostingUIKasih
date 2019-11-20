@@ -1,24 +1,152 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
-import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
+import { 
+
+    Table, 
+    Button, 
+    Modal, 
+    ModalBody, 
+    ModalFooter, 
+    ModalHeader, 
+    Input,
+    Pagination, 
+    PaginationItem, 
+    PaginationLink
+
+} from 'reactstrap'
 import Axios from 'axios'
-import { URL_API } from '../../helpers/Url_API'
+import { URL_API } from '../../helpers/Url_API';
+
+import queryString from 'query-string';
 
 class SchoolList extends Component{
     state = {
         data:'',
         selectedId: '',
         addModal: false,
-        editModal: false
+        editModal: false,
+        totalpage: ''
     }
 
     componentDidMount(){
-        Axios.get(URL_API+'/school/getSchool')
+        let limit = 5;
+
+        const parsed = queryString.parse(this.props.location.search);
+        
+        if(!parsed.page) {
+            parsed.page = 1
+        }
+
+        let data = {
+            name: '',
+            page: parsed.page,
+            date: 'ASC',
+            limit
+        }
+
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+        Axios.post(URL_API+'/school/getSchool', data, options)
         .then((res)=>{
             console.log(res.data)
-            this.setState({data: res.data})
+            this.setState({
+                data: res.data.results,
+                totalpage: Math.ceil(res.data.total / limit)
+            })
+        })
+        .catch((err) => {
+            console.log(err)
         })
     }
+
+
+    renderPagingButton = () =>{
+        if(this.state.totalpage !== 0){
+            
+            var jsx = []
+            const parsed = queryString.parse(this.props.location.search);
+            for(var i = 0; i < this.state.totalpage; i++){
+                if(parsed.search || parsed.orderby) {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/schoollist?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                    )
+                } else {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/schoollist?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                   )
+                }
+            }
+            return jsx
+        }
+    }
+
+    printPagination = () =>{
+        if(this.state.totalpage !== 0){
+            const parsed = queryString.parse(this.props.location.search);
+            var currentpage = parsed.page
+            if(!parsed.page) {
+                currentpage =  1
+            }
+            if (parsed.search || parsed.orderby) {
+                console.log('Masuk')
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/schoollist?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/schoollist?&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/schoollist?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/schoollist?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            } else {
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/schoollist?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/schoollist?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/schoollist?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/schoollist?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            }
+        }
+    }
+
 
     renderSekolah=()=>{
         return this.state.data.map((val, i) => {
@@ -144,10 +272,38 @@ class SchoolList extends Component{
 
         Axios.post(URL_API + '/school/putSchool?id='+id, data)
         .then((res) => {
-            Axios.get(URL_API+'/school/getSchool')
+            let limit = 5;
+
+            const parsed = queryString.parse(this.props.location.search);
+            
+            if(!parsed.page) {
+                parsed.page = 1
+            }
+    
+            let data = {
+                name: '',
+                page: parsed.page,
+                date: 'ASC',
+                limit
+            }
+    
+            let token = localStorage.getItem('token')
+                var options = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+    
+            Axios.post(URL_API+'/school/getSchool', data, options)
             .then((res)=>{
-                this.setState({data: res.data, editModal: false})
-            }).catch((err)=>{
+                console.log(res.data)
+                this.setState({
+                    data: res.data.results, 
+                    editModal: false,
+                    totalpage: Math.ceil(res.data.total / limit)
+                })
+            })
+            .catch((err) => {
                 console.log(err)
             })
         }).catch((err)=> {
@@ -172,14 +328,36 @@ class SchoolList extends Component{
 
             Axios.post(URL_API+'/school/deleteSchool?id='+id, {}, options)
             .then((res)=>{
-                Axios.get(URL_API+'/school/getSchool')
+                
+                let limit = 5;
+
+                const parsed = queryString.parse(this.props.location.search);
+                
+                if(!parsed.page) {
+                    parsed.page = 1
+                }
+
+                let data = {
+                    name: '',
+                    page: parsed.page,
+                    date: 'ASC',
+                    limit
+                }
+
+                Axios.post(URL_API+'/school/getSchool', data, options)
                 .then((res)=>{
-                    this.setState({data: res.data})
-                }).catch((err)=>{
-                    console.log(err)
-                }).catch((err)=>{
+                    console.log(res.data)
+                    this.setState({
+                        data: res.data.results,
+                        totalpage: Math.ceil(res.data.total / limit)
+                    })
+                })
+                .catch((err) => {
                     console.log(err)
                 })
+            })
+            .catch((err) => {
+                console.log(err)
             })
         }
     }
@@ -192,7 +370,7 @@ class SchoolList extends Component{
         return(
             <div>
                 <div className='container mt-4 mb-4'>
-                    <b>List Sekolah Terdaftar</b>
+                    <b>List Sekolah Terdaftar - User</b>
                     {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3'>Add Sekolah</Button>
                     </Link> */}
@@ -215,7 +393,9 @@ class SchoolList extends Component{
                             <th colSpan='2' style={{textAlign:'center'}}>Action</th>
                         </tr>
                         {this.renderSekolah()}
+                        
                     </Table>
+                    {this.printPagination()}
                 </div>
                 {this.renderAddModal()}
                 {this.renderEditModal()}

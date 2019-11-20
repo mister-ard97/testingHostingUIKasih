@@ -13,7 +13,8 @@ class ScholarshipListHomeUI extends Component {
     state = {
         ScholarshipListHomeUI: null,
         totalpage: 0,
-        searchBy: null,
+        searchText: '',
+        orderBy: '',
         searchStatus : false
     }
 
@@ -306,10 +307,20 @@ class ScholarshipListHomeUI extends Component {
             //     this.searchText.value = parsed.search
             // }
 
-            this.props.history.push({
-                pathname:'/scholarship-list',
-                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
-            })
+            
+            // if(this.selectOrder.value !== parsed.orderby || this.searchText.value !== parsed.search) {
+            //     this.props.history.push({
+            //         pathname:'/scholarship-list',
+            //         search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
+            //     })
+            // } else {
+            //     this.props.history.push({
+            //         pathname:'/scholarship-list',
+            //         search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
+            //     })
+            // }
+
+            
         
 
             let limit = 2
@@ -350,6 +361,23 @@ class ScholarshipListHomeUI extends Component {
 
     }
 
+    filterName(e) {
+        console.log(e.target.value)
+        if(e.target.value) {
+            this.setState({
+                searchText: e.target.value
+            })
+        }
+        
+    }
+
+    filterOrderBy(e) {
+        console.log(e.target.value)
+        this.setState({
+            orderBy: e.target.value
+        })
+    }
+
     render() {
         return (
             <div className='row m-0'>
@@ -358,21 +386,22 @@ class ScholarshipListHomeUI extends Component {
                         <h4>Filter By</h4>
                         <div className='row'>
                             <div className='col-6'>
-                                <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                <input type='text' className='form-control' onChange={(e) => this.filterName(e)} ref={(searchText) => this.searchText = searchText}/>
                             </div>
                             <div className='col-6'>
-                                <select id='searchOrder' className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                <select id='searchOrder' className='form-control' onChange={(e) => this.filterOrderBy(e)} ref={(selectOrder) => this.selectOrder = selectOrder}>
                                     <option value='asc'>Newest Post</option>
                                     <option value='desc'>Older Post</option>
                                 </select>
                             </div>
                         </div>
-                        <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchScholarship()}/>
+                        <a className='btn btn-success' href={`/scholarship-list?search=${this.state.searchText}&orderby=${this.state.orderBy}&page=1`}>Search</a>
+                        {/* <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchScholarship()}/> */}
                     </div>
                     
                     {
-                        this.state.searchBy ?
-                        <p>{this.state.searchBy}</p>
+                        this.state.orderBy ?
+                        <p>{this.state.orderBy}</p>
                         :
                         null
                     }

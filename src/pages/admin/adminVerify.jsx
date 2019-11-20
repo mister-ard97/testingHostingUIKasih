@@ -30,7 +30,8 @@ class AdminVerify extends Component {
 
     getSchool() {
         
-        Axios.get(URL_API+'/user/getschool')
+        
+        Axios.post(URL_API+'/user/getschool')
         .then((res)=>{
             console.log(res.data)
             this.setState({

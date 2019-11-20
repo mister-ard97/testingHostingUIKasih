@@ -1,12 +1,26 @@
 import React, {Component} from 'react'
 // import { Link } from 'react-router-dom'
-import { Table, Button, Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap'
+import { 
+    Table, 
+    Button,
+    Modal, 
+    ModalBody, 
+    ModalFooter, 
+    ModalHeader, 
+    Input,
+    Pagination, 
+    PaginationItem, 
+    PaginationLink
+} from 'reactstrap'
+
 import { TextField, MenuItem, makeStyles } from '@material-ui/core'
 import {Autocomplete} from '@material-ui/lab'
 import Axios from 'axios'
 import _ from 'lodash'
 import { URL_API } from '../../helpers/Url_API'
 import { isDataValid } from '../../helpers/helpers'
+
+import queryString from 'query-string';
 
 const useStyles = makeStyles(theme => ({
     textField: {
@@ -35,14 +49,44 @@ class ManageSchool extends Component{
         addModal: false,
         editModal: false,
         verifiedModal: false,
-        errorMsg:''
+        errorMsg:'', 
+        totalpage: ''
     }
 
     componentDidMount(){
-        Axios.get(URL_API+'/school/getSchool')
+        let limit = 5
+
+        
+        const parsed = queryString.parse(this.props.location.search);
+        
+        if(!parsed.page) {
+            parsed.page = 1
+        }
+
+        let data = {
+            name: '',
+            page: parsed.page,
+            date: 'ASC',
+            limit
+        }
+
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+        Axios.post(URL_API+'/school/getSchoolAdmin', data, options)
         .then((res)=>{
             console.log(res.data)
-            this.setState({data: res.data})
+            this.setState({
+                data: res.data.results,
+                totalpage: Math.ceil(res.data.total / limit)
+            })
+        })
+        .catch((err) => {
+            console.log(err)
         })
 
         Axios.get(URL_API+'/payment/beneficiary_banks')
@@ -52,6 +96,88 @@ class ManageSchool extends Component{
         }).catch((err)=>{
             console.log(err)
         })
+    }
+
+    renderPagingButton = () =>{
+        if(this.state.totalpage !== 0){
+            
+            var jsx = []
+            const parsed = queryString.parse(this.props.location.search);
+            for(var i = 0; i < this.state.totalpage; i++){
+                if(parsed.search || parsed.orderby) {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/manageSchool?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                    )
+                } else {
+                    jsx.push(
+                        <PaginationItem key={i}>
+                           <PaginationLink href={`/manageSchool?page=${i+1}`}>
+                               {i+1}
+                           </PaginationLink>
+                       </PaginationItem>
+                   )
+                }
+            }
+            return jsx
+        }
+    }
+
+    printPagination = () =>{
+        if(this.state.totalpage !== 0){
+            const parsed = queryString.parse(this.props.location.search);
+            var currentpage = parsed.page
+            if(!parsed.page) {
+                currentpage =  1
+            }
+            if (parsed.search || parsed.orderby) {
+                console.log('Masuk')
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/manageSchool?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/manageSchool?&page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/manageSchool?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/manageSchool?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            } else {
+                return (
+                    <Pagination aria-label="Page navigation example">
+                    <PaginationItem>
+                        <PaginationLink first href={`/manageSchool?page=1`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink previous
+                         href={`/manageSchool?page=${parseInt(currentpage) === 1 || parseInt(currentpage) < 0 ? '1' : parseInt(currentpage)-1} `} />
+                      </PaginationItem>
+                        {this.renderPagingButton()}
+                      <PaginationItem>
+                        <PaginationLink next 
+                        href={`/manageSchool?page=${this.state.totalpage === parseInt(currentpage) || parseInt(currentpage) > this.state.totalpage ? 
+                        this.state.totalpage : parseInt(currentpage) + 1}`} />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink last href={`/manageSchool?page=${this.state.totalpage}`} />
+                      </PaginationItem>
+                    </Pagination>
+                )
+            }
+        }
     }
 
     renderSekolah=()=>{
@@ -69,7 +195,14 @@ class ManageSchool extends Component{
                     <td>{val.isVerified? 'verified' : 'unverified'}</td>
                     <td><Button color='primary' onClick={()=>this.setState({verifiedModal: true, selectedId: i})}>Verifikasi</Button></td>
                     <td><a className='btn btn-warning' href={`/schooledit?id=${val.id}`}>Edit</a></td>
-                    <td><Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button></td>
+                    <td>
+                        {
+                            val.isDeleted === 0 ? 
+                            <Button color='danger' onClick={()=> this.deleteBtnClick(i)}>Delete</Button>
+                            :
+                            <p>Status sekolah: <span className='text-danger'>Terhapus</span></p>
+                        }
+                    </td>
                     {/* <td><Button onClick={()=> this.verifikasiSekolah(i)}>test</Button></td> */}
                 </tr>
             )
@@ -123,10 +256,37 @@ class ManageSchool extends Component{
         Axios.post(URL_API+'/school/verifiedSchool?id='+id, options)
         .then((res)=>{
             // console.log(res.data)
-            Axios.get(URL_API+'/school/getSchool')
+            let limit = 5
+
+        
+            const parsed = queryString.parse(this.props.location.search);
+            
+            if(!parsed.page) {
+                parsed.page = 1
+            }
+    
+            let data = {
+                name: '',
+                page: parsed.page,
+                date: 'ASC',
+                limit
+            }
+    
+            let token = localStorage.getItem('token')
+                var options = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+    
+            Axios.post(URL_API+'/school/getSchoolAdmin', data, options)
             .then((res)=>{
                 // console.log(res.data)
-                this.setState({data: res.data, verifiedModal: false})
+                this.setState({
+                    data: res.data.results, 
+                    verifiedModal: false,
+                    totalpage: Math.ceil(res.data.total / limit)
+                })
             }).catch((err)=>{
                 console.log(err)
             })
@@ -243,10 +403,38 @@ class ManageSchool extends Component{
 
         Axios.post(URL_API + '/school/addSchool', data, options)
         .then((res) => {
-            console.log(res.data)
-            Axios.get(URL_API+'/school/getSchool')
+            // console.log(res.data)
+
+                let limit = 5
+
+            
+            const parsed = queryString.parse(this.props.location.search);
+            
+            if(!parsed.page) {
+                parsed.page = 1
+            }
+
+            let data = {
+                name: '',
+                page: parsed.page,
+                date: 'ASC',
+                limit
+            }
+
+            let token = localStorage.getItem('token')
+                var options = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+
+            Axios.post(URL_API+'/school/getSchoolAdmin', data, options)
             .then((res)=>{
-                this.setState({data: res.data, addModal: false})
+                this.setState({
+                    data: res.data.results, 
+                    addModal: false,
+                    totalpage: Math.ceil(res.data.total / limit)
+                })
             }).catch((err)=>{
                 console.log(err)
             })
@@ -308,9 +496,36 @@ class ManageSchool extends Component{
 
         Axios.post(URL_API + '/school/putSchool?id='+id, data, options)
         .then((res) => {
-            Axios.get(URL_API+'/school/getSchool')
+            let limit = 5
+
+        
+        const parsed = queryString.parse(this.props.location.search);
+        
+        if(!parsed.page) {
+            parsed.page = 1
+        }
+
+        let data = {
+            name: '',
+            page: parsed.page,
+            date: 'ASC',
+            limit
+        }
+
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+
+        Axios.post(URL_API+'/school/getSchoolAdmin', data, options)
             .then((res)=>{
-                this.setState({data: res.data, editModal: false})
+                this.setState({
+                    data: res.data.results, 
+                    editModal: false,
+                    totalpage: Math.ceil(res.data.total / limit)
+                })
             }).catch((err)=>{
                 console.log(err)
             })
@@ -336,9 +551,36 @@ class ManageSchool extends Component{
 
             Axios.post(URL_API+'/school/deleteSchool?id='+id, options)
             .then((res)=>{
-                Axios.get(URL_API+'/school/getSchool')
+
+                let limit = 5
+
+        
+                const parsed = queryString.parse(this.props.location.search);
+                
+                if(!parsed.page) {
+                    parsed.page = 1
+                }
+        
+                let data = {
+                    name: '',
+                    page: parsed.page,
+                    date: 'ASC',
+                    limit
+                }
+        
+                let token = localStorage.getItem('token')
+                    var options = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }
+        
+                Axios.post(URL_API+'/school/getSchoolAdmin', data, options)
                 .then((res)=>{
-                    this.setState({data: res.data})
+                    this.setState({
+                        data: res.data.results,
+                        totalpage: Math.ceil(res.data.total / limit)
+                    })
                 }).catch((err)=>{
                     console.log(err)
                 }).catch((err)=>{
@@ -360,7 +602,7 @@ class ManageSchool extends Component{
             <div>
                 
                 <div className='container mt-4 mb-4'>
-                    <b>List Sekolah Terdaftar</b>
+                    <b>List Sekolah Seluruh Sekolah</b>
                     {/* <Link to='/schooladd'>
                         <Button color='success' style={{float:'right', textDecoration: 'none'}} className='mb-3' onClick={()=>this.setState({addModal:true})}>Add Sekolah</Button>
                     </Link> */}
@@ -383,14 +625,13 @@ class ManageSchool extends Component{
                             <th colSpan='3' style={{textAlign:'center'}}>Action</th>
                         </tr>
                         {this.renderSekolah()}
+                        
                     </Table>
+                    {this.printPagination()}
                 </div>
                 {/* {this.renderAddModal()} */}
                 {this.renderEditModal()}
                 {this.renderVerModal()}
-
-                
-            
             </div>
         )
     }

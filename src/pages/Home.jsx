@@ -223,7 +223,7 @@ class Home extends Component {
                 return(
                     <a key={id} href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
                            
-                        <div className='container-fluid py-4 p-md-0'>
+                        <div className='container-fluid p-md-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
                                     <img 
                                         src={`${URL_API}${val.studentImage}`} 
@@ -666,7 +666,7 @@ class Home extends Component {
                         <div className='col-12'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 text-center outer-background-scholarship my-3 py-3 py-md-5 scholarship-slider'>
+                        <div className='col-12 text-center outer-background-scholarship my-3 scholarship-slider'>
                             {this.renderSliderScholarship()}
                             {/* <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}
@@ -682,40 +682,12 @@ class Home extends Component {
                     </div>
                 </div>
                 
-                {/* <div className='container-fluid'>
-                    <div className='row m-0'>
-                         <div className='col-12 d-flex justify-content-center'>
-                            <div className="sharebutton">SHARE YOUR STORY</div>
-                            <div className="donatebutton">SHARE YOUR DONATE</div>
-                        </div>
-                    </div>
-                </div> */}
-
-                {/* <div className='container-fluid m-0 p-0'>
-                    <div className='row m-0'>
-                        <div className='col-12 p-0'>
-                            <div className="projectbackground" style={{height : '95vh'}} >
-                                <div className='font-weight-bold' 
-                                    style={{
-                                        paddingTop: '10%',
-                                        marginLeft: '12%'
-                                    }}
-                                >
-                                    <h2 className='mb-4'>TAKE ACTION</h2>
-                                    <p>
-                                        Get involved, speak out, <br /> or become a donor and give every child a fair
-                                        chance for education
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-
-
                 {/* Project List */}
             <div className='container-fluid mt-4 p-0'>
                     <div className='row m-0'>
+                    <div className='col-12 mt-3'>
+                            <h2 className='text-center font-weight-bold text-danger font-size-40'>SOCIAL PROJECTS</h2>
+                        </div>
                         <div className='offset-md-1 offset-0 col-md-10 col-12 py-5 projects-slider'>
                             {this.renderSliderProject()}
                             {/* <Slider {...settingsProjects}>
@@ -735,7 +707,7 @@ class Home extends Component {
 
                 {/* About Us */}
                 <div className='about-us container-fluid my-5 p-0'>
-                    <div className='row m-0 px-5'>
+                    <div className='row m-0 p-5'>
                         <div className=' col-12 offset-md-1 col-md-10 my-3'>
                             <div className='card'>
                                 <div className='row'>

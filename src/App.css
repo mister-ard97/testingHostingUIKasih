@@ -620,6 +620,7 @@
 
 /* Scholarship Slider */
 .bg-scholarship {
+  margin-top: -10%;
   width: 92% !important;
   background: #FFFFFF;
   height: auto;
@@ -751,7 +752,7 @@ a.bg-scholarship:hover {
 
 .scholarship-slider .slick-dots {
   position: absolute;
-  top: 100%;
+  top: 92%;
   left: 0%;
 }
 
@@ -1068,7 +1069,7 @@ a.bg-scholarship:hover {
   border: 4px solid #b5b8c1;
   color: #b5b8c1;
   position: relative;
-  margin: 2rem 3rem;
+  margin: 0.5rem 3rem;
   padding: 1rem 2rem;
   border-radius: 16px;
   font-size: 1.15rem;

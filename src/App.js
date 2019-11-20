@@ -37,7 +37,7 @@ import ScholarshipListHome from './pages/ScholarshipListHomeUI';
 import ProjectDetails from './pages/ProjectDetails';
 import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
-import UserPage from './pages/User'
+import UserPage from './pages/User';
 import VerificationUser from './pages/userFeature/verificationUser';
 
 import Payout from './pages/userFeature/payout'
@@ -51,6 +51,7 @@ import PaymentPending from './pages/paymentPending'
 import ScholarshipAdd from './pages/userFeature/ScholarshipAdd'
 import ScholarshipList from './pages/userFeature/ScholarshipList'
 import ScholarshipDetail from './pages/userFeature/ScholarshipDetail';
+import EditProfile from './pages/userFeature/editProfile';
 import Footer from './components/footer'
 import Subscription from './pages/Subscription'
 import BottomNav from './components/bottomNav'
@@ -126,6 +127,7 @@ class App extends Component {
                 <Route path='/schoollist' component={SchoolList}/>    
                 <Route path='/schooladd' component={SchoolAdd}/>
                 <Route path='/schooledit' component={SchoolEdit}/>
+                <Route path='/profile'component={EditProfile} />
 
                 {/* User Admin */}
                 <Route path='/manage-project' component={ProjectManage}/>

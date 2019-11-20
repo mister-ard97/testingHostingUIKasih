@@ -133,8 +133,8 @@ class CarouselCustom extends Component {
                     >
                         <CarouselIndicators items={this.state.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
                         {this.renderCarousel()}
-                        <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                        <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+                        {/* <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
+                        <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} /> */}
                     </Carousel>
                 </div>
             )

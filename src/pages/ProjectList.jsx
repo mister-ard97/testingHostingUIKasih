@@ -13,7 +13,8 @@ class ProjectList extends Component {
     state = {
         ProjectList: null,
         totalpage: 0,
-        searchBy: null,
+        searchText: '',
+        orderBy: '',
         searchStatus : false
     }
 
@@ -283,10 +284,10 @@ class ProjectList extends Component {
             //     this.searchText.value = parsed.search
             // }
 
-            this.props.history.push({
-                pathname:'/project-list',
-                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
-            })
+            // this.props.history.push({
+            //     pathname:'/project-list',
+            //     search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
+            // })
         
 
             let limit = 2
@@ -328,6 +329,24 @@ class ProjectList extends Component {
 
     }
 
+    
+    filterName(e) {
+        console.log(e.target.value)
+        if(e.target.value) {
+            this.setState({
+                searchText: e.target.value
+            })
+        }
+        
+    }
+
+    filterOrderBy(e) {
+        console.log(e.target.value)
+        this.setState({
+            orderBy: e.target.value
+        })
+    }
+
     render() {
         return (
             <div className='row m-0'>
@@ -336,16 +355,17 @@ class ProjectList extends Component {
                         <h4>Filter By</h4>
                         <div className='row'>
                             <div className='col-6'>
-                                <input type='text' className='form-control' ref={(searchText) => this.searchText = searchText}/>
+                                <input type='text' className='form-control' onChange={(e) => this.filterName(e)} ref={(searchText) => this.searchText = searchText}/>
                             </div>
                             <div className='col-6'>
-                                <select id='searchOrder' className='form-control' ref={(selectOrder) => this.selectOrder = selectOrder}>
+                                <select id='searchOrder' className='form-control' onChange={(e) => this.filterOrderBy(e)} ref={(selectOrder) => this.selectOrder = selectOrder}>
                                     <option value='asc'>Newest Post</option>
                                     <option value='desc'>Older Post</option>
                                 </select>
                             </div>
                         </div>
-                        <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/>
+                        <a className='btn btn-success' href={`/project-list?search=${this.state.searchText}&orderby=${this.state.orderBy}&page=1`}>Search</a>
+                        {/* <input type='button' className='btn btn-success mt-3' value='Search' onClick={() => this.searchProject()}/> */}
                     </div>
                     
                     {
