@@ -15,7 +15,8 @@ class SchoolAdd extends Component{
         codeBank:'',
         account_name:'',
         success: false,
-        loading: false
+        loading: false,
+        
     }
 
     componentDidMount(){

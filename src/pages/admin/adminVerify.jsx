@@ -18,14 +18,45 @@ class AdminVerify extends Component {
         edit : false,
         imageFile : [],
         schooldata : [],
-        province : []
+        province : [],
+        totalData : 0
     }
 
     componentDidMount() {
-      this.getStudentUnverified()
+        if(queryString.parse(this.props.location.search).type === 'studentlist'){
+            this.getStudentList()
+        }else {
+            this.getStudentUnverified()
+        }
       this.getSchool()
       this.getProvinsiList()
        
+    }
+
+    getStudentList = () =>{
+        // VIEW ALL APPROVED STUDENT
+        if(this.props.id){
+            console.log('getstudentlist')
+            let token = localStorage.getItem('token')
+            const options = {
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+              }
+          }
+  
+
+            Axios.get(URL_API + '/student/getstudentadmin' , options)
+            .then((res)=>{
+                console.log(res.data)
+                this.setState({
+                    data : res.data,
+                    totalData : res.data.count
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
     }
 
     getSchool() {
@@ -39,7 +70,8 @@ class AdminVerify extends Component {
             })
         })
         .catch((err)=>{
-
+            window.alert(err)
+            console.log(err)
         })
     }
 
@@ -109,6 +141,7 @@ class AdminVerify extends Component {
                 'Authorization': `Bearer ${token}`
             }
         }
+        console.log('get student unf')
 
         Axios.get(URL_API+'/studentrev/admingetstudent?type=' + parsed.type, options)
         .then((res)=>{
@@ -820,7 +853,10 @@ class AdminVerify extends Component {
                         <input type="button" className="btn btn-primary mr-5" value="NEW USER VERIFICATION"/>
                     </a>
                     <a href="/adminverify?type=update">
-                        <input type="button" className="btn btn-success" value="UPDATE USER VERIFICATION"/>
+                        <input type="button" className="btn btn-success mr-5" value="UPDATE USER VERIFICATION"/>
+                    </a>
+                    <a href="/adminverify?type=studentlist">
+                        <input type="button" className="btn btn-dark" value="VIEW ALL APPROVED STUDENT"/>
                     </a>
                   
               
@@ -854,6 +890,7 @@ class AdminVerify extends Component {
 
 const mapStateToProps = ({auth}) => {
     return {
+        id : auth.id,
         role: auth.role,
         email: auth.email
     }

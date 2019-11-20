@@ -29,7 +29,7 @@ class Studentlist extends Component {
         //     limit : '3'
         // }
         const parsed = queryString.parse(this.props.location.search);
-        this.getSchool()
+        // this.getSchool()
         this.getStudentData({
             limit : this.state.limit,
             page : parseInt(parsed.page)
@@ -233,6 +233,8 @@ class Studentlist extends Component {
             window.alert(err)
         }
     }
+
+
 
     renderButtonStatus= (type, id, index) =>{
         if(type === 'Update Unverified'){

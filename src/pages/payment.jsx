@@ -26,15 +26,42 @@ class Payment extends Component {
         nominalSubscription : null,
         loadingSubsData : true,
         redirectLogin : false,
+        redirectHome : false,
 
         check : false
     }
 
     componentDidMount(){
-        console.log("PAYMENTPAGE")
+        // queryString.parse
+        // console.log(queryString.parse(this.props.location.search).type)
+        console.log(queryString.parse(this.props.location.search))
         console.log(window.location.href.length)
         console.log(window.location.href)
-        console.log(queryString.parse(this.props.location.search))
+        // console.log(queryString.parse(this.props.location.search))
+        var query = queryString.parse(this.props.location.search)
+        if(query.type && query.id && (query.scholarshipName || query.projectName)){
+            if(query.scholarshipName){
+                this.setState({
+                    scholarshipName: query.scholarshipName, 
+                    scholarshipId: query.id, 
+                    paymentSource : queryString.parse(this.props.location.search).type,
+                })
+            }else{
+                this.setState({
+                    projectName : query.projectName,
+                    projectId : query.Id,
+                    paymentSource : queryString.parse(this.props.location.search).type,
+                })
+            }
+
+         
+        }else {
+            window.alert("URL IS NOT VALID")
+            this.setState({
+                redirectHome : true
+            })
+        }
+
         if(queryString.parse(this.props.location.search).type === 'subscription'){
             this.getUserSubscriptionNominal()
         }else {
@@ -42,36 +69,42 @@ class Payment extends Component {
                 loadingSubsData : false
             })
         }
+
      
         
         // ---------------------- NOTE -------------------------
         // mau pake parsed atau localStorage ?
 
-        var nama = localStorage.getItem('nama')
-        var namaScholarship = localStorage.getItem('namaScholarship')
-        if(nama || namaScholarship){
+        // var namaParse = JSON.parse(namaScholarship)
 
-            if(namaScholarship) {
-                console.log('a')
-                var namaParse = JSON.parse(namaScholarship)
-                this.setState({
-                    scholarshipName: namaParse.scholarName, 
-                    scholarshipId: namaParse.scholarId, 
-                    paymentSource : queryString.parse(this.props.location.search).type,
-                })
-            } else {
-                console.log('b')
-                var namaParse = JSON.parse(nama)
-                this.setState({
-                    projectName: namaParse.projectName,
-                    projectId: namaParse.projectId,
-                    paymentSource : queryString.parse(this.props.location.search).type
-                })
-            }
+        // var nama = localStorage.getItem('nama')
+        // var namaScholarship = localStorage.getItem('namaScholarship')
+
+        // // let id = queryString.parse(this.props.location.search).id
+        // // let namaScholarship = queryString.parse(this.props.location.search).scholarshipame
+        // if(nama || namaScholarship || queryString.parse(this.props.location.search).id){
+
+        //     if(namaScholarship) {
+        //         console.log('a')
+        //         var namaParse = JSON.parse(namaScholarship)
+        //         this.setState({
+        //             scholarshipName: namaParse.scholarName, 
+        //             scholarshipId: namaParse.scholarId, 
+        //             paymentSource : queryString.parse(this.props.location.search).type,
+        //         })
+        //     } else {
+        //         console.log('b')
+        //         var namaParse = JSON.parse(nama)
+        //         this.setState({
+        //             projectName: namaParse.projectName,
+        //             projectId: namaParse.projectId,
+        //             paymentSource : queryString.parse(this.props.location.search).type
+        //         })
+        //     }
             
-            // console.log(namaParse.projectId, namaParse.projectName)
+        //     // console.log(namaParse.projectId, namaParse.projectName)
             
-        }
+        // }
         
         if(!this.props.email){
         
@@ -116,7 +149,7 @@ class Payment extends Component {
         // console.log(status.order_id)
         // if(status.order_id === this.state.orderId && status.transaction_status !== 'settlement' || status.transaction_status !== 'capture'){
             
-            this.createPayment()
+        this.createPayment()
             console.log('masuk add')
         // }
       }
@@ -199,7 +232,7 @@ class Payment extends Component {
             console.log(res.data)
             localStorage.setItem('order_id', res.data.order_id)
             // req.app.io.emit(`status_transaction_${res.data.order_id}`, res.data.order_id)
-
+            // GAK DI PAKE UNTUK REDIRECT
             window.snap.pay(res.data.transactionToken, {
               onSuccess: (result) => {
                 console.log('success')
@@ -208,41 +241,36 @@ class Payment extends Component {
                 Axios.post(`${URL_API}/payment/updatePayment`, result)
                 .then((res)=>{
                     console.log(res.data)
-                    localStorage.removeItem('nama')
-                    localStorage.removeItem('namaScholarship')
+                    
                 })
                 .catch((err)=>{
                     console.log(err)
                 })
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/finish?${link}`})
+                // var link = result.finish_redirect_url.split('?')[1]
+                // document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                // this.setState({lompatan: `/finish?${link}`})
                 
                }
                ,
                onPending: function(result){
-                 console.log('pending')
-                 console.log(result)
+                //  console.log('pending')
+                //  console.log(result)
                  
-                 localStorage.removeItem('nama')
-                 localStorage.removeItem('namaScholarship')
+              
 
-                console.log(result.finish_redirect_url)
-                var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/unfinish?${link}`})
+                // console.log(result.finish_redirect_url)
+                // var link = result.finish_redirect_url.split('?')[1]
+                // document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                // this.setState({lompatan: `/unfinish?${link}`})
                 },
                 onError: function(result){
-                 console.log('error')
-                 console.log(result)
-                 console.log(result.finish_redirect_url)
+                //  console.log('error')
+                //  console.log(result)
+                //  console.log(result.finish_redirect_url)
 
-                 localStorage.removeItem('nama')
-                 localStorage.removeItem('namaScholarship')
-
-                 var link = result.finish_redirect_url.split('?')[1]
-                document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
-                this.setState({lompatan: `/error?${link}`})
+                //  var link = result.finish_redirect_url.split('?')[1]
+                // document.getElementById('apagitu').innerHTML = result.finish_redirect_url;
+                // this.setState({lompatan: `/error?${link}`})
                 }
              
             })
@@ -357,8 +385,17 @@ class Payment extends Component {
         }
         
         if(this.state.redirectLogin){
+            console.log('masuk1')
             return <Redirect to={{
                 pathname : '/login',
+                from : this.props.location.pathname + this.props.location.search
+            }} />
+
+        }
+        if(this.state.redirectHome){
+            console.log('masuk1')
+            return <Redirect to={{
+                pathname : '/',
                 from : this.props.location.pathname + this.props.location.search
             }} />
 
@@ -371,17 +408,19 @@ class Payment extends Component {
             return <Redirect to={`/paymentPending?trans=${this.state.orderId}`}/>
         }
         console.log(this.props.match)
-        if(this.state.check ){
+        // if(this.state.check){
+        //     console.log('masuk2')
 
-            return(
-                <Redirect to={{
-                    pathname : '/login',
-                    from : this.props.location.pathname + this.props.location.search
-                }} />
-            )
-        }
-
+        //     return(
+        //         <Redirect to={{
+        //             pathname : '/login',
+        //             from : this.props.location.pathname + this.props.location.search
+        //         }} />
+        //     )
+        // }
+        console.log('masukmasuk3')
         return (
+            
             <div className="mt-5">
                 <h1>
                     Loading...

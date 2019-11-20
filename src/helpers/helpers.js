@@ -19,6 +19,26 @@ export function isDataValid(obj) {
     return true
 }
 
+export function dateDiff(first, second){
+    let date1 = new Date(first); 
+    let date2 = second ? new Date(second) : new Date(Date.now());
+    if(((date2.getTime() - date1.getTime()) /  (1000 * 60 * 60 * 24)) < 1){
+        if(((date2.getTime() - date1.getTime()) /  (1000 * 60 * 60 )) < 1){
+            if(((date2.getTime() - date1.getTime()) /  (1000 * 60  )) < 1){
+                console.log(((date2.getTime() - date1.getTime()) /  (1000 * 60 * 60 )))
+                console.log('masuk')
+                return 'Just Now'
+            }
+            console.log('masuk menit')
+            return Math.floor((date2.getTime() - date1.getTime()) /  (1000 * 60 )) + ' Menit yang lalu';
+        }
+        return Math.floor((date2.getTime() - date1.getTime()) /  (1000 * 60 * 60)) + ' Jam yang lalu';
+        // return ' Hari Ini '
+    }
+    return  Math.floor((date2.getTime() - date1.getTime()) /  (1000 * 60 * 60 * 24)) + ' Hari yang lalu'; 
+      
+}
+
 
   
 // export function minus(a, b) {

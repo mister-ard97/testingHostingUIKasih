@@ -302,7 +302,7 @@ class ScholarshipDetailHome extends Component {
     
                         </ModalBody>
                         <ModalFooter>
-                            <a href={`/payment?id=${this.state.ScholarshipDetail.id}&scholarship-name=${this.state.ScholarshipDetail.judul}&type=subscription`}>
+                            <a href={`/payment?id=${this.state.ScholarshipDetail.id}&scholarshipName=${this.state.ScholarshipDetail.judul}&type=subscription`}>
                             <input type="button" value="Pembayaran" className="form-control btn btn-danger"/>
                             </a>
                         </ModalFooter>
@@ -397,7 +397,7 @@ class ScholarshipDetailHome extends Component {
 
                                 {
                                     this.props.email ?
-                                    <a href={`/payment?id=${id}&scholarship-name=${judul}&type=donation`} onClick={() => this.getNamaScholarship(id, judul)}> 
+                                    <a href={`/payment?id=${id}&scholarshipName=${judul}&type=donation`} onClick={() => this.getNamaScholarship(id, judul)}> 
                                         <button>
                                             Donasi
                                         </button>

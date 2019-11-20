@@ -247,8 +247,8 @@ class Home extends Component {
                                 {/* </div>
                            */}
                                 <div className="mt-3">
-                                    <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100).toFixed(2)  : 0}   color="danger" >
-                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100).toFixed(2)  : 0}% 
+                                    <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100)  : 0}   color="danger" >
+                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100)  : 0}% 
                                     </Progress>
                                 </div>
 
@@ -303,8 +303,8 @@ class Home extends Component {
                                 <h5>#bersamamembangunbangsa</h5> */}
                                 <h5>Dana yang terkumpul </h5>
                                 <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
-                                <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}   color="danger" >
-                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(2)  : 0}% 
+                                <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100)  : 0}   color="danger" >
+                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100)  : 0}% 
                                 </Progress>
                                 <h5>Dana yang dibutuhkan </h5>
                                 <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>
@@ -663,7 +663,7 @@ class Home extends Component {
 
                  <div className='container-fluid my-5 p-0'>
                     <div className='row m-0'>
-                        <div className='col-12'>
+                        <div className='col-12 mb-0'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
                         <div className='col-12 text-center outer-background-scholarship my-3 scholarship-slider'>

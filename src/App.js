@@ -39,12 +39,12 @@ import ScholarshipStudent from './pages/ScholarshipDetailHome';
 
 import UserPage from './pages/userFeature/settingUser';
 import VerificationUser from './pages/userFeature/verificationUser';
-
+import RegisterStudent from './pages/userFeature/RegisterStudent'
 import Payout from './pages/userFeature/payout'
-
 import ChangePassword from './pages/userFeature/changePassword'
 import Payment from './pages/payment'
-import History from './pages/historyDonasi'
+import History from './pages/History'
+import AdminTransaction from './pages/admin/manageTransaction'
 import PaymentFinish from './pages/paymentFinish'
 import PaymentError from './pages/paymentError'
 import PaymentPending from './pages/paymentPending'
@@ -104,6 +104,7 @@ class App extends Component {
                 <Route path='/verified' component={Verified} />
                 <Route path='/payment' component={Payment}/>
                 <Route path='/history' component={History}/>
+                <Route path='/transactionadmin' component={AdminTransaction}/>
                 <Route path='/subscription' component={Subscription} />
                 <Route path='/settings' component={UserPage} />
                 <Route path='/verificationUser' component={VerificationUser} />
@@ -114,6 +115,8 @@ class App extends Component {
                 <Route path='/paymentPending' component={PaymentPending}/>
                 <Route path='/scholarship-list' component={ScholarshipListHome} />
                 <Route path='/scholarship-student' component={ScholarshipStudent} />  
+                <Route path='/scholarship-student' component={ScholarshipStudent} />  
+                <Route path='/register-student' component={RegisterStudent} />  
 
                 <Route path='/project-list' component={ProjectList} />
                 <Route path='/project-detail' component={ProjectDetails} /> 

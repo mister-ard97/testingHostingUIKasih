@@ -129,6 +129,8 @@ class CarouselCustom extends Component {
                         previous={this.previous}
                         draggable={true}
                         autoPlay={true}
+                        interval={4000}
+
                         ride="carousel"
                     >
                         <CarouselIndicators items={this.state.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
