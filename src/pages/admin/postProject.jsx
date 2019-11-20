@@ -2,9 +2,9 @@ import React from 'react'
 import Axios from 'axios';
 import { URL_API } from '../../helpers/Url_API';
 import { Redirect } from 'react-router-dom';
-// import ReactQuill, {Quill} from 'react-quill'
+import ReactQuill, {Quill} from 'react-quill'
 // import {ImageDrop} from 'quill-image-drop-module'
-// import ImageResize from 'quill-image-resize-module'
+import ImageResize from 'quill-image-resize-module'
  
 
 // import { Quill } from 'react-quill';
@@ -17,7 +17,7 @@ import{  Progress } from 'reactstrap';
 import { dateCheck, isDataValid } from '../../helpers/helpers';
 import { async } from 'q';
 
-// Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageResize', ImageResize);
 
 
 
@@ -205,8 +205,9 @@ class postProject extends React.Component{
             name : this.refs.prname.value,
             description : this.state.text,
             totalTarget : this.refs.prtarget.value,
-            projectCreated : this.refs.prdatestart.value,
-            projectEnded : this.refs.prdateend.value,
+            projectCreated : new Date(),
+            //new Date(this.refs.prdatestart.value)
+            projectEnded : new Date(this.refs.prdateend.value),
             shareDescription: this.refs.shareDescription.value
         }
         console.log(isDataValid(data))
@@ -214,8 +215,8 @@ class postProject extends React.Component{
             return window.alert('Harap Untuk mengisi semua form')
         }
 
-        if(dateCheck(this.refs.prdatestart.value , this.refs.prdateend.value)){
-            return window.alert('Mohon di cek kembali tanggal project ')
+        if((new Date(this.refs.prdateend.value) - new Date()) <= 0){
+            return window.alert('Tanggal Project Berakhir harus valid   ')
         }
 
         
@@ -353,20 +354,20 @@ class postProject extends React.Component{
                         <h5>Nama Project</h5>
                         <input type="text" ref='prname' className="form-control mb-5" placeholder="masukkan nama project"/>
                         {/* <button onClick={()=>this.setState({modalopen:true})} className="toolbar">add image</button> */}
-                        {/* <ReactQuill value={this.state.text}
+                        <ReactQuill value={this.state.text}
                                     modules={this.modules}
                                     formats={this.formats}
                                     onChange={this.handleChange} 
                                     className="mb-5"
-                        />  */}
+                        /> 
                         {/* <CKEditor
                             editor={ DokumenEditor }
                         /> */}
 
                         <h5>Project Target</h5>
                         <input type="number" ref='prtarget' className="form-control mb-4" placeholder="masukkan project description"/>
-                        <h5>Project Date Start</h5>
-                        <input type="date" ref='prdatestart' className="form-control mb-4" placeholder="masukkan project description"/>
+                        {/* <h5>Project Date Start</h5>
+                        <input type="date" ref='prdatestart' className="form-control mb-4" placeholder="masukkan project description"/> */}
                         <h5>Project Date End</h5>
                         <input type="date" ref='prdateend' className="form-control mb-4" placeholder="masukkan project description"/>
                         <h5>Insert Image Here</h5>

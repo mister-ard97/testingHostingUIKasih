@@ -13,7 +13,7 @@ import { URL_API } from '../../helpers/Url_API'
 class SchoolEdit extends Component{
     state={
         editData: '',
-        listBank:'',
+        listBank:['abc', 'bca'],
         bank:'',
         codeBank:'',
         account_name:'',
@@ -182,6 +182,8 @@ class SchoolEdit extends Component{
     }
    
     render(){
+        console.log(this.state.listBank, this.state.codeBank)
+        // console.log()
         
         if(this.state.listBank.length === 0){
             return <p>Loading</p>
@@ -190,6 +192,7 @@ class SchoolEdit extends Component{
             return <Redirect to='/schoollist'/>
         }
         const {nama, alamat, bank, email, namaPemilikRekening, nomorRekening, telepon} = this.state.editData
+        console.log(this.state.editData)
         return(
             <div className='container mt-5 p-3'>
 
@@ -202,18 +205,37 @@ class SchoolEdit extends Component{
                     <Input className='mb-2' type='textarea' ref='alamat' innerRef='ialamat' defaultValue={alamat} placeholder='Masukkan alamat sekolah' />
                     {console.log(this.state.bank)}
                     <Autocomplete
+                        // defaultValue={'annnnnn'}
+                        // value = "abc"
+                        // inputValue={'bca'}
+                        id="Select-Bank"
+                        value={this.state.bank}
+                        // title="bcas"
                         options={this.state.listBank}
-                        getOptionLabel={(option) => 
-                           option.name
+                        getOptionLabel={(option) => {
+                            // console.log('get option label')
+                            // console.log(option)
+                            return option.name
                         }
+                        }
+                        
+                        // value="abc"
                         // style={{width: 300}}
                         onChange={(event, value)=> value ? this.handleChangeBank(value) : null}
                         className='mb-2'
-                        renderInput={params=>(
-                            <TextField {...params} variant='outlined' fullWidth />
-                        )}
+                        renderInput={params=>{ 
+                                // console.log(params)
+                                return (
+    
+                                    <TextField {...params} variant='outlined' fullWidth placeholder={this.state.bank} />
+                                )
+                        }
+                        
+                  
+             
+                        }
                     />
-                    <p>{this.state.bank}</p>
+                    {/* <p>{this.state.bank}</p> */}
                     
                     <Input className='mb-2' type='number' ref='noRek' innerRef='inoRek' defaultValue={nomorRekening} id='norek' onBlur={this.validateAccount} placeholder='Masukkan nomor rekening sekolah' />
                     <LoadingOverlay

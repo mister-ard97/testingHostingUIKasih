@@ -8,7 +8,7 @@ import {URL_API} from '../../helpers/Url_API'
 // import CKEditor from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-// import {ImageDrop} from 'quill-image-drop-module'
+// import {ImageDrop} from 'quill-image-drop-module'zz
 
 import ReactQuill, {Quill} from 'react-quill'
 import ImageResize from 'quill-image-resize-module'
@@ -23,7 +23,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 // import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import { isDataValid } from '../../helpers/helpers'
 
 

@@ -15,7 +15,6 @@ import {
 
  
 import queryString from 'query-string'
-
 class ProjectDetails extends Component {
     state = {
         ProjectDetail: null,
@@ -94,7 +93,7 @@ class ProjectDetails extends Component {
                                 </WhatsappShareButton>
                                 {
                                     this.props.email ?
-                                    <a href={`/payment?id=${val.projectId}&projectName=${val.projectName}`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
+                                    <a href={`/payment?id=${val.projectId}&projectName=${val.projectName}&type=donation`} onClick={() => this.getNamaProject(val.projectId, val.projectName)}> 
                                         <button>
                                             Donasi
                                         </button>

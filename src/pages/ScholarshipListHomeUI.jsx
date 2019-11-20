@@ -21,6 +21,7 @@ class ScholarshipListHomeUI extends Component {
         
         const parsed = queryString.parse(this.props.location.search);
         console.log(parsed)
+        
         if(parsed.search || parsed.orderby || parsed.page) {
 
             let searchOrder = document.getElementById('searchOrder').options
@@ -273,12 +274,13 @@ class ScholarshipListHomeUI extends Component {
     }
 
     searchScholarship = () => {
-            // console.log(this.searchText.value)
+            console.log(this.searchText.value)
         
-            // console.log(this.selectOrder.value)
+            console.log(this.selectOrder.value)
+
 
             const parsed = queryString.parse(this.props.location.search)
-            
+            console.log(parsed.page)
             if(!parsed.page) {
                 parsed.page = 1
             }
@@ -308,7 +310,7 @@ class ScholarshipListHomeUI extends Component {
 
             this.props.history.push({
                 pathname:'/scholarship-list',
-                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=1`
+                search:`?search=${this.searchText.value}&orderby=${this.selectOrder.value}&page=${parsed.page}`
             })
         
 

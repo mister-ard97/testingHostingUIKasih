@@ -128,6 +128,7 @@ class Header extends Component {
                                                 <a href='/studentlist?page=1' className='border-bottom d-block'> Student List </a>
                                                 <a href='/manageschool' className='border-bottom d-block'> School List </a>
                                                 <a href='/scholarshiplist' className='border-bottom d-block'> Project Scholarship List </a>
+                                                <a href='/history' className='border-bottom d-block'> Histori Transaksi </a>
                                                 <Link to='/' onClick={this.userLogOut}> Log Out </Link>
                                                 
                                             </div>
