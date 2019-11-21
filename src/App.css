@@ -627,7 +627,7 @@ body {
 
 /* Scholarship Slider */
 .bg-scholarship {
-  margin-top: -10%;
+  margin-top: -15%;
   width: 92% !important;
   background: #FFFFFF;
   height: auto;
@@ -789,7 +789,7 @@ a.bg-scholarship:hover {
 .scholarship-slider .slick-dots li button:before, .projects-slider .slick-dots li button:before {
   color: white !important;
   opacity: 1;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 @media only screen and (max-width: 762px) {

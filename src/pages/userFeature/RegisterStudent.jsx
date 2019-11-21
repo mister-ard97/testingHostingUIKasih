@@ -140,7 +140,9 @@ class RegisterStudent extends Component{
             completed : {
                 0 : true
             },
-            totalSteps : 3
+            totalSteps : 3,
+
+            success: false
 
            
             } // You can also pass a Quill Delta here
@@ -393,9 +395,9 @@ class RegisterStudent extends Component{
                 </div>
                 <div className="col-md-6">
                     <FormGroup>
-                        <Label>Gender</Label>
+                        <Label>Jenis Kelamin</Label>
                         <select className='form-control' ref='gender' onChange={(e)=>this.setState({ gender : e.target.value})} value={this.state.gender}>
-                            <option value='' className="text-muted">Pilih gender</option>
+                            <option value='' className="text-muted">Pilih Jenis Kelamin</option>
                             <option value='Pria'>Pria</option>
                             <option value='Wanita'>Wanita</option>
                         </select>
@@ -573,23 +575,146 @@ class RegisterStudent extends Component{
                       </FormGroup>
                       <FormGroup>
                             <Label for="saudara">Jumlah Saudara Kandung</Label>
-                            <Input ref='saudara' type="number" name='saudara' id='saudara' placeholder='Masukkan nomor telepon sekolah' onChange={(e)=>this.setState({saudara: e.target.value})} value={this.state.saudara}/>
+                            <Input ref='saudara' type="number" name='saudara' id='saudara' placeholder='Jumlah saudara' onChange={(e)=>this.setState({saudara: e.target.value})} value={this.state.saudara}/>
                       </FormGroup>
 
                       <FormGroup>
                             <Label for="shareDescription">Deskripsi Singkat (Tagline)</Label>
-                            <Input ref='shareDescription' type="textarea" name='shareDescription' id='shareDescription' placeholder='Masukkan nomor telepon sekolah' onChange={(e)=>this.setState({shareDescription: e.target.value})} value={this.state.shareDescription}/>
+                            <Input ref='shareDescription' type="textarea" name='shareDescription' id='shareDescription' placeholder='contoh: Ayo bantu bagas agar bisa membayar biaya bulanan sekolah. Karena dengan berbagi akan membuat dunia lebih baik' onChange={(e)=>this.setState({shareDescription: e.target.value})} value={this.state.shareDescription}/>
                       </FormGroup>
-                      <input type="button" onClick={()=>{
-                          window.alert('success');
-                          console.log(this.state)
-                      }}  className="btn btn-success" value="submit"/>
+                      <input type="button" onClick={()=> this.addDataSiswa()}  className="btn btn-success" value="submit"/>
                 </Form>
             ];
             
           default:
             return 'Unknown step';
         }
+      }
+
+
+      addDataSiswa = () => {
+            let formData = new FormData();
+        
+            let data = {
+                name: this.state.nama,
+                pendidikanTerakhir: this.state.pendidikan,
+                gender: this.state.gender,
+                status: this.state.status,
+                alamat: this.state.alamat,
+                tanggalLahir: this.state.tanggalLahir,
+                story: this.state.deskripsi,
+                provinsi: this.state.provinsi,
+                shareDescription : this.state.shareDescription,
+                nomorRekening : this.state.rekening,
+                pemilikRekening : this.state.account_name,
+                alamatSekolah : this.state.alamatSekolah,
+                bank : this.state.bank,
+                cabangBank : this.state.cabangBank,
+                teleponSekolah : this.state.telp,
+                namaSekolah : this.state.sekolah,
+                jumlahSaudara :this.state.saudara,
+                biayaSekolah : this.state.scholarshipNominal,
+                kelas : this.state.kelas,
+          }
+
+          //  userId: this.props.userId,
+          // isDeleted: 0
+        //   dataStatus: 'Unverified',
+        //   statusNote: ''
+
+          
+        //   studentImage: this.state.StudentImageDB,
+        //   kartuSiswa : this.state.StudentCardImageDB,
+        //   raportTerakhir : this.state.SchoolImageDB,
+        //   kartuKeluarga : this.state.FamilyCardImageDB,
+        //   dataPenghasilan : this.state.IncomeCardImageDB,
+
+        if(!isDataValid({
+            ...data, 
+            image : this.state.StudentImageDB, 
+            image2 : this.state.StudentCardImageDB,
+              image3: this.state.SchoolImageDB,
+              image4: this.state.FamilyCardImageDB,
+              image5: this.state.IncomeCardImageDB
+          })) {
+            return window.alert('Harap isi form')
+        }
+
+        let token = localStorage.getItem('token')
+            var options = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type' : 'multipart/form-data'
+                }
+            }
+
+          formData.append('data', JSON.stringify(data));
+          formData.append('image', this.state.StudentImageDB)
+          formData.append('image', this.state.StudentCardImageDB)
+          formData.append('image', this.state.SchoolImageDB)
+          formData.append('image', this.state.FamilyCardImageDB)
+          formData.append('image', this.state.IncomeCardImageDB)
+
+          Axios.post(URL_API + '/student/poststudentdata', formData, options)
+          .then((res) => {
+              window.alert('Data telah terinput. Terima kasih');
+              this.setState({
+                nama : '',
+                pendidikan : '',
+                gender : '',
+                status : '',
+                tanggalLahir : '',
+                provinsi : '',
+                alamat : '',
+                shareDescription : '',
+                saudara : '',
+                deskripsi : '',
+                sekolah : '',
+                alamatSekolah : '',
+                telp : '', 
+                kelas : '',
+                scholarshipNominal : '',
+                //StudentImage
+                StudentImageName: 'Pilih Gambar ...',
+                StudentImageFile: URL_API + '/defaultPhoto/defaultUser.png', 
+                StudentImageDB: null,
+    
+                SchoolImageName: 'Pilih Gambar ...',
+                SchoolImageFile: URL_API + '/defaultPhoto/defaultUser.png', 
+                SchoolImageDB: null,
+    
+                StudentCardImageName: 'Pilih Gambar ...',
+                StudentCardImageFile: URL_API + '/defaultPhoto/defaultUser.png', 
+                StudentCardImageDB: null,
+    
+                FamilyCardImageName: 'Pilih Gambar ...',
+                FamilyCardImageFile: URL_API + '/defaultPhoto/defaultUser.png', 
+                FamilyCardImageDB: null,
+    
+                IncomeCardImageName: 'Pilih Gambar ...',
+                IncomeCardImageFile: URL_API + '/defaultPhoto/defaultUser.png', 
+                IncomeCardImageDB: null,
+                listOfImages : [],
+                province : [],
+                account_name : '',
+                rekening : '',
+                cabangBank : '',
+                listBank : [],
+                bank : '',
+                codeBank : '',
+                steps : ['Masukkan Biodata Siswa', 'Lengkapi Data Sekolah', 'Lengkapi Data Tambahan'],
+                activeStep : 0,
+                completed : {
+                    0 : true
+                },
+                totalSteps : 3,
+                success: true
+              })
+          })
+          .catch((err) => {
+              console.log(err)
+              
+          })
       }
 
        totalSteps = () => {
@@ -930,9 +1055,9 @@ class RegisterStudent extends Component{
         // if(!this.state.existSiswa){
         //     return <h2>Loading</h2>
         // }
-        // if(this.state.success){
-        //     return <Redirect to='/scholarshipList'/>
-        // }
+        if(this.state.success){
+            return <Redirect to='/studentlist?page=1'/>
+        }
         const {activeStep, steps, completed} = this.state
         return(
     

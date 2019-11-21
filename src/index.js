@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-magic-slider-dots/dist/magic-dots.css';
 import App from './App';
-import './fonts/Neon.ttf'
+import './fonts/Neon.ttf';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

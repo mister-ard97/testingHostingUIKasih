@@ -317,7 +317,7 @@ class ScholarshipDetailHome extends Component {
         if(this.state.ScholarshipDetail) {
             console.log(this.state.ScholarshipDetail)
             const {namaSiswa, studentImage} = this.state.ScholarshipDetail.Student
-            const { namaSekolah } = this.state.ScholarshipDetail.School
+            // const { namaSekolah } = this.state.ScholarshipDetail.School
             const {
                 id, 
                 judul, 
@@ -345,7 +345,7 @@ class ScholarshipDetailHome extends Component {
 
                             <div className='col-10 img-small'>
                                 <h5>{judul}</h5>
-                                <p>{namaSekolah}</p>
+                                {/* <p>{namaSekolah}</p> */}
                                 <p>Nama Siswa : {namaSiswa}</p>
                                 
                                 <Progress  className="font-weight-bold mb-3" animated value={(totaldonation / nominal) * 100 ? (totaldonation / nominal) * 100  : 0} >

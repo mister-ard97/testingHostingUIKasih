@@ -160,7 +160,7 @@ class Home extends Component {
     //                             {/* <p>{new Date(val.projectCreated).toLocaleDateString('id-IND')}</p>
     //                             <h6>Project Ended</h6>
     //                             <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
-    //                             <p>{val.nominal}</p>
+    //                             <p>{val.biayaSekolah}</p>
     //                             <Progress  className="font-weight-bold mb-3" animated value={(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0} >
     //                             {(parseInt(val.grandtotal) / val.nominal) * 100 ? (parseInt(val.grandtotal) / val.nominal) * 100  : 0}%
     //                             </Progress>
@@ -218,10 +218,10 @@ class Home extends Component {
         console.log(this.state.scholarshipList)
         if(this.state.scholarshipList.length !== 0){
             return this.state.scholarshipList.map((val,id)=>{
-                val.totaldonation = val.totaldonation ? val.totaldonation : 0
+                // 30000 = 30000 ? 30000 : 0
                 // val.currentSubs = parseInt(val.currentSubs)
                 return(
-                    <a key={id} href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 py-sm-5'>
+                    <a key={id} href={`/scholarship-student?id=${val.id}`} className='card bg-scholarship text-center py-0 pt-sm-2 pb-sm-2'>
                            
                         <div className='container-fluid p-md-0'>
                             <div className='col-12 d-flex justify-content-center mb-3'>
@@ -240,28 +240,28 @@ class Home extends Component {
                                     <div className="mt-2 ">
                                         {/* <div className="mt-2"> */}
                                             <h5>Dana yang Terkumpul</h5>
-                                            <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totaldonation)).format(0,0)}`} disabled/>
+                                            <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(30000)).format(0,0)}`} disabled/>
                                         {/* </div>  */}
                                     </div>
                                    
                                 {/* </div>
                            */}
                                 <div className="mt-3">
-                                    <Progress  className="font-weight-bold mb-3" animated value={(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100)  : 0}   color="danger" >
-                                    {(val.totaldonation / val.nominal) * 100 ? ((val.totaldonation / val.nominal) * 100)  : 0}% 
+                                    <Progress  className="font-weight-bold mb-3" animated value={(30000 / val.biayaSekolah) * 100 ? ((30000 / val.biayaSekolah) * 100).toFixed(0)  : 0}   color="danger" >
+                                    {(30000 / val.biayaSekolah) * 100 ? ((30000 / val.biayaSekolah) * 100).toFixed(0)  : 0}% 
                                     </Progress>
                                 </div>
 
                                 <div className=" mt-2 ">
                                     {/* <div classNanme="mt-2"> */}
                                         <h5>Dana yang dibutuhkan</h5>
-                                        <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                        <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.biayaSekolah)).format(0,0)}`} disabled/>
                                     {/* </div> */}
                                 </div>
                                 
                                 <div className="mt-2">
                                     <h4> Sisa Hari : </h4>
-                                    <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
+                                    <input type="text" className="form-control text-center" value={9 + ' Hari '} disabled/>
                                 </div>
                                 
                                 {/* <h5 className="my-3">{val.namaSiswa}</h5>
@@ -303,13 +303,13 @@ class Home extends Component {
                                 <h5>#bersamamembangunbangsa</h5> */}
                                 <h5>Dana yang terkumpul </h5>
                                 <input type="text" className="form-control text-center mb-3" value={`Rp. ${numeral(parseInt(val.totalNominal)).format(0,0)}`} disabled/>
-                                <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100)  : 0}   color="danger" >
-                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100)  : 0}% 
+                                <Progress  className="font-weight-bold my-1" animated value={(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(0)  : 0}   color="danger" >
+                                    {(val.totalNominal / val.totalTarget) * 100 ? ((val.totalNominal / val.totalTarget) * 100).toFixed(0)  : 0}% 
                                 </Progress>
                                 <h5>Dana yang dibutuhkan </h5>
                                 <input type="text" className="form-control text-center" value={`Rp. ${numeral(parseInt(val.totalTarget)).format(0,0)}`} disabled/>
                                 <h5>Sisa hari </h5>
-                                <input type="text" className="form-control text-center" value={val.SisaHari + ' Hari '} disabled/>
+                                <input type="text" className="form-control text-center" value={10 + ' Hari '} disabled/>
                             </div>
                             <div className='col-5 pt-5 d-flex flex-column px-3'>
                                 <img src={`${URL_API}${val.projectImage}`} alt={`${val.projectName}-banner`} className="img-fluid" style={{marginBottom : 'auto', maxHeight : '200px'}}/>
@@ -666,7 +666,7 @@ class Home extends Component {
                         <div className='col-12 mb-0'>
                             <h2 className='text-center font-weight-bold text-danger font-size-40'>SCHOLARSHIPS</h2>
                         </div>
-                        <div className='col-12 text-center outer-background-scholarship my-3 scholarship-slider'>
+                        <div className='col-12 text-center outer-background-scholarship mt-1 mb-3 scholarship-slider'>
                             {this.renderSliderScholarship()}
                             {/* <Slider {...settings}>
                                 {this.renderScholarshipListSlider()}

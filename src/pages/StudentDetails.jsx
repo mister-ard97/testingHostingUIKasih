@@ -28,6 +28,8 @@ class StudentDetails extends Component {
 
         // GANTI JADI POST YANG NERIMA REQ.BODY
 
+        window.scrollTo(0, 0);
+
         this.getStudentDetail()
       
         // Dino
@@ -44,7 +46,7 @@ class StudentDetails extends Component {
         var id = this.props.location.search.split('=')[1]
         // Axios.get(API_URL + `/student/get-student-detail/1` )
         console.log(id)
-        Axios.get(URL_API + `/studentdetail/get-student-detail/${id}`)
+        Axios.get(URL_API + `/student/get-student-detail/${id}`)
             .then((res) => {
                 this.setState({ data: res.data, pendidikan: res.data[0].pendidikanTerakhir })
                 console.log(this.state.data)
@@ -89,19 +91,21 @@ class StudentDetails extends Component {
                  <img src={URL_API + val.studentImage} alt={val.studentImage} style={{width: '300px'}}/>
                  <p>Nama: {val.name}</p>
                  <p>Pendidikan Terakhir: {val.pendidikanTerakhir}</p>
-                 <p>Gender: {val.gender}</p>
+                 <p>Kelas: {val.kelas}</p>
+                 <p>Jenis Kelamin: {val.gender}</p>
                  <p>Status Keluarga: {val.status}</p>
                  <p>Alamat: {val.alamat}</p>
-                 <p>Story : {val.story}</p>
-                 <p></p>
-                  <table>
-                    <thead>
+                 <h5>Cerita Murid</h5>
+                 <div className='card' dangerouslySetInnerHTML={{__html: val.story ? val.story : null}}></div>
+                 {/* <p>Story : {}</p> */}
+                  <table className='my-5'>
+                    <thead className='mt-5'>
                         <tr>
-                                <th className='pr-3'> Report Image</th>
-                                <th className='pr-5'>Description</th>
+                                <th style={{width: '300px'}}>Gambar Dokumen</th>
+                                <th>Description</th>
                         </tr>
                     </thead>
-                {
+                {/* {
                     this.props.role === 'User' ?
                     null
                     :
@@ -126,7 +130,44 @@ class StudentDetails extends Component {
                         })
                     }
                 </tbody>
-                }
+                } */}
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src={`${URL_API}/${val.kartuSiswa}`} alt={`Kartu-Siswa-${val.name}`} width='200' />
+                        </td>
+                        <td>
+                            Kartu siswa
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <img src={`${URL_API}/${val.raportTerakhir}`} alt={`Raport-Siswa-${val.name}`} width='200' />
+                        </td>
+                        <td>
+                            Raport Terakhir Siswa
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <img src={`${URL_API}/${val.kartuKeluarga}`} alt={`Kartu-Keluarga-${val.name}`} width='200' />
+                        </td>
+                        <td>
+                            Kartu Keluarga
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <img src={`${URL_API}/${val.dataPenghasilan}`} alt={`Data-Penghasilan-orangTua-${val.name}`} width='200' />
+                        </td>
+                        <td>
+                            Slip Gaji Orang Tua
+                        </td>
+                    </tr>
+                </tbody>
               </table>
              </div>
             )
@@ -520,7 +561,9 @@ class StudentDetails extends Component {
             <div className='container'>
                     <div className='row'>
                     {this.renderStudentDetailForGuest()}
-                        <div className='col-12'>
+
+
+                        {/* <div className='col-12'>
                             
                         <table>
                         <thead>
@@ -554,7 +597,7 @@ class StudentDetails extends Component {
                             null
                         }
                   </table>
-                        </div>
+                        </div> */}
                 </div>
             </div>
         );

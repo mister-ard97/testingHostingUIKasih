@@ -210,25 +210,25 @@ class ScholarshipListHomeUI extends Component {
                                     <h6>Project Ended</h6>
                                     <p>{new Date(val.projectEnded).toLocaleDateString('id-IND')}</p> */}
                                     <p>{val.nominal}</p>
-                                    <Progress  className="font-weight-bold mb-3" animated value={(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0} >
+                                    <Progress  className="font-weight-bold mb-3" animated value={(30000 / val.biayaSekolah) * 100 ? (30000 / val.biayaSekolah) * 100  : 0} >
                                     {(val.currentSubs / val.nominal) * 100 ? (val.currentSubs / val.nominal) * 100  : 0}%
                                     </Progress>
                                     <div className="d-flex flex-row mb-3">
                                         <div className="mr-4">
                                             <h4>Dana yang terkumpul </h4>
-                                            <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.currentSubs)).format(0,0)}`} disabled/>
+                                            <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.biayaSekolah)).format(0,0)}`} disabled/>
                                         </div>
     
                                         <div>
                                             <h4>Dana yang dibutuhkan :  </h4>
-                                            <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.nominal)).format(0,0)}`} disabled/>
+                                            <input type="text" className="form-control" value={`Rp. ${numeral(parseInt(val.biayaSekolah)).format(0,0)}`} disabled/>
                                         </div>
                                     </div>
                            
                                     <h5>Banyaknya Donasi </h5>
                                     <div className="text-gray mb-3"> {val.totalDonasi} Donasi </div>
                                     <h5>Sisa Hari </h5>
-                                    <div className="text-gray mb-3"> {val.SisaHari} Hari </div>
+                                    <div className="text-gray mb-3"> 9 Hari </div>
                                     <div className="row">
                                         <div className="col-md-5">
                                             <input type="button" className="btn btn-dark form-control font-weight-bolder" value="Contribute" onClick={()=>this.renderMidtrans(val.id)}/>
