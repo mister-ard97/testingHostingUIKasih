@@ -3,7 +3,7 @@
 // export const URL_API = 'http://localhost:1998';
 
 
-export const URL_API = 'http://localhost:2019';
+// export const URL_API = 'http://localhost:2019';
 // export const URL_API = 'http://ec2-52-221-189-87.ap-southeast-1.compute.amazonaws.com:2019';
 
 
@@ -16,7 +16,7 @@ export const APIWILAYAHURL = "https://x.rajaapi.com/MeP7c5ne"
 
 
 // hosting api live
-// export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
+export const URL_API = 'https://apikasihnusantara.purwadhikax.com';
 
 // ui local
 // export const UI_LINK = 'http://localhost:3000';
